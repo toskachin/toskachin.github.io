@@ -46,14 +46,14 @@ jekyll 使用教程：<https://www.jekyll.com.cn/>
 # 以下为自定义的全局变量，可以在 HTML 文件中引用，
 # 比如代码：<h1>{{ site.title }}</h1> 
 # 将会展示为设定的值，也可以自行添加其他自定义全局变量。
-title: 黄琦雲的博客 # 网站的标题
+title: 动感地带 # 网站的标题
 description: > # 网站的描述，可能会出现在搜索引擎展示结果中
   基于 jekyll 的 Github Pages 个人博客网站，技术的学习、总结、分享与提升
-url: "https://knightyun.github.io" # 网站地址
-github_repo: knightyun/knightyun.github.io
-github_profile: "https://github.com/knightyun" # GitHub 个人主页
-user: "黄琦雲" # 用于侧栏展示的名字
-user_email: "2386209384@qq.com" # 侧栏展示的联系方式
+url: "https://toskachin.github.io" # 网站地址
+github_repo: toskachin/toskachin.github.io
+github_profile: "https://github.com/toskchin" # GitHub 个人主页
+user: "Toska" # 用于侧栏展示的名字
+user_email: "royjin@msn.com" # 侧栏展示的联系方式
 paginate: 5 # 主页展示的博客文章数量
 
 # jekyll 相关配置
