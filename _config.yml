@@ -17,15 +17,15 @@ description: > # 网站的描述，可能会出现在搜索引擎展示结果中
 url: "https://toskachin.github.io" # 网站地址
 github_repo: "https://github.com/toskachin/toskachin.github.io"
 github_profile: "https://github.com/toskachin" # GitHub 个人主页
-user: "黄琦雲" # 用于侧栏展示的名字
-user_email: "2386209384@qq.com" # 侧栏展示的联系方式
+user: "toska" # 用于侧栏展示的名字
+user_email: "royjin@msn.com" # 侧栏展示的联系方式
 paginate: 5 # 主页展示的博客文章数量
-nick_name: "瑝琦" # 昵称
-english_name: "Knight"
+nick_name: "RJ" # 昵称
+english_name: "RJ"
 # valine 评论插件配置
-valine:
-  leancloud_appid: "4XY3DoTJmibNe3rHeAKOxqzl-gzGzoHsz"
-  leancloud_appkey: "vjothQHALvgTQF9GrSgj577a"
+# valine:
+#   leancloud_appid: "4XY3DoTJmibNe3rHeAKOxqzl-gzGzoHsz"
+#   leancloud_appkey: "vjothQHALvgTQF9GrSgj577a"
 
 # jekyll 相关配置
 markdown: kramdown
