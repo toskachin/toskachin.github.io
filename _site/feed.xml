@@ -2,11 +2,549 @@
 <rss version="2.0">
 
     <channel>
-        <title>TOSKA的博客</title>
+        <title>TOSKA'S BLOG</title>
         <link>http://localhost:4000</link>
         <description>基于 jekyll 的 Github Pages 个人博客网站，技术的学习、总结、分享与提升
 </description>
-        <lastBuildDate>Wed, 26 May 2021 19:41:39 +0800</lastBuildDate>
+        <lastBuildDate>Wed, 26 May 2021 19:52:58 +0800</lastBuildDate>
+        
+        <item>
+            <title>Linux system administrator从入门到放弃</title>
+            <link>
+                http://localhost:4000/2021/05/27/linux-notes
+            </link>
+            <description>
+                &lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#system&quot;&gt;system&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#system-information&quot;&gt;system information&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#hostnamectl&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hostnamectl&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#uname&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uname&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#check-user&quot;&gt;check user&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#mix-command&quot;&gt;mix command&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#sar&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sar&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#vmstat&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmstat&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#top&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;top&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#lsblk&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lsblk&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#lscpu&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lscpu&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#lshw&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lshw&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#lspci&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lspci&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#lsusb&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lsusb&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#uptime&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uptime&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#dmesg&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dmesg&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#strace&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;strace&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#cpu&quot;&gt;cpu&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#lscpu-1&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lscpu&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#vmstate&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmstate&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#mpstat&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mpstat&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#pidstat&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pidstat&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#perf&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;perf&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#memory&quot;&gt;memory&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#free&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;free&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#pamp&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pamp&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#dtrace&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dtrace&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#valgrind&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;valgrind&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#process&quot;&gt;process&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#ps&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ps&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#pidstat-1&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pidstat&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#pstree&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pstree&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#diskio&quot;&gt;disk/IO&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#disk-performance-check&quot;&gt;Disk performance check&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#df&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;df&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#du&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;du&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#fsck&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fsck&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#iostat&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;iostat&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#iotop&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;iotop&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#pidstat-2&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pidstat&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#perf-1&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;perf&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#disk-add-and-extend-or-remove&quot;&gt;Disk add and extend or remove&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#lsblk-1&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lsblk&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#fdisk&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fdisk&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#physical-volume&quot;&gt;physical volume&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#volume-group&quot;&gt;volume group&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#logical-volume&quot;&gt;Logical Volume&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#扩展逻辑卷&quot;&gt;扩展逻辑卷&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#缩减逻辑卷&quot;&gt;缩减逻辑卷&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#network&quot;&gt;network&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#route&quot;&gt;route&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#mtr&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mtr&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#traceroute&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;traceroute&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#ping&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ping&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#tcpdump&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tcpdump&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#netstat&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;netstat&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#dns&quot;&gt;dns&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#nslookup&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nslookup&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#dig&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dig&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#iptable&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;iptable&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#ss&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ss&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#fuser&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fuser&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#lsof&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lsof&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#nmap&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nmap&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#sar--n&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sar -n&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#files&quot;&gt;files&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#less&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;less&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#head&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;head&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#tail&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tail&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#awk&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;awk&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#sed&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sed&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#tr&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tr&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#find&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;find&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#job-control&quot;&gt;job control&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#bg-fg&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bg&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fg&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#disown&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;disown&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#job&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;job&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#nohup&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nohup&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#ps-1&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ps&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#pstree-1&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pstree&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#time&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;time&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#watch&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;watch&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#screen&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;screen&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#users-and-permission&quot;&gt;users and permission&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#chmod&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chmod&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#chown&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chown&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#vim-hotkeys&quot;&gt;VIM hotkeys&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#delete&quot;&gt;delete&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#move&quot;&gt;move&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#linux_commands&quot;&gt;linux_commands&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#scp&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;scp&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#rsync&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rsync&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;system&quot;&gt;system&lt;/h1&gt;
+&lt;h2 id=&quot;system-information&quot;&gt;system information&lt;/h2&gt;
+&lt;h3 id=&quot;hostnamectl&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hostnamectl&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@sf-centos-101 ~]# hostnamectl
+   Static &lt;span class=&quot;nb&quot;&gt;hostname&lt;/span&gt;: sf-centos-101
+         Icon name: computer-vm
+           Chassis: vm
+        Machine ID: 67a52c5361b8494880a0be3cb79d1581
+           Boot ID: 22199b0fc6724b20bb7c30e70fb5e17d
+    Virtualization: vmware
+  Operating System: CentOS Linux 7 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Core&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+       CPE OS Name: cpe:/o:centos:centos:7
+            Kernel: Linux 3.10.0-1160.el7.x86_64
+      Architecture: x86-64
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;uname&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uname&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@sf-centos-101 ~]# &lt;span class=&quot;nb&quot;&gt;uname&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt;
+Linux sf-centos-101 3.10.0-1160.el7.x86_64 &lt;span class=&quot;c&quot;&gt;#1 SMP Mon Oct 19 16:18:59 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;check-user&quot;&gt;check user&lt;/h3&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@sf-centos-101 ~]# w root
+ 04:05:44 up 2 days, 19:06,  2 &lt;span class=&quot;nb&quot;&gt;users&lt;/span&gt;,  load average: 0.00, 0.01, 0.05
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+root     pts/0    corp-sto-sha-01. 03:20   11:04   0.07s  0.07s &lt;span class=&quot;nt&quot;&gt;-bash&lt;/span&gt;
+root     pts/1    corp-sto-sha-01. 04:04    0.00s  0.03s  0.00s w root
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@sf-centos-101 ~]# &lt;span class=&quot;nb&quot;&gt;whoami
+&lt;/span&gt;root
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@sf-centos-101 ~]# &lt;span class=&quot;nb&quot;&gt;users
+&lt;/span&gt;root root
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@sf-centos-101 ~]# &lt;span class=&quot;nb&quot;&gt;who&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt;
+           system boot  2021-04-03 08:59
+LOGIN      tty1         2021-04-03 08:59               845 &lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;tty1
+           run-level 3  2021-04-03 08:59
+root     + pts/0        2021-04-06 03:20 00:11       39379 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;corp-sto-sha-01.global.marinsoftware.com&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+root     + pts/1        2021-04-06 04:04   &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;         39580 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;corp-sto-sha-01.global.marinsoftware.com&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#check last user root login time&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@sf-centos-101 ~]# last root
+root     pts/1        corp-sto-sha-01. Tue Apr  6 04:04   still logged &lt;span class=&quot;k&quot;&gt;in
+&lt;/span&gt;root     pts/0        corp-sto-sha-01. Tue Apr  6 03:20   still logged &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;mix-command&quot;&gt;mix command&lt;/h2&gt;
+&lt;h3 id=&quot;sar&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sar&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;#memory&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;-S&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;#sawp&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# disk&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;#cpu&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#I/O activities&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#network statistics sar -n DEV or sar -n UDP&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#output sar 2 4 -o /tmp/data.log &amp;gt;/dev/null 2&amp;gt;$1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#history&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@sf-centos-101 ~]# sar &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /var/log/sa/sa05
+Linux 3.10.0-1160.el7.x86_64 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;sf-centos-101&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 	04/05/2021 	_x86_64_	&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1 CPU&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+12:00:01 AM kbmemfree kbmemused  %memused kbbuffers  kbcached  kbcommit   %commit  kbactive   kbinact   kbdirty
+12:10:01 AM   1341824    521180     27.98      2252    171716    339432      9.58    171872     99364         0
+12:20:01 AM   1341824    521180     27.98      2252    171724    339536      9.59    171940     99368         0
+12:30:01 AM   1341528    521476     27.99      2252    171728    339608      9.59    172080     99364         0
+12:40:01 AM   1341576    521428     27.99      2252    171732    339676      9.59    172128     99364         0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# memory&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@sf-centos-101 ~]# sar &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; 2 2
+Linux 3.10.0-1160.el7.x86_64 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;sf-centos-101&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 	04/06/2021 	_x86_64_	&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1 CPU&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+03:30:11 AM kbmemfree kbmemused  %memused kbbuffers  kbcached  kbcommit   %commit  kbactive   kbinact   kbdirty
+03:30:13 AM   1322376    540628     29.02      2252    174900    354680     10.01    190772     99372        20
+03:30:15 AM   1322376    540628     29.02      2252    174900    354680     10.01    190780     99372        20
+Average:      1322376    540628     29.02      2252    174900    354680     10.01    190776     99372        20
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;vmstat&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmstat&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#I/O disk&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#By default vmstat doesn’t display this information. Use option -a, to display active and inactive memory information&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;top&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;top&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;m &lt;span class=&quot;c&quot;&gt;#memory&lt;/span&gt;
+P &lt;span class=&quot;c&quot;&gt;#CPU&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;lsblk&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lsblk&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;lscpu&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lscpu&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;lshw&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lshw&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;lspci&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lspci&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;lsusb&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lsusb&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;uptime&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uptime&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;dmesg&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dmesg&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;strace&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;strace&lt;/code&gt;&lt;/h2&gt;
+
+&lt;h1 id=&quot;cpu&quot;&gt;cpu&lt;/h1&gt;
+&lt;h2 id=&quot;lscpu-1&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lscpu&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;vmstate&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmstate&lt;/code&gt;&lt;/h2&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;-w&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#format&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@sf-centos-101 ~]# vmstat &lt;span class=&quot;nt&quot;&gt;-w&lt;/span&gt; 2 2
+procs &lt;span class=&quot;nt&quot;&gt;-----------------------memory----------------------&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;---swap--&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-----io----&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-system--&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--------cpu--------&lt;/span&gt;
+ r  b         swpd         free         buff        cache   si   so    bi    bo   &lt;span class=&quot;k&quot;&gt;in   &lt;/span&gt;cs  us  sy  &lt;span class=&quot;nb&quot;&gt;id  &lt;/span&gt;wa  st
+ 2  0            0      1322380         2252       220916    0    0     1     0   34   55   0   0 100   0   0
+ 0  0            0      1322380         2252       220948    0    0     0     0   54   93   0   0 100   0   0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;mpstat&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mpstat&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;pidstat&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pidstat&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;perf&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;perf&lt;/code&gt;&lt;/h2&gt;
+
+&lt;h1 id=&quot;memory&quot;&gt;memory&lt;/h1&gt;
+&lt;h2 id=&quot;free&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;free&lt;/code&gt;&lt;/h2&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@sf-centos-101 ~]# free &lt;span class=&quot;nt&quot;&gt;-mh&lt;/span&gt;
+              total        used        free      shared  buff/cache   available
+Mem:           1.8G        309M        1.3G        9.4M        217M        1.3G
+Swap:          1.6G          0B        1.6G
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;pamp&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pamp&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;dtrace&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dtrace&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;valgrind&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;valgrind&lt;/code&gt;&lt;/h2&gt;
+
+&lt;h1 id=&quot;process&quot;&gt;process&lt;/h1&gt;
+&lt;h2 id=&quot;ps&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ps&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;pidstat-1&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pidstat&lt;/code&gt;&lt;/h2&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt;     &lt;span class=&quot;c&quot;&gt;#Report I/O statistics&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt;     &lt;span class=&quot;c&quot;&gt;#memory&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt;     &lt;span class=&quot;c&quot;&gt;#cpu&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;pstree&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pstree&lt;/code&gt;&lt;/h2&gt;
+
+&lt;h1 id=&quot;diskio&quot;&gt;disk/IO&lt;/h1&gt;
+&lt;h2 id=&quot;disk-performance-check&quot;&gt;Disk performance check&lt;/h2&gt;
+&lt;h2 id=&quot;df&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;df&lt;/code&gt;&lt;/h2&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@sf-centos-101 ~]# &lt;span class=&quot;nb&quot;&gt;df&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-h&lt;/span&gt;
+Filesystem               Size  Used Avail Use% Mounted on
+devtmpfs                 899M     0  899M   0% /dev
+tmpfs                    910M     0  910M   0% /dev/shm
+tmpfs                    910M  9.4M  901M   2% /run
+tmpfs                    910M     0  910M   0% /sys/fs/cgroup
+/dev/mapper/centos-root  214G  2.2G  212G   2% /
+/dev/sda1               1014M  154M  861M  16% /boot
+tmpfs                    182M     0  182M   0% /run/user/0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;du&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;du&lt;/code&gt;&lt;/h2&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@sf-centos-101 ~]# &lt;span class=&quot;nb&quot;&gt;du&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-sh&lt;/span&gt; /root
+36K	/root
+
+&lt;span class=&quot;nb&quot;&gt;du&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-sh&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;sort&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-hr&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;head&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; 5 &lt;span class=&quot;c&quot;&gt;#list top 5 biggest folders&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;fsck&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fsck&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;iostat&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;iostat&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;iotop&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;iotop&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;pidstat-2&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pidstat&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;perf-1&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;perf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;disk-add-and-extend-or-remove&quot;&gt;Disk add and extend or remove&lt;/h2&gt;
+&lt;h2 id=&quot;lsblk-1&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lsblk&lt;/code&gt;&lt;/h2&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@sf-centos-101 ~]# lsblk
+NAME            MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda               8:0    0    16G  0 disk
+├─sda1            8:1    0     1G  0 part /boot
+└─sda2            8:2    0    15G  0 part
+  ├─centos-root 253:0    0 213.4G  0 lvm  /
+  └─centos-swap 253:1    0   1.6G  0 lvm  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;SWAP]
+sdb               8:16   0   200G  0 disk
+└─centos-root   253:0    0 213.4G  0 lvm  /
+sr0              11:0    1   4.4G  0 rom
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;fdisk&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fdisk&lt;/code&gt;&lt;/h2&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;fdisk &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt;
+fdisk /dev/sdb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;physical-volume&quot;&gt;physical volume&lt;/h2&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pvs &lt;span class=&quot;c&quot;&gt;#简要pv信息显示&lt;/span&gt;
+pvdisplay 显示pv的详细信息
+pvcreated /dev/DEVICE &lt;span class=&quot;c&quot;&gt;#创建pv&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;volume-group&quot;&gt;volume group&lt;/h2&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vgs
+vgdisplay
+vgcreate  &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#[kKmMgGtTpPeE]] VolumeGroupName  PhysicalDevicePath [PhysicalDevicePath...]&lt;/span&gt;
+vgextend  VolumeGroupName  PhysicalDevicePath &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;PhysicalDevicePath...]
+vgreduce  VolumeGroupName  PhysicalDevicePath &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;PhysicalDevicePath...]
+  先做pvmove
+vgremove
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;logical-volume&quot;&gt;Logical Volume&lt;/h2&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;lvs
+lvdisplay
+
+lvcreate &lt;span class=&quot;nt&quot;&gt;-L&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#[mMgGtT] -n NAME VolumeGroup&lt;/span&gt;
+
+lvremove /dev/VG_NAME/LV_NAME
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;扩展逻辑卷&quot;&gt;扩展逻辑卷&lt;/h2&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;CDISK&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/sdX
+pvcreate &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CDISK&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+pvdisplay &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+vgdisplay &lt;span class=&quot;c&quot;&gt;#List Volume group&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#Extend the vg&lt;/span&gt;
+vgextend vg1 &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CDISK&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+vgs &lt;span class=&quot;nt&quot;&gt;--unit&lt;/span&gt; m  &lt;span class=&quot;c&quot;&gt;#list free disk&lt;/span&gt;
+lvextend &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-L&lt;/span&gt; +&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Number from VFree cloumn&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; /dev/mapper/vg1-root &lt;span class=&quot;c&quot;&gt;# -r resize&lt;/span&gt;
+OR
+lvextend &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; +100%FREE /dev/mapper/vg1-root
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;缩减逻辑卷&quot;&gt;缩减逻辑卷&lt;/h2&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;umount /dev/VG_NAME/LV_NAME
+e2fsck &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /dev/VG_NAME/LV_NAME
+resize2fs /dev/VG_NAME/LV_NAME &lt;span class=&quot;c&quot;&gt;#[mMgGtT]&lt;/span&gt;
+lvreduce &lt;span class=&quot;nt&quot;&gt;-L&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;-]#[mMgGtT] /dev/VG_NAME/LV_NAME
+mount
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;network&quot;&gt;network&lt;/h1&gt;
+&lt;h2 id=&quot;route&quot;&gt;route&lt;/h2&gt;
+&lt;h3 id=&quot;mtr&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mtr&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;s2&quot;&gt;&quot;r&quot;&lt;/span&gt; to generate the mtr &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;a report format
+&lt;span class=&quot;s2&quot;&gt;&quot;w&quot;&lt;/span&gt; to show the full &lt;span class=&quot;nb&quot;&gt;hostname &lt;/span&gt;of each &lt;span class=&quot;s1&quot;&gt;&#39;hop&#39;&lt;/span&gt; where available
+&lt;span class=&quot;s2&quot;&gt;&quot;c X&quot;&lt;/span&gt; to indicate to send X number packets. By default, an MTR report will only send 10. We recommend 50, which will take around a minute. 
+
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@sf-centos-101 ~]# mtr &lt;span class=&quot;nt&quot;&gt;-rwc&lt;/span&gt; 50 google.com
+Start: Tue Apr  6 22:55:25 2021
+HOST: sf-centos-101                 Loss%   Snt   Last   Avg  Best  Wrst StDev
+  1.|-- 10.0.5.2                       0.0%    50    0.2   0.2   0.1   0.3   0.0
+  2.|-- host241.right-net.com          0.0%    50    0.4   0.9   0.4  13.7   2.2
+  3.|-- ae7.cr1.sjc2.us.zip.zayo.com   0.0%    50    2.0   2.2   1.9  10.2   1.1
+  4.|-- ae27.cs1.sjc2.us.eth.zayo.com  0.0%    50    2.1   2.4   2.0   8.5   0.9
+  5.|-- ???                           100.0    50    0.0   0.0   0.0   0.0   0.0
+  6.|-- 142.250.160.46                 0.0%    50    2.4   2.5   2.4   3.3   0.0
+  7.|-- 108.170.243.1                  0.0%    50    3.6   3.4   3.0   4.4   0.0
+  8.|-- 108.170.243.14                 0.0%    50    5.3   3.3   2.4  16.2   2.1
+  9.|-- 142.250.234.135                0.0%    50    2.8   3.1   2.7   5.4   0.5
+ 10.|-- 142.250.237.172                0.0%    50    9.9  10.5   9.8  27.3   2.5
+ 11.|-- 142.250.235.172               40.0%    50   50.7  51.0  50.6  55.2   0.8
+ 12.|-- 142.250.232.69                90.0%    50   50.8  50.7  50.5  50.8   0.0
+ 13.|-- 216.239.57.137                86.0%    50   66.9  67.1  66.9  67.9   0.0
+ 14.|-- 108.170.227.149                0.0%    50   67.6  67.4  67.2  67.7   0.0
+ 15.|-- 108.170.248.97                 0.0%    50   66.8  66.8  66.7  67.2   0.0
+ 16.|-- 142.250.235.239                0.0%    50   67.4  67.6  67.2  69.7   0.3
+ 17.|-- lga34s33-in-f14.1e100.net      0.0%    50   66.6  66.6  66.6  66.9   0.0
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;traceroute&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;traceroute&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;traceroute google.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;ping&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ping&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ping &lt;span class=&quot;nt&quot;&gt;-4&lt;/span&gt; google.com &lt;span class=&quot;c&quot;&gt;#use ipv4&lt;/span&gt;
+ping &lt;span class=&quot;nt&quot;&gt;-6&lt;/span&gt; google.com &lt;span class=&quot;c&quot;&gt;#use ipv6&lt;/span&gt;
+ping &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; 2 google.com &lt;span class=&quot;c&quot;&gt;#Specify the Number of Packets&lt;/span&gt;
+ping &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; 40 &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; 5 google.com &lt;span class=&quot;c&quot;&gt;#control package size&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;tcpdump&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tcpdump&lt;/code&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;netstat&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;netstat&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;netstat &lt;span class=&quot;nt&quot;&gt;-antp&lt;/span&gt; 
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;dns&quot;&gt;dns&lt;/h2&gt;
+&lt;h3 id=&quot;nslookup&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nslookup&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nslookup dnsserver google.com &lt;span class=&quot;c&quot;&gt;#指定dns服务器解析&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;dig&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dig&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dig @dnsserver youtube.com &lt;span class=&quot;c&quot;&gt;#dig @8.8.8.8 youtube.com&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@sf-centos-101 ~]# dig +short youtube.com
+172.217.2.14
+
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@sf-centos-101 ~]# dig +nocmd &lt;span class=&quot;nt&quot;&gt;-x&lt;/span&gt; 8.8.8.8  +noall +answer
+8.8.8.8.in-addr.arpa.	20558	IN	PTR	dns.google.
+
+&lt;span class=&quot;c&quot;&gt;#cat domains.txt&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#lxer.com&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#linuxtoday.com&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#tuxmachines.org&lt;/span&gt;
+
+dig &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; domains.txt +short
+
+&lt;span class=&quot;c&quot;&gt;#108.166.170.171&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#70.42.23.121&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#204.68.122.43&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;iptable&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;iptable&lt;/code&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;ss&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ss&lt;/code&gt;&lt;/h3&gt;
+
+&lt;h2 id=&quot;fuser&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fuser&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;lsof&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lsof&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;nmap&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nmap&lt;/code&gt;&lt;/h2&gt;
+
+&lt;h2 id=&quot;sar--n&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sar -n&lt;/code&gt;&lt;/h2&gt;
+
+&lt;h1 id=&quot;files&quot;&gt;files&lt;/h1&gt;
+&lt;h2 id=&quot;less&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;less&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;head&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;head&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;tail&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tail&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;awk&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;awk&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;sed&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sed&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;tr&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tr&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;find&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;find&lt;/code&gt;&lt;/h2&gt;
+
+&lt;h1 id=&quot;job-control&quot;&gt;job control&lt;/h1&gt;
+&lt;h2 id=&quot;bg-fg&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bg&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fg&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;disown&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;disown&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;job&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;job&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;nohup&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nohup&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;ps-1&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ps&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;pstree-1&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pstree&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;time&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;time&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;watch&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;watch&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;screen&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;screen&lt;/code&gt;&lt;/h2&gt;
+
+&lt;h1 id=&quot;users-and-permission&quot;&gt;users and permission&lt;/h1&gt;
+&lt;h2 id=&quot;chmod&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chmod&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;chown&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chown&lt;/code&gt;&lt;/h2&gt;
+
+&lt;h1 id=&quot;vim-hotkeys&quot;&gt;VIM hotkeys&lt;/h1&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vim     + line number    file  
+vim +81 /Users/rjin/.ssh/known_hosts
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;delete&quot;&gt;delete&lt;/h2&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;x        删除当前光标下的字符
+dw       删除光标之后的单词剩余部分。
+d&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;      删除光标之后的该行剩余部分。
+&lt;span class=&quot;nb&quot;&gt;dd       &lt;/span&gt;删除当前行。
+
+cw     删除光标后一个单词，进入instert mode
+c&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+c        功能和d相同，区别在于完成删除操作后进入INSERT MODE
+cc       也是删除当前行，然后进入INSERT MODE
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;move&quot;&gt;move&lt;/h2&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nw  n为数字  光标向后N个单词
+nb  光标向前N个单词
+
+gg
+
+G
+
+0  &lt;span class=&quot;c&quot;&gt;#绝对行首&lt;/span&gt;
+^  &lt;span class=&quot;c&quot;&gt;#行首非第一个非字符&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#绝对行&lt;/span&gt;
+
+
+h或退格: 左移一个字符；
+l或空格: 右移一个字符；
+j: 下移一行；
+k: 上移一行
+
+ctrl+d: 下翻半屏。
+ctrl+u: 上翻半屏。
+ctrl+e: 向下滚动一行。
+ctrl+y: 向上滚动一行。
+
+
+nw  n为数字  光标向后N个单词
+nb  光标向前N个单词
+
+a  &lt;span class=&quot;c&quot;&gt;#光标后字符插入&lt;/span&gt;
+A  &lt;span class=&quot;c&quot;&gt;#行尾插入&lt;/span&gt;
+
+
+gg  &lt;span class=&quot;c&quot;&gt;#移到首行&lt;/span&gt;
+G   &lt;span class=&quot;c&quot;&gt;#移到末尾&lt;/span&gt;
+
+
+d&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;#删除光标到行尾&lt;/span&gt;
+
+
+u/U &lt;span class=&quot;c&quot;&gt;#撤销操作&lt;/span&gt;
+
+
+0  &lt;span class=&quot;c&quot;&gt;#绝对行首&lt;/span&gt;
+^  &lt;span class=&quot;c&quot;&gt;#行首非第一个非字符&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#绝对行尾&lt;/span&gt;
+
+
+
+
+：set nu   &lt;span class=&quot;c&quot;&gt;#显示行数&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;linux_commands&quot;&gt;linux_commands&lt;/h1&gt;
+&lt;h2 id=&quot;scp&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;scp&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;rsync&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rsync&lt;/code&gt;&lt;/h2&gt;
+
+
+            </description>
+            <pubDate>Thu, 27 May 2021 00:00:00 +0800</pubDate>
+            <guid>
+                http://localhost:4000/2021/05/27/linux-notes
+            </guid>
+        </item>
         
         <item>
             <title>shell从入门到放弃</title>

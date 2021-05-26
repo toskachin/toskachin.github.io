@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <meta http-equiv="Content-Language" content="zh-CN" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 360 -->
+    <meta name="360-site-verification" content="fa6ca3a9a0330e9cecabee0a9fe1d52a" />
+    <!-- 搜狗 -->
+    <meta name="sogou_site_verification" content="oatSp9uAV5" />
+    <!--熊掌号 -->
+    <meta name="baidu-site-verification" content="Wkb0Jzk8yx" />
+    <!-- Google Search Console -->
+    <meta name="google-site-verification" content="IJrXvaK-Luj-lCGP7tymcCbkcfMKi82Y8V21qN9ZT0s" />
+    <title>
+        
+            Linux system administrator从入门到放弃
+        
+    </title>
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
+    
+    <link rel="stylesheet" href="/assets/css/materialize.min.css">
+    <link rel="stylesheet" href="/assets/css/icons.css">
+    
+
+    
+        
+        <link rel="stylesheet" href="/assets/css/page.css">
+        
+    
+        
+        <link rel="stylesheet" href="/assets/css/post.css">
+        
+    
+        
+        <link rel="stylesheet" href="/assets/css/syntax.css">
+        
+    
+        
+        <link rel="stylesheet" href="/assets/css/article-category.css">
+        
+    
+
+    
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">	
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Linux system administrator从入门到放弃" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="linux操作手册" />
+<meta property="og:description" content="linux操作手册" />
+<link rel="canonical" href="http://localhost:4000/2021/05/27/linux-notes" />
+<meta property="og:url" content="http://localhost:4000/2021/05/27/linux-notes" />
+<meta property="og:site_name" content="TOSKA'S BLOG" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-05-27T00:00:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Linux system administrator从入门到放弃" />
+<script type="application/ld+json">
+{"headline":"Linux system administrator从入门到放弃","dateModified":"2021-05-27T00:00:00+08:00","description":"linux操作手册","datePublished":"2021-05-27T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2021/05/27/linux-notes"},"url":"http://localhost:4000/2021/05/27/linux-notes","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body>
+    <header>
+        <nav class="top-nav">
+            
+            <div class="nav-wrapper">
+                <div class="container">
+                    
+                    <a class="page-title" href="/">TOSKA'S BLOG</a>
+                    <p class="head-message">Stay Hungry&nbsp;&nbsp;Stay Foolish</p>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <a href="#" data-target="slide-out" class="sidenav-trigger top-nav full hide-on-large-only">
+                <i class="material-icons">menu</i>
+            </a>
+        </div>
+        <ul id="slide-out" class="sidenav sidenav-fixed" style="background-color:#ddd">
+            <li>
+                <div class="userView">
+                    <img class="user-bg" src="/assets/img/bg.png" />
+                    <a class="user-avatar" href="https://github.com/toskachin" target="_blank">
+                        <img class="circle z-depth-2" src="/assets/img/user.png" width="64" />
+                    </a>
+                    <div class="white-text user-info">
+                        toska <i>(RJ)<I><BRr><I><BR
+                        royjin@msn.com
+                    </div>
+                </div>
+            </li>
+            <li><a class="waves-effect" href="/"><i class="material-icons">home</i>Home - 主页</a></li>
+            <li><a class="waves-effect" href="/projects"><i class="material-icons">description</i>Github - 项目</a></li>
+            <li><a class="waves-effect" href="/categories"><i class="material-icons">sort</i>Categories - 目录</a></li>
+            <li><a class="waves-effect" href="/tags"><i class="material-icons">label</i>Tags - 标签</a></li>
+            <!-- <li><a class="waves-effect" href="/feed.xml" target="_blank"><i class="material-icons">rss_feed</i>RSS - 订阅</a></li> -->
+            <li><a class="waves-effect" href="/about"><i class="material-icons">person</i>About - 关于我</a></li>
+            <li><a class="waves-effect" href="/contact"><i class="material-icons">email</i>Contact - 联系我</a></li>
+            <!-- 华为云广告 -->
+            <li class="ad">
+                <!-- <a href="https://mp.weixin.qq.com/s/ujUoHc3grjO8LD_Bg1fckA" target="_blank"> -->
+                <!-- <a href="https://mp.weixin.qq.com/s/MTbMlhjAx8R4fc8Po90EXg" target="_blank">
+                    <img src="/assets/img/ad-huaweiyun.png" alt="" width="100%" />
+                </a>
+                <i class="material-icons" onclick="javascript:this.parentNode.style.display='none';">close</i> -->
+            </li>
+        </ul>
+    </header>
+    <main>
+
+<div class="container">
+    <div id="page-info">
+        <h1 class="page-title white-text">Linux system administrator从入门到放弃</h1>
+    </div>
+    <div id="page-content" class="row">
+        <div id="post-info">
+    <ul class="collapsible hoverable" data-collapsible="accordion">
+        <li>
+            <div class="collapsible-header grey lighten-4">
+                <span>
+                    <i class="material-icons tooltipped" data-position="left" data-delay="30" data-tooltip="Date">date_range</i>
+                    27/05/2021 00:00<br />
+                    <div id="busuanzi_container_site_pv">点击量：<span style="display: inline;" id="busuanzi_value_page_pv"></span>次</div>
+                    <i id="indicate" class="right material-icons tooltipped" data-position="left" data-delay="30"
+                        data-tooltip="Show extra info">info</i>
+                </span>
+            </div>
+            <div class="collapsible-body">
+                <span>
+                    <i class="material-icons tooltipped" data-position="left" data-delay="30" data-tooltip="Categories">sort</i>
+                    
+                    
+                    
+                    <a href="/categories#linux_cap"
+                        target="_blank">
+                        <div class="chip">Linux</div>
+                    </a>
+                    
+                </span>
+                <span>
+                    <i class="material-icons tooltipped" data-position="left" data-delay="30" data-tooltip="Tags">label</i>
+                    
+                    
+                    
+                    <a href="/tags#tech" target="_blank">
+                        <div class="chip">tech</div>
+                    </a>
+                    
+                </span>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="divider"></div>
+<div id="post-content" class="row">
+    <div class="col s12">
+        <ul>
+  <li><a href="#system">system</a>
+    <ul>
+      <li><a href="#system-information">system information</a>
+        <ul>
+          <li><a href="#hostnamectl"><code class="language-plaintext highlighter-rouge">hostnamectl</code></a></li>
+          <li><a href="#uname"><code class="language-plaintext highlighter-rouge">uname</code></a></li>
+          <li><a href="#check-user">check user</a></li>
+        </ul>
+      </li>
+      <li><a href="#mix-command">mix command</a>
+        <ul>
+          <li><a href="#sar"><code class="language-plaintext highlighter-rouge">sar</code></a></li>
+          <li><a href="#vmstat"><code class="language-plaintext highlighter-rouge">vmstat</code></a></li>
+          <li><a href="#top"><code class="language-plaintext highlighter-rouge">top</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#lsblk"><code class="language-plaintext highlighter-rouge">lsblk</code></a></li>
+      <li><a href="#lscpu"><code class="language-plaintext highlighter-rouge">lscpu</code></a></li>
+      <li><a href="#lshw"><code class="language-plaintext highlighter-rouge">lshw</code></a></li>
+      <li><a href="#lspci"><code class="language-plaintext highlighter-rouge">lspci</code></a></li>
+      <li><a href="#lsusb"><code class="language-plaintext highlighter-rouge">lsusb</code></a></li>
+      <li><a href="#uptime"><code class="language-plaintext highlighter-rouge">uptime</code></a></li>
+      <li><a href="#dmesg"><code class="language-plaintext highlighter-rouge">dmesg</code></a></li>
+      <li><a href="#strace"><code class="language-plaintext highlighter-rouge">strace</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#cpu">cpu</a>
+    <ul>
+      <li><a href="#lscpu-1"><code class="language-plaintext highlighter-rouge">lscpu</code></a></li>
+      <li><a href="#vmstate"><code class="language-plaintext highlighter-rouge">vmstate</code></a></li>
+      <li><a href="#mpstat"><code class="language-plaintext highlighter-rouge">mpstat</code></a></li>
+      <li><a href="#pidstat"><code class="language-plaintext highlighter-rouge">pidstat</code></a></li>
+      <li><a href="#perf"><code class="language-plaintext highlighter-rouge">perf</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#memory">memory</a>
+    <ul>
+      <li><a href="#free"><code class="language-plaintext highlighter-rouge">free</code></a></li>
+      <li><a href="#pamp"><code class="language-plaintext highlighter-rouge">pamp</code></a></li>
+      <li><a href="#dtrace"><code class="language-plaintext highlighter-rouge">dtrace</code></a></li>
+      <li><a href="#valgrind"><code class="language-plaintext highlighter-rouge">valgrind</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#process">process</a>
+    <ul>
+      <li><a href="#ps"><code class="language-plaintext highlighter-rouge">ps</code></a></li>
+      <li><a href="#pidstat-1"><code class="language-plaintext highlighter-rouge">pidstat</code></a></li>
+      <li><a href="#pstree"><code class="language-plaintext highlighter-rouge">pstree</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#diskio">disk/IO</a>
+    <ul>
+      <li><a href="#disk-performance-check">Disk performance check</a></li>
+      <li><a href="#df"><code class="language-plaintext highlighter-rouge">df</code></a></li>
+      <li><a href="#du"><code class="language-plaintext highlighter-rouge">du</code></a></li>
+      <li><a href="#fsck"><code class="language-plaintext highlighter-rouge">fsck</code></a></li>
+      <li><a href="#iostat"><code class="language-plaintext highlighter-rouge">iostat</code></a></li>
+      <li><a href="#iotop"><code class="language-plaintext highlighter-rouge">iotop</code></a></li>
+      <li><a href="#pidstat-2"><code class="language-plaintext highlighter-rouge">pidstat</code></a></li>
+      <li><a href="#perf-1"><code class="language-plaintext highlighter-rouge">perf</code></a></li>
+      <li><a href="#disk-add-and-extend-or-remove">Disk add and extend or remove</a></li>
+      <li><a href="#lsblk-1"><code class="language-plaintext highlighter-rouge">lsblk</code></a></li>
+      <li><a href="#fdisk"><code class="language-plaintext highlighter-rouge">fdisk</code></a></li>
+      <li><a href="#physical-volume">physical volume</a></li>
+      <li><a href="#volume-group">volume group</a></li>
+      <li><a href="#logical-volume">Logical Volume</a></li>
+      <li><a href="#扩展逻辑卷">扩展逻辑卷</a></li>
+      <li><a href="#缩减逻辑卷">缩减逻辑卷</a></li>
+    </ul>
+  </li>
+  <li><a href="#network">network</a>
+    <ul>
+      <li><a href="#route">route</a>
+        <ul>
+          <li><a href="#mtr"><code class="language-plaintext highlighter-rouge">mtr</code></a></li>
+          <li><a href="#traceroute"><code class="language-plaintext highlighter-rouge">traceroute</code></a></li>
+          <li><a href="#ping"><code class="language-plaintext highlighter-rouge">ping</code></a></li>
+          <li><a href="#tcpdump"><code class="language-plaintext highlighter-rouge">tcpdump</code></a></li>
+          <li><a href="#netstat"><code class="language-plaintext highlighter-rouge">netstat</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#dns">dns</a>
+        <ul>
+          <li><a href="#nslookup"><code class="language-plaintext highlighter-rouge">nslookup</code></a></li>
+          <li><a href="#dig"><code class="language-plaintext highlighter-rouge">dig</code></a></li>
+          <li><a href="#iptable"><code class="language-plaintext highlighter-rouge">iptable</code></a></li>
+          <li><a href="#ss"><code class="language-plaintext highlighter-rouge">ss</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#fuser"><code class="language-plaintext highlighter-rouge">fuser</code></a></li>
+      <li><a href="#lsof"><code class="language-plaintext highlighter-rouge">lsof</code></a></li>
+      <li><a href="#nmap"><code class="language-plaintext highlighter-rouge">nmap</code></a></li>
+      <li><a href="#sar--n"><code class="language-plaintext highlighter-rouge">sar -n</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#files">files</a>
+    <ul>
+      <li><a href="#less"><code class="language-plaintext highlighter-rouge">less</code></a></li>
+      <li><a href="#head"><code class="language-plaintext highlighter-rouge">head</code></a></li>
+      <li><a href="#tail"><code class="language-plaintext highlighter-rouge">tail</code></a></li>
+      <li><a href="#awk"><code class="language-plaintext highlighter-rouge">awk</code></a></li>
+      <li><a href="#sed"><code class="language-plaintext highlighter-rouge">sed</code></a></li>
+      <li><a href="#tr"><code class="language-plaintext highlighter-rouge">tr</code></a></li>
+      <li><a href="#find"><code class="language-plaintext highlighter-rouge">find</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#job-control">job control</a>
+    <ul>
+      <li><a href="#bg-fg"><code class="language-plaintext highlighter-rouge">bg</code> <code class="language-plaintext highlighter-rouge">fg</code></a></li>
+      <li><a href="#disown"><code class="language-plaintext highlighter-rouge">disown</code></a></li>
+      <li><a href="#job"><code class="language-plaintext highlighter-rouge">job</code></a></li>
+      <li><a href="#nohup"><code class="language-plaintext highlighter-rouge">nohup</code></a></li>
+      <li><a href="#ps-1"><code class="language-plaintext highlighter-rouge">ps</code></a></li>
+      <li><a href="#pstree-1"><code class="language-plaintext highlighter-rouge">pstree</code></a></li>
+      <li><a href="#time"><code class="language-plaintext highlighter-rouge">time</code></a></li>
+      <li><a href="#watch"><code class="language-plaintext highlighter-rouge">watch</code></a></li>
+      <li><a href="#screen"><code class="language-plaintext highlighter-rouge">screen</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#users-and-permission">users and permission</a>
+    <ul>
+      <li><a href="#chmod"><code class="language-plaintext highlighter-rouge">chmod</code></a></li>
+      <li><a href="#chown"><code class="language-plaintext highlighter-rouge">chown</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#vim-hotkeys">VIM hotkeys</a>
+    <ul>
+      <li><a href="#delete">delete</a></li>
+      <li><a href="#move">move</a></li>
+    </ul>
+  </li>
+  <li><a href="#linux_commands">linux_commands</a>
+    <ul>
+      <li><a href="#scp"><code class="language-plaintext highlighter-rouge">scp</code></a></li>
+      <li><a href="#rsync"><code class="language-plaintext highlighter-rouge">rsync</code></a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="system">system</h1>
+<h2 id="system-information">system information</h2>
+<h3 id="hostnamectl"><code class="language-plaintext highlighter-rouge">hostnamectl</code></h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>root@sf-centos-101 ~]# hostnamectl
+   Static <span class="nb">hostname</span>: sf-centos-101
+         Icon name: computer-vm
+           Chassis: vm
+        Machine ID: 67a52c5361b8494880a0be3cb79d1581
+           Boot ID: 22199b0fc6724b20bb7c30e70fb5e17d
+    Virtualization: vmware
+  Operating System: CentOS Linux 7 <span class="o">(</span>Core<span class="o">)</span>
+       CPE OS Name: cpe:/o:centos:centos:7
+            Kernel: Linux 3.10.0-1160.el7.x86_64
+      Architecture: x86-64
+</code></pre></div></div>
+<h3 id="uname"><code class="language-plaintext highlighter-rouge">uname</code></h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>root@sf-centos-101 ~]# <span class="nb">uname</span> <span class="nt">-a</span>
+Linux sf-centos-101 3.10.0-1160.el7.x86_64 <span class="c">#1 SMP Mon Oct 19 16:18:59 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</span>
+</code></pre></div></div>
+<h3 id="check-user">check user</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>root@sf-centos-101 ~]# w root
+ 04:05:44 up 2 days, 19:06,  2 <span class="nb">users</span>,  load average: 0.00, 0.01, 0.05
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+root     pts/0    corp-sto-sha-01. 03:20   11:04   0.07s  0.07s <span class="nt">-bash</span>
+root     pts/1    corp-sto-sha-01. 04:04    0.00s  0.03s  0.00s w root
+<span class="o">[</span>root@sf-centos-101 ~]# <span class="nb">whoami
+</span>root
+<span class="o">[</span>root@sf-centos-101 ~]# <span class="nb">users
+</span>root root
+</code></pre></div></div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>root@sf-centos-101 ~]# <span class="nb">who</span> <span class="nt">-a</span>
+           system boot  2021-04-03 08:59
+LOGIN      tty1         2021-04-03 08:59               845 <span class="nb">id</span><span class="o">=</span>tty1
+           run-level 3  2021-04-03 08:59
+root     + pts/0        2021-04-06 03:20 00:11       39379 <span class="o">(</span>corp-sto-sha-01.global.marinsoftware.com<span class="o">)</span>
+root     + pts/1        2021-04-06 04:04   <span class="nb">.</span>         39580 <span class="o">(</span>corp-sto-sha-01.global.marinsoftware.com<span class="o">)</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#check last user root login time</span>
+<span class="o">[</span>root@sf-centos-101 ~]# last root
+root     pts/1        corp-sto-sha-01. Tue Apr  6 04:04   still logged <span class="k">in
+</span>root     pts/0        corp-sto-sha-01. Tue Apr  6 03:20   still logged <span class="k">in</span>
+</code></pre></div></div>
+<h2 id="mix-command">mix command</h2>
+<h3 id="sar"><code class="language-plaintext highlighter-rouge">sar</code></h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">-r</span>  <span class="c">#memory</span>
+<span class="nt">-S</span>  <span class="c">#sawp</span>
+<span class="nt">-d</span>  <span class="c"># disk</span>
+<span class="nt">-u</span>  <span class="c">#cpu</span>
+<span class="nt">-b</span> <span class="c">#I/O activities</span>
+<span class="nt">-n</span> <span class="c">#network statistics sar -n DEV or sar -n UDP</span>
+<span class="nt">-o</span> <span class="c">#output sar 2 4 -o /tmp/data.log &gt;/dev/null 2&gt;$1</span>
+</code></pre></div></div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#history</span>
+<span class="o">[</span>root@sf-centos-101 ~]# sar <span class="nt">-r</span> <span class="nt">-f</span> /var/log/sa/sa05
+Linux 3.10.0-1160.el7.x86_64 <span class="o">(</span>sf-centos-101<span class="o">)</span> 	04/05/2021 	_x86_64_	<span class="o">(</span>1 CPU<span class="o">)</span>
+
+12:00:01 AM kbmemfree kbmemused  %memused kbbuffers  kbcached  kbcommit   %commit  kbactive   kbinact   kbdirty
+12:10:01 AM   1341824    521180     27.98      2252    171716    339432      9.58    171872     99364         0
+12:20:01 AM   1341824    521180     27.98      2252    171724    339536      9.59    171940     99368         0
+12:30:01 AM   1341528    521476     27.99      2252    171728    339608      9.59    172080     99364         0
+12:40:01 AM   1341576    521428     27.99      2252    171732    339676      9.59    172128     99364         0
+</code></pre></div></div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># memory</span>
+<span class="o">[</span>root@sf-centos-101 ~]# sar <span class="nt">-r</span> 2 2
+Linux 3.10.0-1160.el7.x86_64 <span class="o">(</span>sf-centos-101<span class="o">)</span> 	04/06/2021 	_x86_64_	<span class="o">(</span>1 CPU<span class="o">)</span>
+
+03:30:11 AM kbmemfree kbmemused  %memused kbbuffers  kbcached  kbcommit   %commit  kbactive   kbinact   kbdirty
+03:30:13 AM   1322376    540628     29.02      2252    174900    354680     10.01    190772     99372        20
+03:30:15 AM   1322376    540628     29.02      2252    174900    354680     10.01    190780     99372        20
+Average:      1322376    540628     29.02      2252    174900    354680     10.01    190776     99372        20
+</code></pre></div></div>
+<h3 id="vmstat"><code class="language-plaintext highlighter-rouge">vmstat</code></h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">-d</span> <span class="c">#I/O disk</span>
+<span class="nt">-a</span> <span class="c">#By default vmstat doesn’t display this information. Use option -a, to display active and inactive memory information</span>
+</code></pre></div></div>
+<h3 id="top"><code class="language-plaintext highlighter-rouge">top</code></h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>m <span class="c">#memory</span>
+P <span class="c">#CPU</span>
+</code></pre></div></div>
+
+<h2 id="lsblk"><code class="language-plaintext highlighter-rouge">lsblk</code></h2>
+<h2 id="lscpu"><code class="language-plaintext highlighter-rouge">lscpu</code></h2>
+<h2 id="lshw"><code class="language-plaintext highlighter-rouge">lshw</code></h2>
+<h2 id="lspci"><code class="language-plaintext highlighter-rouge">lspci</code></h2>
+<h2 id="lsusb"><code class="language-plaintext highlighter-rouge">lsusb</code></h2>
+<h2 id="uptime"><code class="language-plaintext highlighter-rouge">uptime</code></h2>
+<h2 id="dmesg"><code class="language-plaintext highlighter-rouge">dmesg</code></h2>
+<h2 id="strace"><code class="language-plaintext highlighter-rouge">strace</code></h2>
+
+<h1 id="cpu">cpu</h1>
+<h2 id="lscpu-1"><code class="language-plaintext highlighter-rouge">lscpu</code></h2>
+<h2 id="vmstate"><code class="language-plaintext highlighter-rouge">vmstate</code></h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">-w</span> <span class="c">#format</span>
+<span class="o">[</span>root@sf-centos-101 ~]# vmstat <span class="nt">-w</span> 2 2
+procs <span class="nt">-----------------------memory----------------------</span> <span class="nt">---swap--</span> <span class="nt">-----io----</span> <span class="nt">-system--</span> <span class="nt">--------cpu--------</span>
+ r  b         swpd         free         buff        cache   si   so    bi    bo   <span class="k">in   </span>cs  us  sy  <span class="nb">id  </span>wa  st
+ 2  0            0      1322380         2252       220916    0    0     1     0   34   55   0   0 100   0   0
+ 0  0            0      1322380         2252       220948    0    0     0     0   54   93   0   0 100   0   0
+</code></pre></div></div>
+<h2 id="mpstat"><code class="language-plaintext highlighter-rouge">mpstat</code></h2>
+<h2 id="pidstat"><code class="language-plaintext highlighter-rouge">pidstat</code></h2>
+<h2 id="perf"><code class="language-plaintext highlighter-rouge">perf</code></h2>
+
+<h1 id="memory">memory</h1>
+<h2 id="free"><code class="language-plaintext highlighter-rouge">free</code></h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>root@sf-centos-101 ~]# free <span class="nt">-mh</span>
+              total        used        free      shared  buff/cache   available
+Mem:           1.8G        309M        1.3G        9.4M        217M        1.3G
+Swap:          1.6G          0B        1.6G
+</code></pre></div></div>
+<h2 id="pamp"><code class="language-plaintext highlighter-rouge">pamp</code></h2>
+<h2 id="dtrace"><code class="language-plaintext highlighter-rouge">dtrace</code></h2>
+<h2 id="valgrind"><code class="language-plaintext highlighter-rouge">valgrind</code></h2>
+
+<h1 id="process">process</h1>
+<h2 id="ps"><code class="language-plaintext highlighter-rouge">ps</code></h2>
+<h2 id="pidstat-1"><code class="language-plaintext highlighter-rouge">pidstat</code></h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">-d</span>     <span class="c">#Report I/O statistics</span>
+<span class="nt">-r</span>     <span class="c">#memory</span>
+<span class="nt">-u</span>     <span class="c">#cpu</span>
+
+</code></pre></div></div>
+<h2 id="pstree"><code class="language-plaintext highlighter-rouge">pstree</code></h2>
+
+<h1 id="diskio">disk/IO</h1>
+<h2 id="disk-performance-check">Disk performance check</h2>
+<h2 id="df"><code class="language-plaintext highlighter-rouge">df</code></h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>root@sf-centos-101 ~]# <span class="nb">df</span> <span class="nt">-h</span>
+Filesystem               Size  Used Avail Use% Mounted on
+devtmpfs                 899M     0  899M   0% /dev
+tmpfs                    910M     0  910M   0% /dev/shm
+tmpfs                    910M  9.4M  901M   2% /run
+tmpfs                    910M     0  910M   0% /sys/fs/cgroup
+/dev/mapper/centos-root  214G  2.2G  212G   2% /
+/dev/sda1               1014M  154M  861M  16% /boot
+tmpfs                    182M     0  182M   0% /run/user/0
+</code></pre></div></div>
+<h2 id="du"><code class="language-plaintext highlighter-rouge">du</code></h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>root@sf-centos-101 ~]# <span class="nb">du</span> <span class="nt">-sh</span> /root
+36K	/root
+
+<span class="nb">du</span> <span class="nt">-sh</span> <span class="k">*</span> | <span class="nb">sort</span> <span class="nt">-hr</span> | <span class="nb">head</span> <span class="nt">-n</span> 5 <span class="c">#list top 5 biggest folders</span>
+</code></pre></div></div>
+<h2 id="fsck"><code class="language-plaintext highlighter-rouge">fsck</code></h2>
+<h2 id="iostat"><code class="language-plaintext highlighter-rouge">iostat</code></h2>
+<h2 id="iotop"><code class="language-plaintext highlighter-rouge">iotop</code></h2>
+<h2 id="pidstat-2"><code class="language-plaintext highlighter-rouge">pidstat</code></h2>
+<h2 id="perf-1"><code class="language-plaintext highlighter-rouge">perf</code></h2>
+<h2 id="disk-add-and-extend-or-remove">Disk add and extend or remove</h2>
+<h2 id="lsblk-1"><code class="language-plaintext highlighter-rouge">lsblk</code></h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>root@sf-centos-101 ~]# lsblk
+NAME            MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda               8:0    0    16G  0 disk
+├─sda1            8:1    0     1G  0 part /boot
+└─sda2            8:2    0    15G  0 part
+  ├─centos-root 253:0    0 213.4G  0 lvm  /
+  └─centos-swap 253:1    0   1.6G  0 lvm  <span class="o">[</span>SWAP]
+sdb               8:16   0   200G  0 disk
+└─centos-root   253:0    0 213.4G  0 lvm  /
+sr0              11:0    1   4.4G  0 rom
+</code></pre></div></div>
+<h2 id="fdisk"><code class="language-plaintext highlighter-rouge">fdisk</code></h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fdisk <span class="nt">-l</span>
+fdisk /dev/sdb
+</code></pre></div></div>
+<h2 id="physical-volume">physical volume</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pvs <span class="c">#简要pv信息显示</span>
+pvdisplay 显示pv的详细信息
+pvcreated /dev/DEVICE <span class="c">#创建pv</span>
+</code></pre></div></div>
+<h2 id="volume-group">volume group</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vgs
+vgdisplay
+vgcreate  <span class="o">[</span><span class="nt">-s</span> <span class="c">#[kKmMgGtTpPeE]] VolumeGroupName  PhysicalDevicePath [PhysicalDevicePath...]</span>
+vgextend  VolumeGroupName  PhysicalDevicePath <span class="o">[</span>PhysicalDevicePath...]
+vgreduce  VolumeGroupName  PhysicalDevicePath <span class="o">[</span>PhysicalDevicePath...]
+  先做pvmove
+vgremove
+
+</code></pre></div></div>
+
+<h2 id="logical-volume">Logical Volume</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lvs
+lvdisplay
+
+lvcreate <span class="nt">-L</span> <span class="c">#[mMgGtT] -n NAME VolumeGroup</span>
+
+lvremove /dev/VG_NAME/LV_NAME
+</code></pre></div></div>
+<h2 id="扩展逻辑卷">扩展逻辑卷</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">CDISK</span><span class="o">=</span>/dev/sdX
+pvcreate <span class="k">${</span><span class="nv">CDISK</span><span class="k">}</span>
+pvdisplay <span class="c">#</span>
+vgdisplay <span class="c">#List Volume group</span>
+<span class="c">#Extend the vg</span>
+vgextend vg1 <span class="k">${</span><span class="nv">CDISK</span><span class="k">}</span>
+vgs <span class="nt">--unit</span> m  <span class="c">#list free disk</span>
+lvextend <span class="nt">-r</span> <span class="nt">-L</span> +<span class="o">(</span>Number from VFree cloumn<span class="o">)</span> /dev/mapper/vg1-root <span class="c"># -r resize</span>
+OR
+lvextend <span class="nt">-r</span> <span class="nt">-l</span> +100%FREE /dev/mapper/vg1-root
+</code></pre></div></div>
+<h2 id="缩减逻辑卷">缩减逻辑卷</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>umount /dev/VG_NAME/LV_NAME
+e2fsck <span class="nt">-f</span> /dev/VG_NAME/LV_NAME
+resize2fs /dev/VG_NAME/LV_NAME <span class="c">#[mMgGtT]</span>
+lvreduce <span class="nt">-L</span> <span class="o">[</span>-]#[mMgGtT] /dev/VG_NAME/LV_NAME
+mount
+</code></pre></div></div>
+
+<h1 id="network">network</h1>
+<h2 id="route">route</h2>
+<h3 id="mtr"><code class="language-plaintext highlighter-rouge">mtr</code></h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"r"</span> to generate the mtr <span class="k">in </span>a report format
+<span class="s2">"w"</span> to show the full <span class="nb">hostname </span>of each <span class="s1">'hop'</span> where available
+<span class="s2">"c X"</span> to indicate to send X number packets. By default, an MTR report will only send 10. We recommend 50, which will take around a minute. 
+
+<span class="o">[</span>root@sf-centos-101 ~]# mtr <span class="nt">-rwc</span> 50 google.com
+Start: Tue Apr  6 22:55:25 2021
+HOST: sf-centos-101                 Loss%   Snt   Last   Avg  Best  Wrst StDev
+  1.|-- 10.0.5.2                       0.0%    50    0.2   0.2   0.1   0.3   0.0
+  2.|-- host241.right-net.com          0.0%    50    0.4   0.9   0.4  13.7   2.2
+  3.|-- ae7.cr1.sjc2.us.zip.zayo.com   0.0%    50    2.0   2.2   1.9  10.2   1.1
+  4.|-- ae27.cs1.sjc2.us.eth.zayo.com  0.0%    50    2.1   2.4   2.0   8.5   0.9
+  5.|-- ???                           100.0    50    0.0   0.0   0.0   0.0   0.0
+  6.|-- 142.250.160.46                 0.0%    50    2.4   2.5   2.4   3.3   0.0
+  7.|-- 108.170.243.1                  0.0%    50    3.6   3.4   3.0   4.4   0.0
+  8.|-- 108.170.243.14                 0.0%    50    5.3   3.3   2.4  16.2   2.1
+  9.|-- 142.250.234.135                0.0%    50    2.8   3.1   2.7   5.4   0.5
+ 10.|-- 142.250.237.172                0.0%    50    9.9  10.5   9.8  27.3   2.5
+ 11.|-- 142.250.235.172               40.0%    50   50.7  51.0  50.6  55.2   0.8
+ 12.|-- 142.250.232.69                90.0%    50   50.8  50.7  50.5  50.8   0.0
+ 13.|-- 216.239.57.137                86.0%    50   66.9  67.1  66.9  67.9   0.0
+ 14.|-- 108.170.227.149                0.0%    50   67.6  67.4  67.2  67.7   0.0
+ 15.|-- 108.170.248.97                 0.0%    50   66.8  66.8  66.7  67.2   0.0
+ 16.|-- 142.250.235.239                0.0%    50   67.4  67.6  67.2  69.7   0.3
+ 17.|-- lga34s33-in-f14.1e100.net      0.0%    50   66.6  66.6  66.6  66.9   0.0
+
+</code></pre></div></div>
+<h3 id="traceroute"><code class="language-plaintext highlighter-rouge">traceroute</code></h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>traceroute google.com
+</code></pre></div></div>
+
+<h3 id="ping"><code class="language-plaintext highlighter-rouge">ping</code></h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ping <span class="nt">-4</span> google.com <span class="c">#use ipv4</span>
+ping <span class="nt">-6</span> google.com <span class="c">#use ipv6</span>
+ping <span class="nt">-c</span> 2 google.com <span class="c">#Specify the Number of Packets</span>
+ping <span class="nt">-s</span> 40 <span class="nt">-c</span> 5 google.com <span class="c">#control package size</span>
+</code></pre></div></div>
+<h3 id="tcpdump"><code class="language-plaintext highlighter-rouge">tcpdump</code></h3>
+<h3 id="netstat"><code class="language-plaintext highlighter-rouge">netstat</code></h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>netstat <span class="nt">-antp</span> 
+
+</code></pre></div></div>
+<h2 id="dns">dns</h2>
+<h3 id="nslookup"><code class="language-plaintext highlighter-rouge">nslookup</code></h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nslookup dnsserver google.com <span class="c">#指定dns服务器解析</span>
+</code></pre></div></div>
+<h3 id="dig"><code class="language-plaintext highlighter-rouge">dig</code></h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dig @dnsserver youtube.com <span class="c">#dig @8.8.8.8 youtube.com</span>
+
+<span class="o">[</span>root@sf-centos-101 ~]# dig +short youtube.com
+172.217.2.14
+
+<span class="o">[</span>root@sf-centos-101 ~]# dig +nocmd <span class="nt">-x</span> 8.8.8.8  +noall +answer
+8.8.8.8.in-addr.arpa.	20558	IN	PTR	dns.google.
+
+<span class="c">#cat domains.txt</span>
+<span class="c">#lxer.com</span>
+<span class="c">#linuxtoday.com</span>
+<span class="c">#tuxmachines.org</span>
+
+dig <span class="nt">-f</span> domains.txt +short
+
+<span class="c">#108.166.170.171</span>
+<span class="c">#70.42.23.121</span>
+<span class="c">#204.68.122.43</span>
+</code></pre></div></div>
+<h3 id="iptable"><code class="language-plaintext highlighter-rouge">iptable</code></h3>
+<h3 id="ss"><code class="language-plaintext highlighter-rouge">ss</code></h3>
+
+<h2 id="fuser"><code class="language-plaintext highlighter-rouge">fuser</code></h2>
+<h2 id="lsof"><code class="language-plaintext highlighter-rouge">lsof</code></h2>
+<h2 id="nmap"><code class="language-plaintext highlighter-rouge">nmap</code></h2>
+
+<h2 id="sar--n"><code class="language-plaintext highlighter-rouge">sar -n</code></h2>
+
+<h1 id="files">files</h1>
+<h2 id="less"><code class="language-plaintext highlighter-rouge">less</code></h2>
+<h2 id="head"><code class="language-plaintext highlighter-rouge">head</code></h2>
+<h2 id="tail"><code class="language-plaintext highlighter-rouge">tail</code></h2>
+<h2 id="awk"><code class="language-plaintext highlighter-rouge">awk</code></h2>
+<h2 id="sed"><code class="language-plaintext highlighter-rouge">sed</code></h2>
+<h2 id="tr"><code class="language-plaintext highlighter-rouge">tr</code></h2>
+<h2 id="find"><code class="language-plaintext highlighter-rouge">find</code></h2>
+
+<h1 id="job-control">job control</h1>
+<h2 id="bg-fg"><code class="language-plaintext highlighter-rouge">bg</code> <code class="language-plaintext highlighter-rouge">fg</code></h2>
+<h2 id="disown"><code class="language-plaintext highlighter-rouge">disown</code></h2>
+<h2 id="job"><code class="language-plaintext highlighter-rouge">job</code></h2>
+<h2 id="nohup"><code class="language-plaintext highlighter-rouge">nohup</code></h2>
+<h2 id="ps-1"><code class="language-plaintext highlighter-rouge">ps</code></h2>
+<h2 id="pstree-1"><code class="language-plaintext highlighter-rouge">pstree</code></h2>
+<h2 id="time"><code class="language-plaintext highlighter-rouge">time</code></h2>
+<h2 id="watch"><code class="language-plaintext highlighter-rouge">watch</code></h2>
+<h2 id="screen"><code class="language-plaintext highlighter-rouge">screen</code></h2>
+
+<h1 id="users-and-permission">users and permission</h1>
+<h2 id="chmod"><code class="language-plaintext highlighter-rouge">chmod</code></h2>
+<h2 id="chown"><code class="language-plaintext highlighter-rouge">chown</code></h2>
+
+<h1 id="vim-hotkeys">VIM hotkeys</h1>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim     + line number    file  
+vim +81 /Users/rjin/.ssh/known_hosts
+
+</code></pre></div></div>
+<h2 id="delete">delete</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x        删除当前光标下的字符
+dw       删除光标之后的单词剩余部分。
+d<span class="nv">$ </span>      删除光标之后的该行剩余部分。
+<span class="nb">dd       </span>删除当前行。
+
+cw     删除光标后一个单词，进入instert mode
+c<span class="err">$</span>
+c        功能和d相同，区别在于完成删除操作后进入INSERT MODE
+cc       也是删除当前行，然后进入INSERT MODE
+</code></pre></div></div>
+<h2 id="move">move</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nw  n为数字  光标向后N个单词
+nb  光标向前N个单词
+
+gg
+
+G
+
+0  <span class="c">#绝对行首</span>
+^  <span class="c">#行首非第一个非字符</span>
+<span class="nv">$ </span> <span class="c">#绝对行</span>
+
+
+h或退格: 左移一个字符；
+l或空格: 右移一个字符；
+j: 下移一行；
+k: 上移一行
+
+ctrl+d: 下翻半屏。
+ctrl+u: 上翻半屏。
+ctrl+e: 向下滚动一行。
+ctrl+y: 向上滚动一行。
+
+
+nw  n为数字  光标向后N个单词
+nb  光标向前N个单词
+
+a  <span class="c">#光标后字符插入</span>
+A  <span class="c">#行尾插入</span>
+
+
+gg  <span class="c">#移到首行</span>
+G   <span class="c">#移到末尾</span>
+
+
+d<span class="nv">$ </span>  <span class="c">#删除光标到行尾</span>
+
+
+u/U <span class="c">#撤销操作</span>
+
+
+0  <span class="c">#绝对行首</span>
+^  <span class="c">#行首非第一个非字符</span>
+<span class="nv">$ </span> <span class="c">#绝对行尾</span>
+
+
+
+
+：set nu   <span class="c">#显示行数</span>
+
+</code></pre></div></div>
+
+<h1 id="linux_commands">linux_commands</h1>
+<h2 id="scp"><code class="language-plaintext highlighter-rouge">scp</code></h2>
+<h2 id="rsync"><code class="language-plaintext highlighter-rouge">rsync</code></h2>
+
+
+    </div>
+</div>
+<hr>
+
+<!-- valine 评论插件 -->
+<h3>评论：</h3>
+<div class="comments"></div>
+<hr>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '.comments',
+        appId: '',
+        appKey: '',
+        avatar: 'robohash',
+        placeholder: '留下你的评论吧（支持Markdown）~',
+        // visitor: true,
+    })
+</script>
+
+
+    </div>
+</div>
+
+</main>
+
+<footer class="page-footer teal">
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <p class="footer-message grey-text text-lighten-3">学而不厌，诲人不倦</p>
+                <hr>
+                <p class="visit-statistics">
+                    <span id="busuanzi_container_site_pv">访问量：<span id="busuanzi_value_site_pv"></span>次</span>&nbsp;
+                    <span id="busuanzi_container_site_pv">访客量：<span id="busuanzi_value_site_uv"></span>人次</span>
+                </p>
+                <p class="grey-text text-lighten-4">基于 jekyll 的 Github Pages 个人博客网站，技术的学习、总结、分享与提升
+</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            Copyright &#xA9; 2021 TOSKA'S BLOG. All rights reserved. Powered by
+            <a href=https://github.com/toskachin/toskachin.github.io>toskachin</a>.
+        </div>
+    </div>
+    <!-- Search box -->
+    <div class="search">
+        <i class="material-icons search-icon search-start">search</i>
+        <input type="text" class="search-input" placeholder="Searching...（支持正则表达式）" />
+        <i class="material-icons search-icon search-clear">clear</i>
+        <div class="search-results z-depth-4"></div>
+    </div>
+    <!-- 右下角功能按钮 -->
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large blue z-depth-4">
+            <i class="large material-icons">apps</i>
+        </a>
+        <ul>
+            <li class="category-btn hide">
+                <!-- 文章目录按钮 -->
+                <a class="sidenav-trigger btn-floating blue lighten-2" data-target="category">
+                    <i class="material-icons">format_list_bulleted</i>
+                </a>
+            </li>
+            <li>
+                <a class="btn-floating blue lighten-2" href="javascript: searchInput.focus()">
+                    <i class="material-icons">search</i>
+                </a>
+            </li>
+            <li>
+                <a class="btn-floating blue lighten-2" href="javascript: scrollTo(0, 0);">
+                    <i class="material-icons">publish</i>
+                </a>
+            </li>
+            <li>
+                <a class="btn-floating blue lighten-2" href="javascript: scrollTo(0, document.body.clientHeight);">
+                    <i class="material-icons">file_download</i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- 文章目录侧栏 -->
+    <ul id="category" class="hide sidenav no-autoinit grey lighten-4 grey-text text-darken-3">
+        <li>
+            <p class="center-align">目录</p>
+        </li>
+    </ul>
+</footer>
+
+
+    
+    <script src="/assets/js/min/materialize.min.js"></script>
+    
+
+    
+    <script src="/assets/js/min/post.min.js"></script>
+    
+
+    
+    <script src="/assets/js/min/particles.min.js"></script>
+    
+
+    
+    <script src="/assets/js/min/main.min.js"></script>
+    
+
+    
+    <script src="/assets/js/min/search.min.js"></script>
+    
+
+    
+    <script src="/assets/js/min/gen-category.min.js"></script>
+    
+
+
+
+
+<!-- 以下为插入的第三方网站分析代码 -->
+
+</body>
+
+</html>
