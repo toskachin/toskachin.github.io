@@ -1,4 +1,10 @@
-
+---
+title: shell从入门到放弃
+layout: post
+categories: Linux
+tags: tech
+excerpt: shell手册
+---
 
 - [变量](#变量)
   - [局部变量](#局部变量)
