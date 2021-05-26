@@ -55,9 +55,9 @@ Example config of my website:
 
 # Global variable, can use it in HTML file,
 # for example: <h1>{{ site.title }}</h1> 
-title: 动感地带 # title for your website
+title: TOSKA的博客 # title for your website
 description: > # description for your website, useful for search engine exhibition.
-  基于 jekyll 的 Github Pages 个人博客网站，技术的学习、总结、分享与提升
+  基于 jekyll 的 Github Pages 个人博客网站
 url: "https://toskachin.github.io" # address of your website.
 github_repo: toskachin/toskachin.github.io
 github_profile: "https://github.com/toskachin" # your GitHub home page.
