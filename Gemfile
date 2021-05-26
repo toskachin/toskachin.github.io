@@ -33,3 +33,4 @@ source 'https://rubygems.org'
 
 # Windows 平台中如果频繁改变文件内容，使用下面的包可以提升性能：
 gem 'wdm', '>=0.1.0' if Gem.win_platform?
+gem "webrick", "~> 1.7"
