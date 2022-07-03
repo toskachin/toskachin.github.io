@@ -3,11 +3,11 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: 子荣君的杂货铺
 subtitle: ''
-description: ''
-keywords:
-author: toska
+description: '10+专业经验和人生感悟'
+keywords: 技术，人生
+author: TOSKA
 language: zh-CN
 timezone: ''
 
@@ -40,7 +40,10 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
+marked:
+  prependRoot: true
+  postAsset: true
 relative_link: false
 future: true
 highlight:
@@ -102,8 +105,9 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
-
+  type: git
+  repository: git@github.com:toskachin/toskachin.github.io.git
+  branch: master
 
 search:
   path: search.xml
