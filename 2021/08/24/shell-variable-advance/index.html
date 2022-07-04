@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"toskachin.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="shell变量的高级应用  变量内容替换和删除 字符串处理 计算字符串长度 获取子串在字符串中索引的位置 提取字符串   数组的操作 删除元素 分片访问 内容替换   数组遍历 PS    shell变量的高级应用变量内容替换和删除   语法 说明    ${变量名#匹配规则}} 从变量开头进行规则匹配，将符合最短的数据删除   ${变量名##匹配规则}} 从变量开头进行规则匹配，将符合最长的数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shell变量高级篇">
+<meta property="og:url" content="https://toskachin.github.io/2021/08/24/shell-variable-advance/index.html">
+<meta property="og:site_name" content="子荣君的杂货铺">
+<meta property="og:description" content="shell变量的高级应用  变量内容替换和删除 字符串处理 计算字符串长度 获取子串在字符串中索引的位置 提取字符串   数组的操作 删除元素 分片访问 内容替换   数组遍历 PS    shell变量的高级应用变量内容替换和删除   语法 说明    ${变量名#匹配规则}} 从变量开头进行规则匹配，将符合最短的数据删除   ${变量名##匹配规则}} 从变量开头进行规则匹配，将符合最长的数">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-24T01:07:34.000Z">
+<meta property="article:modified_time" content="2022-07-03T11:25:11.677Z">
+<meta property="article:author" content="TOSKA">
+<meta property="article:tag" content="tech">
+<meta property="article:tag" content="shell">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://toskachin.github.io/2021/08/24/shell-variable-advance/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://toskachin.github.io/2021/08/24/shell-variable-advance/","path":"2021/08/24/shell-variable-advance/","title":"shell变量高级篇"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>shell变量高级篇 | 子荣君的杂货铺</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="子荣君的杂货铺" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">子荣君的杂货铺</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shell%E5%8F%98%E9%87%8F%E7%9A%84%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">shell变量的高级应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2%E5%92%8C%E5%88%A0%E9%99%A4"><span class="nav-number">1.1.</span> <span class="nav-text">变量内容替换和删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">字符串处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6"><span class="nav-number">1.2.1.</span> <span class="nav-text">计算字符串长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%AD%90%E4%B8%B2%E5%9C%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.2.2.</span> <span class="nav-text">获取子串在字符串中索引的位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.2.3.</span> <span class="nav-text">提取字符串</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">1.3.</span> <span class="nav-text">数组的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0"><span class="nav-number">1.3.1.</span> <span class="nav-text">删除元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%89%87%E8%AE%BF%E9%97%AE"><span class="nav-number">1.3.2.</span> <span class="nav-text">分片访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2"><span class="nav-number">1.3.3.</span> <span class="nav-text">内容替换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E9%81%8D%E5%8E%86"><span class="nav-number">1.4.</span> <span class="nav-text">数组遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PS"><span class="nav-number">1.4.1.</span> <span class="nav-text">PS</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="TOSKA"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">TOSKA</p>
+  <div class="site-description" itemprop="description">10+专业经验和人生感悟</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/toskachin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;toskachin" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:royjin@msn.com" title="E-Mail → mailto:royjin@msn.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+<!-- recent posts -->
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+        <div class="links-of-blogroll-title recent-posts-title">
+	    <i class="fa fa-history " aria-hidden="true"></i>
+            近期文章
+	</div>
+	<ul class="links-of-blogroll-list recent-posts-list">
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/07/04/stock-price/" title="python程序获取股票信息" target="">
+		    python程序获取股票信息
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/05/30/Interview_FAQ/" title="Interview FAQ 2022" target="">
+		    Interview FAQ 2022
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/05/10/regexr/" title="一文了解正则表达式" target="">
+		    一文了解正则表达式
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/04/04/linux_systemadmin/" title="Linux system admin notes" target="">
+		    Linux system admin notes
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/03/27/macos_setup/" title="MacOS setup" target="">
+		    MacOS setup
+		    </a>
+		</li>
+	</ul>
+    </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/toskachin" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2021/08/24/shell-variable-advance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="TOSKA">
+      <meta itemprop="description" content="10+专业经验和人生感悟">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="子荣君的杂货铺">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          shell变量高级篇
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-08-24 09:07:34" itemprop="dateCreated datePublished" datetime="2021-08-24T09:07:34+08:00">2021-08-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-07-03 19:25:11" itemprop="dateModified" datetime="2022-07-03T19:25:11+08:00">2022-07-03</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/shell/" itemprop="url" rel="index"><span itemprop="name">shell</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p> <a href="#shell%E5%8F%98%E9%87%8F%E7%9A%84%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8">shell变量的高级应用</a></p>
+<ul>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2%E5%92%8C%E5%88%A0%E9%99%A4">变量内容替换和删除</a></li>
+<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86">字符串处理</a><ul>
+<li><a href="#%E8%AE%A1%E7%AE%97%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6">计算字符串长度</a></li>
+<li><a href="#%E8%8E%B7%E5%8F%96%E5%AD%90%E4%B8%B2%E5%9C%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BD%8D%E7%BD%AE">获取子串在字符串中索引的位置</a></li>
+<li><a href="#%E6%8F%90%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2">提取字符串</a></li>
+</ul>
+</li>
+<li><a href="#%E6%95%B0%E7%BB%84%E7%9A%84%E6%93%8D%E4%BD%9C">数组的操作</a><ul>
+<li><a href="#%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0">删除元素</a></li>
+<li><a href="#%E5%88%86%E7%89%87%E8%AE%BF%E9%97%AE">分片访问</a></li>
+<li><a href="#%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2">内容替换</a></li>
+</ul>
+</li>
+<li><a href="#%E6%95%B0%E7%BB%84%E9%81%8D%E5%8E%86">数组遍历</a><ul>
+<li><a href="#ps">PS</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="shell变量的高级应用"><a href="#shell变量的高级应用" class="headerlink" title="shell变量的高级应用"></a>shell变量的高级应用</h1><h2 id="变量内容替换和删除"><a href="#变量内容替换和删除" class="headerlink" title="变量内容替换和删除"></a>变量内容替换和删除</h2><table>
+<thead>
+<tr>
+<th align="center">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">${变量名#匹配规则}}</td>
+<td align="left">从变量开头进行规则匹配，将符合最短的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名##匹配规则}}</td>
+<td align="left">从变量开头进行规则匹配，将符合最长的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名%匹配规则}}</td>
+<td align="left">从变量尾部进行规则匹配，将符合最短的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名%%匹配规则}}</td>
+<td align="left">从变量尾部进行规则匹配，将符合最长的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名/旧字符串/新字符串}}</td>
+<td align="left">变量内容符合旧字符串，则第一个旧字符串会被新字符串取代</td>
+</tr>
+<tr>
+<td align="center">${变量名//旧字符串/新字符串}}</td>
+<td align="left">变量内容符合旧字符串，则全部的旧字符串会被新字符串取代</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$variable_1</span></span><br><span class="line">I love you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1#*ov&#125;</span> //从头开始将最短数据删除</span><br><span class="line">e you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1##*ov&#125;</span> //从头开始将最长数据删除</span><br><span class="line">e me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%ov*&#125;</span> //从尾开始将最短数据删除</span><br><span class="line">I love you,<span class="keyword">do</span> you l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%%ov&#125;</span> //从尾开始将最长数据删除</span><br><span class="line">I l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line">/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH/bin/BIN&#125;</span> //替换一个</span><br><span class="line">/sBIN:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH//bin/BIN&#125;</span> //替换所有</span><br><span class="line">/sBIN:/BIN:/usr/sBIN:/usr/BIN</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串处理"><a href="#字符串处理" class="headerlink" title="字符串处理"></a>字符串处理</h2><h3 id="计算字符串长度"><a href="#计算字符串长度" class="headerlink" title="计算字符串长度"></a>计算字符串长度</h3><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">方法一</td>
+<td align="left"><code>$&#123;#string&#125;</code></td>
+<td align="left">NA</td>
+</tr>
+<tr>
+<td align="left">方法二</td>
+<td align="left"><code>expr length &quot;$string&quot;</code></td>
+<td align="left">string如有空格，必须加双引号</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;#var1&#125;</span></span><br><span class="line">21</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr length <span class="string">&quot;<span class="variable">$var1</span>&quot;</span>`</span><br><span class="line">21</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取子串在字符串中索引的位置"><a href="#获取子串在字符串中索引的位置" class="headerlink" title="获取子串在字符串中索引的位置"></a>获取子串在字符串中索引的位置</h3><table>
+<thead>
+<tr>
+<th align="left">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>expr index $string $substring</code></td>
+<td align="left">查找子串中任一出现的字符，找到第一个出现字符的位置就返回</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr index <span class="string">&quot;<span class="variable">$variable_1</span>&quot;</span> oe`</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+<h3 id="提取字符串"><a href="#提取字符串" class="headerlink" title="提取字符串"></a>提取字符串</h3><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">方法一</td>
+<td align="left"><code>$&#123;string:position&#125;</code></td>
+<td align="left">从 string 中的 position 位置开始，索引下标从 0 开始</td>
+</tr>
+<tr>
+<td align="left">方法二</td>
+<td align="left"><code>$&#123;string:position:length&#125;</code></td>
+<td align="left">从 position 开始，匹配长度为 length</td>
+</tr>
+<tr>
+<td align="left">方法三</td>
+<td align="left"><code>$&#123;string: -position&#125;</code></td>
+<td align="left">从右边开始匹配，注意冒号后面的空格</td>
+</tr>
+<tr>
+<td align="left">方法四</td>
+<td align="left"><code>$&#123;string:(position&#125;</code></td>
+<td align="left">从左边开始匹配</td>
+</tr>
+<tr>
+<td align="left">方法五</td>
+<td align="left"><code>expr substr $string $position $length</code></td>
+<td align="left">从 position 开始，匹配长度为 length，索引下标从 1 开始</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[shdevops@localhost ~]$ var_str=<span class="string">&quot;k8s docker cloud aws&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: 3&#125;</span> //方法一</span><br><span class="line">docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:3:5&#125;</span> //方法二</span><br><span class="line">dock</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5&#125;</span>  //方法三，注意有空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5:3&#125;</span> //方法三 ，带长度</span><br><span class="line">d a</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:-5&#125;</span> //方法三，没有空格无效</span><br><span class="line">k8s docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:(-5)&#125;</span> //方法三，可以用括号代替空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr substr <span class="string">&quot;<span class="variable">$var_str</span>&quot;</span> 1 5` //方法五，从索引1开始计数</span><br><span class="line">k8s d</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="数组的操作"><a href="#数组的操作" class="headerlink" title="数组的操作"></a>数组的操作</h2><blockquote>
+<p>我们知道在强类型语言中定义变量的时候必须为这个变量定义类型，比如定义整形可以定义为 int 型，字符串 string 类型，日期类型 Date 等等，在使用之前必须定义类型，这是强类型编程语言的风格。Shell 编程中，由于 Shell 是弱类型语言，在使用变量前不需要为变量声明类型， 但其实 Shell 本身也是支持提前声明有类型变量的，只是说使用方式和一般的强类型编程语言有些不同， 使用 declare 和 typeset 命令来进行声明。</p>
+<ul>
+<li>declare 命令和 typeset 命令两者等价</li>
+<li>declare、typeset 命令都是用来定义变量类型的</li>
+</ul>
+<p>既然它们是等价的 那我们用 declare 进行演示</p>
+</blockquote>
+<p>declare 常用命令参数表</p>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-i</td>
+<td align="left">将变量设为整数</td>
+</tr>
+<tr>
+<td align="center">-a</td>
+<td align="left">将变量定义为数组</td>
+</tr>
+<tr>
+<td align="center">-f</td>
+<td align="left">显示此脚本定义过的所有函数及内容</td>
+</tr>
+<tr>
+<td align="center">-F</td>
+<td align="left">仅显示此脚本定义过的函数名</td>
+</tr>
+<tr>
+<td align="center">-x</td>
+<td align="left">将变量声明为环境变量</td>
+</tr>
+</tbody></table>
+<p><code>declare -a array_name</code> 声明数组， 然后 <code>array_name=(value1 ... valuen)</code>， 这里不声明也可以</p>
+<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><ul>
+<li><code>unset my_arr[2]</code> 清楚元素 <code>unset my_arr</code> 清空整个数组</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[shdevops@localhost ~]$</span><br><span class="line">[shdevops@localhost ~]$ my_arr=(1 <span class="string">&quot;abc&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1 abc</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr[1]</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="分片访问"><a href="#分片访问" class="headerlink" title="分片访问"></a>分片访问</h3><ul>
+<li> ${array[@]:1:3} 数组下标从 1 到 3 的三个元素</li>
+<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;apple&quot;</span> <span class="string">&quot;juice&quot;</span> <span class="string">&quot;cat&quot;</span> <span class="string">&quot;dog&quot;</span> <span class="string">&quot;ox&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]:1:3&#125;</span></span><br><span class="line">juice cat dog</span><br></pre></td></tr></table></figure>
+<h3 id="内容替换"><a href="#内容替换" class="headerlink" title="内容替换"></a>内容替换</h3></li>
+<li> <code>$&#123;my_array[@]/an/AN&#125;</code> 将数组中所有元素内包含 an 的子串替换为 AN<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;an1&quot;</span> <span class="string">&quot;an2&quot;</span> <span class="string">&quot;an3&quot;</span> <span class="string">&quot;an4&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]/an/AN&#125;</span></span><br><span class="line">AN1 AN2 AN3 AN4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
+<h2 id="数组遍历"><a href="#数组遍历" class="headerlink" title="数组遍历"></a>数组遍历</h2></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">my_arr=(an1 an2 an3 an4)</span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$v</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span>;<span class="keyword">do</span> <span class="built_in">echo</span> <span class="variable">$v</span>;<span class="keyword">done</span></span><br><span class="line">an1</span><br><span class="line">an2</span><br><span class="line">an3</span><br><span class="line">an4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">取消声明的变量：</span><br><span class="line"></span><br><span class="line">declare +r</span><br><span class="line">declare +i</span><br><span class="line">declare +a</span><br><span class="line">declare +x</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tech/" rel="tag"># tech</a>
+              <a href="/tags/shell/" rel="tag"># shell</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/24/japanese-learn/" rel="prev" title="日语五十音快乐记忆法则">
+                  <i class="fa fa-chevron-left"></i> 日语五十音快乐记忆法则
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/08/26/terraform-notes/" rel="next" title="一文熟悉云配置神器terraform">
+                  一文熟悉云配置神器terraform <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TOSKA</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">194k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:24</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div id="site-runtime">
+  <span class="post-meta-item-icon">
+    <i class="fa fa-clock-o"></i>
+  </span>
+  <span id="runtime"></span>
+</div>
+
+<script language="javascript">
+  function isPC() {
+    var userAgentInfo = navigator.userAgent;
+    var agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+    for (var i = 0; i < agents.length; i++) {
+      if (userAgentInfo.indexOf(agents[i]) > 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function siteTime(openOnPC, start) {
+    window.setTimeout("siteTime(openOnPC, start)", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+      start = new Date("2021-08-19 09:00:00 +0800");
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth() + 1;
+    var date = now.getDate();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+    var diff = now - start;
+
+    var diffYears = Math.floor(diff / years);
+    var diffDays = Math.floor((diff / days) - diffYears * 365);
+    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+
+    if (openOnPC) {
+      document.getElementById("runtime").innerHTML = "Running: " + diffYears + " years " + diffDays + " days " + diffHours + " hours " + diffMinutes + " mins " + diffSeconds + " secs";
+    } else {
+      document.getElementById("runtime").innerHTML = "Running: " + diffYears + "y " + diffDays + "d " + diffHours + "h " + diffMinutes + "m " + diffSeconds + "s";
+    }
+  }
+
+  var showOnMobile = false;
+  var openOnPC = isPC();
+  var start = new Date();
+  siteTime(openOnPC, start);
+
+  if (!openOnPC && !showOnMobile) {
+    document.getElementById('site-runtime').style.display = 'none';
+  }
+</script>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

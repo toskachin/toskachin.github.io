@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"toskachin.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="背景 常用方法 xargs用法 xargs参数 xargs命令与管道符的区别：   Find使用 find 各参数performance比较 区别find -exec and find | xargs 退出代码 案例 find -exec find | xargs       Find 结论 参数的多少 find -exec vs find | xargs   reference find局限性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux下regex匹配高级用法">
+<meta property="og:url" content="https://toskachin.github.io/2021/10/16/linux-regex-advance/index.html">
+<meta property="og:site_name" content="子荣君的杂货铺">
+<meta property="og:description" content="背景 常用方法 xargs用法 xargs参数 xargs命令与管道符的区别：   Find使用 find 各参数performance比较 区别find -exec and find | xargs 退出代码 案例 find -exec find | xargs       Find 结论 参数的多少 find -exec vs find | xargs   reference find局限性">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-15T23:40:41.000Z">
+<meta property="article:modified_time" content="2022-07-03T11:25:11.669Z">
+<meta property="article:author" content="TOSKA">
+<meta property="article:tag" content="tech">
+<meta property="article:tag" content="shell">
+<meta property="article:tag" content="regex">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://toskachin.github.io/2021/10/16/linux-regex-advance/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://toskachin.github.io/2021/10/16/linux-regex-advance/","path":"2021/10/16/linux-regex-advance/","title":"Linux下regex匹配高级用法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux下regex匹配高级用法 | 子荣君的杂货铺</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="子荣君的杂货铺" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">子荣君的杂货铺</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">常用方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xargs%E7%94%A8%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">xargs用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#xargs%E5%8F%82%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">xargs参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xargs%E5%91%BD%E4%BB%A4%E4%B8%8E%E7%AE%A1%E9%81%93%E7%AC%A6%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9A"><span class="nav-number">3.2.</span> <span class="nav-text">xargs命令与管道符的区别：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Find%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">Find使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#find-%E5%90%84%E5%8F%82%E6%95%B0performance%E6%AF%94%E8%BE%83"><span class="nav-number">4.1.</span> <span class="nav-text">find 各参数performance比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%BA%E5%88%ABfind-exec-and-find-xargs"><span class="nav-number">4.2.</span> <span class="nav-text">区别find -exec and find | xargs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%80%E5%87%BA%E4%BB%A3%E7%A0%81"><span class="nav-number">4.2.1.</span> <span class="nav-text">退出代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B"><span class="nav-number">4.2.2.</span> <span class="nav-text">案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#find-exec"><span class="nav-number">4.2.2.1.</span> <span class="nav-text">find -exec</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#find-xargs"><span class="nav-number">4.2.2.2.</span> <span class="nav-text">find | xargs</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Find-%E7%BB%93%E8%AE%BA"><span class="nav-number">5.</span> <span class="nav-text">Find 结论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E7%9A%84%E5%A4%9A%E5%B0%91"><span class="nav-number">5.1.</span> <span class="nav-text">参数的多少</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#find-exec-vs-find-xargs"><span class="nav-number">5.2.</span> <span class="nav-text">find -exec vs find | xargs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">6.</span> <span class="nav-text">reference</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#find%E5%B1%80%E9%99%90%E6%80%A7"><span class="nav-number">6.1.</span> <span class="nav-text">find局限性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ls-grep-egrep-xargs"><span class="nav-number">7.</span> <span class="nav-text">ls + grep&#x2F;egrep + xargs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#grep-and-egrep%E7%94%A8%E6%B3%95"><span class="nav-number">7.1.</span> <span class="nav-text">grep and egrep用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B-1"><span class="nav-number">7.1.1.</span> <span class="nav-text">案例</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="TOSKA"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">TOSKA</p>
+  <div class="site-description" itemprop="description">10+专业经验和人生感悟</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/toskachin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;toskachin" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:royjin@msn.com" title="E-Mail → mailto:royjin@msn.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+<!-- recent posts -->
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+        <div class="links-of-blogroll-title recent-posts-title">
+	    <i class="fa fa-history " aria-hidden="true"></i>
+            近期文章
+	</div>
+	<ul class="links-of-blogroll-list recent-posts-list">
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/07/04/stock-price/" title="python程序获取股票信息" target="">
+		    python程序获取股票信息
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/05/30/Interview_FAQ/" title="Interview FAQ 2022" target="">
+		    Interview FAQ 2022
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/05/10/regexr/" title="一文了解正则表达式" target="">
+		    一文了解正则表达式
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/04/04/linux_systemadmin/" title="Linux system admin notes" target="">
+		    Linux system admin notes
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/03/27/macos_setup/" title="MacOS setup" target="">
+		    MacOS setup
+		    </a>
+		</li>
+	</ul>
+    </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/toskachin" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2021/10/16/linux-regex-advance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="TOSKA">
+      <meta itemprop="description" content="10+专业经验和人生感悟">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="子荣君的杂货铺">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux下regex匹配高级用法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-16 07:40:41" itemprop="dateCreated datePublished" datetime="2021-10-16T07:40:41+08:00">2021-10-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-07-03 19:25:11" itemprop="dateModified" datetime="2022-07-03T19:25:11+08:00">2022-07-03</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/shell/" itemprop="url" rel="index"><span itemprop="name">shell</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <ul>
+<li><a href="#%E8%83%8C%E6%99%AF">背景</a></li>
+<li><a href="#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95">常用方法</a></li>
+<li><a href="#xargs%E7%94%A8%E6%B3%95">xargs用法</a><ul>
+<li><a href="#xargs%E5%8F%82%E6%95%B0">xargs参数</a></li>
+<li><a href="#xargs%E5%91%BD%E4%BB%A4%E4%B8%8E%E7%AE%A1%E9%81%93%E7%AC%A6%E7%9A%84%E5%8C%BA%E5%88%AB">xargs命令与管道符的区别：</a></li>
+</ul>
+</li>
+<li><a href="#find%E4%BD%BF%E7%94%A8">Find使用</a><ul>
+<li><a href="#find-%E5%90%84%E5%8F%82%E6%95%B0performance%E6%AF%94%E8%BE%83">find 各参数performance比较</a></li>
+<li><a href="#%E5%8C%BA%E5%88%ABfind--exec-and-find--xargs">区别find -exec and find | xargs</a><ul>
+<li><a href="#%E9%80%80%E5%87%BA%E4%BB%A3%E7%A0%81">退出代码</a></li>
+<li><a href="#%E6%A1%88%E4%BE%8B">案例</a><ul>
+<li><a href="#find--exec">find -exec</a></li>
+<li><a href="#find--xargs">find | xargs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#find-%E7%BB%93%E8%AE%BA">Find 结论</a><ul>
+<li><a href="#%E5%8F%82%E6%95%B0%E7%9A%84%E5%A4%9A%E5%B0%91">参数的多少</a></li>
+<li><a href="#find--exec-vs-find--xargs">find -exec vs find | xargs</a></li>
+</ul>
+</li>
+<li><a href="#reference">reference</a><ul>
+<li><a href="#find%E5%B1%80%E9%99%90%E6%80%A7">find局限性</a></li>
+</ul>
+</li>
+<li><a href="#ls--grepegrep--xargs">ls + grep/egrep + xargs</a><ul>
+<li><a href="#grep-and-egrep%E7%94%A8%E6%B3%95">grep and egrep用法</a><ul>
+<li><a href="#%E6%A1%88%E4%BE%8B-1">案例</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>最近由于需要大量处理csv数据文件，对于csv数据文件内容的处理当然优先选择python pandas module,但是对于服务器上海量文件的寻找,linux bash的原生态的find,grep比python显得优势更大。</p>
+<h1 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h1><ul>
+<li>find command</li>
+<li>ls + grep/egrep + xargs</li>
+</ul>
+<h1 id="xargs用法"><a href="#xargs用法" class="headerlink" title="xargs用法"></a>xargs用法</h1><p>先介绍xargs用法因为两者都需要用到 </p>
+<h2 id="xargs参数"><a href="#xargs参数" class="headerlink" title="xargs参数"></a>xargs参数</h2><p>xargs的默认动作是echo，默认分隔符为空白字符（空格，TAB，换行符）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-0，--null：以\0作为分隔符，接受到的特殊字符将当作文本符号处理；</span><br><span class="line">-d：指定分段的分隔符，默认分隔字符为空白字符；</span><br><span class="line">-a，--arg-file=file：指定命令标准输入的来源文件；</span><br><span class="line">-e&#x27;FLAG&#x27; 或者-E &#x27;FLAG&#x27;：指定一个终止符号，当xargs命令匹配到第一个FLAG后，停止传递，并退出命令；</span><br><span class="line">-p：每当xargs执行一个分段时，询问一次用户是否执行；</span><br><span class="line">-t：表示先打印执行的命令再输出；</span><br><span class="line">-n NUM：表示一个分段包含的参数个数，参数之间以分隔符隔开，默认是将所有的参数当作一个分段输出；</span><br><span class="line">-i：用于将分段分批传递给其后的&#123;&#125;进行输出，分段会替换&#123;&#125;所在的位置进行输出；</span><br><span class="line">-I &quot;FLAG&quot;：可指定分段的替换符号，分段会分批替换到符号所在的位置进行输出执行；</span><br><span class="line">-L：指定每次执行的最大的非空行的行数；</span><br></pre></td></tr></table></figure>
+<h2 id="xargs命令与管道符的区别："><a href="#xargs命令与管道符的区别：" class="headerlink" title="xargs命令与管道符的区别："></a>xargs命令与管道符的区别：</h2><p>管道符| 是将前一个命令的标准输出作为后一个命令的标准输入耳使用；而xargs命令是将前一个命令的标准输出作为后一个命令的参数而使用</p>
+<h1 id="Find使用"><a href="#Find使用" class="headerlink" title="Find使用"></a>Find使用</h1><p>对于常用的,比如我想寻找一些文件然后cp到特定路径下面</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find path -name &quot;yourname*.csv&quot; -exec command &#123;&#125; /tmp/test/ \;</span><br></pre></td></tr></table></figure>
+
+<h2 id="find-各参数performance比较"><a href="#find-各参数performance比较" class="headerlink" title="find 各参数performance比较"></a>find 各参数performance比较</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">du -hd0</span><br><span class="line"> 37G    .</span><br><span class="line"></span><br><span class="line"># &#x27;time&#x27; will print the total time taken for the command to finish</span><br><span class="line"></span><br><span class="line"># time find -exec \;</span><br><span class="line">time find . -name \*.php -type f -exec grep -Hn &#x27;$test&#x27; &#123;&#125; \;</span><br><span class="line">real    1m24.433s</span><br><span class="line">user    0m29.022s</span><br><span class="line">sys     0m43.304s</span><br><span class="line"></span><br><span class="line"># find -exec \+</span><br><span class="line">time find . -name \*.php -type f -exec grep -Hn &#x27;$test&#x27; &#123;&#125; \+</span><br><span class="line">real    0m13.050s</span><br><span class="line">user    0m5.315s</span><br><span class="line">sys     0m2.179s</span><br><span class="line"></span><br><span class="line"># find | xargs -n1</span><br><span class="line">time find . -name \*.php -type f -print0 | xargs -0 -n1 grep -Hn &#x27;$test&#x27;</span><br><span class="line">real    0m55.159s</span><br><span class="line">user    0m23.692s</span><br><span class="line">sys     0m28.618s</span><br><span class="line"></span><br><span class="line"># find | xargs</span><br><span class="line">time find . -name \*.php -type f -print0 | xargs -0 -grep -Hn &#x27;$test&#x27;</span><br><span class="line">real    0m12.047s</span><br><span class="line">user    0m4.997s</span><br><span class="line">sys     0m3.593s</span><br></pre></td></tr></table></figure>
+<p>得出结论find + and xargs 优于其他因为没有过多的fork和exec，减少了I/O的读写时间，可以看出大概快了6倍</p>
+<h2 id="区别find-exec-and-find-xargs"><a href="#区别find-exec-and-find-xargs" class="headerlink" title="区别find -exec and find | xargs"></a>区别find -exec and find | xargs</h2><h3 id="退出代码"><a href="#退出代码" class="headerlink" title="退出代码"></a>退出代码</h3><ul>
+<li>find -exec 返回退出代码在本身进程</li>
+<li>find | xargs 返回退出代码在子进程</li>
+</ul>
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><h4 id="find-exec"><a href="#find-exec" class="headerlink" title="find -exec"></a>find -exec</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">find . -name \*.php -type f -exec php -l &#123;&#125; \;</span><br><span class="line">...</span><br><span class="line">PHP Parse error:  syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line"></span><br><span class="line">Parse error: syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line">Errors parsing ./test.php</span><br><span class="line">...</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/network/user-new.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/network/users.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/network.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-discussion.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-general.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-head.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-media.php</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>可以看出尽管命令php -l报错 exit 1但是find -exec仍旧执行到最后且exit 0</p>
+<h4 id="find-xargs"><a href="#find-xargs" class="headerlink" title="find | xargs"></a>find | xargs</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">find . -name \*.php -type f -print0 | xargs -0 -n1 php -l</span><br><span class="line">...</span><br><span class="line">PHP Parse error:  syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line"></span><br><span class="line">Parse error: syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line">Errors parsing ./test.php</span><br></pre></td></tr></table></figure>
+
+<p>你可以看出命令立即退出，这是因为子进程退出了这个是piping command设计的原理</p>
+<h1 id="Find-结论"><a href="#Find-结论" class="headerlink" title="Find 结论"></a>Find 结论</h1><h2 id="参数的多少"><a href="#参数的多少" class="headerlink" title="参数的多少"></a>参数的多少</h2><p>find和 xargs -n1 是否需要使用; 如果子目录可以使用多个参数使用 +，如果子命令只支持一个参数使用;和-n1</p>
+<h2 id="find-exec-vs-find-xargs"><a href="#find-exec-vs-find-xargs" class="headerlink" title="find -exec vs find | xargs"></a>find -exec vs find | xargs</h2><p>find -exec 会继续执行没个文件尽管-exec报错，但find | xargs 会立即退出当子进程有错时，取决于你的需求</p>
+<h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><p><a target="_blank" rel="noopener" href="https://www.everythingcli.org/find-exec-vs-find-xargs/">https://www.everythingcli.org/find-exec-vs-find-xargs/</a></p>
+<h2 id="find局限性"><a href="#find局限性" class="headerlink" title="find局限性"></a>find局限性</h2><p>但是你会发现find也有其局限性</p>
+<ul>
+<li>对于regex匹配很有限</li>
+<li>输出不友好，比如./yourname.csv，你需要进行二次处理输出结果<br>有此我们引出第二种用法</li>
+</ul>
+<h1 id="ls-grep-egrep-xargs"><a href="#ls-grep-egrep-xargs" class="headerlink" title="ls + grep/egrep + xargs"></a>ls + grep/egrep + xargs</h1><ul>
+<li>ls 列出需要文件</li>
+<li>grep 运行regex正则匹配</li>
+<li>xargs 执行命令</li>
+</ul>
+<h2 id="grep-and-egrep用法"><a href="#grep-and-egrep用法" class="headerlink" title="grep and egrep用法"></a>grep and egrep用法</h2><p>匹配7位字母或者数字keyword</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &#x27;^[a-zA-Z0-9]\&#123;7\&#125;$&#x27; /usr/share/wordlists/rockyou.txt</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">egrep &#x27;^.&#123;7&#125;$&#x27; /usr/share/wordlists/rockyou.txt</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="案例-1"><a href="#案例-1" class="headerlink" title="案例"></a>案例</h3><p>找到一些特定文件名并复制到其他目录下，folder存在很多类似的文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">2019-12-01_db5xtqje90.csv</span><br><span class="line">_2019-12-01_db5xtqje90.csv</span><br><span class="line">_2019-12-01_db5xtqje90_processed.csv</span><br><span class="line">2019-12-01_db5xtqje90.csv.dbfile.txt</span><br><span class="line">2019-12-01_db5xtqje90_error.csv</span><br><span class="line"></span><br><span class="line">ls | egrep &#x27;^.&#123;40&#125;$&#x27; | grep Revenue_2019-12 | xargs  -d &quot;\n&quot; cp -t /tmp/test/</span><br><span class="line"></span><br><span class="line"># egrep &#x27;^.&#123;40&#125;$&#x27; 匹配40位任意字符长度的文件名</span><br><span class="line"># xargs  -d &quot;\n&quot;  指定分隔符号为回车 </span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tech/" rel="tag"># tech</a>
+              <a href="/tags/shell/" rel="tag"># shell</a>
+              <a href="/tags/regex/" rel="tag"># regex</a>
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/09/goldman-sachs-interview/" rel="prev" title="高盛投行运维岗位面试">
+                  <i class="fa fa-chevron-left"></i> 高盛投行运维岗位面试
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/03/10/Interview_notes_march_2022/" rel="next" title="Interview notes March 2022">
+                  Interview notes March 2022 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TOSKA</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">194k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:24</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div id="site-runtime">
+  <span class="post-meta-item-icon">
+    <i class="fa fa-clock-o"></i>
+  </span>
+  <span id="runtime"></span>
+</div>
+
+<script language="javascript">
+  function isPC() {
+    var userAgentInfo = navigator.userAgent;
+    var agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+    for (var i = 0; i < agents.length; i++) {
+      if (userAgentInfo.indexOf(agents[i]) > 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function siteTime(openOnPC, start) {
+    window.setTimeout("siteTime(openOnPC, start)", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+      start = new Date("2021-08-19 09:00:00 +0800");
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth() + 1;
+    var date = now.getDate();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+    var diff = now - start;
+
+    var diffYears = Math.floor(diff / years);
+    var diffDays = Math.floor((diff / days) - diffYears * 365);
+    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+
+    if (openOnPC) {
+      document.getElementById("runtime").innerHTML = "Running: " + diffYears + " years " + diffDays + " days " + diffHours + " hours " + diffMinutes + " mins " + diffSeconds + " secs";
+    } else {
+      document.getElementById("runtime").innerHTML = "Running: " + diffYears + "y " + diffDays + "d " + diffHours + "h " + diffMinutes + "m " + diffSeconds + "s";
+    }
+  }
+
+  var showOnMobile = false;
+  var openOnPC = isPC();
+  var start = new Date();
+  siteTime(openOnPC, start);
+
+  if (!openOnPC && !showOnMobile) {
+    document.getElementById('site-runtime').style.display = 'none';
+  }
+</script>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

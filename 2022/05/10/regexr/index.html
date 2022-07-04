@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"toskachin.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="一.正则表达式简介 什么是正则表达式正则表达式（Regluar Expressions）又称规则表达式，这个概念最初是由Unix中的工具软件（如sed 和 grep）普及开的。正则表达式在代码中常简写为REs，regexes或regexp（regex patterns）。它本质上是一个小巧的、高度专用的编程语言。 许多程序设计语言都支持通过正则表达式进行字符串操作。例如，在Perl中就内建了一个功">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一文了解正则表达式">
+<meta property="og:url" content="https://toskachin.github.io/2022/05/10/regexr/index.html">
+<meta property="og:site_name" content="子荣君的杂货铺">
+<meta property="og:description" content="一.正则表达式简介 什么是正则表达式正则表达式（Regluar Expressions）又称规则表达式，这个概念最初是由Unix中的工具软件（如sed 和 grep）普及开的。正则表达式在代码中常简写为REs，regexes或regexp（regex patterns）。它本质上是一个小巧的、高度专用的编程语言。 许多程序设计语言都支持通过正则表达式进行字符串操作。例如，在Perl中就内建了一个功">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://toskachin.github.io/2022/05/10/regexr/regex1.png">
+<meta property="og:image" content="https://toskachin.github.io/2022/05/10/regexr/regex2.png">
+<meta property="og:image" content="https://toskachin.github.io/2022/05/10/regexr/regex3.png">
+<meta property="og:image" content="https://toskachin.github.io/2022/05/10/regexr/regexr4.png">
+<meta property="og:image" content="https://toskachin.github.io/2022/05/10/regexr/regexr5.png">
+<meta property="og:image" content="https://toskachin.github.io/2022/05/10/regexr/regexr6.png">
+<meta property="og:image" content="https://toskachin.github.io/2022/05/10/regexr/regerx7.png">
+<meta property="og:image" content="https://toskachin.github.io/2022/05/10/regexr/regexr8.png">
+<meta property="og:image" content="https://toskachin.github.io/2022/05/10/regexr/regerx9.png">
+<meta property="og:image" content="https://toskachin.github.io/2022/05/10/regexr/regerx10.png">
+<meta property="og:image" content="https://toskachin.github.io/2022/05/10/regexr/regerx11.png">
+<meta property="article:published_time" content="2022-05-10T08:49:15.000Z">
+<meta property="article:modified_time" content="2022-07-03T11:25:11.671Z">
+<meta property="article:author" content="TOSKA">
+<meta property="article:tag" content="shell">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://toskachin.github.io/2022/05/10/regexr/regex1.png">
+
+
+<link rel="canonical" href="https://toskachin.github.io/2022/05/10/regexr/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://toskachin.github.io/2022/05/10/regexr/","path":"2022/05/10/regexr/","title":"一文了解正则表达式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>一文了解正则表达式 | 子荣君的杂货铺</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="子荣君的杂货铺" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">子荣君的杂货铺</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">一.正则表达式简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6"><span class="nav-number">2.</span> <span class="nav-text">二.正则表达式中的字符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89-%E5%85%83%E5%AD%97%E7%AC%A6%E8%AF%A6%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">三.元字符详解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B-%E5%B8%B8%E7%94%A8%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AE%9E%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">四.常用正则表达式实例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%8C%B9%E9%85%8D%E8%BF%87%E7%A8%8B"><span class="nav-number">5.</span> <span class="nav-text">五.正则表达式的匹配过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%B4%AA%E5%A9%AA%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-number">5.1.</span> <span class="nav-text">1. 贪婪模式匹配过程分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%9D%9E%E8%B4%AA%E5%A9%AA%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-number">5.2.</span> <span class="nav-text">2. 非贪婪模式匹配过程分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%80%BB%E7%BB%93"><span class="nav-number">5.3.</span> <span class="nav-text">3. 总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E8%A1%A5%E5%85%85%E7%A4%BA%E4%BE%8B"><span class="nav-number">5.4.</span> <span class="nav-text">4. 补充示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD-%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">六.参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="TOSKA"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">TOSKA</p>
+  <div class="site-description" itemprop="description">10+专业经验和人生感悟</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/toskachin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;toskachin" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:royjin@msn.com" title="E-Mail → mailto:royjin@msn.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+<!-- recent posts -->
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+        <div class="links-of-blogroll-title recent-posts-title">
+	    <i class="fa fa-history " aria-hidden="true"></i>
+            近期文章
+	</div>
+	<ul class="links-of-blogroll-list recent-posts-list">
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/07/04/stock-price/" title="python程序获取股票信息" target="">
+		    python程序获取股票信息
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/05/30/Interview_FAQ/" title="Interview FAQ 2022" target="">
+		    Interview FAQ 2022
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/05/10/regexr/" title="一文了解正则表达式" target="">
+		    一文了解正则表达式
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/04/04/linux_systemadmin/" title="Linux system admin notes" target="">
+		    Linux system admin notes
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/03/27/macos_setup/" title="MacOS setup" target="">
+		    MacOS setup
+		    </a>
+		</li>
+	</ul>
+    </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/toskachin" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2022/05/10/regexr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="TOSKA">
+      <meta itemprop="description" content="10+专业经验和人生感悟">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="子荣君的杂货铺">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一文了解正则表达式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-10 16:49:15" itemprop="dateCreated datePublished" datetime="2022-05-10T16:49:15+08:00">2022-05-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-07-03 19:25:11" itemprop="dateModified" datetime="2022-07-03T19:25:11+08:00">2022-07-03</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/shell/" itemprop="url" rel="index"><span itemprop="name">shell</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="一-正则表达式简介"><a href="#一-正则表达式简介" class="headerlink" title="一.正则表达式简介"></a>一.正则表达式简介</h1><ol>
+<li><p>什么是正则表达式<br>正则表达式（Regluar Expressions）又称规则表达式，这个概念最初是由Unix中的工具软件（如sed 和 grep）普及开的。正则表达式在代码中常简写为REs，regexes或regexp（regex patterns）。它本质上是一个小巧的、高度专用的编程语言。 许多程序设计语言都支持通过正则表达式进行字符串操作。例如，在Perl中就内建了一个功能强大的正则表达式引擎。</p>
+</li>
+<li><p>正则表达式能做什么<br>正则表达式的主要应用对象是文本，使用正则表达式可以指定想要匹配的字符串规则，然后通过这个规则来匹配、查找、替换或切割那些符合指定规则的文本。总体来讲，正则表达式可以对指定的文本实现以下功能：</p>
+</li>
+</ol>
+<ul>
+<li>匹配验证： 判断给定的字符串是否符合正则表达式所指定的过滤规则，从而可以判断某个字符串的内容是否符合特定的规则（如email地址、手机号码等）；当正则表达式用于匹配验证时，通常需要在正则表达式字符串的首部和尾部加上^和$，以匹配整个待验证的字符串。</li>
+<li>查找与替换： 判断给定字符串中是否包含满足正则表达式所指定的匹配规则的子串，如查找一段文本中的所包含的IP地址。另外，还可以对查找到的子串进行内容替换。<br>字符串分割与子串截取： 基于子串查找功能还可以以符合正则表达式所指定的匹配规则的字符串作为分隔符对给定的字符串进行分割。</li>
+</ul>
+<h1 id="二-正则表达式中的字符"><a href="#二-正则表达式中的字符" class="headerlink" title="二.正则表达式中的字符"></a>二.正则表达式中的字符</h1><p>正则表达式的主要应用对象是文本，其最基础的功能是文本匹配，而文本是由一个个的字符组成，因此正则表达式实际上是对字符的匹配。正则表达式中的字符分为 普通字符 和 元字符，而正则表达式就是这些普通字符和特殊元字符组合成的表示一个特定匹配规则的表达式。</p>
+<ol>
+<li>普通字符<br>实际上，大多数字符都将简单地匹配它们的自身值，它们被称为普通字符，如数字（0-9），字母（a-z, A-Z）等。例如，正则表达式hello123将匹配字符串’hello123’，因为该这则表达式中都是普通字符，不包含特殊元字符。当然，我们可以通过指定正则表达式的匹配模式为 忽略字母大小写模式，这么正则表达式hello123将能够匹配’Hello123’, ‘HellO123’, ‘HELLO123’等字符串。</li>
+</ol>
+<blockquote>
+<p>提示： 其实我们并不需要去记忆哪些字符是普通字符，我们只需要知道哪些字符是特殊元字符就可以了，除了特殊元字符之外的所有字符都是普通字符。</p>
+</blockquote>
+<ol start="2">
+<li>元字符<br>上面提到，正则表达式除了进行字符自身之的匹配外，还可以基于指定的规则进行模糊匹配。这就意味着它需要一些特殊字符来表示这些模糊的匹配规则，因此这些特殊字符默认情况下并不能匹配到它们自身的字面值，而是表示某些特殊的功能。这些特殊元字符包括：., [, ], (, ), *, +, ?, ^, $, , |。这些特殊字符的使用，会在下面进行详细讲解。正则表达式的重点和难点也就在于对正则表达式引擎的工作原理以及对这些特殊元字符掌握和灵活运用。</li>
+</ol>
+<blockquote>
+<p>提示： 那么如果想匹配这些特殊元字符本身的字面值怎么办呢？我们可以通过其中一个特殊字符对其它特殊字符进行转义，从而达到可以匹配这些特殊字符自身字面值的目的。</p>
+</blockquote>
+<h1 id="三-元字符详解"><a href="#三-元字符详解" class="headerlink" title="三.元字符详解"></a>三.元字符详解</h1><p>现在我们来详细说明一下正则表达式中的特殊元字符到底能完成哪些复杂的匹配功能。<br>1.单个字符匹配</p>
+<p><img src="/2022/05/10/regexr/regex1.png" alt="image"></p>
+<blockquote>
+<p>说明： 所有的特殊字符在[ ]内都将失去其原有的特殊含义:</p>
+<ul>
+<li>有些特殊字符在[ ]中被赋予新的特殊含义，如 ‘^’出现在[ ]中的开始位置表示取反，它出现在[]中的其他位置表示其本身（变成了一个普通字符）；</li>
+<li>有些特殊字符则变为普通字符，如 ‘.’, ‘*’, ‘+’, ‘?’, ‘$’</li>
+<li>有的普通字符变为特殊字符，如 ‘-‘ 在[ ]中的位置不是第一个字符则表示一个数字或字母区间，如果在[ ]中的位置是第一个字符则表示其本身（一个普通字符）</li>
+<li>在[ ]中，如果要使用’-‘, ‘^’ 或’]’，可在在它们前面加上反斜杠，或把’-‘, ‘]’放在第一个字符的 位置，把’^’放在非第一个字符的位置</li>
+</ul>
+</blockquote>
+<ol>
+<li>预定义字符集</li>
+</ol>
+<p>我们可以在反斜杠后面跟上一个指定的字母来表示预定义的字符集合</p>
+<p><img src="/2022/05/10/regexr/regex2.png" alt="image"></p>
+<ol start="3">
+<li>字符次数匹配–量词<br>在正则表达式中，我们还可以指定匹配某个字符出现次数</li>
+</ol>
+<p><img src="/2022/05/10/regexr/regex3.png" alt="image"></p>
+<blockquote>
+<p>说明： {m,n}中的m和n可以省略其中一个，{,n}相当于{0,n}，{m,}相当于{m,整数最大值}。</p>
+</blockquote>
+<p>我们可以得出以下结论：</p>
+<ul>
+<li>{0,1}或{,1} 等价于 ?</li>
+<li>{1,} 等价于 +</li>
+<li>{0,} 等价于 *</li>
+</ul>
+<p>我们优先选择使用 ?, + 和 *，因为他们书写简单，也可以使整个正则表达式变得简洁。</p>
+<blockquote>
+<p>说明： ? 这个字符在正则表达中与 ?, +, *, {m,n}连用时还有一个额外的功能，就是将匹配模式由贪婪模式（尽可能的增加匹配次数） 变成 非贪婪模式（尽可能减少匹配次数）， 这个会在下面的内容中进行详细说明。</p>
+</blockquote>
+<ol start="4">
+<li><p>边界匹配<br>正则表达式中还可以对边界位置进行匹配，如一个字符串的开头或结尾，一个单词的开头或结尾。<br><img src="/2022/05/10/regexr/regexr4.png" alt="image"></p>
+</li>
+<li><p>逻辑与分组<br>语法 | 说明 | 表达式实例 | 可匹配到的字符串实例<br><img src="/2022/05/10/regexr/regexr5.png" alt="image"></p>
+</li>
+</ol>
+<ol start="6">
+<li>特殊构造</li>
+</ol>
+<p><img src="/2022/05/10/regexr/regexr6.png" alt="image"></p>
+<blockquote>
+<p>说明： 上面所说的“不消耗字符串内容”是指只是进行匹配，但是不移动原始字符串的匹配位置，这样就可以完成多次匹配。下面有个匹配密码的正则表达式实例，就是用这个特性巧妙完成的。</p>
+</blockquote>
+<h1 id="四-常用正则表达式实例"><a href="#四-常用正则表达式实例" class="headerlink" title="四.常用正则表达式实例"></a>四.常用正则表达式实例</h1><p>通常写一个合适的正则表达式是比较耗费时间的，因此我们可以保留一些常用的正则表达式以备不时之需。但是需要说明的是，没有任何一个人敢说自己写的正则表达式是百分之百严谨的，而且也没有百分之百相同的匹配需求，因此这里只是列举我自己写的几个常用的正则表达式，欢迎大家留言讨论。</p>
+<blockquote>
+<p>说明： 下面只是一些简单的匹配规则，实际情况中需要我们根据具体情况再这些正则表达式的首部和尾部加上相应的边界符，如：^, $, \A, \Z, \b, \B等</p>
+</blockquote>
+<p><strong>匹配一个网络地址（URL)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[a-zA-Z]+://[\S]+</span><br></pre></td></tr></table></figure>
+<p>需要说明的是，网络地址不一定是一个网页地址（http或https链接），还可能是ftp地址等。如果我们要匹配特定协议的网络地址，如http或http链接可以这样写:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(https?://)?[\S]+</span><br></pre></td></tr></table></figure>
+<p><strong>匹配一个IP地址</strong><br>最简单的写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(\d+[.])&#123;3&#125;\d+</span><br></pre></td></tr></table></figure>
+<p>严谨一点的写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(((?:[1-9]\d?)|(?:1\d&#123;2&#125;)|(?:2[0-4]\d)|(?:25[0-5]))[.])&#123;3&#125;((?:[1-9]\d?)|(?:1\d&#123;2&#125;)|(?:2[0-4]\d)|(?:25[0-5]))</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">((([1-9]\d?)|(1\d&#123;2&#125;)|(2[0-4]\d)|(25[0-5]))[.])&#123;3&#125;(([1-9]\d?)|(1\d&#123;2&#125;)|(2[0-4]\d)|(25[0-5]))</span><br></pre></td></tr></table></figure>
+<p><strong>匹配一个邮箱地址</strong><br>最简单的写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\S+@\S+\.\S+</span><br></pre></td></tr></table></figure>
+<p>严谨一点的写法（保证只出现一个@符）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[^\s@]+@[^\s@]+\.[^\s@]+</span><br></pre></td></tr></table></figure>
+<p><strong>匹配密码是否合法</strong><br>要求比较简单的情况，比如只要求为非空字符且限定密码长度为6-18位</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^\S[6-18]$</span><br></pre></td></tr></table></figure>
+<p>要求比较复杂的情况，比如必须同时包含含数字、大小字母、小写字母和标点符号，这就需要用到前面所说的正则表达式的特殊构造了(?=…), (?!=…)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(?=^.&#123;6,8&#125;$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)</span><br></pre></td></tr></table></figure>
+<p>如果要求必须同时包含且只能包含数字、大小字母、小写字母和标点符号，可以这样写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(?=^[\d\Wa-zA-Z]&#123;6,8&#125;$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)</span><br></pre></td></tr></table></figure>
+<p><strong>匹配大陆身份证号码（15位或18位)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\d&#123;15&#125;|(\d&#123;18&#125;|(\d&#123;17&#125;[Xx]))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>小贴士： 当今的身份证号码有15位和18位之分。1985年我国实行居民身份证制度，当时签发的身份证号码是15位的，1999年签发的身份证由于年份的扩展（由两位变为四位）和末尾加了效验码，就成了18位。这两种身份证号码将在相当长的一段时期内共存。两种身份证号码的含义如下：</p>
+</blockquote>
+<p><strong>匹配日期（年-月-日)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(\d&#123;2&#125;|\d&#123;4&#125;)-((0?[1-9])|(1[0-2]))-((0?[1-9])|([12][0-9])|(3[01]))</span><br></pre></td></tr></table></figure>
+<p>24小时制时间（小时:分钟:秒）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(((0?|1)[0-9])|(2[0-3])):([0-5][0-9]):([0-5][0-9])</span><br></pre></td></tr></table></figure>
+<p>其他常用正则表达式<br><img src="/2022/05/10/regexr/regerx7.png" alt="image"><br><strong>再次说明，实际情况中需要我们根据具体情况再这些正则表达式的首部和尾部加上相应的边界符，如：^, $, \A, \Z, \b, \B等</strong></p>
+<h1 id="五-正则表达式的匹配过程"><a href="#五-正则表达式的匹配过程" class="headerlink" title="五.正则表达式的匹配过程"></a>五.正则表达式的匹配过程</h1><p>基于量词（如?, +, *, {m,n}, {m,}）的字符重复次数匹配是正则表达式优于普通字符串处理方法的一个重要方面，也是正则表达式的一个重要组成部分。量词对正则表达式的匹配过程具有非常重大的影响，因此在介绍正则表达式的匹配过程时，必不可少的要提到量词的两个重要分类：</p>
+<ul>
+<li>匹配优先量词 我们上面介绍的量词就是匹配优先量词包括：?, +, *, {m,n}，但是不包括{m}</li>
+<li>忽略优先量词 在匹配优先量词后面加上一个问号就变成了忽略优先量词，包括：??, +?, *?, {m,n}?<br>如果大家对这两个词不熟悉的话，那么大家一定听说过这两个词：</li>
+<li>贪婪模式（或非惰性匹配） 顾名思义，就是在整个表达式匹配成功的前提下，尽可能多的去匹配量词所修饰的字符</li>
+<li>非贪婪模式（或惰性匹配） 在整个表达式匹配成功的前提下，尽可能少的去匹配量词所修饰的字符<br>它们之间的关系是：</li>
+<li>匹配优先量词修饰的子表达式使用的是就是贪婪模式（非惰性匹配）;</li>
+<li>忽略优先量词修饰的子表达式使用的就是模式就是非贪婪模式（惰性匹配）;<br>下面我们通过一个实例来分析 贪婪模式 和 非贪婪模式 下的正则匹配过程：</li>
+<li>要匹配的字符串：’abcbd’</li>
+<li>贪婪模式正则表达式：a[bcd]*b</li>
+<li>非贪婪模式正则表达式：a[bcd]*?b</li>
+</ul>
+<h2 id="1-贪婪模式匹配过程分析"><a href="#1-贪婪模式匹配过程分析" class="headerlink" title="1. 贪婪模式匹配过程分析"></a>1. 贪婪模式匹配过程分析</h2><p><img src="/2022/05/10/regexr/regexr8.png" alt="image"></p>
+<h2 id="2-非贪婪模式匹配过程分析"><a href="#2-非贪婪模式匹配过程分析" class="headerlink" title="2. 非贪婪模式匹配过程分析"></a>2. 非贪婪模式匹配过程分析</h2><p><img src="/2022/05/10/regexr/regerx9.png" alt="image"></p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>贪婪模式与非贪婪模式影响的是被量词修饰的子表达式的匹配行为，贪婪模式在整个表达式匹配成功的前提下，尽可能多的匹配；非贪婪模式在整个表达式匹配成功的前提下，尽可能少的匹配。另外，非贪婪模式只被部分NFA引擎所支持。从匹配效率上来看，能达到相同匹配结果时，贪婪模式的匹配效率通常会比较高，因为它回溯过程会比较少。</p>
+<h2 id="4-补充示例"><a href="#4-补充示例" class="headerlink" title="4. 补充示例"></a>4. 补充示例</h2><p>匹配过程示例<br><img src="/2022/05/10/regexr/regerx10.png" alt="image"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 首先由“&lt;”取得控制权，由位置0位开始尝试匹配，匹配字符“a”，匹配失败，第一轮匹配结束。第二轮匹配从位置1开始尝试匹配，同样匹配失败。第三轮从位置3开始尝试匹配，匹配字符“&lt;”，匹配成功，控制权交给“d”。</span><br><span class="line"></span><br><span class="line">* “d”尝试匹配字符“d”，匹配成功，控制权交给“i”。重复以上过程，直到由“&gt;”匹配到字符“&gt;”，控制权交给“.*”。</span><br><span class="line"></span><br><span class="line">* “.*”属于贪婪模式，将从B处后的字符“t”开始，一直匹配到E处，也就是字符串结束位置，将控制权交给“&lt;”。</span><br><span class="line"></span><br><span class="line">* “&lt;”从字符串结束位置尝试匹配，匹配失败，向前查找可供回溯的状态，把控制权交给“.”，由“.”让出一个字符“c”，把控制权再交给“&lt;”，尝试匹配，匹配失败，向前查找可供回溯的状态。一直重复以上过程，直到“.*”让出已匹配的字符“&lt;”，实际上也就是到让出了已匹配的子串“&lt;/div&gt;cc&quot;为止，“&lt;”才匹配字符“&lt;”成功，控制权交给“/”。 </span><br><span class="line"></span><br><span class="line">* 接下来由“/”、“d”、“i”、“v”分别匹配对应的字符成功，此时整个正则表达式匹配完毕。</span><br></pre></td></tr></table></figure>
+
+<h1 id="六-参考资料"><a href="#六-参考资料" class="headerlink" title="六.参考资料"></a>六.参考资料</h1><p><img src="/2022/05/10/regexr/regerx11.png" alt="image"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/shell/" rel="tag"># shell</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/04/04/linux_systemadmin/" rel="prev" title="Linux system admin notes">
+                  <i class="fa fa-chevron-left"></i> Linux system admin notes
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/05/30/Interview_FAQ/" rel="next" title="Interview FAQ 2022">
+                  Interview FAQ 2022 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TOSKA</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">194k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:24</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div id="site-runtime">
+  <span class="post-meta-item-icon">
+    <i class="fa fa-clock-o"></i>
+  </span>
+  <span id="runtime"></span>
+</div>
+
+<script language="javascript">
+  function isPC() {
+    var userAgentInfo = navigator.userAgent;
+    var agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+    for (var i = 0; i < agents.length; i++) {
+      if (userAgentInfo.indexOf(agents[i]) > 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function siteTime(openOnPC, start) {
+    window.setTimeout("siteTime(openOnPC, start)", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+      start = new Date("2021-08-19 09:00:00 +0800");
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth() + 1;
+    var date = now.getDate();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+    var diff = now - start;
+
+    var diffYears = Math.floor(diff / years);
+    var diffDays = Math.floor((diff / days) - diffYears * 365);
+    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+
+    if (openOnPC) {
+      document.getElementById("runtime").innerHTML = "Running: " + diffYears + " years " + diffDays + " days " + diffHours + " hours " + diffMinutes + " mins " + diffSeconds + " secs";
+    } else {
+      document.getElementById("runtime").innerHTML = "Running: " + diffYears + "y " + diffDays + "d " + diffHours + "h " + diffMinutes + "m " + diffSeconds + "s";
+    }
+  }
+
+  var showOnMobile = false;
+  var openOnPC = isPC();
+  var start = new Date();
+  siteTime(openOnPC, start);
+
+  if (!openOnPC && !showOnMobile) {
+    document.getElementById('site-runtime').style.display = 'none';
+  }
+</script>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

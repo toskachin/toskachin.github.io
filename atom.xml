@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>子荣君的杂货铺</title>
+  <icon>https://toskachin.github.io/icon.png</icon>
+  
+  <link href="https://toskachin.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://toskachin.github.io/"/>
+  <updated>2022-07-04T00:30:12.185Z</updated>
+  <id>https://toskachin.github.io/</id>
+  
+  <author>
+    <name>TOSKA</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python程序获取股票信息</title>
+    <link href="https://toskachin.github.io/2022/07/04/stock-price/"/>
+    <id>https://toskachin.github.io/2022/07/04/stock-price/</id>
+    <published>2022-07-04T00:27:16.000Z</published>
+    <updated>2022-07-04T00:30:12.185Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h1&gt;&lt;p&gt;股票里面“打板”</summary>
+        
+      
+    
+    
+    
+    <category term="python" scheme="https://toskachin.github.io/categories/python/"/>
+    
+    
+    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
+    
+    <category term="stock" scheme="https://toskachin.github.io/tags/stock/"/>
+    
+    <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Interview FAQ 2022</title>
+    <link href="https://toskachin.github.io/2022/05/30/Interview_FAQ/"/>
+    <id>https://toskachin.github.io/2022/05/30/Interview_FAQ/</id>
+    <published>2022-05-29T16:00:00.000Z</published>
+    <updated>2022-07-03T11:25:11.659Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#background&quot;&gt;Background&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#linux-system&quot;&gt;Linux system&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="ideas,interview" scheme="https://toskachin.github.io/categories/ideas-interview/"/>
+    
+    
+    <category term="ideas,interview,面试" scheme="https://toskachin.github.io/tags/ideas-interview-%E9%9D%A2%E8%AF%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一文了解正则表达式</title>
+    <link href="https://toskachin.github.io/2022/05/10/regexr/"/>
+    <id>https://toskachin.github.io/2022/05/10/regexr/</id>
+    <published>2022-05-10T08:49:15.000Z</published>
+    <updated>2022-07-03T11:25:11.671Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;一-正则表达式简介&quot;&gt;&lt;a href=&quot;#一-正则表达式简介&quot; class=&quot;headerlink&quot; title=&quot;一.正则表达式简介&quot;&gt;&lt;/a&gt;一.正则表达式简介&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;什么是正则表达式&lt;br&gt;正则表达式（Regluar</summary>
+        
+      
+    
+    
+    
+    <category term="shell" scheme="https://toskachin.github.io/categories/shell/"/>
+    
+    
+    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux system admin notes</title>
+    <link href="https://toskachin.github.io/2022/04/04/linux_systemadmin/"/>
+    <id>https://toskachin.github.io/2022/04/04/linux_systemadmin/</id>
+    <published>2022-04-03T23:29:35.000Z</published>
+    <updated>2022-07-03T11:25:11.669Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;headerlink&quot; title=&quot;&quot;&gt;&lt;/a&gt;&lt;/h1&gt;&lt;h2 id=&quot;linunx-环境变量&quot;&gt;&lt;a href=&quot;#linunx-环境变量&quot; class=&quot;headerlink&quot; title=&quot;linunx</summary>
+        
+      
+    
+    
+    
+    <category term="shell,linux" scheme="https://toskachin.github.io/categories/shell-linux/"/>
+    
+    
+    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
+    
+    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
+    
+    <category term="linux" scheme="https://toskachin.github.io/tags/linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MacOS setup</title>
+    <link href="https://toskachin.github.io/2022/03/27/macos_setup/"/>
+    <id>https://toskachin.github.io/2022/03/27/macos_setup/</id>
+    <published>2022-03-27T04:54:41.000Z</published>
+    <updated>2022-07-03T11:25:11.670Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#terminal-applications&quot;&gt;Terminal Applications&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#iterm2&quot;&gt;iterm2&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="macos,tools" scheme="https://toskachin.github.io/categories/macos-tools/"/>
+    
+    
+    <category term="macos" scheme="https://toskachin.github.io/tags/macos/"/>
+    
+    <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Interview notes March 2022</title>
+    <link href="https://toskachin.github.io/2022/03/10/Interview_notes_march_2022/"/>
+    <id>https://toskachin.github.io/2022/03/10/Interview_notes_march_2022/</id>
+    <published>2022-03-09T16:00:00.000Z</published>
+    <updated>2022-07-03T11:25:11.659Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Application-support&quot;&gt;&lt;a href=&quot;#Application-support&quot; class=&quot;headerlink&quot; title=&quot;Application support&quot;&gt;&lt;/a&gt;Application support&lt;/h2&gt;&lt;h3</summary>
+        
+      
+    
+    
+    
+    <category term="ideas,interview" scheme="https://toskachin.github.io/categories/ideas-interview/"/>
+    
+    
+    <category term="ideas,interview,面试" scheme="https://toskachin.github.io/tags/ideas-interview-%E9%9D%A2%E8%AF%95/"/>
+    
+    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux下regex匹配高级用法</title>
+    <link href="https://toskachin.github.io/2021/10/16/linux-regex-advance/"/>
+    <id>https://toskachin.github.io/2021/10/16/linux-regex-advance/</id>
+    <published>2021-10-15T23:40:41.000Z</published>
+    <updated>2022-07-03T11:25:11.669Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E8%83%8C%E6%99%AF&quot;&gt;背景&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95&quot;&gt;常用方法&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="shell" scheme="https://toskachin.github.io/categories/shell/"/>
+    
+    
+    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
+    
+    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
+    
+    <category term="regex" scheme="https://toskachin.github.io/tags/regex/"/>
+    
+    <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>高盛投行运维岗位面试</title>
+    <link href="https://toskachin.github.io/2021/09/09/goldman-sachs-interview/"/>
+    <id>https://toskachin.github.io/2021/09/09/goldman-sachs-interview/</id>
+    <published>2021-09-09T08:49:49.000Z</published>
+    <updated>2022-07-03T11:25:11.659Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Background&quot;&gt;&lt;a href=&quot;#Background&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="面试" scheme="https://toskachin.github.io/categories/%E9%9D%A2%E8%AF%95/"/>
+    
+    
+    <category term="面试" scheme="https://toskachin.github.io/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+    <category term="技术" scheme="https://toskachin.github.io/tags/%E6%8A%80%E6%9C%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一文熟悉云配置神器terraform</title>
+    <link href="https://toskachin.github.io/2021/08/26/terraform-notes/"/>
+    <id>https://toskachin.github.io/2021/08/26/terraform-notes/</id>
+    <published>2021-08-26T05:36:20.000Z</published>
+    <updated>2022-07-03T11:25:11.678Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;hr&gt;
+&lt;p&gt;随着Infrastructure as Code (IaC)在DEVOPS领域的兴起，如果是 Ansible 是偏向</summary>
+        
+      
+    
+    
+    
+    <category term="shell" scheme="https://toskachin.github.io/categories/shell/"/>
+    
+    
+    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
+    
+    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
+    
+    <category term="terraform" scheme="https://toskachin.github.io/tags/terraform/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>shell变量高级篇</title>
+    <link href="https://toskachin.github.io/2021/08/24/shell-variable-advance/"/>
+    <id>https://toskachin.github.io/2021/08/24/shell-variable-advance/</id>
+    <published>2021-08-24T01:07:34.000Z</published>
+    <updated>2022-07-03T11:25:11.677Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt; &lt;a href=&quot;#shell%E5%8F%98%E9%87%8F%E7%9A%84%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8&quot;&gt;shell变量的高级应用&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="shell" scheme="https://toskachin.github.io/categories/shell/"/>
+    
+    
+    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
+    
+    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>日语五十音快乐记忆法则</title>
+    <link href="https://toskachin.github.io/2021/08/24/japanese-learn/"/>
+    <id>https://toskachin.github.io/2021/08/24/japanese-learn/</id>
+    <published>2021-08-23T23:54:41.000Z</published>
+    <updated>2022-07-03T11:25:11.659Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;五十音图&quot;&gt;&lt;a href=&quot;#五十音图&quot; class=&quot;headerlink&quot; title=&quot;五十音图&quot;&gt;&lt;/a&gt;五十音图&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/2021/08/24/japanese-learn/50yin.jpeg&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="日语学习" scheme="https://toskachin.github.io/categories/%E6%97%A5%E8%AF%AD%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="日语" scheme="https://toskachin.github.io/tags/%E6%97%A5%E8%AF%AD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Kubernetes网络类型详解</title>
+    <link href="https://toskachin.github.io/2021/08/21/k8s-network-1/"/>
+    <id>https://toskachin.github.io/2021/08/21/k8s-network-1/</id>
+    <published>2021-08-20T22:48:49.000Z</published>
+    <updated>2022-07-03T11:25:11.667Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Kubernetes网络插件对比分析（Flannel、Calico、Weave）&quot;&gt;&lt;a href=&quot;#Kubernetes网络插件对比分析（Flannel、Calico、Weave）&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="kubernetes" scheme="https://toskachin.github.io/categories/kubernetes/"/>
+    
+    
+    <category term="network" scheme="https://toskachin.github.io/tags/network/"/>
+    
+    <category term="kubernetes" scheme="https://toskachin.github.io/tags/kubernetes/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo Next(v8.7.0)如何边栏添加最近更新文章</title>
+    <link href="https://toskachin.github.io/2021/08/20/hexo-sidebar/"/>
+    <id>https://toskachin.github.io/2021/08/20/hexo-sidebar/</id>
+    <published>2021-08-20T08:49:15.000Z</published>
+    <updated>2022-07-03T11:25:11.659Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;创建自定义文件&quot;&gt;&lt;a href=&quot;#创建自定义文件&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="blog" scheme="https://toskachin.github.io/categories/blog/"/>
+    
+    
+    <category term="hexo" scheme="https://toskachin.github.io/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一文让你python从入门到放弃</title>
+    <link href="https://toskachin.github.io/2021/08/20/python-notes/"/>
+    <id>https://toskachin.github.io/2021/08/20/python-notes/</id>
+    <published>2021-08-20T02:54:16.000Z</published>
+    <updated>2022-07-03T11:25:11.671Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%89%8D%E8%A8%80&quot;&gt;前言&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E8%BF%90%E7%AE%97%E7%AC%A6operators&quot;&gt;运算符(operators)&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="python" scheme="https://toskachin.github.io/categories/python/"/>
+    
+    
+    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
+    
+    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
+    
+    <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一文让你从入门到精通shell</title>
+    <link href="https://toskachin.github.io/2021/08/19/shell-notes/"/>
+    <id>https://toskachin.github.io/2021/08/19/shell-notes/</id>
+    <published>2021-08-19T09:29:35.000Z</published>
+    <updated>2022-07-03T11:25:11.677Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%8F%98%E9%87%8F&quot;&gt;变量&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F&quot;&gt;局部变量&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="shell" scheme="https://toskachin.github.io/categories/shell/"/>
+    
+    
+    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
+    
+    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
+    
+  </entry>
+  
+</feed>
