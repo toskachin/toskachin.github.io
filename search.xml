@@ -161,6 +161,25 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo Next(v8.7.0)如何边栏添加最近更新文章</title>
+    <url>/2021/08/20/hexo-sidebar/</url>
+    <content><![CDATA[<h2 id="创建自定义文件"><a href="#创建自定义文件" class="headerlink" title="创建自定义文件"></a>创建自定义文件</h2><p>在新建文件yoursite/source/_data/sidebar.njk,添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- recent posts --&gt;</span><br><span class="line">&#123;%- if theme.recent_posts %&#125;</span><br><span class="line">    &lt;div class=&quot;links-of-blogroll motion-element &#123;&#123; &quot;links-of-blogroll-&quot; + theme.recent_posts_layout &#125;&#125;&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;links-of-blogroll-title recent-posts-title&quot;&gt;</span><br><span class="line">	    &lt;i class=&quot;fa fa-history &#123;&#123; theme.recent_posts_icon | lower &#125;&#125;&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;</span><br><span class="line">            &#123;&#123; theme.recent_posts_title &#125;&#125;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;ul class=&quot;links-of-blogroll-list recent-posts-list&quot;&gt;</span><br><span class="line">	    &#123;%- set posts = site.posts.sort(&#x27;-date&#x27;).toArray() %&#125;</span><br><span class="line">	    &#123;%- for post in posts.slice(&#x27;0&#x27;, &#x27;5&#x27;) %&#125;</span><br><span class="line">	        &lt;li class=&quot;my-links-of-blogroll-item&quot;&gt;</span><br><span class="line">		    &lt;a href=&quot;&#123;&#123; url_for(post.path) &#125;&#125;&quot; title=&quot;&#123;&#123; post.title &#125;&#125;&quot; target=&quot;&quot;&gt;</span><br><span class="line">		    &#123;&#123; post.title &#125;&#125;</span><br><span class="line">		    &lt;/a&gt;</span><br><span class="line">		&lt;/li&gt;</span><br><span class="line">	    &#123;%- endfor %&#125;</span><br><span class="line">	&lt;/ul&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="修改主题配置文件"><a href="#修改主题配置文件" class="headerlink" title="修改主题配置文件"></a>修改主题配置文件</h2><p>在站点目录下修改主题配置文件（_config.yml）添加以下内容<br>文件路径：yoursite/theme/next/_config.yml</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">recent_posts: true</span><br><span class="line">recent_posts_title: 近期文章</span><br><span class="line">recent_posts_layout: block</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动添加文件"><a href="#启动添加文件" class="headerlink" title="启动添加文件"></a>启动添加文件</h2><p>修改文件yoursite/theme/next/_config.yml uncomment sidebar这一行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">custom_file_path:</span><br><span class="line">  #head: source/_data/head.njk</span><br><span class="line">  #header: source/_data/header.njk</span><br><span class="line">  sidebar: source/_data/sidebar.njk</span><br><span class="line">  #postMeta: source/_data/post-meta.njk</span><br><span class="line">  #postBodyEnd: source/_data/post-body-end.njk</span><br><span class="line">  #footer: source/_data/footer.njk</span><br><span class="line">  #bodyEnd: source/_data/body-end.njk</span><br><span class="line">  #variable: source/_data/variables.styl</span><br><span class="line">  #mixin: source/_data/mixins.styl</span><br><span class="line">  #style: source/_data/styles.styl</span><br></pre></td></tr></table></figure>
+
+<h2 id="刷新站点"><a href="#刷新站点" class="headerlink" title="刷新站点"></a>刷新站点</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s </span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo_blog_setup</title>
     <url>/2022/07/04/hexo-blog-setup/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>每次换电脑，或者在其他电脑上工作后发现无法更新这个Blog，需要记录下如何当初一步一步设置这个blog，以方便迁移，重新搭建</p>
@@ -186,25 +205,6 @@
       <tags>
         <tag>tech</tag>
         <tag>personal</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo Next(v8.7.0)如何边栏添加最近更新文章</title>
-    <url>/2021/08/20/hexo-sidebar/</url>
-    <content><![CDATA[<h2 id="创建自定义文件"><a href="#创建自定义文件" class="headerlink" title="创建自定义文件"></a>创建自定义文件</h2><p>在新建文件yoursite/source/_data/sidebar.njk,添加以下内容</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- recent posts --&gt;</span><br><span class="line">&#123;%- if theme.recent_posts %&#125;</span><br><span class="line">    &lt;div class=&quot;links-of-blogroll motion-element &#123;&#123; &quot;links-of-blogroll-&quot; + theme.recent_posts_layout &#125;&#125;&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;links-of-blogroll-title recent-posts-title&quot;&gt;</span><br><span class="line">	    &lt;i class=&quot;fa fa-history &#123;&#123; theme.recent_posts_icon | lower &#125;&#125;&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;</span><br><span class="line">            &#123;&#123; theme.recent_posts_title &#125;&#125;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;ul class=&quot;links-of-blogroll-list recent-posts-list&quot;&gt;</span><br><span class="line">	    &#123;%- set posts = site.posts.sort(&#x27;-date&#x27;).toArray() %&#125;</span><br><span class="line">	    &#123;%- for post in posts.slice(&#x27;0&#x27;, &#x27;5&#x27;) %&#125;</span><br><span class="line">	        &lt;li class=&quot;my-links-of-blogroll-item&quot;&gt;</span><br><span class="line">		    &lt;a href=&quot;&#123;&#123; url_for(post.path) &#125;&#125;&quot; title=&quot;&#123;&#123; post.title &#125;&#125;&quot; target=&quot;&quot;&gt;</span><br><span class="line">		    &#123;&#123; post.title &#125;&#125;</span><br><span class="line">		    &lt;/a&gt;</span><br><span class="line">		&lt;/li&gt;</span><br><span class="line">	    &#123;%- endfor %&#125;</span><br><span class="line">	&lt;/ul&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="修改主题配置文件"><a href="#修改主题配置文件" class="headerlink" title="修改主题配置文件"></a>修改主题配置文件</h2><p>在站点目录下修改主题配置文件（_config.yml）添加以下内容<br>文件路径：yoursite/theme/next/_config.yml</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">recent_posts: true</span><br><span class="line">recent_posts_title: 近期文章</span><br><span class="line">recent_posts_layout: block</span><br></pre></td></tr></table></figure>
-
-<h2 id="启动添加文件"><a href="#启动添加文件" class="headerlink" title="启动添加文件"></a>启动添加文件</h2><p>修改文件yoursite/theme/next/_config.yml uncomment sidebar这一行</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">custom_file_path:</span><br><span class="line">  #head: source/_data/head.njk</span><br><span class="line">  #header: source/_data/header.njk</span><br><span class="line">  sidebar: source/_data/sidebar.njk</span><br><span class="line">  #postMeta: source/_data/post-meta.njk</span><br><span class="line">  #postBodyEnd: source/_data/post-body-end.njk</span><br><span class="line">  #footer: source/_data/footer.njk</span><br><span class="line">  #bodyEnd: source/_data/body-end.njk</span><br><span class="line">  #variable: source/_data/variables.styl</span><br><span class="line">  #mixin: source/_data/mixins.styl</span><br><span class="line">  #style: source/_data/styles.styl</span><br></pre></td></tr></table></figure>
-
-<h2 id="刷新站点"><a href="#刷新站点" class="headerlink" title="刷新站点"></a>刷新站点</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s </span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -578,6 +578,35 @@
       </tags>
   </entry>
   <entry>
+    <title>python程序获取股票信息</title>
+    <url>/2022/07/04/stock-price/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
+<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
+<li>python3</li>
+<li>akshare</li>
+<li>GoogleSheet</li>
+</ul>
+<p>Reference </p>
+<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
+<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
+<li>code example</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
+</ul>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>stock</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>shell变量高级篇</title>
     <url>/2021/08/24/shell-variable-advance/</url>
     <content><![CDATA[<p> <a href="#shell%E5%8F%98%E9%87%8F%E7%9A%84%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8">shell变量的高级应用</a></p>
@@ -762,35 +791,6 @@
       <tags>
         <tag>tech</tag>
         <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python程序获取股票信息</title>
-    <url>/2022/07/04/stock-price/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
-<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
-<li>python3</li>
-<li>akshare</li>
-<li>GoogleSheet</li>
-</ul>
-<p>Reference </p>
-<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
-<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
-<li>code example</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
-</ul>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>stock</tag>
-        <tag>python</tag>
       </tags>
   </entry>
   <entry>
