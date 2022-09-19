@@ -20,19 +20,21 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"toskachin.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Kubernetes 入门基础Kubernetes 核心组件Kubernetes 主要由以下几个核心组件组成:  etcd 保存了整个集群的状态； API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制； Controller Manager 负责维护集群的状态，比如故障检测、自动扩展、滚动更新等； Scheduler 负责资源的调度，按照预定的调度策">
+<meta name="description" content="Kubernetes 入门基础*** Kubernetes Components Architecture *** Kubernetes 核心组件Kubernetes 主要由以下几个核心组件组成:  etcd 保存了整个集群的状态； API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制； Controller Manager 负责维护集群的状态，比如">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kubernetes 入门基础">
 <meta property="og:url" content="https://toskachin.github.io/2022/09/20/Kubernetes_from_zero/index.html">
 <meta property="og:site_name" content="子荣君的杂货铺">
-<meta property="og:description" content="Kubernetes 入门基础Kubernetes 核心组件Kubernetes 主要由以下几个核心组件组成:  etcd 保存了整个集群的状态； API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制； Controller Manager 负责维护集群的状态，比如故障检测、自动扩展、滚动更新等； Scheduler 负责资源的调度，按照预定的调度策">
+<meta property="og:description" content="Kubernetes 入门基础*** Kubernetes Components Architecture *** Kubernetes 核心组件Kubernetes 主要由以下几个核心组件组成:  etcd 保存了整个集群的状态； API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制； Controller Manager 负责维护集群的状态，比如">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://toskachin.github.io/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg">
 <meta property="article:published_time" content="2022-09-19T23:54:41.000Z">
-<meta property="article:modified_time" content="2022-09-19T13:47:04.858Z">
+<meta property="article:modified_time" content="2022-09-19T13:51:21.773Z">
 <meta property="article:author" content="TOSKA">
 <meta property="article:tag" content="tech">
 <meta property="article:tag" content="k8s">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://toskachin.github.io/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg">
 
 
 <link rel="canonical" href="https://toskachin.github.io/2022/09/20/Kubernetes_from_zero/">
@@ -292,7 +294,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-09-19 21:47:04" itemprop="dateModified" datetime="2022-09-19T21:47:04+08:00">2022-09-19</time>
+        <time title="修改时间：2022-09-19 21:51:21" itemprop="dateModified" datetime="2022-09-19T21:51:21+08:00">2022-09-19</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -336,7 +338,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="Kubernetes-入门基础"><a href="#Kubernetes-入门基础" class="headerlink" title="Kubernetes 入门基础"></a>Kubernetes 入门基础</h1><h2 id="Kubernetes-核心组件"><a href="#Kubernetes-核心组件" class="headerlink" title="Kubernetes 核心组件"></a>Kubernetes 核心组件</h2><p>Kubernetes 主要由以下几个核心组件组成:</p>
+        <h1 id="Kubernetes-入门基础"><a href="#Kubernetes-入门基础" class="headerlink" title="Kubernetes 入门基础"></a>Kubernetes 入门基础</h1><p>*** Kubernetes Components Architecture ***<br><img src="/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg" alt="image"></p>
+<h2 id="Kubernetes-核心组件"><a href="#Kubernetes-核心组件" class="headerlink" title="Kubernetes 核心组件"></a>Kubernetes 核心组件</h2><p>Kubernetes 主要由以下几个核心组件组成:</p>
 <ul>
 <li>etcd 保存了整个集群的状态；</li>
 <li>API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制；</li>
