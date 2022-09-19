@@ -20,16 +20,16 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"toskachin.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Kubernetes 入门基础*** Kubernetes Components Architecture *** Kubernetes 核心组件Kubernetes 主要由以下几个核心组件组成:  etcd 保存了整个集群的状态； API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制； Controller Manager 负责维护集群的状态，比如">
+<meta name="description" content="Kubernetes 入门基础Kubernetes Components Architecture Kubernetes 核心组件Kubernetes 主要由以下几个核心组件组成:  etcd 保存了整个集群的状态； API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制； Controller Manager 负责维护集群的状态，比如故障检测、自动扩">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kubernetes 入门基础">
 <meta property="og:url" content="https://toskachin.github.io/2022/09/20/Kubernetes_from_zero/index.html">
 <meta property="og:site_name" content="子荣君的杂货铺">
-<meta property="og:description" content="Kubernetes 入门基础*** Kubernetes Components Architecture *** Kubernetes 核心组件Kubernetes 主要由以下几个核心组件组成:  etcd 保存了整个集群的状态； API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制； Controller Manager 负责维护集群的状态，比如">
+<meta property="og:description" content="Kubernetes 入门基础Kubernetes Components Architecture Kubernetes 核心组件Kubernetes 主要由以下几个核心组件组成:  etcd 保存了整个集群的状态； API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制； Controller Manager 负责维护集群的状态，比如故障检测、自动扩">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://toskachin.github.io/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg">
 <meta property="article:published_time" content="2022-09-19T23:54:41.000Z">
-<meta property="article:modified_time" content="2022-09-19T13:51:21.773Z">
+<meta property="article:modified_time" content="2022-09-19T23:51:25.025Z">
 <meta property="article:author" content="TOSKA">
 <meta property="article:tag" content="tech">
 <meta property="article:tag" content="k8s">
@@ -151,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Kubernetes-%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">Kubernetes 入门基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubernetes-%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">Kubernetes 核心组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubernetes%E7%9B%B8%E5%85%B3%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.</span> <span class="nav-text">Kubernetes相关基础概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubernetes%E9%9B%86%E7%BE%A4%E7%9B%B8%E5%85%B3%E7%BB%84%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">Kubernetes集群相关组件</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Kubernetes-%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">Kubernetes 入门基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubernetes-%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">Kubernetes 核心组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubernetes%E7%9B%B8%E5%85%B3%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.</span> <span class="nav-text">Kubernetes相关基础概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K8s-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.</span> <span class="nav-text">K8s 常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#kubectl"><span class="nav-number">1.3.1.</span> <span class="nav-text">kubectl</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">配置</span></a></li></ol></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -286,16 +286,10 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2022-09-20 07:54:41" itemprop="dateCreated datePublished" datetime="2022-09-20T07:54:41+08:00">2022-09-20</time>
+      <time title="创建时间：2022-09-20 07:54:41 / 修改时间：07:51:25" itemprop="dateCreated datePublished" datetime="2022-09-20T07:54:41+08:00">2022-09-20</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-09-19 21:51:21" itemprop="dateModified" datetime="2022-09-19T21:51:21+08:00">2022-09-19</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -320,14 +314,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.9k</span>
+      <span>2.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -338,7 +332,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="Kubernetes-入门基础"><a href="#Kubernetes-入门基础" class="headerlink" title="Kubernetes 入门基础"></a>Kubernetes 入门基础</h1><p>*** Kubernetes Components Architecture ***<br><img src="/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg" alt="image"></p>
+        <h1 id="Kubernetes-入门基础"><a href="#Kubernetes-入门基础" class="headerlink" title="Kubernetes 入门基础"></a>Kubernetes 入门基础</h1><p><strong>Kubernetes Components Architecture</strong><br><img src="/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg" alt="image"></p>
 <h2 id="Kubernetes-核心组件"><a href="#Kubernetes-核心组件" class="headerlink" title="Kubernetes 核心组件"></a>Kubernetes 核心组件</h2><p>Kubernetes 主要由以下几个核心组件组成:</p>
 <ul>
 <li>etcd 保存了整个集群的状态；</li>
@@ -361,39 +355,23 @@
 <li>Volume：Volume是Pod中能够被多个容器访问的共享目录，Kubernetes中的Volume是定义在Pod上，可以被一个或多个Pod中的容器挂载到某个目录下。</li>
 <li>Namespace：Namespace用于实现多租户的资源隔离，可将集群内部的资源对象分配到不同的Namespace中，形成逻辑上的不同项目、小组或用户组，便于不同的Namespace在共享使用整个集群的资源的同时还能被分别管理。</li>
 </ul>
-<h2 id="Kubernetes集群相关组件"><a href="#Kubernetes集群相关组件" class="headerlink" title="Kubernetes集群相关组件"></a>Kubernetes集群相关组件</h2><ul>
-<li><p>Kubernetes Master控制组件，调度管理整个系统（集群），包含如下组件:</p>
-</li>
-<li><p>Kubernetes API Server：作为Kubernetes系统的入口，其封装了核心对象的增删改查操作，以RESTful API接口方式提供给外部客户和内部组件调用，集群内各个功能模块之间数据交互和通信的中心枢纽。</p>
-</li>
-<li><p>Kubernetes Scheduler：为新建立的Pod进行节点(node)选择(即分配机器)，负责集群的资源调度。</p>
-</li>
-<li><p>Kubernetes Controller：负责执行各种控制器，目前已经提供了很多控制器来保证Kubernetes的正常运行。</p>
-</li>
-<li><p>Replication Controller：管理维护Replication Controller，关联Replication Controller和Pod，保证Replication Controller定义的副本数量与实际运行Pod数量一致。</p>
-</li>
-<li><p>Node Controller：管理维护Node，定期检查Node的健康状态，标识出(失效|未失效)的Node节点。</p>
-</li>
-<li><p>Namespace Controller：管理维护Namespace，定期清理无效的Namespace，包括Namesapce下的API对象，比如Pod、Service等。</p>
-</li>
-<li><p>Service Controller：管理维护Service，提供负载以及服务代理。</p>
-</li>
-<li><p>EndPoints Controller：管理维护Endpoints，关联Service和Pod，创建Endpoints为Service的后端，当Pod发生变化时，实时更新Endpoints。</p>
-</li>
-<li><p>Service Account Controller：管理维护Service Account，为每个Namespace创建默认的Service Account，同时为Service Account创建Service Account Secret。</p>
-</li>
-<li><p>Persistent Volume Controller：管理维护Persistent Volume和Persistent Volume Claim，为新的Persistent Volume Claim分配Persistent Volume进行绑定，为释放的Persistent Volume执行清理回收。</p>
-</li>
-<li><p>Daemon Set Controller：管理维护Daemon Set，负责创建Daemon Pod，保证指定的Node上正常的运行Daemon Pod。</p>
-</li>
-<li><p>Deployment Controller：管理维护Deployment，关联Deployment和Replication Controller，保证运行指定数量的Pod。当Deployment更新时，控制实现Replication Controller和Pod的更新。</p>
-</li>
-<li><p>Job Controller：管理维护Job，为Jod创建一次性任务Pod，保证完成Job指定完成的任务数目</p>
-</li>
-<li><p>Pod Autoscaler Controller：实现Pod的自动伸缩，定时获取监控数据，进行策略匹配，当满足条件时执行Pod的伸缩动作。</p>
-</li>
+<h2 id="K8s-常用命令"><a href="#K8s-常用命令" class="headerlink" title="K8s 常用命令"></a>K8s 常用命令</h2><h3 id="kubectl"><a href="#kubectl" class="headerlink" title="kubectl"></a>kubectl</h3><hr>
+<p>kubectl 是 Kubernetes 的命令行工具（CLI），是 Kubernetes 用户和管理员必备的管理工具。<br>kubectl 提供了大量的子命令，方便管理 Kubernetes 集群中的各种功能。这里不再罗列各种子命令的格式，而是介绍下如何查询命令的帮助</p>
+<ul>
+<li>kubectl -h 查看子命令列表</li>
+<li>kubectl options 查看全局选项</li>
+<li>kubectl <command> –help 查看子命令的帮助</li>
+<li>kubectl [command] [PARAMS] -o=<format> 设置输出格式（如 json、yaml、jsonpath 等）</li>
+<li>kubectl explain [RESOURCE] 查看资源的定义</li>
 </ul>
-
+<hr>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>使用 kubectl 的第一步是配置 Kubernetes 集群以及认证方式，包括</p>
+<ul>
+<li>cluster 信息：Kubernetes server 地址</li>
+<li>用户信息：用户名、密码或密钥</li>
+<li>Context：cluster、用户信息以及 Namespace 的组合</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kubectl config set-credentials myself --username=admin --password=secret</span><br><span class="line">kubectl config set-cluster local-server --server=http://localhost:8080</span><br><span class="line">kubectl config set-context default-context --cluster=local-server --user=myself --namespace=default</span><br><span class="line">kubectl config use-context default-context</span><br><span class="line">kubectl config view</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -452,7 +430,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:31</span>
+    <span title="站点阅读时长">5:30</span>
   </span>
 </div>
 <div class="busuanzi-count">
