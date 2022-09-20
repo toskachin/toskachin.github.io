@@ -22,6 +22,108 @@
       </tags>
   </entry>
   <entry>
+    <title>Kubernetes 入门基础</title>
+    <url>/2022/09/20/Kubernetes_from_zero/</url>
+    <content><![CDATA[<h1 id="Kubernetes-入门基础"><a href="#Kubernetes-入门基础" class="headerlink" title="Kubernetes 入门基础"></a>Kubernetes 入门基础</h1><p><strong>Kubernetes Components Architecture</strong><br><img src="/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg" alt="image"></p>
+<h2 id="Kubernetes-核心组件"><a href="#Kubernetes-核心组件" class="headerlink" title="Kubernetes 核心组件"></a>Kubernetes 核心组件</h2><p>Kubernetes 主要由以下几个核心组件组成:</p>
+<ul>
+<li>etcd 保存了整个集群的状态；</li>
+<li>API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制；</li>
+<li>Controller Manager 负责维护集群的状态，比如故障检测、自动扩展、滚动更新等；</li>
+<li>Scheduler 负责资源的调度，按照预定的调度策略将 Pod 调度到相应的机器上；</li>
+<li>Kubelet 负责维护容器的生命周期，同时也负责 Volume（CVI）和网络（CNI）的管理；</li>
+<li>Container Runtime 负责镜像管理以及 Pod 和容器的真正运行（CRI）；</li>
+<li>Kube-proxy 负责为 Service 提供 cluster 内部的服务发现和负载均衡；</li>
+</ul>
+<h2 id="Kubernetes相关基础概念"><a href="#Kubernetes相关基础概念" class="headerlink" title="Kubernetes相关基础概念"></a>Kubernetes相关基础概念</h2><ul>
+<li>master：k8s集群的管理节点，负责管理集群，提供集群的资源数据访问入口。拥有Etcd存储服务（可选），运行Api Server进程，Controller Manager服务进程及Scheduler服务进程。</li>
+<li>node（worker）：Node（worker）是Kubernetes集群架构中运行Pod的服务节点，是Kubernetes集群操作的单元，用来承载被分配Pod的运行，是Pod运行的宿主机。运行docker eninge服务，守护进程kunelet及负载均衡器kube-proxy。</li>
+<li>pod：运行于Node节点上，若干相关容器的组合。Pod内包含的容器运行在同一宿主机上，使用相同的网络命名空间、IP地址和端口，能够通过localhost进行通信。Pod是Kurbernetes进行创建、调度和管理的最小单位，它提供了比容器更高层次的抽象，使得部署和管理更加灵活。一个Pod可以包含一个容器或者多个相关容器。</li>
+<li>label：Kubernetes中的Label实质是一系列的Key/Value键值对，其中key与value可自定义。Label可以附加到各种资源对象上，如Node、Pod、Service、RC等。一个资源对象可以定义任意数量的Label，同一个Label也可以被添加到任意数量的资源对象上去。Kubernetes通过Label Selector（标签选择器）查询和筛选资源对象。</li>
+<li>Replication Controller：Replication Controller用来管理Pod的副本，保证集群中存在指定数量的Pod副本。集群中副本的数量大于指定数量，则会停止指定数量之外的多余容器数量。反之，则会启动少于指定数量个数的容器，保证数量不变。Replication Controller是实现弹性伸缩、动态扩容和滚动升级的核心。</li>
+<li>Deployment：Deployment在内部使用了RS来实现目的，Deployment相当于RC的一次升级，其最大的特色为可以随时获知当前Pod的部署进度。</li>
+<li>HPA（Horizontal Pod Autoscaler）：Pod的横向自动扩容，也是Kubernetes的一种资源，通过追踪分析RC控制的所有Pod目标的负载变化情况，来确定是否需要针对性的调整Pod副本数量。</li>
+<li>Service：Service定义了Pod的逻辑集合和访问该集合的策略，是真实服务的抽象。Service提供了一个统一的服务访问入口以及服务代理和发现机制，关联多个相同Label的Pod，用户不需要了解后台Pod是如何运行。</li>
+<li>Volume：Volume是Pod中能够被多个容器访问的共享目录，Kubernetes中的Volume是定义在Pod上，可以被一个或多个Pod中的容器挂载到某个目录下。</li>
+<li>Namespace：Namespace用于实现多租户的资源隔离，可将集群内部的资源对象分配到不同的Namespace中，形成逻辑上的不同项目、小组或用户组，便于不同的Namespace在共享使用整个集群的资源的同时还能被分别管理。</li>
+</ul>
+<h2 id="K8s-常用命令"><a href="#K8s-常用命令" class="headerlink" title="K8s 常用命令"></a>K8s 常用命令</h2><h3 id="kubectl"><a href="#kubectl" class="headerlink" title="kubectl"></a>kubectl</h3><hr>
+<p>kubectl 是 Kubernetes 的命令行工具（CLI），是 Kubernetes 用户和管理员必备的管理工具。<br>kubectl 提供了大量的子命令，方便管理 Kubernetes 集群中的各种功能。这里不再罗列各种子命令的格式，而是介绍下如何查询命令的帮助</p>
+<ul>
+<li>kubectl -h 查看子命令列表</li>
+<li>kubectl options 查看全局选项</li>
+<li>kubectl <command> –help 查看子命令的帮助</li>
+<li>kubectl [command] [PARAMS] -o=<format> 设置输出格式（如 json、yaml、jsonpath 等）</li>
+<li>kubectl explain [RESOURCE] 查看资源的定义</li>
+</ul>
+<hr>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>使用 kubectl 的第一步是配置 Kubernetes 集群以及认证方式，包括</p>
+<ul>
+<li>cluster 信息：Kubernetes server 地址</li>
+<li>用户信息：用户名、密码或密钥</li>
+<li>Context：cluster、用户信息以及 Namespace 的组合</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl config set-credentials myself --username=admin --password=secret</span><br><span class="line">kubectl config set-cluster local-server --server=http://localhost:8080</span><br><span class="line">kubectl config set-context default-context --cluster=local-server --user=myself --namespace=default</span><br><span class="line">kubectl config use-context default-context</span><br><span class="line">kubectl config view</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>tech</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>k8s</tag>
+        <tag>container</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker useful commands</title>
+    <url>/2022/09/21/docker_useful_commands/</url>
+    <content><![CDATA[<h2 id="docker-commands"><a href="#docker-commands" class="headerlink" title="docker commands"></a>docker commands</h2><hr>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker cp </span><br><span class="line">docker stop redis</span><br><span class="line">docker kill redis</span><br><span class="line">docker rm -l db #移除网络连接</span><br><span class="line">docker rm -v redis #删除容器挂载的磁盘</span><br><span class="line">docker logs redis #查看日志</span><br><span class="line">docker logs -f -t --tail=20 redis #查看容器日历最近20条</span><br><span class="line">docker top redis #查看容器进程</span><br><span class="line">docker images #查看本地镜像</span><br><span class="line">docker search mysql #查看mysql的镜像</span><br></pre></td></tr></table></figure>
+<h2 id="clean-docker-cache"><a href="#clean-docker-cache" class="headerlink" title="clean docker cache"></a>clean docker cache</h2><p><code>docker system prune</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker system prune后可以加额外的参数，如：</span><br><span class="line">docker system prune -a ： 一并清除所有未被使用的镜像和没有tag镜像。</span><br><span class="line">docker system prune -f ： 用以强制删除，不提示信息。</span><br></pre></td></tr></table></figure>
+
+<p><code>docker container prune</code></p>
+<p><code>docker network prun</code></p>
+<p><code>docker volume prune</code></p>
+<p><code>docker image prune --force --all</code></p>
+<h2 id="push-image-to-remote-server"><a href="#push-image-to-remote-server" class="headerlink" title="push image to remote server"></a>push image to remote server</h2><p><code>docker push  remote_server:5000/python-chromedriver:3.6</code></p>
+<h2 id="download-from-remote-server"><a href="#download-from-remote-server" class="headerlink" title="download from remote server"></a>download from remote server</h2><p><code>docker run labs-admin-lv-101.labs.marinsw.net:5000/ci-centos6-base date</code> </p>
+<h2 id="log-into-container"><a href="#log-into-container" class="headerlink" title="log into container"></a>log into container</h2><p><code>docker exec -it containerID /bin/bash</code></p>
+<h2 id="run-comtainer-from-remote-docker-registry-and-login"><a href="#run-comtainer-from-remote-docker-registry-and-login" class="headerlink" title="run comtainer from remote docker registry  and login"></a>run comtainer from remote docker registry  and login</h2><p><code>docker run -it remote_server:5000/ci-ubuntu- /bin/bash</code></p>
+<h2 id="rename-docker-image"><a href="#rename-docker-image" class="headerlink" title="rename docker image"></a>rename docker image</h2><p><code>docker image tag 7cebbf38959b  ci-ubuntu:latest</code></p>
+<h2 id="build-image-without-cache"><a href="#build-image-without-cache" class="headerlink" title="build image without cache"></a>build image without cache</h2><p><code>docker build --no-cache -f Dockerfile -t ci-base .</code></p>
+<h2 id="Build-docker-with-docker-file"><a href="#Build-docker-with-docker-file" class="headerlink" title="Build docker with docker file"></a>Build docker with docker file</h2><p><code>docker build -f Dockerfile -t image-name .</code></p>
+<h2 id="Log-into-images"><a href="#Log-into-images" class="headerlink" title="Log into images"></a>Log into images</h2><p><code>docker run -i -t image-name /bin/bash</code></p>
+<h2 id="list-images"><a href="#list-images" class="headerlink" title="list images"></a>list images</h2><p><code>docker images</code></p>
+<h2 id="rm-images"><a href="#rm-images" class="headerlink" title="rm images"></a>rm images</h2><p><code>docker image rm -f imagename</code></p>
+<h2 id="locally-docker-tag-local-image"><a href="#locally-docker-tag-local-image" class="headerlink" title="locally docker tag local image"></a>locally docker tag local image</h2><p><code>docker tag 98d6830c1011 remote_server:5000/python-chromedriver:3.6</code></p>
+<h2 id="save-image-to-file-and-load-locally"><a href="#save-image-to-file-and-load-locally" class="headerlink" title="save image to file and load locally"></a>save image to file and load locally</h2><ul>
+<li><p>docker save labs-admin-lv-101.labs.marinsw.net:5000/ci-ubuntu-mysqldb-mvn354 | gzip  &gt; docker_image_ci-ubuntu-mysqldb-mvn354.tar.gz</p>
+</li>
+<li><p>docker save calc &gt; calc.tar</p>
+</li>
+<li><p>docker load &lt; docker_image_ci-ubuntu-mysqldb-mvn354.tar.gz</p>
+</li>
+</ul>
+<h2 id="建立本地docker-registry"><a href="#建立本地docker-registry" class="headerlink" title="建立本地docker registry"></a>建立本地docker registry</h2><hr>
+<ul>
+<li>docker pull registry:2.6.2 #下载registry</li>
+<li>docker run –name registry -p 5000:5000 -v /data/registry:/var/lib/registry -d registry:2.6.2 #启动registry服务</li>
+<li>docker port registry #查看端口</li>
+<li>docker tag busybox:latest 192.168.10.102:5000/busybox:v0.1 #tag镜像</li>
+<li>docker push 192.168.10.102:5000/busybox:v0.1 #推送镜像</li>
+</ul>
+]]></content>
+      <categories>
+        <category>tech</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>k8s</tag>
+        <tag>container</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Interview notes March 2022</title>
     <url>/2022/03/10/Interview_notes_march_2022/</url>
     <content><![CDATA[<h2 id="Application-support"><a href="#Application-support" class="headerlink" title="Application support"></a>Application support</h2><h3 id="Macbook-support"><a href="#Macbook-support" class="headerlink" title="Macbook support"></a>Macbook support</h3><p>how to reset Macbook</p>
@@ -98,54 +200,31 @@
       </tags>
   </entry>
   <entry>
-    <title>Kubernetes 入门基础</title>
-    <url>/2022/09/20/Kubernetes_from_zero/</url>
-    <content><![CDATA[<h1 id="Kubernetes-入门基础"><a href="#Kubernetes-入门基础" class="headerlink" title="Kubernetes 入门基础"></a>Kubernetes 入门基础</h1><p><strong>Kubernetes Components Architecture</strong><br><img src="/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg" alt="image"></p>
-<h2 id="Kubernetes-核心组件"><a href="#Kubernetes-核心组件" class="headerlink" title="Kubernetes 核心组件"></a>Kubernetes 核心组件</h2><p>Kubernetes 主要由以下几个核心组件组成:</p>
-<ul>
-<li>etcd 保存了整个集群的状态；</li>
-<li>API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制；</li>
-<li>Controller Manager 负责维护集群的状态，比如故障检测、自动扩展、滚动更新等；</li>
-<li>Scheduler 负责资源的调度，按照预定的调度策略将 Pod 调度到相应的机器上；</li>
-<li>Kubelet 负责维护容器的生命周期，同时也负责 Volume（CVI）和网络（CNI）的管理；</li>
-<li>Container Runtime 负责镜像管理以及 Pod 和容器的真正运行（CRI）；</li>
-<li>Kube-proxy 负责为 Service 提供 cluster 内部的服务发现和负载均衡；</li>
+    <title>Hexo_blog_setup</title>
+    <url>/2022/07/04/hexo-blog-setup/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>每次换电脑，或者在其他电脑上工作后发现无法更新这个Blog，需要记录下如何当初一步一步设置这个blog，以方便迁移，重新搭建</p>
+<h1 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h1><ul>
+<li>hexo </li>
+<li>hexo theme</li>
+<li>github</li>
+<li></li>
 </ul>
-<h2 id="Kubernetes相关基础概念"><a href="#Kubernetes相关基础概念" class="headerlink" title="Kubernetes相关基础概念"></a>Kubernetes相关基础概念</h2><ul>
-<li>master：k8s集群的管理节点，负责管理集群，提供集群的资源数据访问入口。拥有Etcd存储服务（可选），运行Api Server进程，Controller Manager服务进程及Scheduler服务进程。</li>
-<li>node（worker）：Node（worker）是Kubernetes集群架构中运行Pod的服务节点，是Kubernetes集群操作的单元，用来承载被分配Pod的运行，是Pod运行的宿主机。运行docker eninge服务，守护进程kunelet及负载均衡器kube-proxy。</li>
-<li>pod：运行于Node节点上，若干相关容器的组合。Pod内包含的容器运行在同一宿主机上，使用相同的网络命名空间、IP地址和端口，能够通过localhost进行通信。Pod是Kurbernetes进行创建、调度和管理的最小单位，它提供了比容器更高层次的抽象，使得部署和管理更加灵活。一个Pod可以包含一个容器或者多个相关容器。</li>
-<li>label：Kubernetes中的Label实质是一系列的Key/Value键值对，其中key与value可自定义。Label可以附加到各种资源对象上，如Node、Pod、Service、RC等。一个资源对象可以定义任意数量的Label，同一个Label也可以被添加到任意数量的资源对象上去。Kubernetes通过Label Selector（标签选择器）查询和筛选资源对象。</li>
-<li>Replication Controller：Replication Controller用来管理Pod的副本，保证集群中存在指定数量的Pod副本。集群中副本的数量大于指定数量，则会停止指定数量之外的多余容器数量。反之，则会启动少于指定数量个数的容器，保证数量不变。Replication Controller是实现弹性伸缩、动态扩容和滚动升级的核心。</li>
-<li>Deployment：Deployment在内部使用了RS来实现目的，Deployment相当于RC的一次升级，其最大的特色为可以随时获知当前Pod的部署进度。</li>
-<li>HPA（Horizontal Pod Autoscaler）：Pod的横向自动扩容，也是Kubernetes的一种资源，通过追踪分析RC控制的所有Pod目标的负载变化情况，来确定是否需要针对性的调整Pod副本数量。</li>
-<li>Service：Service定义了Pod的逻辑集合和访问该集合的策略，是真实服务的抽象。Service提供了一个统一的服务访问入口以及服务代理和发现机制，关联多个相同Label的Pod，用户不需要了解后台Pod是如何运行。</li>
-<li>Volume：Volume是Pod中能够被多个容器访问的共享目录，Kubernetes中的Volume是定义在Pod上，可以被一个或多个Pod中的容器挂载到某个目录下。</li>
-<li>Namespace：Namespace用于实现多租户的资源隔离，可将集群内部的资源对象分配到不同的Namespace中，形成逻辑上的不同项目、小组或用户组，便于不同的Namespace在共享使用整个集群的资源的同时还能被分别管理。</li>
-</ul>
-<h2 id="K8s-常用命令"><a href="#K8s-常用命令" class="headerlink" title="K8s 常用命令"></a>K8s 常用命令</h2><h3 id="kubectl"><a href="#kubectl" class="headerlink" title="kubectl"></a>kubectl</h3><hr>
-<p>kubectl 是 Kubernetes 的命令行工具（CLI），是 Kubernetes 用户和管理员必备的管理工具。<br>kubectl 提供了大量的子命令，方便管理 Kubernetes 集群中的各种功能。这里不再罗列各种子命令的格式，而是介绍下如何查询命令的帮助</p>
-<ul>
-<li>kubectl -h 查看子命令列表</li>
-<li>kubectl options 查看全局选项</li>
-<li>kubectl <command> –help 查看子命令的帮助</li>
-<li>kubectl [command] [PARAMS] -o=<format> 设置输出格式（如 json、yaml、jsonpath 等）</li>
-<li>kubectl explain [RESOURCE] 查看资源的定义</li>
-</ul>
-<hr>
-<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>使用 kubectl 的第一步是配置 Kubernetes 集群以及认证方式，包括</p>
-<ul>
-<li>cluster 信息：Kubernetes server 地址</li>
-<li>用户信息：用户名、密码或密钥</li>
-<li>Context：cluster、用户信息以及 Namespace 的组合</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl config set-credentials myself --username=admin --password=secret</span><br><span class="line">kubectl config set-cluster local-server --server=http://localhost:8080</span><br><span class="line">kubectl config set-context default-context --cluster=local-server --user=myself --namespace=default</span><br><span class="line">kubectl config use-context default-context</span><br><span class="line">kubectl config view</span><br></pre></td></tr></table></figure>]]></content>
+<h2 id="Install-Steps"><a href="#Install-Steps" class="headerlink" title="Install Steps"></a>Install Steps</h2><h3 id="Install-hexo"><a href="#Install-hexo" class="headerlink" title="Install hexo"></a>Install hexo</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hello-cli -g</span><br><span class="line"></span><br><span class="line">~ ❯ hexo -v                                                                              08:45:30</span><br><span class="line">hexo-cli: 4.3.0</span><br><span class="line">os: darwin 21.5.0 12.4</span><br><span class="line"></span><br><span class="line">node: 14.17.5</span><br><span class="line">v8: 8.4.371.23-node.76</span><br><span class="line">uv: 1.41.0</span><br><span class="line">zlib: 1.2.11</span><br><span class="line">brotli: 1.0.9</span><br><span class="line">ares: 1.17.2</span><br><span class="line">modules: 83</span><br><span class="line">nghttp2: 1.42.0</span><br><span class="line">napi: 8</span><br><span class="line">llhttp: 2.1.3</span><br><span class="line">openssl: 1.1.1k</span><br><span class="line">cldr: 39.0</span><br><span class="line">icu: 69.1</span><br><span class="line">tz: 2021a</span><br><span class="line">unicode: 13.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="Create-project"><a href="#Create-project" class="headerlink" title="Create project"></a>Create project</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">cd [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<h3 id="Set-blog-information"><a href="#Set-blog-information" class="headerlink" title="Set blog information"></a>Set blog information</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim _config.yml</span><br><span class="line"></span><br><span class="line">~~~~~~~~~~~~~~~~~~ _config.yml ~~~~~~~~~~~~~~~~~~</span><br><span class="line"># Site</span><br><span class="line">title: [githubaccount]&#x27;s note</span><br><span class="line">subtitle:</span><br><span class="line">description: [githubaccount]&#x27;s personal blog</span><br><span class="line">author: [githubaccount]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:[githubaccount]/[githubaccount].github.io.git</span><br><span class="line">  branch: master</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><h3 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next themes/next</span><br><span class="line"></span><br><span class="line">vi _config.yml</span><br><span class="line"></span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line">theme: next</span><br><span class="line"># https://github.com/theme-next/hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line">npm install hexo-enhancer --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install --save hexo-submit-urls-to-search-engine</span><br><span class="line">npm install hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Useful-hexo-commands"><a href="#Useful-hexo-commands" class="headerlink" title="Useful hexo commands"></a>Useful hexo commands</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo --config _config.yml</span><br><span class="line">hexo generate --watch</span><br><span class="line"></span><br><span class="line">hexo server</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>tech</category>
+        <category>blog</category>
       </categories>
       <tags>
         <tag>tech</tag>
-        <tag>k8s</tag>
+        <tag>personal</tag>
       </tags>
   </entry>
   <entry>
@@ -209,34 +288,6 @@
       <tags>
         <tag>面试</tag>
         <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo_blog_setup</title>
-    <url>/2022/07/04/hexo-blog-setup/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>每次换电脑，或者在其他电脑上工作后发现无法更新这个Blog，需要记录下如何当初一步一步设置这个blog，以方便迁移，重新搭建</p>
-<h1 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h1><ul>
-<li>hexo </li>
-<li>hexo theme</li>
-<li>github</li>
-<li></li>
-</ul>
-<h2 id="Install-Steps"><a href="#Install-Steps" class="headerlink" title="Install Steps"></a>Install Steps</h2><h3 id="Install-hexo"><a href="#Install-hexo" class="headerlink" title="Install hexo"></a>Install hexo</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hello-cli -g</span><br><span class="line"></span><br><span class="line">~ ❯ hexo -v                                                                              08:45:30</span><br><span class="line">hexo-cli: 4.3.0</span><br><span class="line">os: darwin 21.5.0 12.4</span><br><span class="line"></span><br><span class="line">node: 14.17.5</span><br><span class="line">v8: 8.4.371.23-node.76</span><br><span class="line">uv: 1.41.0</span><br><span class="line">zlib: 1.2.11</span><br><span class="line">brotli: 1.0.9</span><br><span class="line">ares: 1.17.2</span><br><span class="line">modules: 83</span><br><span class="line">nghttp2: 1.42.0</span><br><span class="line">napi: 8</span><br><span class="line">llhttp: 2.1.3</span><br><span class="line">openssl: 1.1.1k</span><br><span class="line">cldr: 39.0</span><br><span class="line">icu: 69.1</span><br><span class="line">tz: 2021a</span><br><span class="line">unicode: 13.0</span><br></pre></td></tr></table></figure>
-
-<h3 id="Create-project"><a href="#Create-project" class="headerlink" title="Create project"></a>Create project</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">cd [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
-
-<h3 id="Set-blog-information"><a href="#Set-blog-information" class="headerlink" title="Set blog information"></a>Set blog information</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim _config.yml</span><br><span class="line"></span><br><span class="line">~~~~~~~~~~~~~~~~~~ _config.yml ~~~~~~~~~~~~~~~~~~</span><br><span class="line"># Site</span><br><span class="line">title: [githubaccount]&#x27;s note</span><br><span class="line">subtitle:</span><br><span class="line">description: [githubaccount]&#x27;s personal blog</span><br><span class="line">author: [githubaccount]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:[githubaccount]/[githubaccount].github.io.git</span><br><span class="line">  branch: master</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><h3 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next themes/next</span><br><span class="line"></span><br><span class="line">vi _config.yml</span><br><span class="line"></span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line">theme: next</span><br><span class="line"># https://github.com/theme-next/hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line">npm install hexo-enhancer --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install --save hexo-submit-urls-to-search-engine</span><br><span class="line">npm install hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="Useful-hexo-commands"><a href="#Useful-hexo-commands" class="headerlink" title="Useful hexo commands"></a>Useful hexo commands</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo --config _config.yml</span><br><span class="line">hexo generate --watch</span><br><span class="line"></span><br><span class="line">hexo server</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>personal</tag>
       </tags>
   </entry>
   <entry>
@@ -496,6 +547,139 @@
       </tags>
   </entry>
   <entry>
+    <title>一文了解正则表达式</title>
+    <url>/2022/05/10/regexr/</url>
+    <content><![CDATA[<h1 id="一-正则表达式简介"><a href="#一-正则表达式简介" class="headerlink" title="一.正则表达式简介"></a>一.正则表达式简介</h1><ol>
+<li><p>什么是正则表达式<br>正则表达式（Regluar Expressions）又称规则表达式，这个概念最初是由Unix中的工具软件（如sed 和 grep）普及开的。正则表达式在代码中常简写为REs，regexes或regexp（regex patterns）。它本质上是一个小巧的、高度专用的编程语言。 许多程序设计语言都支持通过正则表达式进行字符串操作。例如，在Perl中就内建了一个功能强大的正则表达式引擎。</p>
+</li>
+<li><p>正则表达式能做什么<br>正则表达式的主要应用对象是文本，使用正则表达式可以指定想要匹配的字符串规则，然后通过这个规则来匹配、查找、替换或切割那些符合指定规则的文本。总体来讲，正则表达式可以对指定的文本实现以下功能：</p>
+</li>
+</ol>
+<ul>
+<li>匹配验证： 判断给定的字符串是否符合正则表达式所指定的过滤规则，从而可以判断某个字符串的内容是否符合特定的规则（如email地址、手机号码等）；当正则表达式用于匹配验证时，通常需要在正则表达式字符串的首部和尾部加上^和$，以匹配整个待验证的字符串。</li>
+<li>查找与替换： 判断给定字符串中是否包含满足正则表达式所指定的匹配规则的子串，如查找一段文本中的所包含的IP地址。另外，还可以对查找到的子串进行内容替换。<br>字符串分割与子串截取： 基于子串查找功能还可以以符合正则表达式所指定的匹配规则的字符串作为分隔符对给定的字符串进行分割。</li>
+</ul>
+<h1 id="二-正则表达式中的字符"><a href="#二-正则表达式中的字符" class="headerlink" title="二.正则表达式中的字符"></a>二.正则表达式中的字符</h1><p>正则表达式的主要应用对象是文本，其最基础的功能是文本匹配，而文本是由一个个的字符组成，因此正则表达式实际上是对字符的匹配。正则表达式中的字符分为 普通字符 和 元字符，而正则表达式就是这些普通字符和特殊元字符组合成的表示一个特定匹配规则的表达式。</p>
+<ol>
+<li>普通字符<br>实际上，大多数字符都将简单地匹配它们的自身值，它们被称为普通字符，如数字（0-9），字母（a-z, A-Z）等。例如，正则表达式hello123将匹配字符串’hello123’，因为该这则表达式中都是普通字符，不包含特殊元字符。当然，我们可以通过指定正则表达式的匹配模式为 忽略字母大小写模式，这么正则表达式hello123将能够匹配’Hello123’, ‘HellO123’, ‘HELLO123’等字符串。</li>
+</ol>
+<blockquote>
+<p>提示： 其实我们并不需要去记忆哪些字符是普通字符，我们只需要知道哪些字符是特殊元字符就可以了，除了特殊元字符之外的所有字符都是普通字符。</p>
+</blockquote>
+<ol start="2">
+<li>元字符<br>上面提到，正则表达式除了进行字符自身之的匹配外，还可以基于指定的规则进行模糊匹配。这就意味着它需要一些特殊字符来表示这些模糊的匹配规则，因此这些特殊字符默认情况下并不能匹配到它们自身的字面值，而是表示某些特殊的功能。这些特殊元字符包括：., [, ], (, ), *, +, ?, ^, $, , |。这些特殊字符的使用，会在下面进行详细讲解。正则表达式的重点和难点也就在于对正则表达式引擎的工作原理以及对这些特殊元字符掌握和灵活运用。</li>
+</ol>
+<blockquote>
+<p>提示： 那么如果想匹配这些特殊元字符本身的字面值怎么办呢？我们可以通过其中一个特殊字符对其它特殊字符进行转义，从而达到可以匹配这些特殊字符自身字面值的目的。</p>
+</blockquote>
+<h1 id="三-元字符详解"><a href="#三-元字符详解" class="headerlink" title="三.元字符详解"></a>三.元字符详解</h1><p>现在我们来详细说明一下正则表达式中的特殊元字符到底能完成哪些复杂的匹配功能。<br>1.单个字符匹配</p>
+<p><img src="/2022/05/10/regexr/regex1.png" alt="image"></p>
+<blockquote>
+<p>说明： 所有的特殊字符在[ ]内都将失去其原有的特殊含义:</p>
+<ul>
+<li>有些特殊字符在[ ]中被赋予新的特殊含义，如 ‘^’出现在[ ]中的开始位置表示取反，它出现在[]中的其他位置表示其本身（变成了一个普通字符）；</li>
+<li>有些特殊字符则变为普通字符，如 ‘.’, ‘*’, ‘+’, ‘?’, ‘$’</li>
+<li>有的普通字符变为特殊字符，如 ‘-‘ 在[ ]中的位置不是第一个字符则表示一个数字或字母区间，如果在[ ]中的位置是第一个字符则表示其本身（一个普通字符）</li>
+<li>在[ ]中，如果要使用’-‘, ‘^’ 或’]’，可在在它们前面加上反斜杠，或把’-‘, ‘]’放在第一个字符的 位置，把’^’放在非第一个字符的位置</li>
+</ul>
+</blockquote>
+<ol>
+<li>预定义字符集</li>
+</ol>
+<p>我们可以在反斜杠后面跟上一个指定的字母来表示预定义的字符集合</p>
+<p><img src="/2022/05/10/regexr/regex2.png" alt="image"></p>
+<ol start="3">
+<li>字符次数匹配–量词<br>在正则表达式中，我们还可以指定匹配某个字符出现次数</li>
+</ol>
+<p><img src="/2022/05/10/regexr/regex3.png" alt="image"></p>
+<blockquote>
+<p>说明： {m,n}中的m和n可以省略其中一个，{,n}相当于{0,n}，{m,}相当于{m,整数最大值}。</p>
+</blockquote>
+<p>我们可以得出以下结论：</p>
+<ul>
+<li>{0,1}或{,1} 等价于 ?</li>
+<li>{1,} 等价于 +</li>
+<li>{0,} 等价于 *</li>
+</ul>
+<p>我们优先选择使用 ?, + 和 *，因为他们书写简单，也可以使整个正则表达式变得简洁。</p>
+<blockquote>
+<p>说明： ? 这个字符在正则表达中与 ?, +, *, {m,n}连用时还有一个额外的功能，就是将匹配模式由贪婪模式（尽可能的增加匹配次数） 变成 非贪婪模式（尽可能减少匹配次数）， 这个会在下面的内容中进行详细说明。</p>
+</blockquote>
+<ol start="4">
+<li><p>边界匹配<br>正则表达式中还可以对边界位置进行匹配，如一个字符串的开头或结尾，一个单词的开头或结尾。<br><img src="/2022/05/10/regexr/regexr4.png" alt="image"></p>
+</li>
+<li><p>逻辑与分组<br>语法 | 说明 | 表达式实例 | 可匹配到的字符串实例<br><img src="/2022/05/10/regexr/regexr5.png" alt="image"></p>
+</li>
+</ol>
+<ol start="6">
+<li>特殊构造</li>
+</ol>
+<p><img src="/2022/05/10/regexr/regexr6.png" alt="image"></p>
+<blockquote>
+<p>说明： 上面所说的“不消耗字符串内容”是指只是进行匹配，但是不移动原始字符串的匹配位置，这样就可以完成多次匹配。下面有个匹配密码的正则表达式实例，就是用这个特性巧妙完成的。</p>
+</blockquote>
+<h1 id="四-常用正则表达式实例"><a href="#四-常用正则表达式实例" class="headerlink" title="四.常用正则表达式实例"></a>四.常用正则表达式实例</h1><p>通常写一个合适的正则表达式是比较耗费时间的，因此我们可以保留一些常用的正则表达式以备不时之需。但是需要说明的是，没有任何一个人敢说自己写的正则表达式是百分之百严谨的，而且也没有百分之百相同的匹配需求，因此这里只是列举我自己写的几个常用的正则表达式，欢迎大家留言讨论。</p>
+<blockquote>
+<p>说明： 下面只是一些简单的匹配规则，实际情况中需要我们根据具体情况再这些正则表达式的首部和尾部加上相应的边界符，如：^, $, \A, \Z, \b, \B等</p>
+</blockquote>
+<p><strong>匹配一个网络地址（URL)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[a-zA-Z]+://[\S]+</span><br></pre></td></tr></table></figure>
+<p>需要说明的是，网络地址不一定是一个网页地址（http或https链接），还可能是ftp地址等。如果我们要匹配特定协议的网络地址，如http或http链接可以这样写:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(https?://)?[\S]+</span><br></pre></td></tr></table></figure>
+<p><strong>匹配一个IP地址</strong><br>最简单的写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(\d+[.])&#123;3&#125;\d+</span><br></pre></td></tr></table></figure>
+<p>严谨一点的写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(((?:[1-9]\d?)|(?:1\d&#123;2&#125;)|(?:2[0-4]\d)|(?:25[0-5]))[.])&#123;3&#125;((?:[1-9]\d?)|(?:1\d&#123;2&#125;)|(?:2[0-4]\d)|(?:25[0-5]))</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">((([1-9]\d?)|(1\d&#123;2&#125;)|(2[0-4]\d)|(25[0-5]))[.])&#123;3&#125;(([1-9]\d?)|(1\d&#123;2&#125;)|(2[0-4]\d)|(25[0-5]))</span><br></pre></td></tr></table></figure>
+<p><strong>匹配一个邮箱地址</strong><br>最简单的写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\S+@\S+\.\S+</span><br></pre></td></tr></table></figure>
+<p>严谨一点的写法（保证只出现一个@符）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[^\s@]+@[^\s@]+\.[^\s@]+</span><br></pre></td></tr></table></figure>
+<p><strong>匹配密码是否合法</strong><br>要求比较简单的情况，比如只要求为非空字符且限定密码长度为6-18位</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">^\S[6-18]$</span><br></pre></td></tr></table></figure>
+<p>要求比较复杂的情况，比如必须同时包含含数字、大小字母、小写字母和标点符号，这就需要用到前面所说的正则表达式的特殊构造了(?=…), (?!=…)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(?=^.&#123;6,8&#125;$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)</span><br></pre></td></tr></table></figure>
+<p>如果要求必须同时包含且只能包含数字、大小字母、小写字母和标点符号，可以这样写：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(?=^[\d\Wa-zA-Z]&#123;6,8&#125;$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)</span><br></pre></td></tr></table></figure>
+<p><strong>匹配大陆身份证号码（15位或18位)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\d&#123;15&#125;|(\d&#123;18&#125;|(\d&#123;17&#125;[Xx]))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>小贴士： 当今的身份证号码有15位和18位之分。1985年我国实行居民身份证制度，当时签发的身份证号码是15位的，1999年签发的身份证由于年份的扩展（由两位变为四位）和末尾加了效验码，就成了18位。这两种身份证号码将在相当长的一段时期内共存。两种身份证号码的含义如下：</p>
+</blockquote>
+<p><strong>匹配日期（年-月-日)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(\d&#123;2&#125;|\d&#123;4&#125;)-((0?[1-9])|(1[0-2]))-((0?[1-9])|([12][0-9])|(3[01]))</span><br></pre></td></tr></table></figure>
+<p>24小时制时间（小时:分钟:秒）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(((0?|1)[0-9])|(2[0-3])):([0-5][0-9]):([0-5][0-9])</span><br></pre></td></tr></table></figure>
+<p>其他常用正则表达式<br><img src="/2022/05/10/regexr/regerx7.png" alt="image"><br><strong>再次说明，实际情况中需要我们根据具体情况再这些正则表达式的首部和尾部加上相应的边界符，如：^, $, \A, \Z, \b, \B等</strong></p>
+<h1 id="五-正则表达式的匹配过程"><a href="#五-正则表达式的匹配过程" class="headerlink" title="五.正则表达式的匹配过程"></a>五.正则表达式的匹配过程</h1><p>基于量词（如?, +, *, {m,n}, {m,}）的字符重复次数匹配是正则表达式优于普通字符串处理方法的一个重要方面，也是正则表达式的一个重要组成部分。量词对正则表达式的匹配过程具有非常重大的影响，因此在介绍正则表达式的匹配过程时，必不可少的要提到量词的两个重要分类：</p>
+<ul>
+<li>匹配优先量词 我们上面介绍的量词就是匹配优先量词包括：?, +, *, {m,n}，但是不包括{m}</li>
+<li>忽略优先量词 在匹配优先量词后面加上一个问号就变成了忽略优先量词，包括：??, +?, *?, {m,n}?<br>如果大家对这两个词不熟悉的话，那么大家一定听说过这两个词：</li>
+<li>贪婪模式（或非惰性匹配） 顾名思义，就是在整个表达式匹配成功的前提下，尽可能多的去匹配量词所修饰的字符</li>
+<li>非贪婪模式（或惰性匹配） 在整个表达式匹配成功的前提下，尽可能少的去匹配量词所修饰的字符<br>它们之间的关系是：</li>
+<li>匹配优先量词修饰的子表达式使用的是就是贪婪模式（非惰性匹配）;</li>
+<li>忽略优先量词修饰的子表达式使用的就是模式就是非贪婪模式（惰性匹配）;<br>下面我们通过一个实例来分析 贪婪模式 和 非贪婪模式 下的正则匹配过程：</li>
+<li>要匹配的字符串：’abcbd’</li>
+<li>贪婪模式正则表达式：a[bcd]*b</li>
+<li>非贪婪模式正则表达式：a[bcd]*?b</li>
+</ul>
+<h2 id="1-贪婪模式匹配过程分析"><a href="#1-贪婪模式匹配过程分析" class="headerlink" title="1. 贪婪模式匹配过程分析"></a>1. 贪婪模式匹配过程分析</h2><p><img src="/2022/05/10/regexr/regexr8.png" alt="image"></p>
+<h2 id="2-非贪婪模式匹配过程分析"><a href="#2-非贪婪模式匹配过程分析" class="headerlink" title="2. 非贪婪模式匹配过程分析"></a>2. 非贪婪模式匹配过程分析</h2><p><img src="/2022/05/10/regexr/regerx9.png" alt="image"></p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>贪婪模式与非贪婪模式影响的是被量词修饰的子表达式的匹配行为，贪婪模式在整个表达式匹配成功的前提下，尽可能多的匹配；非贪婪模式在整个表达式匹配成功的前提下，尽可能少的匹配。另外，非贪婪模式只被部分NFA引擎所支持。从匹配效率上来看，能达到相同匹配结果时，贪婪模式的匹配效率通常会比较高，因为它回溯过程会比较少。</p>
+<h2 id="4-补充示例"><a href="#4-补充示例" class="headerlink" title="4. 补充示例"></a>4. 补充示例</h2><p>匹配过程示例<br><img src="/2022/05/10/regexr/regerx10.png" alt="image"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* 首先由“&lt;”取得控制权，由位置0位开始尝试匹配，匹配字符“a”，匹配失败，第一轮匹配结束。第二轮匹配从位置1开始尝试匹配，同样匹配失败。第三轮从位置3开始尝试匹配，匹配字符“&lt;”，匹配成功，控制权交给“d”。</span><br><span class="line"></span><br><span class="line">* “d”尝试匹配字符“d”，匹配成功，控制权交给“i”。重复以上过程，直到由“&gt;”匹配到字符“&gt;”，控制权交给“.*”。</span><br><span class="line"></span><br><span class="line">* “.*”属于贪婪模式，将从B处后的字符“t”开始，一直匹配到E处，也就是字符串结束位置，将控制权交给“&lt;”。</span><br><span class="line"></span><br><span class="line">* “&lt;”从字符串结束位置尝试匹配，匹配失败，向前查找可供回溯的状态，把控制权交给“.”，由“.”让出一个字符“c”，把控制权再交给“&lt;”，尝试匹配，匹配失败，向前查找可供回溯的状态。一直重复以上过程，直到“.*”让出已匹配的字符“&lt;”，实际上也就是到让出了已匹配的子串“&lt;/div&gt;cc&quot;为止，“&lt;”才匹配字符“&lt;”成功，控制权交给“/”。 </span><br><span class="line"></span><br><span class="line">* 接下来由“/”、“d”、“i”、“v”分别匹配对应的字符成功，此时整个正则表达式匹配完毕。</span><br></pre></td></tr></table></figure>
+
+<h1 id="六-参考资料"><a href="#六-参考资料" class="headerlink" title="六.参考资料"></a>六.参考资料</h1><p><img src="/2022/05/10/regexr/regerx11.png" alt="image"></p>
+]]></content>
+      <categories>
+        <category>shell</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>shell变量高级篇</title>
     <url>/2021/08/24/shell-variable-advance/</url>
     <content><![CDATA[<p> <a href="#shell%E5%8F%98%E9%87%8F%E7%9A%84%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8">shell变量的高级应用</a></p>
@@ -679,139 +863,6 @@
       </categories>
       <tags>
         <tag>tech</tag>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一文了解正则表达式</title>
-    <url>/2022/05/10/regexr/</url>
-    <content><![CDATA[<h1 id="一-正则表达式简介"><a href="#一-正则表达式简介" class="headerlink" title="一.正则表达式简介"></a>一.正则表达式简介</h1><ol>
-<li><p>什么是正则表达式<br>正则表达式（Regluar Expressions）又称规则表达式，这个概念最初是由Unix中的工具软件（如sed 和 grep）普及开的。正则表达式在代码中常简写为REs，regexes或regexp（regex patterns）。它本质上是一个小巧的、高度专用的编程语言。 许多程序设计语言都支持通过正则表达式进行字符串操作。例如，在Perl中就内建了一个功能强大的正则表达式引擎。</p>
-</li>
-<li><p>正则表达式能做什么<br>正则表达式的主要应用对象是文本，使用正则表达式可以指定想要匹配的字符串规则，然后通过这个规则来匹配、查找、替换或切割那些符合指定规则的文本。总体来讲，正则表达式可以对指定的文本实现以下功能：</p>
-</li>
-</ol>
-<ul>
-<li>匹配验证： 判断给定的字符串是否符合正则表达式所指定的过滤规则，从而可以判断某个字符串的内容是否符合特定的规则（如email地址、手机号码等）；当正则表达式用于匹配验证时，通常需要在正则表达式字符串的首部和尾部加上^和$，以匹配整个待验证的字符串。</li>
-<li>查找与替换： 判断给定字符串中是否包含满足正则表达式所指定的匹配规则的子串，如查找一段文本中的所包含的IP地址。另外，还可以对查找到的子串进行内容替换。<br>字符串分割与子串截取： 基于子串查找功能还可以以符合正则表达式所指定的匹配规则的字符串作为分隔符对给定的字符串进行分割。</li>
-</ul>
-<h1 id="二-正则表达式中的字符"><a href="#二-正则表达式中的字符" class="headerlink" title="二.正则表达式中的字符"></a>二.正则表达式中的字符</h1><p>正则表达式的主要应用对象是文本，其最基础的功能是文本匹配，而文本是由一个个的字符组成，因此正则表达式实际上是对字符的匹配。正则表达式中的字符分为 普通字符 和 元字符，而正则表达式就是这些普通字符和特殊元字符组合成的表示一个特定匹配规则的表达式。</p>
-<ol>
-<li>普通字符<br>实际上，大多数字符都将简单地匹配它们的自身值，它们被称为普通字符，如数字（0-9），字母（a-z, A-Z）等。例如，正则表达式hello123将匹配字符串’hello123’，因为该这则表达式中都是普通字符，不包含特殊元字符。当然，我们可以通过指定正则表达式的匹配模式为 忽略字母大小写模式，这么正则表达式hello123将能够匹配’Hello123’, ‘HellO123’, ‘HELLO123’等字符串。</li>
-</ol>
-<blockquote>
-<p>提示： 其实我们并不需要去记忆哪些字符是普通字符，我们只需要知道哪些字符是特殊元字符就可以了，除了特殊元字符之外的所有字符都是普通字符。</p>
-</blockquote>
-<ol start="2">
-<li>元字符<br>上面提到，正则表达式除了进行字符自身之的匹配外，还可以基于指定的规则进行模糊匹配。这就意味着它需要一些特殊字符来表示这些模糊的匹配规则，因此这些特殊字符默认情况下并不能匹配到它们自身的字面值，而是表示某些特殊的功能。这些特殊元字符包括：., [, ], (, ), *, +, ?, ^, $, , |。这些特殊字符的使用，会在下面进行详细讲解。正则表达式的重点和难点也就在于对正则表达式引擎的工作原理以及对这些特殊元字符掌握和灵活运用。</li>
-</ol>
-<blockquote>
-<p>提示： 那么如果想匹配这些特殊元字符本身的字面值怎么办呢？我们可以通过其中一个特殊字符对其它特殊字符进行转义，从而达到可以匹配这些特殊字符自身字面值的目的。</p>
-</blockquote>
-<h1 id="三-元字符详解"><a href="#三-元字符详解" class="headerlink" title="三.元字符详解"></a>三.元字符详解</h1><p>现在我们来详细说明一下正则表达式中的特殊元字符到底能完成哪些复杂的匹配功能。<br>1.单个字符匹配</p>
-<p><img src="/2022/05/10/regexr/regex1.png" alt="image"></p>
-<blockquote>
-<p>说明： 所有的特殊字符在[ ]内都将失去其原有的特殊含义:</p>
-<ul>
-<li>有些特殊字符在[ ]中被赋予新的特殊含义，如 ‘^’出现在[ ]中的开始位置表示取反，它出现在[]中的其他位置表示其本身（变成了一个普通字符）；</li>
-<li>有些特殊字符则变为普通字符，如 ‘.’, ‘*’, ‘+’, ‘?’, ‘$’</li>
-<li>有的普通字符变为特殊字符，如 ‘-‘ 在[ ]中的位置不是第一个字符则表示一个数字或字母区间，如果在[ ]中的位置是第一个字符则表示其本身（一个普通字符）</li>
-<li>在[ ]中，如果要使用’-‘, ‘^’ 或’]’，可在在它们前面加上反斜杠，或把’-‘, ‘]’放在第一个字符的 位置，把’^’放在非第一个字符的位置</li>
-</ul>
-</blockquote>
-<ol>
-<li>预定义字符集</li>
-</ol>
-<p>我们可以在反斜杠后面跟上一个指定的字母来表示预定义的字符集合</p>
-<p><img src="/2022/05/10/regexr/regex2.png" alt="image"></p>
-<ol start="3">
-<li>字符次数匹配–量词<br>在正则表达式中，我们还可以指定匹配某个字符出现次数</li>
-</ol>
-<p><img src="/2022/05/10/regexr/regex3.png" alt="image"></p>
-<blockquote>
-<p>说明： {m,n}中的m和n可以省略其中一个，{,n}相当于{0,n}，{m,}相当于{m,整数最大值}。</p>
-</blockquote>
-<p>我们可以得出以下结论：</p>
-<ul>
-<li>{0,1}或{,1} 等价于 ?</li>
-<li>{1,} 等价于 +</li>
-<li>{0,} 等价于 *</li>
-</ul>
-<p>我们优先选择使用 ?, + 和 *，因为他们书写简单，也可以使整个正则表达式变得简洁。</p>
-<blockquote>
-<p>说明： ? 这个字符在正则表达中与 ?, +, *, {m,n}连用时还有一个额外的功能，就是将匹配模式由贪婪模式（尽可能的增加匹配次数） 变成 非贪婪模式（尽可能减少匹配次数）， 这个会在下面的内容中进行详细说明。</p>
-</blockquote>
-<ol start="4">
-<li><p>边界匹配<br>正则表达式中还可以对边界位置进行匹配，如一个字符串的开头或结尾，一个单词的开头或结尾。<br><img src="/2022/05/10/regexr/regexr4.png" alt="image"></p>
-</li>
-<li><p>逻辑与分组<br>语法 | 说明 | 表达式实例 | 可匹配到的字符串实例<br><img src="/2022/05/10/regexr/regexr5.png" alt="image"></p>
-</li>
-</ol>
-<ol start="6">
-<li>特殊构造</li>
-</ol>
-<p><img src="/2022/05/10/regexr/regexr6.png" alt="image"></p>
-<blockquote>
-<p>说明： 上面所说的“不消耗字符串内容”是指只是进行匹配，但是不移动原始字符串的匹配位置，这样就可以完成多次匹配。下面有个匹配密码的正则表达式实例，就是用这个特性巧妙完成的。</p>
-</blockquote>
-<h1 id="四-常用正则表达式实例"><a href="#四-常用正则表达式实例" class="headerlink" title="四.常用正则表达式实例"></a>四.常用正则表达式实例</h1><p>通常写一个合适的正则表达式是比较耗费时间的，因此我们可以保留一些常用的正则表达式以备不时之需。但是需要说明的是，没有任何一个人敢说自己写的正则表达式是百分之百严谨的，而且也没有百分之百相同的匹配需求，因此这里只是列举我自己写的几个常用的正则表达式，欢迎大家留言讨论。</p>
-<blockquote>
-<p>说明： 下面只是一些简单的匹配规则，实际情况中需要我们根据具体情况再这些正则表达式的首部和尾部加上相应的边界符，如：^, $, \A, \Z, \b, \B等</p>
-</blockquote>
-<p><strong>匹配一个网络地址（URL)</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[a-zA-Z]+://[\S]+</span><br></pre></td></tr></table></figure>
-<p>需要说明的是，网络地址不一定是一个网页地址（http或https链接），还可能是ftp地址等。如果我们要匹配特定协议的网络地址，如http或http链接可以这样写:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(https?://)?[\S]+</span><br></pre></td></tr></table></figure>
-<p><strong>匹配一个IP地址</strong><br>最简单的写法：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(\d+[.])&#123;3&#125;\d+</span><br></pre></td></tr></table></figure>
-<p>严谨一点的写法：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(((?:[1-9]\d?)|(?:1\d&#123;2&#125;)|(?:2[0-4]\d)|(?:25[0-5]))[.])&#123;3&#125;((?:[1-9]\d?)|(?:1\d&#123;2&#125;)|(?:2[0-4]\d)|(?:25[0-5]))</span><br></pre></td></tr></table></figure>
-<p>或</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">((([1-9]\d?)|(1\d&#123;2&#125;)|(2[0-4]\d)|(25[0-5]))[.])&#123;3&#125;(([1-9]\d?)|(1\d&#123;2&#125;)|(2[0-4]\d)|(25[0-5]))</span><br></pre></td></tr></table></figure>
-<p><strong>匹配一个邮箱地址</strong><br>最简单的写法：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\S+@\S+\.\S+</span><br></pre></td></tr></table></figure>
-<p>严谨一点的写法（保证只出现一个@符）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[^\s@]+@[^\s@]+\.[^\s@]+</span><br></pre></td></tr></table></figure>
-<p><strong>匹配密码是否合法</strong><br>要求比较简单的情况，比如只要求为非空字符且限定密码长度为6-18位</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">^\S[6-18]$</span><br></pre></td></tr></table></figure>
-<p>要求比较复杂的情况，比如必须同时包含含数字、大小字母、小写字母和标点符号，这就需要用到前面所说的正则表达式的特殊构造了(?=…), (?!=…)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(?=^.&#123;6,8&#125;$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)</span><br></pre></td></tr></table></figure>
-<p>如果要求必须同时包含且只能包含数字、大小字母、小写字母和标点符号，可以这样写：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(?=^[\d\Wa-zA-Z]&#123;6,8&#125;$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)</span><br></pre></td></tr></table></figure>
-<p><strong>匹配大陆身份证号码（15位或18位)</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\d&#123;15&#125;|(\d&#123;18&#125;|(\d&#123;17&#125;[Xx]))</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>小贴士： 当今的身份证号码有15位和18位之分。1985年我国实行居民身份证制度，当时签发的身份证号码是15位的，1999年签发的身份证由于年份的扩展（由两位变为四位）和末尾加了效验码，就成了18位。这两种身份证号码将在相当长的一段时期内共存。两种身份证号码的含义如下：</p>
-</blockquote>
-<p><strong>匹配日期（年-月-日)</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(\d&#123;2&#125;|\d&#123;4&#125;)-((0?[1-9])|(1[0-2]))-((0?[1-9])|([12][0-9])|(3[01]))</span><br></pre></td></tr></table></figure>
-<p>24小时制时间（小时:分钟:秒）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(((0?|1)[0-9])|(2[0-3])):([0-5][0-9]):([0-5][0-9])</span><br></pre></td></tr></table></figure>
-<p>其他常用正则表达式<br><img src="/2022/05/10/regexr/regerx7.png" alt="image"><br><strong>再次说明，实际情况中需要我们根据具体情况再这些正则表达式的首部和尾部加上相应的边界符，如：^, $, \A, \Z, \b, \B等</strong></p>
-<h1 id="五-正则表达式的匹配过程"><a href="#五-正则表达式的匹配过程" class="headerlink" title="五.正则表达式的匹配过程"></a>五.正则表达式的匹配过程</h1><p>基于量词（如?, +, *, {m,n}, {m,}）的字符重复次数匹配是正则表达式优于普通字符串处理方法的一个重要方面，也是正则表达式的一个重要组成部分。量词对正则表达式的匹配过程具有非常重大的影响，因此在介绍正则表达式的匹配过程时，必不可少的要提到量词的两个重要分类：</p>
-<ul>
-<li>匹配优先量词 我们上面介绍的量词就是匹配优先量词包括：?, +, *, {m,n}，但是不包括{m}</li>
-<li>忽略优先量词 在匹配优先量词后面加上一个问号就变成了忽略优先量词，包括：??, +?, *?, {m,n}?<br>如果大家对这两个词不熟悉的话，那么大家一定听说过这两个词：</li>
-<li>贪婪模式（或非惰性匹配） 顾名思义，就是在整个表达式匹配成功的前提下，尽可能多的去匹配量词所修饰的字符</li>
-<li>非贪婪模式（或惰性匹配） 在整个表达式匹配成功的前提下，尽可能少的去匹配量词所修饰的字符<br>它们之间的关系是：</li>
-<li>匹配优先量词修饰的子表达式使用的是就是贪婪模式（非惰性匹配）;</li>
-<li>忽略优先量词修饰的子表达式使用的就是模式就是非贪婪模式（惰性匹配）;<br>下面我们通过一个实例来分析 贪婪模式 和 非贪婪模式 下的正则匹配过程：</li>
-<li>要匹配的字符串：’abcbd’</li>
-<li>贪婪模式正则表达式：a[bcd]*b</li>
-<li>非贪婪模式正则表达式：a[bcd]*?b</li>
-</ul>
-<h2 id="1-贪婪模式匹配过程分析"><a href="#1-贪婪模式匹配过程分析" class="headerlink" title="1. 贪婪模式匹配过程分析"></a>1. 贪婪模式匹配过程分析</h2><p><img src="/2022/05/10/regexr/regexr8.png" alt="image"></p>
-<h2 id="2-非贪婪模式匹配过程分析"><a href="#2-非贪婪模式匹配过程分析" class="headerlink" title="2. 非贪婪模式匹配过程分析"></a>2. 非贪婪模式匹配过程分析</h2><p><img src="/2022/05/10/regexr/regerx9.png" alt="image"></p>
-<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>贪婪模式与非贪婪模式影响的是被量词修饰的子表达式的匹配行为，贪婪模式在整个表达式匹配成功的前提下，尽可能多的匹配；非贪婪模式在整个表达式匹配成功的前提下，尽可能少的匹配。另外，非贪婪模式只被部分NFA引擎所支持。从匹配效率上来看，能达到相同匹配结果时，贪婪模式的匹配效率通常会比较高，因为它回溯过程会比较少。</p>
-<h2 id="4-补充示例"><a href="#4-补充示例" class="headerlink" title="4. 补充示例"></a>4. 补充示例</h2><p>匹配过程示例<br><img src="/2022/05/10/regexr/regerx10.png" alt="image"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* 首先由“&lt;”取得控制权，由位置0位开始尝试匹配，匹配字符“a”，匹配失败，第一轮匹配结束。第二轮匹配从位置1开始尝试匹配，同样匹配失败。第三轮从位置3开始尝试匹配，匹配字符“&lt;”，匹配成功，控制权交给“d”。</span><br><span class="line"></span><br><span class="line">* “d”尝试匹配字符“d”，匹配成功，控制权交给“i”。重复以上过程，直到由“&gt;”匹配到字符“&gt;”，控制权交给“.*”。</span><br><span class="line"></span><br><span class="line">* “.*”属于贪婪模式，将从B处后的字符“t”开始，一直匹配到E处，也就是字符串结束位置，将控制权交给“&lt;”。</span><br><span class="line"></span><br><span class="line">* “&lt;”从字符串结束位置尝试匹配，匹配失败，向前查找可供回溯的状态，把控制权交给“.”，由“.”让出一个字符“c”，把控制权再交给“&lt;”，尝试匹配，匹配失败，向前查找可供回溯的状态。一直重复以上过程，直到“.*”让出已匹配的字符“&lt;”，实际上也就是到让出了已匹配的子串“&lt;/div&gt;cc&quot;为止，“&lt;”才匹配字符“&lt;”成功，控制权交给“/”。 </span><br><span class="line"></span><br><span class="line">* 接下来由“/”、“d”、“i”、“v”分别匹配对应的字符成功，此时整个正则表达式匹配完毕。</span><br></pre></td></tr></table></figure>
-
-<h1 id="六-参考资料"><a href="#六-参考资料" class="headerlink" title="六.参考资料"></a>六.参考资料</h1><p><img src="/2022/05/10/regexr/regerx11.png" alt="image"></p>
-]]></content>
-      <categories>
-        <category>shell</category>
-      </categories>
-      <tags>
         <tag>shell</tag>
       </tags>
   </entry>

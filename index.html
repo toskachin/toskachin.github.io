@@ -161,7 +161,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -172,7 +172,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -195,6 +195,11 @@
 	</div>
 	<ul class="links-of-blogroll-list recent-posts-list">
 	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/09/21/docker_useful_commands/" title="Docker useful commands" target="">
+		    Docker useful commands
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
 		    <a href="/2022/09/20/Kubernetes_from_zero/" title="Kubernetes 入门基础" target="">
 		    Kubernetes 入门基础
 		    </a>
@@ -212,11 +217,6 @@
 	        <li class="my-links-of-blogroll-item">
 		    <a href="/2022/05/30/Interview_FAQ/" title="Interview FAQ 2022" target="">
 		    Interview FAQ 2022
-		    </a>
-		</li>
-	        <li class="my-links-of-blogroll-item">
-		    <a href="/2022/05/10/regexr/" title="一文了解正则表达式" target="">
-		    一文了解正则表达式
 		    </a>
 		</li>
 	</ul>
@@ -256,6 +256,136 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2022/09/21/docker_useful_commands/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="TOSKA">
+      <meta itemprop="description" content="10+专业经验和人生感悟">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="子荣君的杂货铺">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/09/21/docker_useful_commands/" class="post-title-link" itemprop="url">Docker useful commands</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-09-21 07:54:41" itemprop="dateCreated datePublished" datetime="2022-09-21T07:54:41+08:00">2022-09-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-09-20 21:31:36" itemprop="dateModified" datetime="2022-09-20T21:31:36+08:00">2022-09-20</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="docker-commands"><a href="#docker-commands" class="headerlink" title="docker commands"></a>docker commands</h2><hr>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker cp </span><br><span class="line">docker stop redis</span><br><span class="line">docker kill redis</span><br><span class="line">docker rm -l db #移除网络连接</span><br><span class="line">docker rm -v redis #删除容器挂载的磁盘</span><br><span class="line">docker logs redis #查看日志</span><br><span class="line">docker logs -f -t --tail=20 redis #查看容器日历最近20条</span><br><span class="line">docker top redis #查看容器进程</span><br><span class="line">docker images #查看本地镜像</span><br><span class="line">docker search mysql #查看mysql的镜像</span><br></pre></td></tr></table></figure>
+<h2 id="clean-docker-cache"><a href="#clean-docker-cache" class="headerlink" title="clean docker cache"></a>clean docker cache</h2><p><code>docker system prune</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker system prune后可以加额外的参数，如：</span><br><span class="line">docker system prune -a ： 一并清除所有未被使用的镜像和没有tag镜像。</span><br><span class="line">docker system prune -f ： 用以强制删除，不提示信息。</span><br></pre></td></tr></table></figure>
+
+<p><code>docker container prune</code></p>
+<p><code>docker network prun</code></p>
+<p><code>docker volume prune</code></p>
+<p><code>docker image prune --force --all</code></p>
+<h2 id="push-image-to-remote-server"><a href="#push-image-to-remote-server" class="headerlink" title="push image to remote server"></a>push image to remote server</h2><p><code>docker push  remote_server:5000/python-chromedriver:3.6</code></p>
+<h2 id="download-from-remote-server"><a href="#download-from-remote-server" class="headerlink" title="download from remote server"></a>download from remote server</h2><p><code>docker run labs-admin-lv-101.labs.marinsw.net:5000/ci-centos6-base date</code> </p>
+<h2 id="log-into-container"><a href="#log-into-container" class="headerlink" title="log into container"></a>log into container</h2><p><code>docker exec -it containerID /bin/bash</code></p>
+<h2 id="run-comtainer-from-remote-docker-registry-and-login"><a href="#run-comtainer-from-remote-docker-registry-and-login" class="headerlink" title="run comtainer from remote docker registry  and login"></a>run comtainer from remote docker registry  and login</h2><p><code>docker run -it remote_server:5000/ci-ubuntu- /bin/bash</code></p>
+<h2 id="rename-docker-image"><a href="#rename-docker-image" class="headerlink" title="rename docker image"></a>rename docker image</h2><p><code>docker image tag 7cebbf38959b  ci-ubuntu:latest</code></p>
+<h2 id="build-image-without-cache"><a href="#build-image-without-cache" class="headerlink" title="build image without cache"></a>build image without cache</h2><p><code>docker build --no-cache -f Dockerfile -t ci-base .</code></p>
+<h2 id="Build-docker-with-docker-file"><a href="#Build-docker-with-docker-file" class="headerlink" title="Build docker with docker file"></a>Build docker with docker file</h2><p><code>docker build -f Dockerfile -t image-name .</code></p>
+<h2 id="Log-into-images"><a href="#Log-into-images" class="headerlink" title="Log into images"></a>Log into images</h2><p><code>docker run -i -t image-name /bin/bash</code></p>
+<h2 id="list-images"><a href="#list-images" class="headerlink" title="list images"></a>list images</h2><p><code>docker images</code></p>
+<h2 id="rm-images"><a href="#rm-images" class="headerlink" title="rm images"></a>rm images</h2><p><code>docker image rm -f imagename</code></p>
+<h2 id="locally-docker-tag-local-image"><a href="#locally-docker-tag-local-image" class="headerlink" title="locally docker tag local image"></a>locally docker tag local image</h2><p><code>docker tag 98d6830c1011 remote_server:5000/python-chromedriver:3.6</code></p>
+<h2 id="save-image-to-file-and-load-locally"><a href="#save-image-to-file-and-load-locally" class="headerlink" title="save image to file and load locally"></a>save image to file and load locally</h2><ul>
+<li><p>docker save labs-admin-lv-101.labs.marinsw.net:5000/ci-ubuntu-mysqldb-mvn354 | gzip  &gt; docker_image_ci-ubuntu-mysqldb-mvn354.tar.gz</p>
+</li>
+<li><p>docker save calc &gt; calc.tar</p>
+</li>
+<li><p>docker load &lt; docker_image_ci-ubuntu-mysqldb-mvn354.tar.gz</p>
+</li>
+</ul>
+<h2 id="建立本地docker-registry"><a href="#建立本地docker-registry" class="headerlink" title="建立本地docker registry"></a>建立本地docker registry</h2><hr>
+<ul>
+<li>docker pull registry:2.6.2 #下载registry</li>
+<li>docker run –name registry -p 5000:5000 -v /data/registry:/var/lib/registry -d registry:2.6.2 #启动registry服务</li>
+<li>docker port registry #查看端口</li>
+<li>docker tag busybox:latest 192.168.10.102:5000/busybox:v0.1 #tag镜像</li>
+<li>docker push 192.168.10.102:5000/busybox:v0.1 #推送镜像</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2022/09/20/Kubernetes_from_zero/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -281,7 +411,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-09-20 07:54:41 / 修改时间：07:51:25" itemprop="dateCreated datePublished" datetime="2022-09-20T07:54:41+08:00">2022-09-20</time>
+      <time title="创建时间：2022-09-20 07:54:41 / 修改时间：15:24:39" itemprop="dateCreated datePublished" datetime="2022-09-20T07:54:41+08:00">2022-09-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1695,151 +1825,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2021/09/09/goldman-sachs-interview/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="TOSKA">
-      <meta itemprop="description" content="10+专业经验和人生感悟">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="子荣君的杂货铺">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/09/goldman-sachs-interview/" class="post-title-link" itemprop="url">高盛投行运维岗位面试</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-09-09 16:49:49" itemprop="dateCreated datePublished" datetime="2021-09-09T16:49:49+08:00">2021-09-09</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-07-03 19:25:11" itemprop="dateModified" datetime="2022-07-03T19:25:11+08:00">2022-07-03</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.9k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h1><p>打算写一个面试专题，主要目的是一是分享，另一个是记录技术细节<br>以下是我转入产品运维后面试过的还记得的公司</p>
-<p>Optiver<br>goldman sachs<br>jump trading<br>morgan stanley<br>bloomberg<br>shopee singapore<br>apple<br>paypal<br>Mastercard<br>Microsoft<br>tiktok singapore<br>IBM<br>支付宝<br>宜家<br>迪卡侬<br>特斯拉<br>NVIDIA</p>
-<h1 id="面试流程"><a href="#面试流程" class="headerlink" title="面试流程"></a>面试流程</h1><p>一共1.5小时全英文，分为三个部分</p>
-<ul>
-<li>behave questions</li>
-<li>Linux questions</li>
-<li>coding skill</li>
-</ul>
-<h1 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h1><h2 id="behave-questions"><a href="#behave-questions" class="headerlink" title="behave questions"></a>behave questions</h2><p>我在这边就不分享了，纯属于情商题，不难，没有唯一答案，个人观念不同，可以都对，根据你的工作经验总结出来。</p>
-<h2 id="Linux-questions"><a href="#Linux-questions" class="headerlink" title="Linux questions"></a>Linux questions</h2><blockquote>
-<p>如何查询一个服务器跑了哪些应用</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ps command, </span><br><span class="line"></span><br><span class="line">ps aux</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>ps command 输出了哪些信息</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">username,</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<blockquote>
-<p>如何检查一个服务器网络连接情况</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -altp </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>解释下 netstat 命令输出 state 种类和各个的含义</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">listen</span><br><span class="line">time_wait</span><br><span class="line">eslaticed </span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>PPID是什么，如果kill PPID 会有啥影响</p>
-</blockquote>
-<blockquote>
-<p>pid存在于系统哪个目录下，目录内都有什么内容</p>
-</blockquote>
-<blockquote>
-<p>文件重定向</p>
-</blockquote>
-<p>cat.sh &gt; text.txt</p>
-<p>/dev/stdin 标准输入设备（键盘） 0</p>
-<p>/dev/stdout 标准输出设备（显示器） 1</p>
-<p>/dev/stderr 标准错误输出设备（显示器） 2</p>
-<blockquote>
-<p>linux系统如何删除文件名为-f的文件</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -- -foo</span><br><span class="line">rm ./-foo</span><br></pre></td></tr></table></figure>
-
-<h1 id="coding-question"><a href="#coding-question" class="headerlink" title="coding question"></a>coding question</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">41.42.97.104 - - [26/Feb/2015:03:35:40 -0500] &quot;GET /root/ HTTP/1.1&quot; 301 20 &quot;http://baibai.123.com/09&quot; &quot;Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36&quot; - 0.562 </span><br><span class="line">41.42.97.104 - - [26/Feb/2015:03:35:41 -0500] &quot;GET /crossadkla.xml HTTP/1.1&quot; 304 0 &quot;https://baibai.123.com/&quot; &quot;Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36&quot; - 0.000 </span><br><span class="line">99.122.189.203 - - [26/Feb/2015:03:35:42 -0500] &quot;GET /root/ HTTP/1.1&quot; 301 20 &quot;http://baibai.123.com/11&quot; &quot;Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36&quot; - 0.562 </span><br><span class="line">99.122.189.203  - - [26/Feb/2015:03:35:44 -0500] &quot;GET /crossadkla.xml HTTP/1.1&quot; 304 0 &quot;https://baibai.123.com/&quot; &quot;Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36&quot; - 0.000</span><br><span class="line">99.122.189.203  - - [26/Feb/2015:03:35:44 -0500] &quot;GET /crossadkla.xml HTTP/1.1&quot; 304 0 &quot;https://baibai.123.com/&quot; &quot;Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36&quot; - 0.000</span><br></pre></td></tr></table></figure>
-
-<p>问题 统计访问最多的2个IP地址并打印出来</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -1864,13 +1849,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">198k</span>
+    <span title="站点总字数">199k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:30</span>
+    <span title="站点阅读时长">5:32</span>
   </span>
 </div>
 <div class="busuanzi-count">
