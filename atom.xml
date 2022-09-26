@@ -6,7 +6,7 @@
   <link href="https://toskachin.github.io/atom.xml" rel="self"/>
   
   <link href="https://toskachin.github.io/"/>
-  <updated>2022-09-20T13:31:36.993Z</updated>
+  <updated>2022-09-26T10:19:22.832Z</updated>
   <id>https://toskachin.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Interview FAQ 2022</title>
+    <link href="https://toskachin.github.io/2022/09/26/Interview_FAQ/"/>
+    <id>https://toskachin.github.io/2022/09/26/Interview_FAQ/</id>
+    <published>2022-09-25T16:00:00.000Z</published>
+    <updated>2022-09-26T10:19:22.832Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#background&quot;&gt;Background&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#linux-system&quot;&gt;Linux system&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="ideas,interview" scheme="https://toskachin.github.io/categories/ideas-interview/"/>
+    
+    
+    <category term="ideas,interview,面试" scheme="https://toskachin.github.io/tags/ideas-interview-%E9%9D%A2%E8%AF%95/"/>
+    
+  </entry>
   
   <entry>
     <title>Docker useful commands</title>
@@ -130,34 +158,6 @@
     <category term="stock" scheme="https://toskachin.github.io/tags/stock/"/>
     
     <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Interview FAQ 2022</title>
-    <link href="https://toskachin.github.io/2022/05/30/Interview_FAQ/"/>
-    <id>https://toskachin.github.io/2022/05/30/Interview_FAQ/</id>
-    <published>2022-05-29T16:00:00.000Z</published>
-    <updated>2022-09-26T10:18:49.138Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#background&quot;&gt;Background&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#linux-system&quot;&gt;Linux system&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="ideas,interview" scheme="https://toskachin.github.io/categories/ideas-interview/"/>
-    
-    
-    <category term="ideas,interview,面试" scheme="https://toskachin.github.io/tags/ideas-interview-%E9%9D%A2%E8%AF%95/"/>
     
   </entry>
   
