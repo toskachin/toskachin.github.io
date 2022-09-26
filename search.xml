@@ -12,13 +12,106 @@
 </ul>
 </li>
 </ul>
-<h1 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h1><p>最近也参加几轮心意公司的面试，在这里想做一些总结并持续更新这个page，一方面便于自己总结复习，另一方面可以分享给大家</p>
-<h2 id="Linux-system"><a href="#Linux-system" class="headerlink" title="Linux system"></a>Linux system</h2><h2 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h2><h2 id="Devops"><a href="#Devops" class="headerlink" title="Devops"></a>Devops</h2><h2 id="Scripts"><a href="#Scripts" class="headerlink" title="Scripts"></a>Scripts</h2>]]></content>
+<h1 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h1><p>Sharing interview tech question with you</p>
+<h2 id="Linux-system"><a href="#Linux-system" class="headerlink" title="Linux system"></a>Linux system</h2><p><strong>What is /dev save and when system will use it</strong></p>
+<p><strong>grep command</strong></p>
+<ul>
+<li>grep -l </li>
+<li>grep -f </li>
+<li>grep -v</li>
+<li>grep -e</li>
+</ul>
+<p><strong>what is under /proc</strong></p>
+<p><strong>what is command cpio</strong></p>
+<p><strong>what is jwt token</strong></p>
+<p><strong>explain uptime output</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">10:17:36 up 73 days, 10:18,  4 users,  load average: 5.83, 6.47, 7.31</span><br></pre></td></tr></table></figure>
+<h2 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h2><h2 id="Devops"><a href="#Devops" class="headerlink" title="Devops"></a>Devops</h2><p><strong>if statememt in terraform</strong></p>
+<p><strong>for loop statement in terraform</strong></p>
+<p><strong>git merge and git rebase difference</strong></p>
+<p><strong>desc CI/CD tools</strong></p>
+<h2 id="Scripts"><a href="#Scripts" class="headerlink" title="Scripts"></a>Scripts</h2>]]></content>
       <categories>
         <category>ideas,interview</category>
       </categories>
       <tags>
         <tag>ideas,interview,面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Interview notes March 2022</title>
+    <url>/2022/03/10/Interview_notes_march_2022/</url>
+    <content><![CDATA[<h2 id="Application-support"><a href="#Application-support" class="headerlink" title="Application support"></a>Application support</h2><h3 id="Macbook-support"><a href="#Macbook-support" class="headerlink" title="Macbook support"></a>Macbook support</h3><p>how to reset Macbook</p>
+<blockquote>
+<p>reset SMC, Shift-Control-Option<br>reset PRAM,Command-Option-P-R<br>how to reinstall MacOS<br>Command-R<br>how to install package on MacOS<br>MDM,mobile device management<br>dmg,pkg(DMG like ISO,not installer; pkg is installer package)<br>apple store<br>how to manage softwares on MacOS<br>munki<br>MDM<br>how to deploy printer on MacOS<br>MDM<br>Macbook device management software - MDM</p>
+</blockquote>
+<h3 id="OKTA-intergation"><a href="#OKTA-intergation" class="headerlink" title="OKTA intergation"></a>OKTA intergation</h3><p>SSO context</p>
+<blockquote>
+<p>three types: secure web authentiation(SWA),SMAL2.0(Security Assertion Markup Language),OpenID connect<br>Authentiation and authorization<br>okta three patry intergation process</p>
+</blockquote>
+<ol>
+<li>okta - application - add new application - create new app</li>
+<li>platform - signon method - SMAL2.0 </li>
+<li>general setting - app name - sso url </li>
+<li>identity provider metadata - open file to find ID and add back to sso url</li>
+</ol>
+<p>okta advanced workflows</p>
+<h3 id="Google-admin"><a href="#Google-admin" class="headerlink" title="Google admin"></a>Google admin</h3><p>manage endusers license<br>manage intern and contractor account<br>forward leaver’s email,driver,calaner </p>
+<h2 id="Network-tech"><a href="#Network-tech" class="headerlink" title="Network tech"></a>Network tech</h2><p>VPN types</p>
+<ul>
+<li>IP security IPsesc</li>
+<li>SSL secure socket layer</li>
+<li>PPTP  point to point tunneling protocol</li>
+<li>L2TP layer 2 tunneling protocol </li>
+</ul>
+<p>how to configure IPsesc VPN</p>
+<ul>
+<li>site A</li>
+</ul>
+<ol>
+<li>Phase 1 proposal (Authentication)<ol>
+<li>Authentication method Using a Pre-shared Key</li>
+<li>My identifier</li>
+<li>Peer identifier</li>
+<li>Pre-Shared Key</li>
+</ol>
+</li>
+<li>Phase 1 proposal (Algorithms)<ol>
+<li>Encryption algorithm AES</li>
+<li>Hash algoritm</li>
+</ol>
+</li>
+<li>Phase 2<ol>
+<li>Local Network - Route the local LAN subnet</li>
+<li>remote network - The remote LAN subnet</li>
+</ol>
+</li>
+<li>Phase 2 proposal (SA/Key Exchange)<ol>
+<li>Protocol</li>
+<li>Encryption algorithms</li>
+<li>Hash algortihms</li>
+<li>PFS Key group</li>
+<li>Lifetime</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>site B<br>do the same as site A</li>
+</ul>
+<p>how to block loop in LAN</p>
+<blockquote>
+<p>enable STP<br>how to secure lan interface<br>enable 802.1x + radius<br>how to initize Cisco devices/APs</p>
+</blockquote>
+<h2 id="Script-and-coding"><a href="#Script-and-coding" class="headerlink" title="Script and coding"></a>Script and coding</h2><p>how to rollback git add locally<br>difference of git merge and git rebase<br>Shell script</p>
+<h2 id="Cloud-tech"><a href="#Cloud-tech" class="headerlink" title="Cloud tech"></a>Cloud tech</h2><p>AWS Load balance type<br>Introduce AWS feature you familiar with</p>
+<h2 id="IT-process-and-Project-management"><a href="#IT-process-and-Project-management" class="headerlink" title="IT process and Project management"></a>IT process and Project management</h2><p>How to initize project for office movement<br>Vendor management<br>Project schedule management</p>
+]]></content>
+      <categories>
+        <category>ideas,interview</category>
+      </categories>
+      <tags>
+        <tag>ideas,interview,面试</tag>
+        <tag>shell</tag>
       </tags>
   </entry>
   <entry>
@@ -124,110 +217,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Interview notes March 2022</title>
-    <url>/2022/03/10/Interview_notes_march_2022/</url>
-    <content><![CDATA[<h2 id="Application-support"><a href="#Application-support" class="headerlink" title="Application support"></a>Application support</h2><h3 id="Macbook-support"><a href="#Macbook-support" class="headerlink" title="Macbook support"></a>Macbook support</h3><p>how to reset Macbook</p>
-<blockquote>
-<p>reset SMC, Shift-Control-Option<br>reset PRAM,Command-Option-P-R<br>how to reinstall MacOS<br>Command-R<br>how to install package on MacOS<br>MDM,mobile device management<br>dmg,pkg(DMG like ISO,not installer; pkg is installer package)<br>apple store<br>how to manage softwares on MacOS<br>munki<br>MDM<br>how to deploy printer on MacOS<br>MDM<br>Macbook device management software - MDM</p>
-</blockquote>
-<h3 id="OKTA-intergation"><a href="#OKTA-intergation" class="headerlink" title="OKTA intergation"></a>OKTA intergation</h3><p>SSO context</p>
-<blockquote>
-<p>three types: secure web authentiation(SWA),SMAL2.0(Security Assertion Markup Language),OpenID connect<br>Authentiation and authorization<br>okta three patry intergation process</p>
-</blockquote>
-<ol>
-<li>okta - application - add new application - create new app</li>
-<li>platform - signon method - SMAL2.0 </li>
-<li>general setting - app name - sso url </li>
-<li>identity provider metadata - open file to find ID and add back to sso url</li>
-</ol>
-<p>okta advanced workflows</p>
-<h3 id="Google-admin"><a href="#Google-admin" class="headerlink" title="Google admin"></a>Google admin</h3><p>manage endusers license<br>manage intern and contractor account<br>forward leaver’s email,driver,calaner </p>
-<h2 id="Network-tech"><a href="#Network-tech" class="headerlink" title="Network tech"></a>Network tech</h2><p>VPN types</p>
-<ul>
-<li>IP security IPsesc</li>
-<li>SSL secure socket layer</li>
-<li>PPTP  point to point tunneling protocol</li>
-<li>L2TP layer 2 tunneling protocol </li>
-</ul>
-<p>how to configure IPsesc VPN</p>
-<ul>
-<li>site A</li>
-</ul>
-<ol>
-<li>Phase 1 proposal (Authentication)<ol>
-<li>Authentication method Using a Pre-shared Key</li>
-<li>My identifier</li>
-<li>Peer identifier</li>
-<li>Pre-Shared Key</li>
-</ol>
-</li>
-<li>Phase 1 proposal (Algorithms)<ol>
-<li>Encryption algorithm AES</li>
-<li>Hash algoritm</li>
-</ol>
-</li>
-<li>Phase 2<ol>
-<li>Local Network - Route the local LAN subnet</li>
-<li>remote network - The remote LAN subnet</li>
-</ol>
-</li>
-<li>Phase 2 proposal (SA/Key Exchange)<ol>
-<li>Protocol</li>
-<li>Encryption algorithms</li>
-<li>Hash algortihms</li>
-<li>PFS Key group</li>
-<li>Lifetime</li>
-</ol>
-</li>
-</ol>
-<ul>
-<li>site B<br>do the same as site A</li>
-</ul>
-<p>how to block loop in LAN</p>
-<blockquote>
-<p>enable STP<br>how to secure lan interface<br>enable 802.1x + radius<br>how to initize Cisco devices/APs</p>
-</blockquote>
-<h2 id="Script-and-coding"><a href="#Script-and-coding" class="headerlink" title="Script and coding"></a>Script and coding</h2><p>how to rollback git add locally<br>difference of git merge and git rebase<br>Shell script</p>
-<h2 id="Cloud-tech"><a href="#Cloud-tech" class="headerlink" title="Cloud tech"></a>Cloud tech</h2><p>AWS Load balance type<br>Introduce AWS feature you familiar with</p>
-<h2 id="IT-process-and-Project-management"><a href="#IT-process-and-Project-management" class="headerlink" title="IT process and Project management"></a>IT process and Project management</h2><p>How to initize project for office movement<br>Vendor management<br>Project schedule management</p>
-]]></content>
-      <categories>
-        <category>ideas,interview</category>
-      </categories>
-      <tags>
-        <tag>ideas,interview,面试</tag>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo_blog_setup</title>
-    <url>/2022/07/04/hexo-blog-setup/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>每次换电脑，或者在其他电脑上工作后发现无法更新这个Blog，需要记录下如何当初一步一步设置这个blog，以方便迁移，重新搭建</p>
-<h1 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h1><ul>
-<li>hexo </li>
-<li>hexo theme</li>
-<li>github</li>
-<li></li>
-</ul>
-<h2 id="Install-Steps"><a href="#Install-Steps" class="headerlink" title="Install Steps"></a>Install Steps</h2><h3 id="Install-hexo"><a href="#Install-hexo" class="headerlink" title="Install hexo"></a>Install hexo</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hello-cli -g</span><br><span class="line"></span><br><span class="line">~ ❯ hexo -v                                                                              08:45:30</span><br><span class="line">hexo-cli: 4.3.0</span><br><span class="line">os: darwin 21.5.0 12.4</span><br><span class="line"></span><br><span class="line">node: 14.17.5</span><br><span class="line">v8: 8.4.371.23-node.76</span><br><span class="line">uv: 1.41.0</span><br><span class="line">zlib: 1.2.11</span><br><span class="line">brotli: 1.0.9</span><br><span class="line">ares: 1.17.2</span><br><span class="line">modules: 83</span><br><span class="line">nghttp2: 1.42.0</span><br><span class="line">napi: 8</span><br><span class="line">llhttp: 2.1.3</span><br><span class="line">openssl: 1.1.1k</span><br><span class="line">cldr: 39.0</span><br><span class="line">icu: 69.1</span><br><span class="line">tz: 2021a</span><br><span class="line">unicode: 13.0</span><br></pre></td></tr></table></figure>
-
-<h3 id="Create-project"><a href="#Create-project" class="headerlink" title="Create project"></a>Create project</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">cd [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
-
-<h3 id="Set-blog-information"><a href="#Set-blog-information" class="headerlink" title="Set blog information"></a>Set blog information</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim _config.yml</span><br><span class="line"></span><br><span class="line">~~~~~~~~~~~~~~~~~~ _config.yml ~~~~~~~~~~~~~~~~~~</span><br><span class="line"># Site</span><br><span class="line">title: [githubaccount]&#x27;s note</span><br><span class="line">subtitle:</span><br><span class="line">description: [githubaccount]&#x27;s personal blog</span><br><span class="line">author: [githubaccount]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:[githubaccount]/[githubaccount].github.io.git</span><br><span class="line">  branch: master</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><h3 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next themes/next</span><br><span class="line"></span><br><span class="line">vi _config.yml</span><br><span class="line"></span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line">theme: next</span><br><span class="line"># https://github.com/theme-next/hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line">npm install hexo-enhancer --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install --save hexo-submit-urls-to-search-engine</span><br><span class="line">npm install hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="Useful-hexo-commands"><a href="#Useful-hexo-commands" class="headerlink" title="Useful hexo commands"></a>Useful hexo commands</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo --config _config.yml</span><br><span class="line">hexo generate --watch</span><br><span class="line"></span><br><span class="line">hexo server</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>personal</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>高盛投行运维岗位面试</title>
     <url>/2021/09/09/goldman-sachs-interview/</url>
     <content><![CDATA[<h1 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h1><p>打算写一个面试专题，主要目的是一是分享，另一个是记录技术细节<br>以下是我转入产品运维后面试过的还记得的公司</p>
@@ -307,6 +296,34 @@
       </categories>
       <tags>
         <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo_blog_setup</title>
+    <url>/2022/07/04/hexo-blog-setup/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>每次换电脑，或者在其他电脑上工作后发现无法更新这个Blog，需要记录下如何当初一步一步设置这个blog，以方便迁移，重新搭建</p>
+<h1 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h1><ul>
+<li>hexo </li>
+<li>hexo theme</li>
+<li>github</li>
+<li></li>
+</ul>
+<h2 id="Install-Steps"><a href="#Install-Steps" class="headerlink" title="Install Steps"></a>Install Steps</h2><h3 id="Install-hexo"><a href="#Install-hexo" class="headerlink" title="Install hexo"></a>Install hexo</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hello-cli -g</span><br><span class="line"></span><br><span class="line">~ ❯ hexo -v                                                                              08:45:30</span><br><span class="line">hexo-cli: 4.3.0</span><br><span class="line">os: darwin 21.5.0 12.4</span><br><span class="line"></span><br><span class="line">node: 14.17.5</span><br><span class="line">v8: 8.4.371.23-node.76</span><br><span class="line">uv: 1.41.0</span><br><span class="line">zlib: 1.2.11</span><br><span class="line">brotli: 1.0.9</span><br><span class="line">ares: 1.17.2</span><br><span class="line">modules: 83</span><br><span class="line">nghttp2: 1.42.0</span><br><span class="line">napi: 8</span><br><span class="line">llhttp: 2.1.3</span><br><span class="line">openssl: 1.1.1k</span><br><span class="line">cldr: 39.0</span><br><span class="line">icu: 69.1</span><br><span class="line">tz: 2021a</span><br><span class="line">unicode: 13.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="Create-project"><a href="#Create-project" class="headerlink" title="Create project"></a>Create project</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">cd [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<h3 id="Set-blog-information"><a href="#Set-blog-information" class="headerlink" title="Set blog information"></a>Set blog information</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim _config.yml</span><br><span class="line"></span><br><span class="line">~~~~~~~~~~~~~~~~~~ _config.yml ~~~~~~~~~~~~~~~~~~</span><br><span class="line"># Site</span><br><span class="line">title: [githubaccount]&#x27;s note</span><br><span class="line">subtitle:</span><br><span class="line">description: [githubaccount]&#x27;s personal blog</span><br><span class="line">author: [githubaccount]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:[githubaccount]/[githubaccount].github.io.git</span><br><span class="line">  branch: master</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><h3 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next themes/next</span><br><span class="line"></span><br><span class="line">vi _config.yml</span><br><span class="line"></span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line">theme: next</span><br><span class="line"># https://github.com/theme-next/hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line">npm install hexo-enhancer --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install --save hexo-submit-urls-to-search-engine</span><br><span class="line">npm install hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Useful-hexo-commands"><a href="#Useful-hexo-commands" class="headerlink" title="Useful hexo commands"></a>Useful hexo commands</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo --config _config.yml</span><br><span class="line">hexo generate --watch</span><br><span class="line"></span><br><span class="line">hexo server</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>personal</tag>
       </tags>
   </entry>
   <entry>
