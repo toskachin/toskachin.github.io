@@ -21,11 +21,24 @@
 <li>grep -v</li>
 <li>grep -e</li>
 </ul>
-<p><strong>what is under /proc</strong></p>
+<p><strong>what is under /proc</strong><br>Process information<br><img src="/2022/09/26/Interview_FAQ/linuxDir.jpeg" alt="image"></p>
 <p><strong>what is command cpio</strong></p>
-<p><strong>what is jwt token</strong></p>
+<blockquote>
+<p>cpio - copy files to and from archives</p>
+</blockquote>
+<ul>
+<li><p>将家目录下的所有文件都归档到tree.cpio中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 ~]# find ~ -depth | cpio -ov &gt; tree.cpio 或 [root@server2 ~]# find ~ -depth | cpio -ov -F tree.cpio</span><br></pre></td></tr></table></figure></li>
+<li><p>向归档文件中追加文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 tmp]# ls /root/new.txt | cpio -oA -F tree.cpio</span><br></pre></td></tr></table></figure></li>
+<li><p>提取文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 tmp]# cpio -idv -F tree.cpio /root/</span><br></pre></td></tr></table></figure></li>
+<li><p><em>what is jwt token</em>*<br>JSON Web Token (JWT) is a compact URL-safe means of representing claims to be transferred between two parties</p>
+</li>
+</ul>
 <p><strong>explain uptime output</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">10:17:36 up 73 days, 10:18,  4 users,  load average: 5.83, 6.47, 7.31</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">These numbers are the averages of the system load over a period of one, five, and 15 minutes. </span><br><span class="line"></span><br><span class="line">Applying that to the load average output (0.5, 1.5, 3.0) that we got above: </span><br><span class="line"></span><br><span class="line">* 0.5 means the minimum waiting time at the counter. Between 0.00 and 1.0, there is no need to worry. Your servers are safe!</span><br><span class="line">* 1.5 means the queue is filling up. If the average gets any higher, things are going to start slowing down.</span><br><span class="line">* 3.00 means there&#x27;s a considerably long queue waiting, and an extra resource/counter is required to clear up the queue faster. </span><br></pre></td></tr></table></figure>
 <h2 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h2><h2 id="Devops"><a href="#Devops" class="headerlink" title="Devops"></a>Devops</h2><p><strong>if statememt in terraform</strong></p>
 <p><strong>for loop statement in terraform</strong></p>
 <p><strong>git merge and git rebase difference</strong></p>
