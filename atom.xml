@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>子荣君的杂货铺</title>
+  <title>RJ&#39;s memories</title>
   <icon>https://toskachin.github.io/icon.png</icon>
   
   <link href="https://toskachin.github.io/atom.xml" rel="self"/>
@@ -42,6 +42,8 @@
     
     <category term="ideas,interview,面试" scheme="https://toskachin.github.io/tags/ideas-interview-%E9%9D%A2%E8%AF%95/"/>
     
+    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
+    
   </entry>
   
   <entry>
@@ -74,6 +76,8 @@
     
     <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
     
+    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
+    
   </entry>
   
   <entry>
@@ -103,6 +107,8 @@
     
     <category term="container" scheme="https://toskachin.github.io/tags/container/"/>
     
+    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
+    
   </entry>
   
   <entry>
@@ -129,6 +135,8 @@
     <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
     
     <category term="personal" scheme="https://toskachin.github.io/tags/personal/"/>
+    
+    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     
   </entry>
   
@@ -158,6 +166,8 @@
     <category term="stock" scheme="https://toskachin.github.io/tags/stock/"/>
     
     <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
+    
+    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     
   </entry>
   
@@ -214,6 +224,8 @@
     
     <category term="linux" scheme="https://toskachin.github.io/tags/linux/"/>
     
+    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
+    
   </entry>
   
   <entry>
@@ -244,6 +256,8 @@
     
     <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
     
+    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
+    
   </entry>
   
   <entry>
@@ -270,6 +284,10 @@
     <category term="ideas,interview,面试" scheme="https://toskachin.github.io/tags/ideas-interview-%E9%9D%A2%E8%AF%95/"/>
     
     <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
+    
+    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
+    
+    <category term="life" scheme="https://toskachin.github.io/tags/life/"/>
     
   </entry>
   
@@ -304,6 +322,8 @@
     <category term="regex" scheme="https://toskachin.github.io/tags/regex/"/>
     
     <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
+    
+    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     
   </entry>
   
@@ -362,6 +382,8 @@
     
     <category term="terraform" scheme="https://toskachin.github.io/tags/terraform/"/>
     
+    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
+    
   </entry>
   
   <entry>
@@ -390,6 +412,8 @@
     <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
     
     <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
+    
+    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     
   </entry>
   
@@ -475,6 +499,10 @@
     
     <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
     
+    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
+    
+    <category term="life" scheme="https://toskachin.github.io/tags/life/"/>
+    
   </entry>
   
   <entry>
@@ -504,6 +532,8 @@
     <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
     
     <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
+    
+    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     
   </entry>
   
