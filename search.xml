@@ -1,69 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Interview FAQ 2022</title>
-    <url>/2022/09/26/Interview_FAQ/</url>
-    <content><![CDATA[<ul>
-<li><a href="#background">Background</a><ul>
-<li><a href="#linux-system">Linux system</a></li>
-<li><a href="#network">Network</a></li>
-<li><a href="#devops">Devops</a></li>
-<li><a href="#scripts">Scripts</a></li>
-</ul>
-</li>
-</ul>
-<h1 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h1><p>Sharing interview tech question with you</p>
-<h2 id="Linux-system"><a href="#Linux-system" class="headerlink" title="Linux system"></a>Linux system</h2><p><strong>How to show ip address only on Centos</strong></p>
-<p><code>hostname -i</code></p>
-<p><strong>What is /dev save and when system will use it</strong></p>
-<p><strong>grep command</strong></p>
-<ul>
-<li>grep -l </li>
-<li>grep -f </li>
-<li>grep -v</li>
-<li>grep -e</li>
-</ul>
-<p><strong>what is under /proc</strong><br>Process information<br><img src="/2022/09/26/Interview_FAQ/linuxDir.jpeg" alt="image"></p>
-<p><strong>what is command cpio</strong></p>
+    <title>Interview notes March 2022</title>
+    <url>/2022/03/10/Interview_notes_march_2022/</url>
+    <content><![CDATA[<h2 id="Application-support"><a href="#Application-support" class="headerlink" title="Application support"></a>Application support</h2><h3 id="Macbook-support"><a href="#Macbook-support" class="headerlink" title="Macbook support"></a>Macbook support</h3><p>how to reset Macbook</p>
 <blockquote>
-<p>cpio - copy files to and from archives</p>
+<p>reset SMC, Shift-Control-Option<br>reset PRAM,Command-Option-P-R<br>how to reinstall MacOS<br>Command-R<br>how to install package on MacOS<br>MDM,mobile device management<br>dmg,pkg(DMG like ISO,not installer; pkg is installer package)<br>apple store<br>how to manage softwares on MacOS<br>munki<br>MDM<br>how to deploy printer on MacOS<br>MDM<br>Macbook device management software - MDM</p>
 </blockquote>
+<h3 id="OKTA-intergation"><a href="#OKTA-intergation" class="headerlink" title="OKTA intergation"></a>OKTA intergation</h3><p>SSO context</p>
+<blockquote>
+<p>three types: secure web authentiation(SWA),SMAL2.0(Security Assertion Markup Language),OpenID connect<br>Authentiation and authorization<br>okta three patry intergation process</p>
+</blockquote>
+<ol>
+<li>okta - application - add new application - create new app</li>
+<li>platform - signon method - SMAL2.0 </li>
+<li>general setting - app name - sso url </li>
+<li>identity provider metadata - open file to find ID and add back to sso url</li>
+</ol>
+<p>okta advanced workflows</p>
+<h3 id="Google-admin"><a href="#Google-admin" class="headerlink" title="Google admin"></a>Google admin</h3><p>manage endusers license<br>manage intern and contractor account<br>forward leaver’s email,driver,calaner </p>
+<h2 id="Network-tech"><a href="#Network-tech" class="headerlink" title="Network tech"></a>Network tech</h2><p>VPN types</p>
 <ul>
-<li><p>将家目录下的所有文件都归档到tree.cpio中</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 ~]# find ~ -depth | cpio -ov &gt; tree.cpio 或 [root@server2 ~]# find ~ -depth | cpio -ov -F tree.cpio</span><br></pre></td></tr></table></figure></li>
-<li><p>向归档文件中追加文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 tmp]# ls /root/new.txt | cpio -oA -F tree.cpio</span><br></pre></td></tr></table></figure></li>
-<li><p>提取文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 tmp]# cpio -idv -F tree.cpio /root/</span><br></pre></td></tr></table></figure></li>
-<li><p><em>what is jwt token</em>*<br>JSON Web Token (JWT) is a compact URL-safe means of representing claims to be transferred between two parties</p>
+<li>IP security IPsesc</li>
+<li>SSL secure socket layer</li>
+<li>PPTP  point to point tunneling protocol</li>
+<li>L2TP layer 2 tunneling protocol </li>
+</ul>
+<p>how to configure IPsesc VPN</p>
+<ul>
+<li>site A</li>
+</ul>
+<ol>
+<li>Phase 1 proposal (Authentication)<ol>
+<li>Authentication method Using a Pre-shared Key</li>
+<li>My identifier</li>
+<li>Peer identifier</li>
+<li>Pre-Shared Key</li>
+</ol>
 </li>
-</ul>
-<p><strong>explain uptime output</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">10:17:36 up 73 days, 10:18,  4 users,  load average: 5.83, 6.47, 7.31</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">These numbers are the averages of the system load over a period of one, five, and 15 minutes. </span><br><span class="line"></span><br><span class="line">Applying that to the load average output (0.5, 1.5, 3.0) that we got above: </span><br><span class="line"></span><br><span class="line">* 0.5 means the minimum waiting time at the counter. Between 0.00 and 1.0, there is no need to worry. Your servers are safe!</span><br><span class="line">* 1.5 means the queue is filling up. If the average gets any higher, things are going to start slowing down.</span><br><span class="line">* 3.00 means there&#x27;s a considerably long queue waiting, and an extra resource/counter is required to clear up the queue faster. </span><br></pre></td></tr></table></figure>
-<h2 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h2><h2 id="Devops"><a href="#Devops" class="headerlink" title="Devops"></a>Devops</h2><p><strong>if statememt in terraform</strong></p>
-<p><code>condition ? true_value : false_value</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">resource &quot;azurerm_function_app&quot; &quot;b59func&quot; &#123;</span><br><span class="line">  # Deploy conditionally based on Feature Flag variable</span><br><span class="line">  count = local.deploy_b59func == true ? 1 : 0</span><br><span class="line"></span><br><span class="line">  # resource attributes here</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%&#123; if &lt;CONDITION&gt; &#125;&lt;TRUEVAL&gt;%&#123; endif &#125;</span><br><span class="line"></span><br><span class="line">%&#123; if &lt;CONDITION&gt; &#125;&lt;TRUEVAL&gt;%&#123; else &#125;&lt;FALSEVAL&gt;%&#123; endif &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<li>Phase 1 proposal (Algorithms)<ol>
+<li>Encryption algorithm AES</li>
+<li>Hash algoritm</li>
+</ol>
+</li>
+<li>Phase 2<ol>
+<li>Local Network - Route the local LAN subnet</li>
+<li>remote network - The remote LAN subnet</li>
+</ol>
+</li>
+<li>Phase 2 proposal (SA/Key Exchange)<ol>
+<li>Protocol</li>
+<li>Encryption algorithms</li>
+<li>Hash algortihms</li>
+<li>PFS Key group</li>
+<li>Lifetime</li>
+</ol>
+</li>
+</ol>
 <ul>
-<li>example </li>
+<li>site B<br>do the same as site A</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">output &quot;for_directive_index_if_strip&quot; &#123;</span><br><span class="line">  value = &lt;&lt;EOF</span><br><span class="line">%&#123;~ for i, name in var.names ~&#125;</span><br><span class="line">$&#123;name&#125;%&#123; if i &lt; length(var.names) - 1 &#125;, %&#123; endif &#125;</span><br><span class="line">%&#123;~ endfor ~&#125;</span><br><span class="line">EOF</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform apply</span><br><span class="line"></span><br><span class="line">(...)</span><br><span class="line"></span><br><span class="line">Outputs:</span><br><span class="line"></span><br><span class="line">for_directive_index_if_strip = &quot;neo, trinity, morpheus&quot;</span><br></pre></td></tr></table></figure>
-
-
-<p><strong>for loop statement in terraform</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%&#123; for &lt;ITEM&gt; in &lt;COLLECTION&gt; &#125;&lt;BODY&gt;%&#123; endfor &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>git merge and git rebase difference</strong></p>
-<p><strong>desc CI/CD tools</strong></p>
-<h2 id="Scripts"><a href="#Scripts" class="headerlink" title="Scripts"></a>Scripts</h2>]]></content>
+<p>how to block loop in LAN</p>
+<blockquote>
+<p>enable STP<br>how to secure lan interface<br>enable 802.1x + radius<br>how to initize Cisco devices/APs</p>
+</blockquote>
+<h2 id="Script-and-coding"><a href="#Script-and-coding" class="headerlink" title="Script and coding"></a>Script and coding</h2><p>how to rollback git add locally<br>difference of git merge and git rebase<br>Shell script</p>
+<h2 id="Cloud-tech"><a href="#Cloud-tech" class="headerlink" title="Cloud tech"></a>Cloud tech</h2><p>AWS Load balance type<br>Introduce AWS feature you familiar with</p>
+<h2 id="IT-process-and-Project-management"><a href="#IT-process-and-Project-management" class="headerlink" title="IT process and Project management"></a>IT process and Project management</h2><p>How to initize project for office movement<br>Vendor management<br>Project schedule management</p>
+]]></content>
       <categories>
         <category>ideas,interview</category>
       </categories>
       <tags>
         <tag>ideas,interview,面试</tag>
+        <tag>shell</tag>
       </tags>
   </entry>
   <entry>
@@ -169,79 +179,69 @@
       </tags>
   </entry>
   <entry>
-    <title>Interview notes March 2022</title>
-    <url>/2022/03/10/Interview_notes_march_2022/</url>
-    <content><![CDATA[<h2 id="Application-support"><a href="#Application-support" class="headerlink" title="Application support"></a>Application support</h2><h3 id="Macbook-support"><a href="#Macbook-support" class="headerlink" title="Macbook support"></a>Macbook support</h3><p>how to reset Macbook</p>
-<blockquote>
-<p>reset SMC, Shift-Control-Option<br>reset PRAM,Command-Option-P-R<br>how to reinstall MacOS<br>Command-R<br>how to install package on MacOS<br>MDM,mobile device management<br>dmg,pkg(DMG like ISO,not installer; pkg is installer package)<br>apple store<br>how to manage softwares on MacOS<br>munki<br>MDM<br>how to deploy printer on MacOS<br>MDM<br>Macbook device management software - MDM</p>
-</blockquote>
-<h3 id="OKTA-intergation"><a href="#OKTA-intergation" class="headerlink" title="OKTA intergation"></a>OKTA intergation</h3><p>SSO context</p>
-<blockquote>
-<p>three types: secure web authentiation(SWA),SMAL2.0(Security Assertion Markup Language),OpenID connect<br>Authentiation and authorization<br>okta three patry intergation process</p>
-</blockquote>
-<ol>
-<li>okta - application - add new application - create new app</li>
-<li>platform - signon method - SMAL2.0 </li>
-<li>general setting - app name - sso url </li>
-<li>identity provider metadata - open file to find ID and add back to sso url</li>
-</ol>
-<p>okta advanced workflows</p>
-<h3 id="Google-admin"><a href="#Google-admin" class="headerlink" title="Google admin"></a>Google admin</h3><p>manage endusers license<br>manage intern and contractor account<br>forward leaver’s email,driver,calaner </p>
-<h2 id="Network-tech"><a href="#Network-tech" class="headerlink" title="Network tech"></a>Network tech</h2><p>VPN types</p>
-<ul>
-<li>IP security IPsesc</li>
-<li>SSL secure socket layer</li>
-<li>PPTP  point to point tunneling protocol</li>
-<li>L2TP layer 2 tunneling protocol </li>
+    <title>Interview FAQ 2022</title>
+    <url>/2022/09/26/Interview_FAQ/</url>
+    <content><![CDATA[<ul>
+<li><a href="#background">Background</a><ul>
+<li><a href="#linux-system">Linux system</a></li>
+<li><a href="#network">Network</a></li>
+<li><a href="#devops">Devops</a></li>
+<li><a href="#scripts">Scripts</a></li>
 </ul>
-<p>how to configure IPsesc VPN</p>
-<ul>
-<li>site A</li>
+</li>
 </ul>
-<ol>
-<li>Phase 1 proposal (Authentication)<ol>
-<li>Authentication method Using a Pre-shared Key</li>
-<li>My identifier</li>
-<li>Peer identifier</li>
-<li>Pre-Shared Key</li>
-</ol>
-</li>
-<li>Phase 1 proposal (Algorithms)<ol>
-<li>Encryption algorithm AES</li>
-<li>Hash algoritm</li>
-</ol>
-</li>
-<li>Phase 2<ol>
-<li>Local Network - Route the local LAN subnet</li>
-<li>remote network - The remote LAN subnet</li>
-</ol>
-</li>
-<li>Phase 2 proposal (SA/Key Exchange)<ol>
-<li>Protocol</li>
-<li>Encryption algorithms</li>
-<li>Hash algortihms</li>
-<li>PFS Key group</li>
-<li>Lifetime</li>
-</ol>
-</li>
-</ol>
+<h1 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h1><p>Sharing interview tech question with you</p>
+<h2 id="Linux-system"><a href="#Linux-system" class="headerlink" title="Linux system"></a>Linux system</h2><p><strong>How to show ip address only on Centos</strong></p>
+<p><code>hostname -i</code></p>
+<p><strong>What is /dev save and when system will use it</strong></p>
+<p><strong>grep command</strong></p>
 <ul>
-<li>site B<br>do the same as site A</li>
+<li>grep -l </li>
+<li>grep -f </li>
+<li>grep -v</li>
+<li>grep -e</li>
 </ul>
-<p>how to block loop in LAN</p>
+<p><strong>what is under /proc</strong><br>Process information<br><img src="/2022/09/26/Interview_FAQ/linuxDir.jpeg" alt="image"></p>
+<p><strong>what is command cpio</strong></p>
 <blockquote>
-<p>enable STP<br>how to secure lan interface<br>enable 802.1x + radius<br>how to initize Cisco devices/APs</p>
+<p>cpio - copy files to and from archives</p>
 </blockquote>
-<h2 id="Script-and-coding"><a href="#Script-and-coding" class="headerlink" title="Script and coding"></a>Script and coding</h2><p>how to rollback git add locally<br>difference of git merge and git rebase<br>Shell script</p>
-<h2 id="Cloud-tech"><a href="#Cloud-tech" class="headerlink" title="Cloud tech"></a>Cloud tech</h2><p>AWS Load balance type<br>Introduce AWS feature you familiar with</p>
-<h2 id="IT-process-and-Project-management"><a href="#IT-process-and-Project-management" class="headerlink" title="IT process and Project management"></a>IT process and Project management</h2><p>How to initize project for office movement<br>Vendor management<br>Project schedule management</p>
-]]></content>
+<ul>
+<li><p>将家目录下的所有文件都归档到tree.cpio中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 ~]# find ~ -depth | cpio -ov &gt; tree.cpio 或 [root@server2 ~]# find ~ -depth | cpio -ov -F tree.cpio</span><br></pre></td></tr></table></figure></li>
+<li><p>向归档文件中追加文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 tmp]# ls /root/new.txt | cpio -oA -F tree.cpio</span><br></pre></td></tr></table></figure></li>
+<li><p>提取文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 tmp]# cpio -idv -F tree.cpio /root/</span><br></pre></td></tr></table></figure></li>
+<li><p><em>what is jwt token</em>*<br>JSON Web Token (JWT) is a compact URL-safe means of representing claims to be transferred between two parties</p>
+</li>
+</ul>
+<p><strong>explain uptime output</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">10:17:36 up 73 days, 10:18,  4 users,  load average: 5.83, 6.47, 7.31</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">These numbers are the averages of the system load over a period of one, five, and 15 minutes. </span><br><span class="line"></span><br><span class="line">Applying that to the load average output (0.5, 1.5, 3.0) that we got above: </span><br><span class="line"></span><br><span class="line">* 0.5 means the minimum waiting time at the counter. Between 0.00 and 1.0, there is no need to worry. Your servers are safe!</span><br><span class="line">* 1.5 means the queue is filling up. If the average gets any higher, things are going to start slowing down.</span><br><span class="line">* 3.00 means there&#x27;s a considerably long queue waiting, and an extra resource/counter is required to clear up the queue faster. </span><br></pre></td></tr></table></figure>
+<h2 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h2><h2 id="Devops"><a href="#Devops" class="headerlink" title="Devops"></a>Devops</h2><p><strong>if statememt in terraform</strong></p>
+<p><code>condition ? true_value : false_value</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">resource &quot;azurerm_function_app&quot; &quot;b59func&quot; &#123;</span><br><span class="line">  # Deploy conditionally based on Feature Flag variable</span><br><span class="line">  count = local.deploy_b59func == true ? 1 : 0</span><br><span class="line"></span><br><span class="line">  # resource attributes here</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%&#123; if &lt;CONDITION&gt; &#125;&lt;TRUEVAL&gt;%&#123; endif &#125;</span><br><span class="line"></span><br><span class="line">%&#123; if &lt;CONDITION&gt; &#125;&lt;TRUEVAL&gt;%&#123; else &#125;&lt;FALSEVAL&gt;%&#123; endif &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>example </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">output &quot;for_directive_index_if_strip&quot; &#123;</span><br><span class="line">  value = &lt;&lt;EOF</span><br><span class="line">%&#123;~ for i, name in var.names ~&#125;</span><br><span class="line">$&#123;name&#125;%&#123; if i &lt; length(var.names) - 1 &#125;, %&#123; endif &#125;</span><br><span class="line">%&#123;~ endfor ~&#125;</span><br><span class="line">EOF</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform apply</span><br><span class="line"></span><br><span class="line">(...)</span><br><span class="line"></span><br><span class="line">Outputs:</span><br><span class="line"></span><br><span class="line">for_directive_index_if_strip = &quot;neo, trinity, morpheus&quot;</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>for loop statement in terraform</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%&#123; for &lt;ITEM&gt; in &lt;COLLECTION&gt; &#125;&lt;BODY&gt;%&#123; endfor &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>git merge and git rebase difference</strong></p>
+<p><strong>desc CI/CD tools</strong></p>
+<h2 id="Scripts"><a href="#Scripts" class="headerlink" title="Scripts"></a>Scripts</h2>]]></content>
       <categories>
         <category>ideas,interview</category>
       </categories>
       <tags>
         <tag>ideas,interview,面试</tag>
-        <tag>shell</tag>
       </tags>
   </entry>
   <entry>
@@ -355,43 +355,6 @@
       </tags>
   </entry>
   <entry>
-    <title>日语五十音快乐记忆法则</title>
-    <url>/2021/08/24/japanese-learn/</url>
-    <content><![CDATA[<h2 id="五十音图"><a href="#五十音图" class="headerlink" title="五十音图"></a>五十音图</h2><p><img src="/2021/08/24/japanese-learn/50yin.jpeg" alt="image"></p>
-<h2 id="片假名"><a href="#片假名" class="headerlink" title="片假名"></a>片假名</h2><p><img src="/2021/08/24/japanese-learn/hiragana-g-01.png" alt="image"></p>
-<h2 id="平假名"><a href="#平假名" class="headerlink" title="平假名"></a>平假名</h2><p><img src="/2021/08/24/japanese-learn/katakanahyo-a4-1.png" alt="image"></p>
-<h2 id="五十音片假名记忆办法"><a href="#五十音片假名记忆办法" class="headerlink" title="五十音片假名记忆办法"></a>五十音片假名记忆办法</h2><p>あ，a，长得很像个“安”字，读音是阿。以后看到あ，就直接联想到“安”，就会很自然的记起来这个字读阿。</p>
-<p>い，i，长得很像个“以”，读音也一样，这个就不用教了。</p>
-<p>う，u，联想它长得像个乌鸦的翅膀，所以这个字读乌。</p>
-<p>え，e，读音是中文的诶，和诶的左半边“讠”很像。</p>
-<p>お，o，像一个十字架插在一个圆圈上，所以读作英文的欧</p>
-<p>か，ka，长得很像中文的“加”，日文里没有jia这个发音，只有ka，所以读卡。<br>き，ki，长得像一把钥匙，钥匙的英文是key，读音和き一模一样，读key。<br>く，ku，可以在左边画一笔变成一个“&gt; &lt;”的样子，像一个人在哭一样，读哭。<br>け，ke，读音像中文的开，长得也挺像，看到け就给他头上加一笔记作“开”吧。<br>こ，ko，读音像中文的口，看到こ就联想一下嘴巴的口。</p>
-<p>さ，sa，读音像中文的杀，上半部分是一样的，日文没有翘舌音，所以读sa。<br>し，shi，读音像中文的吸，像一根吸管的样子。<br>す，su，长得像一根棒子吊了根钢丝，读音有点像中文的丝，真实读音有种介于“苏”和“丝”之间的感觉。<br>せ，se，读音像心塞的塞，长得像世界的世，世界让我心塞，记住读塞。<br>そ，so，这货我是死背的，查了一下是中文的“曾”的草书演变过来的。知道是曾变过来之后，そ和曾两个字就越看越像了。</p>
-<p>た，ta，读它，是中文的“太”演变过来的，长得很像，记住读拼音tai的ta部分就可以。<br>ち，chi，长得像个5，但是比5多两个点点，所以读成七。<br>つ，tsu，读音有点像“刺”，右手虎口拿出来作一个捏人的手势去捏别人，想象一下自己会发出呲呲呲的声音。<br>て，te，长得像英文大写T，和写了一半的e，合在一起读te。<br>と，to，形状就是一个倒立的T，加一个O，读to</p>
-<p>な，na，是由中文的奈演变过来的，长得也很像，只读拼音nai的前两个na就可以。<br>に，ni，读“尼”，长得像个二，上海话里“二”本身就有ni这个音。<br>ぬ，nu，中文奴隶的奴演变过来，读音写法都很像。<br>ね，ne，这个实在编不下去了，太难了。和上海话的“难”发音一样，不行就死背吧我无能为力了。<br>の，no，这个一直都知道，就是“的”的意思，所以没背，读“诺”，注意不要和英文的no搞错。</p>
-<p>は，ha，读哈Ha，不知道你有没有从は里找到一个H和一个a。<br>ひ，hi，像一个在笑的嘴巴，发出嘻嘻嘻的笑声。<br>ふ，fu，读成类似“乎”，长得也挺像，或者可以想象成一个人脸在“呼呼呼”的吹气。这个音挺难发的，读音和中文的“夫”是不一样的。<br>へ，he，想象成一个人在嘿嘿嘿笑的时候的眉毛，读“嘿”hei的he，普通话没有这个读音所以很难解释清楚。<br>ほ，ho，比は多了一横，更厚了一点，所以读厚。</p>
-<p>ま，ma，长得很像抹布的“抹”右边部分，读音也一样。<br>み，mi，演变自中文的美，写美的草书时很像，读米。我是记成一个英文的M加上横过来一个i，所以读mi。<br>む，mu，长得像块墓碑，读墓。<br>め，me，比あ少一点，是あ的妹妹，读妹。<br>も，mo，加一横就跟中文的“毛”一样，读mo。</p>
-<p>や，ya，长得像个鸭子，也像中文的“也”，记一下读鸭。<br>ゆ，yu，长得像条鱼，所以读鱼。<br>よ，yo，长得像个Y和一个o，所以读yo哟。</p>
-<p>ら，ra，读“拉”，实在记不起来当时怎么联想的了，好像是强行把他想象成了一个r和一个A，自由发挥吧。注意日文的ra，读作中文里的la，日文没有中文拼音里L这个音节，用的都是r。<br>り，ri，中文“利”的右边部分，读利。<br>る，ru，长得像个葫芦，读卢。<br>れ，re，中文的“礼”演变过来的，读re。这个读法和上海话里的“来”是一样的，我就记：送礼来了。<br>ろ，ro，和る长得很像，葫芦落下来了，读落。</p>
-<p>わ，wa，像一把挖土的铲子，读挖。<br>を，wo，这个字的写法共三笔，一，h，c，读“我”或者“喔”，我直接死背的，长得和中文的“我”也差不多，就当成错别字来记了。<br>ん，nn，跟英文的n很像，读嗯。</p>
-<p>  <strong>友情链接</strong></p>
-<ul>
-<li><p>日本儿童学习日语网站：<a href="https://happylilac.net/mu1607251018.html">https://happylilac.net/mu1607251018.html</a></p>
-</li>
-<li><p>中本菜分享学习五十音办法： <a href="https://mp.weixin.qq.com/s/CYNe_QxvYEwzfM8pR5AFew">https://mp.weixin.qq.com/s/CYNe_QxvYEwzfM8pR5AFew</a></p>
-</li>
-<li><p>一个台湾人记忆五十音的办法：<a href="https://mp.weixin.qq.com/s/vDxlXk2eNKG5Id4NZrElZQ">https://mp.weixin.qq.com/s/vDxlXk2eNKG5Id4NZrElZQ</a></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>日语学习</category>
-      </categories>
-      <tags>
-        <tag>日语</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kubernetes网络类型详解</title>
     <url>/2021/08/21/k8s-network-1/</url>
     <content><![CDATA[<h1 id="Kubernetes网络插件对比分析（Flannel、Calico、Weave）"><a href="#Kubernetes网络插件对比分析（Flannel、Calico、Weave）" class="headerlink" title="Kubernetes网络插件对比分析（Flannel、Calico、Weave）"></a>Kubernetes网络插件对比分析（Flannel、Calico、Weave）</h1><h3 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h3><p>在对CNI插件们进行比较之前，我们可以先对网络中会见到的相关术语做一个整体的了解。不论是阅读本文，还是今后接触到其他和CNI有关的内容，了解一些常见术语总是非常有用的。</p>
@@ -473,6 +436,25 @@
       <tags>
         <tag>network</tag>
         <tag>kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux system admin notes</title>
+    <url>/2022/04/04/linux_systemadmin/</url>
+    <content><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="linunx-环境变量"><a href="#linunx-环境变量" class="headerlink" title="linunx 环境变量"></a>linunx 环境变量</h2><h2 id="linunx-文件权限"><a href="#linunx-文件权限" class="headerlink" title="linunx 文件权限"></a>linunx 文件权限</h2><p><code>umask</code>  default 022</p>
+<h3 id="shell-基础"><a href="#shell-基础" class="headerlink" title="shell 基础"></a>shell 基础</h3><h4 id="结构化命令"><a href="#结构化命令" class="headerlink" title="结构化命令"></a>结构化命令</h4><p>if</p>
+<p>for<br>while<br>until<br>break<br>continue</p>
+<h4 id="shell用户输入"><a href="#shell用户输入" class="headerlink" title="shell用户输入"></a>shell用户输入</h4><h3 id="控制shell脚本"><a href="#控制shell脚本" class="headerlink" title="控制shell脚本"></a>控制shell脚本</h3><h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function name &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">name () &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="退出状态"><a href="#退出状态" class="headerlink" title="退出状态"></a>退出状态</h4><p><code>$?</code></p>
+]]></content>
+      <categories>
+        <category>shell,linux</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -570,25 +552,6 @@
         <tag>shell</tag>
         <tag>regex</tag>
         <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux system admin notes</title>
-    <url>/2022/04/04/linux_systemadmin/</url>
-    <content><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="linunx-环境变量"><a href="#linunx-环境变量" class="headerlink" title="linunx 环境变量"></a>linunx 环境变量</h2><h2 id="linunx-文件权限"><a href="#linunx-文件权限" class="headerlink" title="linunx 文件权限"></a>linunx 文件权限</h2><p><code>umask</code>  default 022</p>
-<h3 id="shell-基础"><a href="#shell-基础" class="headerlink" title="shell 基础"></a>shell 基础</h3><h4 id="结构化命令"><a href="#结构化命令" class="headerlink" title="结构化命令"></a>结构化命令</h4><p>if</p>
-<p>for<br>while<br>until<br>break<br>continue</p>
-<h4 id="shell用户输入"><a href="#shell用户输入" class="headerlink" title="shell用户输入"></a>shell用户输入</h4><h3 id="控制shell脚本"><a href="#控制shell脚本" class="headerlink" title="控制shell脚本"></a>控制shell脚本</h3><h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function name &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">name () &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="退出状态"><a href="#退出状态" class="headerlink" title="退出状态"></a>退出状态</h4><p><code>$?</code></p>
-]]></content>
-      <categories>
-        <category>shell,linux</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>shell</tag>
-        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -722,35 +685,6 @@
       </categories>
       <tags>
         <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python程序获取股票信息</title>
-    <url>/2022/07/04/stock-price/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
-<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
-<li>python3</li>
-<li>akshare</li>
-<li>GoogleSheet</li>
-</ul>
-<p>Reference </p>
-<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
-<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
-<li>code example</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
-</ul>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>stock</tag>
-        <tag>python</tag>
       </tags>
   </entry>
   <entry>
@@ -938,6 +872,35 @@
       <tags>
         <tag>tech</tag>
         <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python程序获取股票信息</title>
+    <url>/2022/07/04/stock-price/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
+<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
+<li>python3</li>
+<li>akshare</li>
+<li>GoogleSheet</li>
+</ul>
+<p>Reference </p>
+<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
+<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
+<li>code example</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
+</ul>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>stock</tag>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>
