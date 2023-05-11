@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"toskachin.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Third part applications Applications Configuration iTerm2 setup Installation  Customization  Colors and Font Settings      Zsh setup Install zsh Step2 Install plugins and  theme Install Theme Re-load">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Developer&#39;s MacOS setup from Zero">
+<meta property="og:url" content="https://toskachin.github.io/2025/05/11/developer_macos_setup/index.html">
+<meta property="og:site_name" content="RJ&#39;s memories">
+<meta property="og:description" content="Third part applications Applications Configuration iTerm2 setup Installation  Customization  Colors and Font Settings      Zsh setup Install zsh Step2 Install plugins and  theme Install Theme Re-load">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://toskachin.github.io/.gitbook/assets/image.png">
+<meta property="article:published_time" content="2025-05-11T07:59:59.000Z">
+<meta property="article:modified_time" content="2023-05-11T08:30:32.970Z">
+<meta property="article:author" content="TOSKA">
+<meta property="article:tag" content="macos">
+<meta property="article:tag" content="developer_tool">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://toskachin.github.io/.gitbook/assets/image.png">
+
+
+<link rel="canonical" href="https://toskachin.github.io/2025/05/11/developer_macos_setup/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://toskachin.github.io/2025/05/11/developer_macos_setup/","path":"2025/05/11/developer_macos_setup/","title":"Developer's MacOS setup from Zero"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Developer's MacOS setup from Zero | RJ's memories</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="RJ's memories" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">RJ's memories</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Third-part-applications"><span class="nav-number">1.</span> <span class="nav-text">Third part applications</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Applications-Configuration"><span class="nav-number">2.</span> <span class="nav-text">Applications Configuration</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#iTerm2-setup"><span class="nav-number">2.1.</span> <span class="nav-text">iTerm2 setup</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Installation"><span class="nav-number">2.1.1.</span> <span class="nav-text">Installation </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Customization"><span class="nav-number">2.1.2.</span> <span class="nav-text">Customization </span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Colors-and-Font-Settings"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">Colors and Font Settings </span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Zsh-setup"><span class="nav-number">2.2.</span> <span class="nav-text">Zsh setup</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Install-zsh"><span class="nav-number">2.2.1.</span> <span class="nav-text">Install zsh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step2-Install-plugins-and-theme"><span class="nav-number">2.2.2.</span> <span class="nav-text">Step2 Install plugins and  theme</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Install-Theme"><span class="nav-number">2.2.3.</span> <span class="nav-text">Install Theme</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Re-load-configuration"><span class="nav-number">2.2.4.</span> <span class="nav-text">Re-load configuration</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Homebrew-setup"><span class="nav-number">2.3.</span> <span class="nav-text">Homebrew setup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-setup"><span class="nav-number">2.4.</span> <span class="nav-text">Git setup</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-and-GitHub"><span class="nav-number">2.4.1.</span> <span class="nav-text">Git and GitHub </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSH-Config-for-GitHub"><span class="nav-number">2.4.2.</span> <span class="nav-text">SSH Config for GitHub </span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Check-for-existing-SSH-keys"><span class="nav-number">2.4.2.1.</span> <span class="nav-text">Check for existing SSH keys </span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Generate-a-new-SSH-key"><span class="nav-number">2.4.2.2.</span> <span class="nav-text">Generate a new SSH key </span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sublime-setup"><span class="nav-number">2.5.</span> <span class="nav-text">Sublime setup</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sublime-Text"><span class="nav-number">2.5.1.</span> <span class="nav-text">Sublime Text </span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Installation-1"><span class="nav-number">2.5.1.1.</span> <span class="nav-text">Installation </span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Use-CLI-to-open-file"><span class="nav-number">2.5.1.2.</span> <span class="nav-text">Use CLI to open file </span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Subl-plugins"><span class="nav-number">2.5.2.</span> <span class="nav-text">Subl plugins</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Keyboard-Shortcuts"><span class="nav-number">2.5.3.</span> <span class="nav-text">Keyboard Shortcuts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SideBarEnhancements"><span class="nav-number">2.5.4.</span> <span class="nav-text">SideBarEnhancements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vintage-Mode"><span class="nav-number">2.5.5.</span> <span class="nav-text">Vintage Mode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Anaconda"><span class="nav-number">2.5.6.</span> <span class="nav-text">Anaconda</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SublimeLinter"><span class="nav-number">2.5.7.</span> <span class="nav-text">SublimeLinter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GitGutter"><span class="nav-number">2.5.8.</span> <span class="nav-text">GitGutter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Markdown-Preview"><span class="nav-number">2.5.9.</span> <span class="nav-text">Markdown Preview</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="TOSKA"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">TOSKA</p>
+  <div class="site-description" itemprop="description">10+ IT career and personal memories</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/toskachin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;toskachin" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:royjin@msn.com" title="E-Mail → mailto:royjin@msn.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+<!-- recent posts -->
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+        <div class="links-of-blogroll-title recent-posts-title">
+	    <i class="fa fa-history " aria-hidden="true"></i>
+            近期文章
+	</div>
+	<ul class="links-of-blogroll-list recent-posts-list">
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2025/05/11/developer_macos_setup/" title="Developer's MacOS setup from Zero" target="">
+		    Developer's MacOS setup from Zero
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/09/26/Interview_FAQ/" title="Interview FAQ 2022" target="">
+		    Interview FAQ 2022
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/09/21/docker_useful_commands/" title="Docker useful commands" target="">
+		    Docker useful commands
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/09/20/Kubernetes_from_zero/" title="Kubernetes 入门基础" target="">
+		    Kubernetes 入门基础
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/2022/07/04/hexo-blog-setup/" title="Hexo_blog_setup" target="">
+		    Hexo_blog_setup
+		    </a>
+		</li>
+	</ul>
+    </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/toskachin" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2025/05/11/developer_macos_setup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="TOSKA">
+      <meta itemprop="description" content="10+ IT career and personal memories">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="RJ's memories">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Developer's MacOS setup from Zero
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-05-11 15:59:59" itemprop="dateCreated datePublished" datetime="2025-05-11T15:59:59+08:00">2025-05-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2023-05-11 16:30:32" itemprop="dateModified" datetime="2023-05-11T16:30:32+08:00">2023-05-11</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/macos-tools/" itemprop="url" rel="index"><span itemprop="name">macos,tools</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>12 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <ul>
+<li><a href="#third-part-applications">Third part applications</a></li>
+<li><a href="#applications-configuration">Applications Configuration</a><ul>
+<li><a href="#iterm2-setup">iTerm2 setup</a><ul>
+<li><a href="#installation-">Installation </a></li>
+<li><a href="#customization-">Customization </a><ul>
+<li><a href="#colors-and-font-settings-">Colors and Font Settings </a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#zsh-setup">Zsh setup</a><ul>
+<li><a href="#install-zsh">Install zsh</a></li>
+<li><a href="#step2-install-plugins-and--theme">Step2 Install plugins and  theme</a></li>
+<li><a href="#install-theme">Install Theme</a></li>
+<li><a href="#re-load-configuration">Re-load configuration</a></li>
+</ul>
+</li>
+<li><a href="#homebrew-setup">Homebrew setup</a></li>
+<li><a href="#git-setup">Git setup</a><ul>
+<li><a href="#git-and-github-">Git and GitHub </a></li>
+<li><a href="#ssh-config-for-github-">SSH Config for GitHub </a><ul>
+<li><a href="#check-for-existing-ssh-keys-">Check for existing SSH keys </a></li>
+<li><a href="#generate-a-new-ssh-key-">Generate a new SSH key </a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sublime-setup">Sublime setup</a><ul>
+<li><a href="#sublime-text-">Sublime Text </a><ul>
+<li><a href="#installation--1">Installation </a></li>
+<li><a href="#use-cli-to-open-file-">Use CLI to open file </a></li>
+</ul>
+</li>
+<li><a href="#subl-plugins">Subl plugins</a></li>
+<li><a href="#keyboard-shortcuts">Keyboard Shortcuts</a></li>
+<li><a href="#sidebarenhancements">SideBarEnhancements</a></li>
+<li><a href="#vintage-mode">Vintage Mode</a></li>
+<li><a href="#anaconda">Anaconda</a></li>
+<li><a href="#sublimelinter">SublimeLinter</a></li>
+<li><a href="#gitgutter">GitGutter</a></li>
+<li><a href="#markdown-preview">Markdown Preview</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Third-part-applications"><a href="#Third-part-applications" class="headerlink" title="Third part applications"></a>Third part applications</h1><ul>
+<li>Custom terminal tool: iTerm2 <a target="_blank" rel="noopener" href="https://iterm2.com/">https://iterm2.com</a></li>
+<li>Smart your terminal: zsh: <a target="_blank" rel="noopener" href="https://ohmyz.sh/">https://ohmyz.sh/</a></li>
+<li>Yum on MacOS: Homebrew <a target="_blank" rel="noopener" href="https://brew.sh/">https://brew.sh</a></li>
+<li>Notebook or IDE: sublime <a target="_blank" rel="noopener" href="https://www.sublimetext.com/">https://www.sublimetext.com</a></li>
+<li>IDE Visual Studio: <a target="_blank" rel="noopener" href="https://code.visualstudio.com/">https://code.visualstudio.com</a></li>
+<li>Git : <a target="_blank" rel="noopener" href="https://github.com/git-guides/install-git">https://github.com/git-guides/install-git</a></li>
+</ul>
+<h1 id="Applications-Configuration"><a href="#Applications-Configuration" class="headerlink" title="Applications Configuration"></a>Applications Configuration</h1><h2 id="iTerm2-setup"><a href="#iTerm2-setup" class="headerlink" title="iTerm2 setup"></a>iTerm2 setup</h2><p><a target="_blank" rel="noopener" href="http://www.iterm2.com/">iTerm2</a> is an open source replacement for Apple’s Terminal. It’s highly customizable and comes with a lot of useful features.</p>
+<h3 id="Installation"><a href="#Installation" class="headerlink" title="Installation "></a>Installation <a id="installation"></a></h3><p>Use <a target="_blank" rel="noopener" href="http://sourabhbajaj.com/mac-setup/Homebrew/">Homebrew</a> to download and install:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew cask install iterm2</span><br></pre></td></tr></table></figure>
+<p>or download via <a target="_blank" rel="noopener" href="https://iterm2.com/">https://iterm2.com</a></p>
+<h3 id="Customization"><a href="#Customization" class="headerlink" title="Customization "></a>Customization <a id="customization"></a></h3><h4 id="Colors-and-Font-Settings"><a href="#Colors-and-Font-Settings" class="headerlink" title="Colors and Font Settings "></a>Colors and Font Settings <a id="colors-and-font-settings"></a></h4><p>Here are some suggested settings you can change or set, <strong>they are all optional</strong>.</p>
+<ul>
+<li>Set hot-key to open and close the terminal to <code>command + option + i</code></li>
+<li>Go to profiles -&gt; Default -&gt; Terminal -&gt; Check silence bell to disable the terminal session from making any sound</li>
+<li>Download <a target="_blank" rel="noopener" href="https://github.com/mbadolato/iTerm2-Color-Schemes/tree/master/schemes">one of iTerm2 color schemes</a> and then set these to your default profile colors</li>
+<li>Change the cursor text and cursor color to yellow make it more visible</li>
+<li>Change the font to 14pt Source Code Pro Lite. Source Code Pro can be downloaded using <a target="_blank" rel="noopener" href="https://sourabhbajaj.com/mac-setup/Homebrew/">Homebrew</a> <code>brew tap caskroom/fonts &amp;&amp; brew cask install font-source-code-pro</code></li>
+<li>If you’re using BASH instead of ZSH you can add <code>export CLICOLOR=1</code> line to your <code>~/.bash_profile</code>file for nice coloring of listings</li>
+</ul>
+<h2 id="Zsh-setup"><a href="#Zsh-setup" class="headerlink" title="Zsh setup"></a>Zsh setup</h2><h3 id="Install-zsh"><a href="#Install-zsh" class="headerlink" title="Install zsh"></a>Install zsh</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c &quot;$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Step2-Install-plugins-and-theme"><a href="#Step2-Install-plugins-and-theme" class="headerlink" title="Step2 Install plugins and  theme"></a>Step2 Install plugins and  theme</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.zshrc</span><br><span class="line"></span><br><span class="line">plugins=(git zsh-autosuggestions zsh-syntax-highlighting)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Install-Theme"><a href="#Install-Theme" class="headerlink" title="Install Theme"></a>Install Theme</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#Set ZSH_THEME=powerlevel10k/powerlevel10k in your ~/.zshrc.</span><br><span class="line"></span><br><span class="line">ZSH_THEME=&quot;powerlevel10k/powerlevel10k&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Re-load-configuration"><a href="#Re-load-configuration" class="headerlink" title="Re-load configuration"></a>Re-load configuration</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<h2 id="Homebrew-setup"><a href="#Homebrew-setup" class="headerlink" title="Homebrew setup"></a>Homebrew setup</h2><p><code>/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;</code></p>
+<h2 id="Git-setup"><a href="#Git-setup" class="headerlink" title="Git setup"></a>Git setup</h2><h3 id="Git-and-GitHub"><a href="#Git-and-GitHub" class="headerlink" title="Git and GitHub "></a>Git and GitHub <a id="git-and-github"></a></h3><p>What’s a developer without <a target="_blank" rel="noopener" href="http://git-scm.com/">Git</a>? To install, run:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install git</span><br></pre></td></tr></table></figure>
+
+<p>When done, to test that it installed properly you can run:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git --version</span><br></pre></td></tr></table></figure>
+
+<p>And <code>which git</code> should output <code>/usr/local/bin/git</code>.</p>
+<p>Next, we’ll define your Git user (should be the same name and email you use for <a target="_blank" rel="noopener" href="https://github.com/">GitHub</a>):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name &quot;Your Name Here&quot;</span><br><span class="line">$ git config --global user.email &quot;your_email@youremail.com&quot;</span><br></pre></td></tr></table></figure>
+
+<p>They will get added to your <code>.gitconfig</code> file.</p>
+<p>To push code to your GitHub repositories, we’re going to use the recommended HTTPS method (versus SSH). To prevent <code>git</code> from asking for your username and password every time you push a commit you can cache your credentials by running the following command, as described in the <a target="_blank" rel="noopener" href="https://help.github.com/articles/caching-your-github-password-in-git/">instructions</a>.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global credential.helper osxkeychain</span><br></pre></td></tr></table></figure>
+
+<h3 id="SSH-Config-for-GitHub"><a href="#SSH-Config-for-GitHub" class="headerlink" title="SSH Config for GitHub "></a>SSH Config for GitHub <a id="ssh-config-for-github"></a></h3><p>The instructions below are referenced from <a target="_blank" rel="noopener" href="https://help.github.com/articles/generating-ssh-keys">the official documentation</a>.</p>
+<h4 id="Check-for-existing-SSH-keys"><a href="#Check-for-existing-SSH-keys" class="headerlink" title="Check for existing SSH keys "></a>Check for existing SSH keys <a id="check-for-existing-ssh-keys"></a></h4><p>First, we need to check for existing SSH keys on your computer. We do this by running:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ls -al ~/.ssh</span><br><span class="line"># Lists the files in your .ssh directory, if they exist</span><br></pre></td></tr></table></figure>
+
+<p>Check the directory listing to see if you have files named either <code>id_rsa.pub</code> or <code>id_dsa.pub</code>. If you don’t have either of those files then read on, otherwise skip the next section.</p>
+<h4 id="Generate-a-new-SSH-key"><a href="#Generate-a-new-SSH-key" class="headerlink" title="Generate a new SSH key "></a>Generate a new SSH key <a id="generate-a-new-ssh-key"></a></h4><p>If you don’t have an SSH key you need to generate one. To do that you need to run the commands below, and make sure to substitute the placeholder with your email. The default settings are preferred, so when you’re asked to “enter a file in which to save the key,”” just press Enter to continue.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C &quot;your_email@example.com&quot;</span><br><span class="line"># Creates a new ssh key, using the provided email as a label</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sublime-setup"><a href="#Sublime-setup" class="headerlink" title="Sublime setup"></a>Sublime setup</h2><h3 id="Sublime-Text"><a href="#Sublime-Text" class="headerlink" title="Sublime Text "></a>Sublime Text <a id="sublime-text"></a></h3><p><a target="_blank" rel="noopener" href="http://www.sublimetext.com/">Sublime Text</a> is a widely used editor that describes it self as <em>a sophisticated text editor for code, markup and prose</em>.</p>
+<h4 id="Installation-1"><a href="#Installation-1" class="headerlink" title="Installation "></a>Installation <a id="installation"></a></h4><p><a target="_blank" rel="noopener" href="http://www.sublimetext.com/">Download</a> the <strong>.dmg</strong> file and drag-and-drop it to the <strong>Applications</strong> folder.</p>
+<h4 id="Use-CLI-to-open-file"><a href="#Use-CLI-to-open-file" class="headerlink" title="Use CLI to open file "></a>Use CLI to open file <a id="use-cli-to-open-file"></a></h4><p>Let’s create a shortcut so we can launch Sublime Text from the command-line</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl</span><br></pre></td></tr></table></figure>
+
+<p>Now you can open a file with <code>$ subl myfile.py</code> or start a new project in the current directory with <code>$ subl .</code>.</p>
+<h3 id="Subl-plugins"><a href="#Subl-plugins" class="headerlink" title="Subl plugins"></a>Subl plugins</h3><p>****</p>
+<h3 id="Keyboard-Shortcuts"><a href="#Keyboard-Shortcuts" class="headerlink" title="Keyboard Shortcuts"></a>Keyboard Shortcuts</h3><ul>
+<li><strong>Goto Anything</strong> Cmd+P is used for quickly finding and opening files. Just type in a part of a path and filename within a project and you can easily open that file. This is great for quickly opening files in large Django projects.</li>
+<li><strong>Goto Line Number</strong> Ctrl+G takes you to a specific line number in an active file.</li>
+<li><strong>command + shift + p</strong>  to open install package -&gt; search packages </li>
+</ul>
+<h3 id="SideBarEnhancements"><a href="#SideBarEnhancements" class="headerlink" title="SideBarEnhancements"></a>SideBarEnhancements</h3><p><a target="_blank" rel="noopener" href="https://sublime.wbond.net/packages/SideBarEnhancements">SideBarEnhancements</a> extends the number of menu options in the sidebar, speeding up your overall workflow. Options such as <strong>New File</strong> and <strong>Duplicate</strong> are essential and should be part of ST3 out of the box. The <strong>Delete</strong> option alone makes it worth downloading. This feature simply sends files to the Trash, which may seem trivial, but if you delete a file without it, then it’s very difficult to recover unless you’re using a version control system</p>
+<p><img src="/../.gitbook/assets/image.png"></p>
+<h3 id="Vintage-Mode"><a href="#Vintage-Mode" class="headerlink" title="Vintage Mode"></a>Vintage Mode</h3><p>enable vim mode on sublime</p>
+<h3 id="Anaconda"><a href="#Anaconda" class="headerlink" title="Anaconda"></a>Anaconda</h3><p><a target="_blank" rel="noopener" href="https://sublime.wbond.net/packages/Anaconda">Anaconda</a> is the ultimate Python package. It adds a number of IDE-like features to ST3 including the following:</p>
+<ul>
+<li><strong>Autocompletion</strong> works by default, but there are a number of configuration <a target="_blank" rel="noopener" href="https://github.com/DamnWidget/anaconda#anaconda-autocompletion">options</a>.</li>
+<li><strong>Code</strong> <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Lint_%28software%29"><strong>linting</strong></a> uses either PyLint or PyFlakes with PEP 8. I personally use a different linting package, as I will explain shortly, so I disable linting altogether within the user-defined Anaconda settings file, <strong>Anaconda.sublime-settings</strong>, via the file menu: <strong>Sublime &gt; Preferences &gt; Package Settings &gt; Anaconda &gt; Settings - User</strong>: <code>&#123;&quot;anaconda_linting&quot;: false&#125;</code></li>
+<li><strong>McCabe code complexity checker</strong> runs the <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">McCabe complexity checker</a> tool within a specific file. If you’re not familiar with what complexity is, be sure to visit the link above.</li>
+<li><strong>Goto Definitions</strong> finds and displays the definition of any variable, function, or class throughout your entire project.</li>
+<li><strong>Find Usage</strong> quickly searches where a variable, function, or class has been used in a specific file.</li>
+<li><strong>Show Documentation</strong> shows the docstring for functions or classes (if defined, of course).</li>
+</ul>
+<h3 id="SublimeLinter"><a href="#SublimeLinter" class="headerlink" title="SublimeLinter"></a>SublimeLinter</h3><p><a target="_blank" rel="noopener" href="https://sublime.wbond.net/packages/SublimeLinter">SublimeLinter</a> is a framework for ST3 linters. The package itself does not include any actual linters; those must be installed separately via Package Control using the <strong>SublimeLinter-[linter_name]</strong> naming syntax. You can view official linters <a target="_blank" rel="noopener" href="https://github.com/SublimeLinter">here</a>. There are also a number of third party linters, which can be viewed in Package Control. Check out the installation instructions <a target="_blank" rel="noopener" href="http://sublimelinter.readthedocs.org/en/latest/installation.html">here</a>.</p>
+<h3 id="GitGutter"><a href="#GitGutter" class="headerlink" title="GitGutter"></a>GitGutter</h3><p><a target="_blank" rel="noopener" href="https://sublime.wbond.net/packages/GitGutter">GitGutter</a> shows little icons in ST3’s gutter area that indicate whether a line has been inserted, modified, or deleted since the last commit.</p>
+<h3 id="Markdown-Preview"><a href="#Markdown-Preview" class="headerlink" title="Markdown Preview"></a>Markdown Preview</h3><p><a target="_blank" rel="noopener" href="https://sublime.wbond.net/packages/Markdown%20Preview">Markdown Preview</a> is used for previewing and building markdown files.</p>
+<p>To use, open the Package Manager and type <code>Markdown Preview</code> to show the available commands:</p>
+<ul>
+<li>Markdown Preview: Python Markdown: Preview in Browser</li>
+<li>Markdown Preview: Python Markdown: Export HTML in Sublime Text</li>
+<li>Markdown Preview: Python Markdown: Copy to Clipboard</li>
+<li>Markdown Preview: GitHub Flavored Markdown: Preview in Browser</li>
+<li>Markdown Preview: GitHub Flavored Markdown: Export HTML in Sublime Text</li>
+<li>Markdown Preview: GitHub Flavored Markdown: Copy to Clipboard</li>
+<li>Markdown Preview: Open Markdown Cheat Sheet</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/macos/" rel="tag"># macos</a>
+              <a href="/tags/developer-tool/" rel="tag"># developer_tool</a>
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/26/Interview_FAQ/" rel="prev" title="Interview FAQ 2022">
+                  <i class="fa fa-chevron-left"></i> Interview FAQ 2022
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TOSKA</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">206k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:44</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div id="site-runtime">
+  <span class="post-meta-item-icon">
+    <i class="fa fa-clock-o"></i>
+  </span>
+  <span id="runtime"></span>
+</div>
+
+<script language="javascript">
+  function isPC() {
+    var userAgentInfo = navigator.userAgent;
+    var agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+    for (var i = 0; i < agents.length; i++) {
+      if (userAgentInfo.indexOf(agents[i]) > 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function siteTime(openOnPC, start) {
+    window.setTimeout("siteTime(openOnPC, start)", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+      start = new Date("2021-08-19 09:00:00 +0800");
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth() + 1;
+    var date = now.getDate();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+    var diff = now - start;
+
+    var diffYears = Math.floor(diff / years);
+    var diffDays = Math.floor((diff / days) - diffYears * 365);
+    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+
+    if (openOnPC) {
+      document.getElementById("runtime").innerHTML = "Running: " + diffYears + " years " + diffDays + " days " + diffHours + " hours " + diffMinutes + " mins " + diffSeconds + " secs";
+    } else {
+      document.getElementById("runtime").innerHTML = "Running: " + diffYears + "y " + diffDays + "d " + diffHours + "h " + diffMinutes + "m " + diffSeconds + "s";
+    }
+  }
+
+  var showOnMobile = false;
+  var openOnPC = isPC();
+  var start = new Date();
+  siteTime(openOnPC, start);
+
+  if (!openOnPC && !showOnMobile) {
+    document.getElementById('site-runtime').style.display = 'none';
+  }
+</script>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -6,7 +6,7 @@
   <link href="https://toskachin.github.io/atom.xml" rel="self"/>
   
   <link href="https://toskachin.github.io/"/>
-  <updated>2022-11-07T13:00:35.815Z</updated>
+  <updated>2023-05-11T08:30:32.970Z</updated>
   <id>https://toskachin.github.io/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Developer&#39;s MacOS setup from Zero</title>
+    <link href="https://toskachin.github.io/2025/05/11/developer_macos_setup/"/>
+    <id>https://toskachin.github.io/2025/05/11/developer_macos_setup/</id>
+    <published>2025-05-11T07:59:59.000Z</published>
+    <updated>2023-05-11T08:30:32.970Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#third-part-applications&quot;&gt;Third part applications&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#applications-configuration&quot;&gt;Applications</summary>
+        
+      
+    
+    
+    
+    <category term="macos,tools" scheme="https://toskachin.github.io/categories/macos-tools/"/>
+    
+    
+    <category term="macos" scheme="https://toskachin.github.io/tags/macos/"/>
+    
+    <category term="developer_tool" scheme="https://toskachin.github.io/tags/developer-tool/"/>
+    
+    <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>Interview FAQ 2022</title>
