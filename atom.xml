@@ -6,7 +6,7 @@
   <link href="https://toskachin.github.io/atom.xml" rel="self"/>
   
   <link href="https://toskachin.github.io/"/>
-  <updated>2023-05-11T08:30:32.970Z</updated>
+  <updated>2023-05-15T14:13:36.090Z</updated>
   <id>https://toskachin.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>个人职业生涯短记 personal career path</title>
+    <link href="https://toskachin.github.io/2025/05/15/career_path/"/>
+    <id>https://toskachin.github.io/2025/05/15/career_path/</id>
+    <published>2025-05-15T12:59:59.000Z</published>
+    <updated>2023-05-15T14:13:36.090Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="engineering" scheme="https://toskachin.github.io/categories/engineering/"/>
+    
+    
+    <category term="developer" scheme="https://toskachin.github.io/tags/developer/"/>
+    
+    <category term="IT" scheme="https://toskachin.github.io/tags/IT/"/>
+    
+  </entry>
   
   <entry>
     <title>Developer&#39;s MacOS setup from Zero</title>
@@ -44,33 +71,6 @@
     <category term="developer_tool" scheme="https://toskachin.github.io/tags/developer-tool/"/>
     
     <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>个人职业生涯短记 personal career path</title>
-    <link href="https://toskachin.github.io/2025/05/05/career_path/"/>
-    <id>https://toskachin.github.io/2025/05/05/career_path/</id>
-    <published>2025-05-05T12:59:59.000Z</published>
-    <updated>2023-05-15T14:04:09.460Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="engineering" scheme="https://toskachin.github.io/categories/engineering/"/>
-    
-    
-    <category term="developer" scheme="https://toskachin.github.io/tags/developer/"/>
-    
-    <category term="IT" scheme="https://toskachin.github.io/tags/IT/"/>
     
   </entry>
   
