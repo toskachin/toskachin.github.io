@@ -146,106 +146,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Kubernetes 入门基础</title>
-    <url>/2022/09/20/Kubernetes_from_zero/</url>
-    <content><![CDATA[<h1 id="Kubernetes-入门基础"><a href="#Kubernetes-入门基础" class="headerlink" title="Kubernetes 入门基础"></a>Kubernetes 入门基础</h1><p><strong>Kubernetes Components Architecture</strong><br><img src="/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg" alt="image"></p>
-<h2 id="Kubernetes-核心组件"><a href="#Kubernetes-核心组件" class="headerlink" title="Kubernetes 核心组件"></a>Kubernetes 核心组件</h2><p>Kubernetes 主要由以下几个核心组件组成:</p>
-<ul>
-<li>etcd 保存了整个集群的状态；</li>
-<li>API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制；</li>
-<li>Controller Manager 负责维护集群的状态，比如故障检测、自动扩展、滚动更新等；</li>
-<li>Scheduler 负责资源的调度，按照预定的调度策略将 Pod 调度到相应的机器上；</li>
-<li>Kubelet 负责维护容器的生命周期，同时也负责 Volume（CVI）和网络（CNI）的管理；</li>
-<li>Container Runtime 负责镜像管理以及 Pod 和容器的真正运行（CRI）；</li>
-<li>Kube-proxy 负责为 Service 提供 cluster 内部的服务发现和负载均衡；</li>
-</ul>
-<h2 id="Kubernetes相关基础概念"><a href="#Kubernetes相关基础概念" class="headerlink" title="Kubernetes相关基础概念"></a>Kubernetes相关基础概念</h2><ul>
-<li>master：k8s集群的管理节点，负责管理集群，提供集群的资源数据访问入口。拥有Etcd存储服务（可选），运行Api Server进程，Controller Manager服务进程及Scheduler服务进程。</li>
-<li>node（worker）：Node（worker）是Kubernetes集群架构中运行Pod的服务节点，是Kubernetes集群操作的单元，用来承载被分配Pod的运行，是Pod运行的宿主机。运行docker eninge服务，守护进程kunelet及负载均衡器kube-proxy。</li>
-<li>pod：运行于Node节点上，若干相关容器的组合。Pod内包含的容器运行在同一宿主机上，使用相同的网络命名空间、IP地址和端口，能够通过localhost进行通信。Pod是Kurbernetes进行创建、调度和管理的最小单位，它提供了比容器更高层次的抽象，使得部署和管理更加灵活。一个Pod可以包含一个容器或者多个相关容器。</li>
-<li>label：Kubernetes中的Label实质是一系列的Key/Value键值对，其中key与value可自定义。Label可以附加到各种资源对象上，如Node、Pod、Service、RC等。一个资源对象可以定义任意数量的Label，同一个Label也可以被添加到任意数量的资源对象上去。Kubernetes通过Label Selector（标签选择器）查询和筛选资源对象。</li>
-<li>Replication Controller：Replication Controller用来管理Pod的副本，保证集群中存在指定数量的Pod副本。集群中副本的数量大于指定数量，则会停止指定数量之外的多余容器数量。反之，则会启动少于指定数量个数的容器，保证数量不变。Replication Controller是实现弹性伸缩、动态扩容和滚动升级的核心。</li>
-<li>Deployment：Deployment在内部使用了RS来实现目的，Deployment相当于RC的一次升级，其最大的特色为可以随时获知当前Pod的部署进度。</li>
-<li>HPA（Horizontal Pod Autoscaler）：Pod的横向自动扩容，也是Kubernetes的一种资源，通过追踪分析RC控制的所有Pod目标的负载变化情况，来确定是否需要针对性的调整Pod副本数量。</li>
-<li>Service：Service定义了Pod的逻辑集合和访问该集合的策略，是真实服务的抽象。Service提供了一个统一的服务访问入口以及服务代理和发现机制，关联多个相同Label的Pod，用户不需要了解后台Pod是如何运行。</li>
-<li>Volume：Volume是Pod中能够被多个容器访问的共享目录，Kubernetes中的Volume是定义在Pod上，可以被一个或多个Pod中的容器挂载到某个目录下。</li>
-<li>Namespace：Namespace用于实现多租户的资源隔离，可将集群内部的资源对象分配到不同的Namespace中，形成逻辑上的不同项目、小组或用户组，便于不同的Namespace在共享使用整个集群的资源的同时还能被分别管理。</li>
-</ul>
-<h2 id="K8s-常用命令"><a href="#K8s-常用命令" class="headerlink" title="K8s 常用命令"></a>K8s 常用命令</h2><h3 id="kubectl"><a href="#kubectl" class="headerlink" title="kubectl"></a>kubectl</h3><hr>
-<p>kubectl 是 Kubernetes 的命令行工具（CLI），是 Kubernetes 用户和管理员必备的管理工具。<br>kubectl 提供了大量的子命令，方便管理 Kubernetes 集群中的各种功能。这里不再罗列各种子命令的格式，而是介绍下如何查询命令的帮助</p>
-<ul>
-<li>kubectl -h 查看子命令列表</li>
-<li>kubectl options 查看全局选项</li>
-<li>kubectl <command> –help 查看子命令的帮助</li>
-<li>kubectl [command] [PARAMS] -o=<format> 设置输出格式（如 json、yaml、jsonpath 等）</li>
-<li>kubectl explain [RESOURCE] 查看资源的定义</li>
-</ul>
-<hr>
-<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>使用 kubectl 的第一步是配置 Kubernetes 集群以及认证方式，包括</p>
-<ul>
-<li>cluster 信息：Kubernetes server 地址</li>
-<li>用户信息：用户名、密码或密钥</li>
-<li>Context：cluster、用户信息以及 Namespace 的组合</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl config set-credentials myself --username=admin --password=secret</span><br><span class="line">kubectl config set-cluster local-server --server=http://localhost:8080</span><br><span class="line">kubectl config set-context default-context --cluster=local-server --user=myself --namespace=default</span><br><span class="line">kubectl config use-context default-context</span><br><span class="line">kubectl config view</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>tech</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>k8s</tag>
-        <tag>container</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>个人职业生涯短记 personal career path</title>
-    <url>/2025/05/05/career_path/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">写在技术大牛陈皓离世之际，惊闻噩耗年仅47岁大牛陈皓离我们而去，死于心梗。</span><br><span class="line">人的一生总有终点，我们能做的就是不断的总结自己的经验，提高自己，分享自己的知识和观点</span><br></pre></td></tr></table></figure>
-
-<h1 id="13年IT职业生涯概览"><a href="#13年IT职业生涯概览" class="headerlink" title="13年IT职业生涯概览"></a>13年IT职业生涯概览</h1><ul>
-<li><p>第一份工作 IBM-UOB 上海数据中心项目<br>学习了解到一个数据中心从无到有的过程，各个供应商的协作，线路设备的上架，24*7运维环境的要求及监控</p>
-</li>
-<li><p>CSM customer support 项目<br>真正从一个入门的IT engineer到独自负责一个客户现场，从helpdesk基础的工作到服务器和网络运维，从一个内向不会沟通的小伙到如何管理客户的需求和期望值</p>
-</li>
-<li><p>ASOS customer 项目<br>这是一个真正系统学习到了一个项目交付运维流程，基于前人研究出的理论基础，利用ITIL知识体系来管理项目</p>
-</li>
-<li><p>Marin IT<br>这个第一个开拓眼界的职位，在这个硅谷互联网公司接触到了各类技术大牛，技术上接触到Meraki基于云平台管理的网络厂商，给自己后来的技术转型带来决心</p>
-</li>
-<li><p>SRE/DEVOPS</p>
-</li>
-<li><ul>
-<li>这个是一个实现起初梦想的职位，一个人管理上千台服务器，维护整个产品平台，如何实现高度自动化，让机器代替人工。</li>
-</ul>
-</li>
-<li><ul>
-<li>各类运维自动化工具，各类监控工具</li>
-</ul>
-</li>
-<li><ul>
-<li>云平台，容器化技术，更高效的使用物理资源</li>
-</ul>
-</li>
-<li><ul>
-<li>根据产品需求开发高度持续集成持续交付工具</li>
-</ul>
-</li>
-<li><ul>
-<li>一个高效的团队如何运转，不同团队之间如何协作</li>
-</ul>
-</li>
-</ul>
-<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>技术之路永无止境，Never stop learning - from Yushin!</p>
-]]></content>
-      <categories>
-        <category>engineering</category>
-      </categories>
-      <tags>
-        <tag>developer</tag>
-        <tag>IT</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Developer&#39;s MacOS setup from Zero</title>
     <url>/2025/05/11/developer_macos_setup/</url>
     <content><![CDATA[<ul>
@@ -401,53 +301,31 @@
       </tags>
   </entry>
   <entry>
-    <title>Docker useful commands</title>
-    <url>/2022/09/21/docker_useful_commands/</url>
-    <content><![CDATA[<h2 id="docker-commands"><a href="#docker-commands" class="headerlink" title="docker commands"></a>docker commands</h2><hr>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker cp </span><br><span class="line">docker stop redis</span><br><span class="line">docker kill redis</span><br><span class="line">docker rm -l db #移除网络连接</span><br><span class="line">docker rm -v redis #删除容器挂载的磁盘</span><br><span class="line">docker logs redis #查看日志</span><br><span class="line">docker logs -f -t --tail=20 redis #查看容器日历最近20条</span><br><span class="line">docker top redis #查看容器进程</span><br><span class="line">docker images #查看本地镜像</span><br><span class="line">docker search mysql #查看mysql的镜像</span><br></pre></td></tr></table></figure>
-<h2 id="clean-docker-cache"><a href="#clean-docker-cache" class="headerlink" title="clean docker cache"></a>clean docker cache</h2><p><code>docker system prune</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker system prune后可以加额外的参数，如：</span><br><span class="line">docker system prune -a ： 一并清除所有未被使用的镜像和没有tag镜像。</span><br><span class="line">docker system prune -f ： 用以强制删除，不提示信息。</span><br></pre></td></tr></table></figure>
+    <title>Hexo_blog_setup</title>
+    <url>/2022/07/04/hexo-blog-setup/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>每次换电脑，或者在其他电脑上工作后发现无法更新这个Blog，需要记录下如何当初一步一步设置这个blog，以方便迁移，重新搭建</p>
+<h1 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h1><ul>
+<li>hexo </li>
+<li>hexo theme</li>
+<li>github</li>
+<li></li>
+</ul>
+<h2 id="Install-Steps"><a href="#Install-Steps" class="headerlink" title="Install Steps"></a>Install Steps</h2><h3 id="Install-hexo"><a href="#Install-hexo" class="headerlink" title="Install hexo"></a>Install hexo</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hello-cli -g</span><br><span class="line"></span><br><span class="line">~ ❯ hexo -v                                                                              08:45:30</span><br><span class="line">hexo-cli: 4.3.0</span><br><span class="line">os: darwin 21.5.0 12.4</span><br><span class="line"></span><br><span class="line">node: 14.17.5</span><br><span class="line">v8: 8.4.371.23-node.76</span><br><span class="line">uv: 1.41.0</span><br><span class="line">zlib: 1.2.11</span><br><span class="line">brotli: 1.0.9</span><br><span class="line">ares: 1.17.2</span><br><span class="line">modules: 83</span><br><span class="line">nghttp2: 1.42.0</span><br><span class="line">napi: 8</span><br><span class="line">llhttp: 2.1.3</span><br><span class="line">openssl: 1.1.1k</span><br><span class="line">cldr: 39.0</span><br><span class="line">icu: 69.1</span><br><span class="line">tz: 2021a</span><br><span class="line">unicode: 13.0</span><br></pre></td></tr></table></figure>
 
-<p><code>docker container prune</code></p>
-<p><code>docker network prun</code></p>
-<p><code>docker volume prune</code></p>
-<p><code>docker image prune --force --all</code></p>
-<h2 id="push-image-to-remote-server"><a href="#push-image-to-remote-server" class="headerlink" title="push image to remote server"></a>push image to remote server</h2><p><code>docker push  remote_server:5000/python-chromedriver:3.6</code></p>
-<h2 id="download-from-remote-server"><a href="#download-from-remote-server" class="headerlink" title="download from remote server"></a>download from remote server</h2><p><code>docker run labs-admin-lv-101.labs.marinsw.net:5000/ci-centos6-base date</code> </p>
-<h2 id="log-into-container"><a href="#log-into-container" class="headerlink" title="log into container"></a>log into container</h2><p><code>docker exec -it containerID /bin/bash</code></p>
-<h2 id="run-comtainer-from-remote-docker-registry-and-login"><a href="#run-comtainer-from-remote-docker-registry-and-login" class="headerlink" title="run comtainer from remote docker registry  and login"></a>run comtainer from remote docker registry  and login</h2><p><code>docker run -it remote_server:5000/ci-ubuntu- /bin/bash</code></p>
-<h2 id="rename-docker-image"><a href="#rename-docker-image" class="headerlink" title="rename docker image"></a>rename docker image</h2><p><code>docker image tag 7cebbf38959b  ci-ubuntu:latest</code></p>
-<h2 id="build-image-without-cache"><a href="#build-image-without-cache" class="headerlink" title="build image without cache"></a>build image without cache</h2><p><code>docker build --no-cache -f Dockerfile -t ci-base .</code></p>
-<h2 id="Build-docker-with-docker-file"><a href="#Build-docker-with-docker-file" class="headerlink" title="Build docker with docker file"></a>Build docker with docker file</h2><p><code>docker build -f Dockerfile -t image-name .</code></p>
-<h2 id="Log-into-images"><a href="#Log-into-images" class="headerlink" title="Log into images"></a>Log into images</h2><p><code>docker run -i -t image-name /bin/bash</code></p>
-<h2 id="list-images"><a href="#list-images" class="headerlink" title="list images"></a>list images</h2><p><code>docker images</code></p>
-<h2 id="rm-images"><a href="#rm-images" class="headerlink" title="rm images"></a>rm images</h2><p><code>docker image rm -f imagename</code></p>
-<h2 id="locally-docker-tag-local-image"><a href="#locally-docker-tag-local-image" class="headerlink" title="locally docker tag local image"></a>locally docker tag local image</h2><p><code>docker tag 98d6830c1011 remote_server:5000/python-chromedriver:3.6</code></p>
-<h2 id="save-image-to-file-and-load-locally"><a href="#save-image-to-file-and-load-locally" class="headerlink" title="save image to file and load locally"></a>save image to file and load locally</h2><ul>
-<li><p>docker save labs-admin-lv-101.labs.marinsw.net:5000/ci-ubuntu-mysqldb-mvn354 | gzip  &gt; docker_image_ci-ubuntu-mysqldb-mvn354.tar.gz</p>
-</li>
-<li><p>docker save calc &gt; calc.tar</p>
-</li>
-<li><p>docker load &lt; docker_image_ci-ubuntu-mysqldb-mvn354.tar.gz</p>
-</li>
-</ul>
-<h2 id="建立本地docker-registry"><a href="#建立本地docker-registry" class="headerlink" title="建立本地docker registry"></a>建立本地docker registry</h2><hr>
-<ul>
-<li>docker pull registry:2.6.2 #下载registry</li>
-<li>docker run –name registry -p 5000:5000 -v /data/registry:/var/lib/registry -d registry:2.6.2 #启动registry服务</li>
-<li>docker port registry #查看端口</li>
-<li>docker tag busybox:latest 192.168.10.102:5000/busybox:v0.1 #tag镜像</li>
-<li>docker push 192.168.10.102:5000/busybox:v0.1 #推送镜像</li>
-</ul>
-]]></content>
+<h3 id="Create-project"><a href="#Create-project" class="headerlink" title="Create project"></a>Create project</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">cd [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<h3 id="Set-blog-information"><a href="#Set-blog-information" class="headerlink" title="Set blog information"></a>Set blog information</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim _config.yml</span><br><span class="line"></span><br><span class="line">~~~~~~~~~~~~~~~~~~ _config.yml ~~~~~~~~~~~~~~~~~~</span><br><span class="line"># Site</span><br><span class="line">title: [githubaccount]&#x27;s note</span><br><span class="line">subtitle:</span><br><span class="line">description: [githubaccount]&#x27;s personal blog</span><br><span class="line">author: [githubaccount]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:[githubaccount]/[githubaccount].github.io.git</span><br><span class="line">  branch: master</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><h3 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next themes/next</span><br><span class="line"></span><br><span class="line">vi _config.yml</span><br><span class="line"></span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line">theme: next</span><br><span class="line"># https://github.com/theme-next/hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line">npm install hexo-enhancer --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install --save hexo-submit-urls-to-search-engine</span><br><span class="line">npm install hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Useful-hexo-commands"><a href="#Useful-hexo-commands" class="headerlink" title="Useful hexo commands"></a>Useful hexo commands</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo --config _config.yml</span><br><span class="line">hexo generate --watch</span><br><span class="line"></span><br><span class="line">hexo server</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>tech</category>
+        <category>blog</category>
       </categories>
       <tags>
         <tag>tech</tag>
-        <tag>k8s</tag>
-        <tag>container</tag>
-        <tag>python</tag>
+        <tag>personal</tag>
         <tag>Tech</tag>
       </tags>
   </entry>
@@ -512,54 +390,6 @@
       <tags>
         <tag>面试</tag>
         <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo_blog_setup</title>
-    <url>/2022/07/04/hexo-blog-setup/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>每次换电脑，或者在其他电脑上工作后发现无法更新这个Blog，需要记录下如何当初一步一步设置这个blog，以方便迁移，重新搭建</p>
-<h1 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h1><ul>
-<li>hexo </li>
-<li>hexo theme</li>
-<li>github</li>
-<li></li>
-</ul>
-<h2 id="Install-Steps"><a href="#Install-Steps" class="headerlink" title="Install Steps"></a>Install Steps</h2><h3 id="Install-hexo"><a href="#Install-hexo" class="headerlink" title="Install hexo"></a>Install hexo</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hello-cli -g</span><br><span class="line"></span><br><span class="line">~ ❯ hexo -v                                                                              08:45:30</span><br><span class="line">hexo-cli: 4.3.0</span><br><span class="line">os: darwin 21.5.0 12.4</span><br><span class="line"></span><br><span class="line">node: 14.17.5</span><br><span class="line">v8: 8.4.371.23-node.76</span><br><span class="line">uv: 1.41.0</span><br><span class="line">zlib: 1.2.11</span><br><span class="line">brotli: 1.0.9</span><br><span class="line">ares: 1.17.2</span><br><span class="line">modules: 83</span><br><span class="line">nghttp2: 1.42.0</span><br><span class="line">napi: 8</span><br><span class="line">llhttp: 2.1.3</span><br><span class="line">openssl: 1.1.1k</span><br><span class="line">cldr: 39.0</span><br><span class="line">icu: 69.1</span><br><span class="line">tz: 2021a</span><br><span class="line">unicode: 13.0</span><br></pre></td></tr></table></figure>
-
-<h3 id="Create-project"><a href="#Create-project" class="headerlink" title="Create project"></a>Create project</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">cd [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
-
-<h3 id="Set-blog-information"><a href="#Set-blog-information" class="headerlink" title="Set blog information"></a>Set blog information</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim _config.yml</span><br><span class="line"></span><br><span class="line">~~~~~~~~~~~~~~~~~~ _config.yml ~~~~~~~~~~~~~~~~~~</span><br><span class="line"># Site</span><br><span class="line">title: [githubaccount]&#x27;s note</span><br><span class="line">subtitle:</span><br><span class="line">description: [githubaccount]&#x27;s personal blog</span><br><span class="line">author: [githubaccount]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:[githubaccount]/[githubaccount].github.io.git</span><br><span class="line">  branch: master</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><h3 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next themes/next</span><br><span class="line"></span><br><span class="line">vi _config.yml</span><br><span class="line"></span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line">theme: next</span><br><span class="line"># https://github.com/theme-next/hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line">npm install hexo-enhancer --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install --save hexo-submit-urls-to-search-engine</span><br><span class="line">npm install hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="Useful-hexo-commands"><a href="#Useful-hexo-commands" class="headerlink" title="Useful hexo commands"></a>Useful hexo commands</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo --config _config.yml</span><br><span class="line">hexo generate --watch</span><br><span class="line"></span><br><span class="line">hexo server</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>personal</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo Next(v8.7.0)如何边栏添加最近更新文章</title>
-    <url>/2021/08/20/hexo-sidebar/</url>
-    <content><![CDATA[<h2 id="创建自定义文件"><a href="#创建自定义文件" class="headerlink" title="创建自定义文件"></a>创建自定义文件</h2><p>在新建文件yoursite/source/_data/sidebar.njk,添加以下内容</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- recent posts --&gt;</span><br><span class="line">&#123;%- if theme.recent_posts %&#125;</span><br><span class="line">    &lt;div class=&quot;links-of-blogroll motion-element &#123;&#123; &quot;links-of-blogroll-&quot; + theme.recent_posts_layout &#125;&#125;&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;links-of-blogroll-title recent-posts-title&quot;&gt;</span><br><span class="line">	    &lt;i class=&quot;fa fa-history &#123;&#123; theme.recent_posts_icon | lower &#125;&#125;&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;</span><br><span class="line">            &#123;&#123; theme.recent_posts_title &#125;&#125;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;ul class=&quot;links-of-blogroll-list recent-posts-list&quot;&gt;</span><br><span class="line">	    &#123;%- set posts = site.posts.sort(&#x27;-date&#x27;).toArray() %&#125;</span><br><span class="line">	    &#123;%- for post in posts.slice(&#x27;0&#x27;, &#x27;5&#x27;) %&#125;</span><br><span class="line">	        &lt;li class=&quot;my-links-of-blogroll-item&quot;&gt;</span><br><span class="line">		    &lt;a href=&quot;&#123;&#123; url_for(post.path) &#125;&#125;&quot; title=&quot;&#123;&#123; post.title &#125;&#125;&quot; target=&quot;&quot;&gt;</span><br><span class="line">		    &#123;&#123; post.title &#125;&#125;</span><br><span class="line">		    &lt;/a&gt;</span><br><span class="line">		&lt;/li&gt;</span><br><span class="line">	    &#123;%- endfor %&#125;</span><br><span class="line">	&lt;/ul&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="修改主题配置文件"><a href="#修改主题配置文件" class="headerlink" title="修改主题配置文件"></a>修改主题配置文件</h2><p>在站点目录下修改主题配置文件（_config.yml）添加以下内容<br>文件路径：yoursite/theme/next/_config.yml</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">recent_posts: true</span><br><span class="line">recent_posts_title: 近期文章</span><br><span class="line">recent_posts_layout: block</span><br></pre></td></tr></table></figure>
-
-<h2 id="启动添加文件"><a href="#启动添加文件" class="headerlink" title="启动添加文件"></a>启动添加文件</h2><p>修改文件yoursite/theme/next/_config.yml uncomment sidebar这一行</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">custom_file_path:</span><br><span class="line">  #head: source/_data/head.njk</span><br><span class="line">  #header: source/_data/header.njk</span><br><span class="line">  sidebar: source/_data/sidebar.njk</span><br><span class="line">  #postMeta: source/_data/post-meta.njk</span><br><span class="line">  #postBodyEnd: source/_data/post-body-end.njk</span><br><span class="line">  #footer: source/_data/footer.njk</span><br><span class="line">  #bodyEnd: source/_data/body-end.njk</span><br><span class="line">  #variable: source/_data/variables.styl</span><br><span class="line">  #mixin: source/_data/mixins.styl</span><br><span class="line">  #style: source/_data/styles.styl</span><br></pre></td></tr></table></figure>
-
-<h2 id="刷新站点"><a href="#刷新站点" class="headerlink" title="刷新站点"></a>刷新站点</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s </span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -647,23 +477,65 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux system admin notes</title>
-    <url>/2022/04/04/linux_systemadmin/</url>
-    <content><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="linunx-环境变量"><a href="#linunx-环境变量" class="headerlink" title="linunx 环境变量"></a>linunx 环境变量</h2><h2 id="linunx-文件权限"><a href="#linunx-文件权限" class="headerlink" title="linunx 文件权限"></a>linunx 文件权限</h2><p><code>umask</code>  default 022</p>
-<h3 id="shell-基础"><a href="#shell-基础" class="headerlink" title="shell 基础"></a>shell 基础</h3><h4 id="结构化命令"><a href="#结构化命令" class="headerlink" title="结构化命令"></a>结构化命令</h4><p>if</p>
-<p>for<br>while<br>until<br>break<br>continue</p>
-<h4 id="shell用户输入"><a href="#shell用户输入" class="headerlink" title="shell用户输入"></a>shell用户输入</h4><h3 id="控制shell脚本"><a href="#控制shell脚本" class="headerlink" title="控制shell脚本"></a>控制shell脚本</h3><h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function name &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">name () &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="退出状态"><a href="#退出状态" class="headerlink" title="退出状态"></a>退出状态</h4><p><code>$?</code></p>
+    <title>个人职业生涯短记 personal career path</title>
+    <url>/2025/05/05/career_path/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><blockquote>
+<p>写在技术大牛陈皓离世之际，惊闻噩耗年仅47岁大牛陈皓离我们而去，死于心梗。<br>人的一生总有终点，我们能做的就是不断的总结自己的经验，提高自己，分享自己的知识和观点</p>
+</blockquote>
+<h1 id="13年IT职业生涯概览"><a href="#13年IT职业生涯概览" class="headerlink" title="13年IT职业生涯概览"></a>13年IT职业生涯概览</h1><ul>
+<li>第一份工作 IBM-UOB 上海数据中心项目<br>学习了解到一个数据中心从无到有的过程，各个供应商的协作，线路设备的上架，24*7运维环境的要求及监控</li>
+</ul>
+<hr>
+<ul>
+<li>CSM customer support 项目<br>真正从一个入门的IT engineer到独自负责一个客户现场，从helpdesk基础的工作到服务器和网络运维，从一个内向不会沟通的小伙到如何管理客户的需求和期望值</li>
+</ul>
+<hr>
+<ul>
+<li>ASOS customer 项目<br>这是一个真正系统学习到了一个项目交付运维流程，基于前人研究出的理论基础，利用ITIL知识体系来管理项目</li>
+</ul>
+<hr>
+<ul>
+<li>Marin IT<br>这个第一个开拓眼界的职位，在这个硅谷互联网公司接触到了各类技术大牛，技术上接触到Meraki基于云平台管理的网络厂商，给自己后来的技术转型带来决心</li>
+</ul>
+<hr>
+<ul>
+<li>SRE/DEVOPS<ul>
+<li>这个是一个实现起初梦想的职位，一个人管理上千台服务器，维护整个产品平台，如何实现高度自动化，让机器代替人工。</li>
+<li>各类运维自动化工具，各类监控工具</li>
+<li>云平台，容器化技术，更高效的使用物理资源</li>
+<li>根据产品需求开发高度持续集成持续交付工具</li>
+<li>一个高效的团队如何运转，不同团队之间如何协作</li>
+</ul>
+</li>
+</ul>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p><strong>技术之路永无止境</strong></p>
+<p><code>Never stop learning</code> - From Yushin!</p>
 ]]></content>
       <categories>
-        <category>shell,linux</category>
+        <category>engineering</category>
       </categories>
       <tags>
-        <tag>tech</tag>
-        <tag>shell</tag>
-        <tag>linux</tag>
-        <tag>Tech</tag>
+        <tag>developer</tag>
+        <tag>IT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo Next(v8.7.0)如何边栏添加最近更新文章</title>
+    <url>/2021/08/20/hexo-sidebar/</url>
+    <content><![CDATA[<h2 id="创建自定义文件"><a href="#创建自定义文件" class="headerlink" title="创建自定义文件"></a>创建自定义文件</h2><p>在新建文件yoursite/source/_data/sidebar.njk,添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- recent posts --&gt;</span><br><span class="line">&#123;%- if theme.recent_posts %&#125;</span><br><span class="line">    &lt;div class=&quot;links-of-blogroll motion-element &#123;&#123; &quot;links-of-blogroll-&quot; + theme.recent_posts_layout &#125;&#125;&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;links-of-blogroll-title recent-posts-title&quot;&gt;</span><br><span class="line">	    &lt;i class=&quot;fa fa-history &#123;&#123; theme.recent_posts_icon | lower &#125;&#125;&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;</span><br><span class="line">            &#123;&#123; theme.recent_posts_title &#125;&#125;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;ul class=&quot;links-of-blogroll-list recent-posts-list&quot;&gt;</span><br><span class="line">	    &#123;%- set posts = site.posts.sort(&#x27;-date&#x27;).toArray() %&#125;</span><br><span class="line">	    &#123;%- for post in posts.slice(&#x27;0&#x27;, &#x27;5&#x27;) %&#125;</span><br><span class="line">	        &lt;li class=&quot;my-links-of-blogroll-item&quot;&gt;</span><br><span class="line">		    &lt;a href=&quot;&#123;&#123; url_for(post.path) &#125;&#125;&quot; title=&quot;&#123;&#123; post.title &#125;&#125;&quot; target=&quot;&quot;&gt;</span><br><span class="line">		    &#123;&#123; post.title &#125;&#125;</span><br><span class="line">		    &lt;/a&gt;</span><br><span class="line">		&lt;/li&gt;</span><br><span class="line">	    &#123;%- endfor %&#125;</span><br><span class="line">	&lt;/ul&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="修改主题配置文件"><a href="#修改主题配置文件" class="headerlink" title="修改主题配置文件"></a>修改主题配置文件</h2><p>在站点目录下修改主题配置文件（_config.yml）添加以下内容<br>文件路径：yoursite/theme/next/_config.yml</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">recent_posts: true</span><br><span class="line">recent_posts_title: 近期文章</span><br><span class="line">recent_posts_layout: block</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动添加文件"><a href="#启动添加文件" class="headerlink" title="启动添加文件"></a>启动添加文件</h2><p>修改文件yoursite/theme/next/_config.yml uncomment sidebar这一行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">custom_file_path:</span><br><span class="line">  #head: source/_data/head.njk</span><br><span class="line">  #header: source/_data/header.njk</span><br><span class="line">  sidebar: source/_data/sidebar.njk</span><br><span class="line">  #postMeta: source/_data/post-meta.njk</span><br><span class="line">  #postBodyEnd: source/_data/post-body-end.njk</span><br><span class="line">  #footer: source/_data/footer.njk</span><br><span class="line">  #bodyEnd: source/_data/body-end.njk</span><br><span class="line">  #variable: source/_data/variables.styl</span><br><span class="line">  #mixin: source/_data/mixins.styl</span><br><span class="line">  #style: source/_data/styles.styl</span><br></pre></td></tr></table></figure>
+
+<h2 id="刷新站点"><a href="#刷新站点" class="headerlink" title="刷新站点"></a>刷新站点</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s </span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -761,6 +633,26 @@
         <tag>shell</tag>
         <tag>regex</tag>
         <tag>python</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux system admin notes</title>
+    <url>/2022/04/04/linux_systemadmin/</url>
+    <content><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="linunx-环境变量"><a href="#linunx-环境变量" class="headerlink" title="linunx 环境变量"></a>linunx 环境变量</h2><h2 id="linunx-文件权限"><a href="#linunx-文件权限" class="headerlink" title="linunx 文件权限"></a>linunx 文件权限</h2><p><code>umask</code>  default 022</p>
+<h3 id="shell-基础"><a href="#shell-基础" class="headerlink" title="shell 基础"></a>shell 基础</h3><h4 id="结构化命令"><a href="#结构化命令" class="headerlink" title="结构化命令"></a>结构化命令</h4><p>if</p>
+<p>for<br>while<br>until<br>break<br>continue</p>
+<h4 id="shell用户输入"><a href="#shell用户输入" class="headerlink" title="shell用户输入"></a>shell用户输入</h4><h3 id="控制shell脚本"><a href="#控制shell脚本" class="headerlink" title="控制shell脚本"></a>控制shell脚本</h3><h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function name &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">name () &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="退出状态"><a href="#退出状态" class="headerlink" title="退出状态"></a>退出状态</h4><p><code>$?</code></p>
+]]></content>
+      <categories>
+        <category>shell,linux</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>linux</tag>
         <tag>Tech</tag>
       </tags>
   </entry>
@@ -1086,6 +978,87 @@
       </tags>
   </entry>
   <entry>
+    <title>python程序获取股票信息</title>
+    <url>/2022/07/04/stock-price/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
+<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
+<li>python3</li>
+<li>akshare</li>
+<li>GoogleSheet</li>
+</ul>
+<p>Reference </p>
+<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
+<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
+<li>code example</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
+</ul>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>stock</tag>
+        <tag>python</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker useful commands</title>
+    <url>/2022/09/21/docker_useful_commands/</url>
+    <content><![CDATA[<h2 id="docker-commands"><a href="#docker-commands" class="headerlink" title="docker commands"></a>docker commands</h2><hr>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker cp </span><br><span class="line">docker stop redis</span><br><span class="line">docker kill redis</span><br><span class="line">docker rm -l db #移除网络连接</span><br><span class="line">docker rm -v redis #删除容器挂载的磁盘</span><br><span class="line">docker logs redis #查看日志</span><br><span class="line">docker logs -f -t --tail=20 redis #查看容器日历最近20条</span><br><span class="line">docker top redis #查看容器进程</span><br><span class="line">docker images #查看本地镜像</span><br><span class="line">docker search mysql #查看mysql的镜像</span><br></pre></td></tr></table></figure>
+<h2 id="clean-docker-cache"><a href="#clean-docker-cache" class="headerlink" title="clean docker cache"></a>clean docker cache</h2><p><code>docker system prune</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker system prune后可以加额外的参数，如：</span><br><span class="line">docker system prune -a ： 一并清除所有未被使用的镜像和没有tag镜像。</span><br><span class="line">docker system prune -f ： 用以强制删除，不提示信息。</span><br></pre></td></tr></table></figure>
+
+<p><code>docker container prune</code></p>
+<p><code>docker network prun</code></p>
+<p><code>docker volume prune</code></p>
+<p><code>docker image prune --force --all</code></p>
+<h2 id="push-image-to-remote-server"><a href="#push-image-to-remote-server" class="headerlink" title="push image to remote server"></a>push image to remote server</h2><p><code>docker push  remote_server:5000/python-chromedriver:3.6</code></p>
+<h2 id="download-from-remote-server"><a href="#download-from-remote-server" class="headerlink" title="download from remote server"></a>download from remote server</h2><p><code>docker run labs-admin-lv-101.labs.marinsw.net:5000/ci-centos6-base date</code> </p>
+<h2 id="log-into-container"><a href="#log-into-container" class="headerlink" title="log into container"></a>log into container</h2><p><code>docker exec -it containerID /bin/bash</code></p>
+<h2 id="run-comtainer-from-remote-docker-registry-and-login"><a href="#run-comtainer-from-remote-docker-registry-and-login" class="headerlink" title="run comtainer from remote docker registry  and login"></a>run comtainer from remote docker registry  and login</h2><p><code>docker run -it remote_server:5000/ci-ubuntu- /bin/bash</code></p>
+<h2 id="rename-docker-image"><a href="#rename-docker-image" class="headerlink" title="rename docker image"></a>rename docker image</h2><p><code>docker image tag 7cebbf38959b  ci-ubuntu:latest</code></p>
+<h2 id="build-image-without-cache"><a href="#build-image-without-cache" class="headerlink" title="build image without cache"></a>build image without cache</h2><p><code>docker build --no-cache -f Dockerfile -t ci-base .</code></p>
+<h2 id="Build-docker-with-docker-file"><a href="#Build-docker-with-docker-file" class="headerlink" title="Build docker with docker file"></a>Build docker with docker file</h2><p><code>docker build -f Dockerfile -t image-name .</code></p>
+<h2 id="Log-into-images"><a href="#Log-into-images" class="headerlink" title="Log into images"></a>Log into images</h2><p><code>docker run -i -t image-name /bin/bash</code></p>
+<h2 id="list-images"><a href="#list-images" class="headerlink" title="list images"></a>list images</h2><p><code>docker images</code></p>
+<h2 id="rm-images"><a href="#rm-images" class="headerlink" title="rm images"></a>rm images</h2><p><code>docker image rm -f imagename</code></p>
+<h2 id="locally-docker-tag-local-image"><a href="#locally-docker-tag-local-image" class="headerlink" title="locally docker tag local image"></a>locally docker tag local image</h2><p><code>docker tag 98d6830c1011 remote_server:5000/python-chromedriver:3.6</code></p>
+<h2 id="save-image-to-file-and-load-locally"><a href="#save-image-to-file-and-load-locally" class="headerlink" title="save image to file and load locally"></a>save image to file and load locally</h2><ul>
+<li><p>docker save labs-admin-lv-101.labs.marinsw.net:5000/ci-ubuntu-mysqldb-mvn354 | gzip  &gt; docker_image_ci-ubuntu-mysqldb-mvn354.tar.gz</p>
+</li>
+<li><p>docker save calc &gt; calc.tar</p>
+</li>
+<li><p>docker load &lt; docker_image_ci-ubuntu-mysqldb-mvn354.tar.gz</p>
+</li>
+</ul>
+<h2 id="建立本地docker-registry"><a href="#建立本地docker-registry" class="headerlink" title="建立本地docker registry"></a>建立本地docker registry</h2><hr>
+<ul>
+<li>docker pull registry:2.6.2 #下载registry</li>
+<li>docker run –name registry -p 5000:5000 -v /data/registry:/var/lib/registry -d registry:2.6.2 #启动registry服务</li>
+<li>docker port registry #查看端口</li>
+<li>docker tag busybox:latest 192.168.10.102:5000/busybox:v0.1 #tag镜像</li>
+<li>docker push 192.168.10.102:5000/busybox:v0.1 #推送镜像</li>
+</ul>
+]]></content>
+      <categories>
+        <category>tech</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>k8s</tag>
+        <tag>container</tag>
+        <tag>python</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MacOS setup</title>
     <url>/2022/03/27/macos_setup/</url>
     <content><![CDATA[<ul>
@@ -1357,36 +1330,6 @@
       </categories>
       <tags>
         <tag>macos</tag>
-        <tag>python</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python程序获取股票信息</title>
-    <url>/2022/07/04/stock-price/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
-<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
-<li>python3</li>
-<li>akshare</li>
-<li>GoogleSheet</li>
-</ul>
-<p>Reference </p>
-<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
-<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
-<li>code example</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
-</ul>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>stock</tag>
         <tag>python</tag>
         <tag>Tech</tag>
       </tags>
@@ -1806,6 +1749,59 @@
       <tags>
         <tag>tech</tag>
         <tag>shell</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kubernetes 入门基础</title>
+    <url>/2022/09/20/Kubernetes_from_zero/</url>
+    <content><![CDATA[<h1 id="Kubernetes-入门基础"><a href="#Kubernetes-入门基础" class="headerlink" title="Kubernetes 入门基础"></a>Kubernetes 入门基础</h1><p><strong>Kubernetes Components Architecture</strong><br><img src="/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg" alt="image"></p>
+<h2 id="Kubernetes-核心组件"><a href="#Kubernetes-核心组件" class="headerlink" title="Kubernetes 核心组件"></a>Kubernetes 核心组件</h2><p>Kubernetes 主要由以下几个核心组件组成:</p>
+<ul>
+<li>etcd 保存了整个集群的状态；</li>
+<li>API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制；</li>
+<li>Controller Manager 负责维护集群的状态，比如故障检测、自动扩展、滚动更新等；</li>
+<li>Scheduler 负责资源的调度，按照预定的调度策略将 Pod 调度到相应的机器上；</li>
+<li>Kubelet 负责维护容器的生命周期，同时也负责 Volume（CVI）和网络（CNI）的管理；</li>
+<li>Container Runtime 负责镜像管理以及 Pod 和容器的真正运行（CRI）；</li>
+<li>Kube-proxy 负责为 Service 提供 cluster 内部的服务发现和负载均衡；</li>
+</ul>
+<h2 id="Kubernetes相关基础概念"><a href="#Kubernetes相关基础概念" class="headerlink" title="Kubernetes相关基础概念"></a>Kubernetes相关基础概念</h2><ul>
+<li>master：k8s集群的管理节点，负责管理集群，提供集群的资源数据访问入口。拥有Etcd存储服务（可选），运行Api Server进程，Controller Manager服务进程及Scheduler服务进程。</li>
+<li>node（worker）：Node（worker）是Kubernetes集群架构中运行Pod的服务节点，是Kubernetes集群操作的单元，用来承载被分配Pod的运行，是Pod运行的宿主机。运行docker eninge服务，守护进程kunelet及负载均衡器kube-proxy。</li>
+<li>pod：运行于Node节点上，若干相关容器的组合。Pod内包含的容器运行在同一宿主机上，使用相同的网络命名空间、IP地址和端口，能够通过localhost进行通信。Pod是Kurbernetes进行创建、调度和管理的最小单位，它提供了比容器更高层次的抽象，使得部署和管理更加灵活。一个Pod可以包含一个容器或者多个相关容器。</li>
+<li>label：Kubernetes中的Label实质是一系列的Key/Value键值对，其中key与value可自定义。Label可以附加到各种资源对象上，如Node、Pod、Service、RC等。一个资源对象可以定义任意数量的Label，同一个Label也可以被添加到任意数量的资源对象上去。Kubernetes通过Label Selector（标签选择器）查询和筛选资源对象。</li>
+<li>Replication Controller：Replication Controller用来管理Pod的副本，保证集群中存在指定数量的Pod副本。集群中副本的数量大于指定数量，则会停止指定数量之外的多余容器数量。反之，则会启动少于指定数量个数的容器，保证数量不变。Replication Controller是实现弹性伸缩、动态扩容和滚动升级的核心。</li>
+<li>Deployment：Deployment在内部使用了RS来实现目的，Deployment相当于RC的一次升级，其最大的特色为可以随时获知当前Pod的部署进度。</li>
+<li>HPA（Horizontal Pod Autoscaler）：Pod的横向自动扩容，也是Kubernetes的一种资源，通过追踪分析RC控制的所有Pod目标的负载变化情况，来确定是否需要针对性的调整Pod副本数量。</li>
+<li>Service：Service定义了Pod的逻辑集合和访问该集合的策略，是真实服务的抽象。Service提供了一个统一的服务访问入口以及服务代理和发现机制，关联多个相同Label的Pod，用户不需要了解后台Pod是如何运行。</li>
+<li>Volume：Volume是Pod中能够被多个容器访问的共享目录，Kubernetes中的Volume是定义在Pod上，可以被一个或多个Pod中的容器挂载到某个目录下。</li>
+<li>Namespace：Namespace用于实现多租户的资源隔离，可将集群内部的资源对象分配到不同的Namespace中，形成逻辑上的不同项目、小组或用户组，便于不同的Namespace在共享使用整个集群的资源的同时还能被分别管理。</li>
+</ul>
+<h2 id="K8s-常用命令"><a href="#K8s-常用命令" class="headerlink" title="K8s 常用命令"></a>K8s 常用命令</h2><h3 id="kubectl"><a href="#kubectl" class="headerlink" title="kubectl"></a>kubectl</h3><hr>
+<p>kubectl 是 Kubernetes 的命令行工具（CLI），是 Kubernetes 用户和管理员必备的管理工具。<br>kubectl 提供了大量的子命令，方便管理 Kubernetes 集群中的各种功能。这里不再罗列各种子命令的格式，而是介绍下如何查询命令的帮助</p>
+<ul>
+<li>kubectl -h 查看子命令列表</li>
+<li>kubectl options 查看全局选项</li>
+<li>kubectl <command> –help 查看子命令的帮助</li>
+<li>kubectl [command] [PARAMS] -o=<format> 设置输出格式（如 json、yaml、jsonpath 等）</li>
+<li>kubectl explain [RESOURCE] 查看资源的定义</li>
+</ul>
+<hr>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>使用 kubectl 的第一步是配置 Kubernetes 集群以及认证方式，包括</p>
+<ul>
+<li>cluster 信息：Kubernetes server 地址</li>
+<li>用户信息：用户名、密码或密钥</li>
+<li>Context：cluster、用户信息以及 Namespace 的组合</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl config set-credentials myself --username=admin --password=secret</span><br><span class="line">kubectl config set-cluster local-server --server=http://localhost:8080</span><br><span class="line">kubectl config set-context default-context --cluster=local-server --user=myself --namespace=default</span><br><span class="line">kubectl config use-context default-context</span><br><span class="line">kubectl config view</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>tech</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>k8s</tag>
+        <tag>container</tag>
         <tag>Tech</tag>
       </tags>
   </entry>
