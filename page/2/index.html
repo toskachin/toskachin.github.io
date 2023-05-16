@@ -161,18 +161,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -205,6 +205,11 @@
 		    </a>
 		</li>
 	        <li class="my-links-of-blogroll-item">
+		    <a href="/2023/05/17/memo_2023may/" title="国民对于疫情后经济复苏信心的丢失，路在何方" target="">
+		    国民对于疫情后经济复苏信心的丢失，路在何方
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
 		    <a href="/2022/09/26/Interview_FAQ/" title="Interview FAQ 2022" target="">
 		    Interview FAQ 2022
 		    </a>
@@ -212,11 +217,6 @@
 	        <li class="my-links-of-blogroll-item">
 		    <a href="/2022/09/21/docker_useful_commands/" title="Docker useful commands" target="">
 		    Docker useful commands
-		    </a>
-		</li>
-	        <li class="my-links-of-blogroll-item">
-		    <a href="/2022/09/20/Kubernetes_from_zero/" title="Kubernetes 入门基础" target="">
-		    Kubernetes 入门基础
 		    </a>
 		</li>
 	</ul>
@@ -247,6 +247,363 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2022/03/27/macos_setup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="TOSKA">
+      <meta itemprop="description" content="10+ IT career and personal memories">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="RJ's memories">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/27/macos_setup/" class="post-title-link" itemprop="url">MacOS setup</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-27 12:54:41" itemprop="dateCreated datePublished" datetime="2022-03-27T12:54:41+08:00">2022-03-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-07-03 19:25:11" itemprop="dateModified" datetime="2022-07-03T19:25:11+08:00">2022-07-03</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/macos-tools/" itemprop="url" rel="index"><span itemprop="name">macos,tools</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>11k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>19 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ul>
+<li><a href="#terminal-applications">Terminal Applications</a><ul>
+<li><a href="#iterm2">iterm2</a><ul>
+<li><a href="#installation-">Installation <a id="installation"></a></a></li>
+<li><a href="#customization-">Customization <a id="customization"></a></a><ul>
+<li><a href="#colors-and-font-settings-">Colors and Font Settings <a id="colors-and-font-settings"></a></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#terminal-hot-keys">Terminal Hot keys</a></li>
+<li><a href="#zsh">Zsh</a><ul>
+<li><a href="#install-zsh">Install zsh</a></li>
+<li><a href="#step2-install-plugins-and--theme">Step2 Install plugins and  theme</a></li>
+<li><a href="#install-theme">Install Theme</a></li>
+<li><a href="#re-load-configuration">Re-load configuration</a></li>
+</ul>
+</li>
+<li><a href="#vim-hot-keys">VIM Hot keys</a></li>
+</ul>
+</li>
+<li><a href="#macos-applications">MacOS Applications</a><ul>
+<li><a href="#git-and-github-">Git and GitHub <a id="git-and-github"></a></a><ul>
+<li><a href="#ssh-config-for-github-">SSH Config for GitHub <a id="ssh-config-for-github"></a></a><ul>
+<li><a href="#check-for-existing-ssh-keys-">Check for existing SSH keys <a id="check-for-existing-ssh-keys"></a></a></li>
+<li><a href="#generate-a-new-ssh-key-">Generate a new SSH key <a id="generate-a-new-ssh-key"></a></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#homebrew">Homebrew</a><ul>
+<li><a href="#installation--1">Installation <a id="installation"></a></a></li>
+</ul>
+</li>
+<li><a href="#cask">cask</a><ul>
+<li><a href="#installation--2">Installation <a id="installation"></a></a></li>
+<li><a href="#search-">Search <a id="search"></a></a></li>
+<li><a href="#usage">usage</a></li>
+</ul>
+</li>
+<li><a href="#using-homebrew">Using Homebrew</a></li>
+<li><a href="#sublime-txt">Sublime TXT</a><ul>
+<li><a href="#sublime-text-">Sublime Text <a id="sublime-text"></a></a><ul>
+<li><a href="#installation--3">Installation <a id="installation"></a></a></li>
+<li><a href="#use-cli-to-open-file-">Use CLI to open file <a id="use-cli-to-open-file"></a></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#subl-plugins">Subl plugins</a><ul>
+<li><a href="#keyboard-shortcuts">Keyboard Shortcuts</a></li>
+<li><a href="#sidebarenhancements">SideBarEnhancements</a></li>
+<li><a href="#vintage-mode">Vintage Mode</a></li>
+<li><a href="#anaconda">Anaconda</a></li>
+<li><a href="#sublimelinter">SublimeLinter</a></li>
+<li><a href="#gitgutter">GitGutter</a></li>
+<li><a href="#markdown-preview">Markdown Preview</a></li>
+</ul>
+</li>
+<li><a href="#vagrant">Vagrant</a><ul>
+<li><a href="#installation--4">Installation <a id="installation"></a></a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#usage-">Usage <a id="usage"></a></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Terminal-Applications"><a href="#Terminal-Applications" class="headerlink" title="Terminal Applications"></a>Terminal Applications</h1><h2 id="iterm2"><a href="#iterm2" class="headerlink" title="iterm2"></a>iterm2</h2><p><a target="_blank" rel="noopener" href="http://www.iterm2.com/">iTerm2</a> is an open source replacement for Apple’s Terminal. It’s highly customizable and comes with a lot of useful features.</p>
+<h3 id="Installation"><a href="#Installation" class="headerlink" title="Installation "></a>Installation <a id="installation"></a></h3><p>Use <a target="_blank" rel="noopener" href="http://sourabhbajaj.com/mac-setup/Homebrew/">Homebrew</a> to download and install:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew cask install iterm2</span><br></pre></td></tr></table></figure>
+
+<h3 id="Customization"><a href="#Customization" class="headerlink" title="Customization "></a>Customization <a id="customization"></a></h3><h4 id="Colors-and-Font-Settings"><a href="#Colors-and-Font-Settings" class="headerlink" title="Colors and Font Settings "></a>Colors and Font Settings <a id="colors-and-font-settings"></a></h4><p>Here are some suggested settings you can change or set, <strong>they are all optional</strong>.</p>
+<ul>
+<li>Set hot-key to open and close the terminal to <code>command + option + i</code></li>
+<li>Go to profiles -&gt; Default -&gt; Terminal -&gt; Check silence bell to disable the terminal session from making any sound</li>
+<li>Download <a target="_blank" rel="noopener" href="https://github.com/mbadolato/iTerm2-Color-Schemes/tree/master/schemes">one of iTerm2 color schemes</a> and then set these to your default profile colors</li>
+<li>Change the cursor text and cursor color to yellow make it more visible</li>
+<li>Change the font to 14pt Source Code Pro Lite. Source Code Pro can be downloaded using <a target="_blank" rel="noopener" href="https://sourabhbajaj.com/mac-setup/Homebrew/">Homebrew</a> <code>brew tap caskroom/fonts &amp;&amp; brew cask install font-source-code-pro</code></li>
+<li>If you’re using BASH instead of ZSH you can add <code>export CLICOLOR=1</code> line to your <code>~/.bash_profile</code>file for nice coloring of listings</li>
+</ul>
+<h2 id="Terminal-Hot-keys"><a href="#Terminal-Hot-keys" class="headerlink" title="Terminal Hot keys"></a>Terminal Hot keys</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">移动：</span><br><span class="line"></span><br><span class="line">ctrl + A  行首</span><br><span class="line">ctrl + E  行尾</span><br><span class="line">Ctrl + B 相当于左箭头键，用于将光标向左移动一格</span><br><span class="line">Ctrl + F 相当于右箭头键，用于将光标向右移动一格</span><br><span class="line"></span><br><span class="line">删除：</span><br><span class="line">ctrl + W  删除左侧一个单词</span><br><span class="line">ctrl + U  删除光标前 所有字符</span><br><span class="line">ctrl + K  删除光标后 所有字符</span><br><span class="line">Ctrl + H 删除光标左侧的一个字符</span><br><span class="line">ctrl + D 删除光标后一个字符</span><br><span class="line"></span><br><span class="line">其他:</span><br><span class="line"></span><br><span class="line">Ctrl + P 相当于上箭头键，即显示上一个命令</span><br><span class="line">Ctrl + N 相当于下箭头键，即显示下一个命令</span><br><span class="line">ctrl + R   搜索旧命令</span><br><span class="line"></span><br><span class="line">ctrl + l  clear 清屏</span><br><span class="line">ctrl + n  开一个新tab的terminal</span><br><span class="line">ctrl + t  同一tab新开一个terminal</span><br></pre></td></tr></table></figure>
+
+<h2 id="Zsh"><a href="#Zsh" class="headerlink" title="Zsh"></a>Zsh</h2><h3 id="Install-zsh"><a href="#Install-zsh" class="headerlink" title="Install zsh"></a>Install zsh</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c &quot;$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Step2-Install-plugins-and-theme"><a href="#Step2-Install-plugins-and-theme" class="headerlink" title="Step2 Install plugins and  theme"></a>Step2 Install plugins and  theme</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.zshrc</span><br><span class="line"></span><br><span class="line">plugins=(git zsh-autosuggestions zsh-syntax-highlighting)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Install-Theme"><a href="#Install-Theme" class="headerlink" title="Install Theme"></a>Install Theme</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#Set ZSH_THEME=powerlevel10k/powerlevel10k in your ~/.zshrc.</span><br><span class="line"></span><br><span class="line">ZSH_THEME=&quot;powerlevel10k/powerlevel10k&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Re-load-configuration"><a href="#Re-load-configuration" class="headerlink" title="Re-load configuration"></a>Re-load configuration</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="VIM-Hot-keys"><a href="#VIM-Hot-keys" class="headerlink" title="VIM Hot keys"></a>VIM Hot keys</h2><p>VIM是一个非常强大的工具及利器，这里只是列出日常工作中最常用的快捷方式</p>
+<blockquote>
+<h4 id="移动"><a href="#移动" class="headerlink" title="移动"></a><strong>移动</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">nw  n为数字  光标向后N个单词</span><br><span class="line">nb  光标向前N个单词</span><br><span class="line"></span><br><span class="line">gg   文首</span><br><span class="line"></span><br><span class="line">G    文尾</span><br><span class="line"></span><br><span class="line">0  #绝对行首</span><br><span class="line">^  #行首非第一个非字符</span><br><span class="line">$  #绝对行</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">h或退格: 左移一个字符；</span><br><span class="line">l或空格: 右移一个字符；</span><br><span class="line">j: 下移一行；</span><br><span class="line">k: 上移一行</span><br><span class="line"></span><br><span class="line">ctrl+d: 下翻半屏。</span><br><span class="line">ctrl+u: 上翻半屏。</span><br><span class="line">ctrl+e: 向下滚动一行。</span><br><span class="line">ctrl+y: 向上滚动一行。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">nw  n为数字  光标向后N个单词</span><br><span class="line">nb  光标向前N个单词</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="编辑"><a href="#编辑" class="headerlink" title="编辑"></a>编辑</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a  #光标后字符插入</span><br><span class="line">A  #行尾插入</span><br><span class="line"></span><br><span class="line">i  #光标位置插入</span><br><span class="line">I   #光标当前行 行首插入</span><br><span class="line"></span><br><span class="line">u/U #撤销操作</span><br></pre></td></tr></table></figure>
+
+<h4 id="位置"><a href="#位置" class="headerlink" title="位置"></a>位置</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0  #绝对行首</span><br><span class="line">^  #行首非第一个非字符</span><br><span class="line">$  #绝对行尾</span><br></pre></td></tr></table></figure>
+
+<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x        删除当前光标下的字符</span><br><span class="line">dw       删除光标之后的单词剩余部分。</span><br><span class="line">d$       删除光标之后的该行剩余部分。</span><br><span class="line">dd       删除当前行。</span><br><span class="line"></span><br><span class="line">cw     删除光标后一个单词，进入instert mode</span><br><span class="line">c$</span><br><span class="line">c        功能和d相同，区别在于完成删除操作后进入INSERT MODE</span><br><span class="line">cc       也是删除当前行，然后进入INSERT MODE</span><br></pre></td></tr></table></figure>
+
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">：set nu   #显示行数</span><br><span class="line">v   #选择行</span><br><span class="line">ctrl + V  #选择列</span><br></pre></td></tr></table></figure>
+
+<h4 id="如何comment多行或者un-comment多行"><a href="#如何comment多行或者un-comment多行" class="headerlink" title="如何comment多行或者un-comment多行"></a>如何comment多行或者un-comment多行</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ctrl + V 进入visual block模式</span><br><span class="line">shift + i 进入插入模式</span><br><span class="line">输入#</span><br><span class="line">Esc退出插入模式</span><br></pre></td></tr></table></figure>
+
+<h4 id="搜索-替代"><a href="#搜索-替代" class="headerlink" title="搜索/替代"></a>搜索/替代</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/searchword</span><br><span class="line"></span><br><span class="line">%s/oldword/newword/g</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h1 id="MacOS-Applications"><a href="#MacOS-Applications" class="headerlink" title="MacOS Applications"></a>MacOS Applications</h1><h2 id="Git-and-GitHub"><a href="#Git-and-GitHub" class="headerlink" title="Git and GitHub "></a>Git and GitHub <a id="git-and-github"></a></h2><p>What’s a developer without <a target="_blank" rel="noopener" href="http://git-scm.com/">Git</a>? To install, run:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install git</span><br></pre></td></tr></table></figure>
+
+<p>When done, to test that it installed properly you can run:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git --version</span><br></pre></td></tr></table></figure>
+
+<p>And <code>which git</code> should output <code>/usr/local/bin/git</code>.</p>
+<p>Next, we’ll define your Git user (should be the same name and email you use for <a target="_blank" rel="noopener" href="https://github.com/">GitHub</a>):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name &quot;Your Name Here&quot;</span><br><span class="line">$ git config --global user.email &quot;your_email@youremail.com&quot;</span><br></pre></td></tr></table></figure>
+
+<p>They will get added to your <code>.gitconfig</code> file.</p>
+<p>To push code to your GitHub repositories, we’re going to use the recommended HTTPS method (versus SSH). To prevent <code>git</code> from asking for your username and password every time you push a commit you can cache your credentials by running the following command, as described in the <a target="_blank" rel="noopener" href="https://help.github.com/articles/caching-your-github-password-in-git/">instructions</a>.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global credential.helper osxkeychain</span><br></pre></td></tr></table></figure>
+
+<h3 id="SSH-Config-for-GitHub"><a href="#SSH-Config-for-GitHub" class="headerlink" title="SSH Config for GitHub "></a>SSH Config for GitHub <a id="ssh-config-for-github"></a></h3><p>The instructions below are referenced from <a target="_blank" rel="noopener" href="https://help.github.com/articles/generating-ssh-keys">the official documentation</a>.</p>
+<h4 id="Check-for-existing-SSH-keys"><a href="#Check-for-existing-SSH-keys" class="headerlink" title="Check for existing SSH keys "></a>Check for existing SSH keys <a id="check-for-existing-ssh-keys"></a></h4><p>First, we need to check for existing SSH keys on your computer. We do this by running:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ls -al ~/.ssh</span><br><span class="line"># Lists the files in your .ssh directory, if they exist</span><br></pre></td></tr></table></figure>
+
+<p>Check the directory listing to see if you have files named either <code>id_rsa.pub</code> or <code>id_dsa.pub</code>. If you don’t have either of those files then read on, otherwise skip the next section.</p>
+<h4 id="Generate-a-new-SSH-key"><a href="#Generate-a-new-SSH-key" class="headerlink" title="Generate a new SSH key "></a>Generate a new SSH key <a id="generate-a-new-ssh-key"></a></h4><p>If you don’t have an SSH key you need to generate one. To do that you need to run the commands below, and make sure to substitute the placeholder with your email. The default settings are preferred, so when you’re asked to “enter a file in which to save the key,”” just press Enter to continue.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C &quot;your_email@example.com&quot;</span><br><span class="line"># Creates a new ssh key, using the provided email as a label</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a>Homebrew</h2><p><a target="_blank" rel="noopener" href="https://brew.sh/">Homebrew</a> calls itself <em>The missing package manager for macOS</em> and is an essential tool for any developer.</p>
+<h3 id="Installation-1"><a href="#Installation-1" class="headerlink" title="Installation "></a>Installation <a id="installation"></a></h3><p>Before you can run Homebrew you need to have the <strong>Command Line Tools</strong> for <strong>Xcode</strong> installed. It include compilers that will allow you to build things from source, and if you are missing this it’s available through the App Store &gt; Updates.</p>
+<p>To install Homebrew run the following: terminal, hit <strong>Enter</strong>, and follow the steps on the screen:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>One thing you need to do is tell the system to use programs installed by Hombrew (in <code>/usr/local/bin</code>) rather than the OS default if it exists. You do this by adding <code>/usr/local/bin</code> to your <code>PATH</code> environment variable (if you’re using <code>zsh</code> you should use <code>.zshrc</code> instead of <code>.bash_profile</code>):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ echo &#x27;export PATH=&quot;/usr/local/bin:$PATH&quot;&#x27; &gt;&gt; ~/.bash_profile</span><br></pre></td></tr></table></figure>
+
+<p>Alternatively, you can also insert <code>/usr/local/bin</code> to the first line of <code>/private/etc/paths</code> and reboot the Mac to change global paths loading order. Admin password may be required if you modify the file.</p>
+<p>To be able to use <code>brew</code> you need to start a new terminal session. After that you should make sure everything is working by running:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew doctor</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="cask"><a href="#cask" class="headerlink" title="cask"></a>cask</h2><p><a target="_blank" rel="noopener" href="https://caskroom.github.io/">Homebrew-Cask</a> extends Homebrew and allows you to install large binary files via a command-line tool. You can for example install applications like Google Chrome, Dropbox, VLC and Spectacle. No more downloading <code>.dmg</code> files and dragging them to your Applications folder!</p>
+<h3 id="Installation-2"><a href="#Installation-2" class="headerlink" title="Installation "></a>Installation <a id="installation"></a></h3><p>You need Homebrew on your system to use Cask, and you make Cask available by adding it as a tap:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew tap caskroom/cask</span><br></pre></td></tr></table></figure>
+
+<h3 id="Search"><a href="#Search" class="headerlink" title="Search "></a>Search <a id="search"></a></h3><p>To see if an app is available on Cask you can search on the <a target="_blank" rel="noopener" href="https://caskroom.github.io/">official Cask website</a>. You can also search in your terminal:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew cask search &lt;package&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="usage"><a href="#usage" class="headerlink" title="usage"></a>usage</h3><p>“To install, drag this icon…” no more. <code>brew cask</code> installs macOS apps, fonts and plugins and other non-open source software.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew cask install firefox</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Using-Homebrew"><a href="#Using-Homebrew" class="headerlink" title="Using Homebrew"></a>Using Homebrew</h2><p>To install a package (or <strong>Formula</strong> in Homebrew vocabulary) simply type:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install &lt;formula&gt;</span><br></pre></td></tr></table></figure>
+
+<p>To update Homebrew’s directory of formulae, run:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew update</span><br></pre></td></tr></table></figure>
+
+<p><strong>Note</strong>: If that command fails you can manually download the directory of formulas like this:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd /usr/local/Homebrew/</span><br><span class="line">$ git fetch origin</span><br><span class="line">$ git reset --hard origin/master</span><br></pre></td></tr></table></figure>
+
+<p>To see if any of your formulas need to be updated:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew outdated</span><br></pre></td></tr></table></figure>
+
+<p>To update a formula:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew upgrade &lt;formula&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Homebrew keeps older versions of formulas installed on your system, in case you want to roll back to an older version. That rarely is necessary, so you can do some cleanup to get rid of those old versions:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew cleanup</span><br></pre></td></tr></table></figure>
+
+<p>If you want to see what formulas Homebrew would delete <em>without actually deleting them</em>, you can run:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew cleanup --dry-run</span><br></pre></td></tr></table></figure>
+
+<p>To see what you have installed (with their version numbers):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew list --versions</span><br></pre></td></tr></table></figure>
+
+<p>To search for formulas you run:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew search &lt;formula&gt;</span><br></pre></td></tr></table></figure>
+
+<p>To get more information about a formula you run:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew info &lt;formula&gt;</span><br></pre></td></tr></table></figure>
+
+<p>To uninstall a formula you can run:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew uninstall &lt;formula&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Sublime-TXT"><a href="#Sublime-TXT" class="headerlink" title="Sublime TXT"></a>Sublime TXT</h2><h3 id="Sublime-Text"><a href="#Sublime-Text" class="headerlink" title="Sublime Text "></a>Sublime Text <a id="sublime-text"></a></h3><p><a target="_blank" rel="noopener" href="http://www.sublimetext.com/">Sublime Text</a> is a widely used editor that describes it self as <em>a sophisticated text editor for code, markup and prose</em>.</p>
+<h4 id="Installation-3"><a href="#Installation-3" class="headerlink" title="Installation "></a>Installation <a id="installation"></a></h4><p><a target="_blank" rel="noopener" href="http://www.sublimetext.com/">Download</a> the <strong>.dmg</strong> file and drag-and-drop it to the <strong>Applications</strong> folder.</p>
+<h4 id="Use-CLI-to-open-file"><a href="#Use-CLI-to-open-file" class="headerlink" title="Use CLI to open file "></a>Use CLI to open file <a id="use-cli-to-open-file"></a></h4><p>Let’s create a shortcut so we can launch Sublime Text from the command-line</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl</span><br></pre></td></tr></table></figure>
+
+<p>Now you can open a file with <code>$ subl myfile.py</code> or start a new project in the current directory with <code>$ subl .</code>.</p>
+<h2 id="Subl-plugins"><a href="#Subl-plugins" class="headerlink" title="Subl plugins"></a>Subl plugins</h2><p>****</p>
+<h3 id="Keyboard-Shortcuts"><a href="#Keyboard-Shortcuts" class="headerlink" title="Keyboard Shortcuts"></a>Keyboard Shortcuts</h3><ul>
+<li><strong>Goto Anything</strong> Cmd+P is used for quickly finding and opening files. Just type in a part of a path and filename within a project and you can easily open that file. This is great for quickly opening files in large Django projects.</li>
+<li><strong>Goto Line Number</strong> Ctrl+G takes you to a specific line number in an active file.</li>
+<li><strong>command + shift + p</strong>  to open install package -&gt; search packages </li>
+</ul>
+<h3 id="SideBarEnhancements"><a href="#SideBarEnhancements" class="headerlink" title="SideBarEnhancements"></a>SideBarEnhancements</h3><p><a target="_blank" rel="noopener" href="https://sublime.wbond.net/packages/SideBarEnhancements">SideBarEnhancements</a> extends the number of menu options in the sidebar, speeding up your overall workflow. Options such as <strong>New File</strong> and <strong>Duplicate</strong> are essential and should be part of ST3 out of the box. The <strong>Delete</strong> option alone makes it worth downloading. This feature simply sends files to the Trash, which may seem trivial, but if you delete a file without it, then it’s very difficult to recover unless you’re using a version control system</p>
+<p><img src="/../.gitbook/assets/image.png"></p>
+<h3 id="Vintage-Mode"><a href="#Vintage-Mode" class="headerlink" title="Vintage Mode"></a>Vintage Mode</h3><p>enable vim mode on sublime</p>
+<h3 id="Anaconda"><a href="#Anaconda" class="headerlink" title="Anaconda"></a>Anaconda</h3><p><a target="_blank" rel="noopener" href="https://sublime.wbond.net/packages/Anaconda">Anaconda</a> is the ultimate Python package. It adds a number of IDE-like features to ST3 including the following:</p>
+<ul>
+<li><strong>Autocompletion</strong> works by default, but there are a number of configuration <a target="_blank" rel="noopener" href="https://github.com/DamnWidget/anaconda#anaconda-autocompletion">options</a>.</li>
+<li><strong>Code</strong> <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Lint_%28software%29"><strong>linting</strong></a> uses either PyLint or PyFlakes with PEP 8. I personally use a different linting package, as I will explain shortly, so I disable linting altogether within the user-defined Anaconda settings file, <strong>Anaconda.sublime-settings</strong>, via the file menu: <strong>Sublime &gt; Preferences &gt; Package Settings &gt; Anaconda &gt; Settings - User</strong>: <code>&#123;&quot;anaconda_linting&quot;: false&#125;</code></li>
+<li><strong>McCabe code complexity checker</strong> runs the <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">McCabe complexity checker</a> tool within a specific file. If you’re not familiar with what complexity is, be sure to visit the link above.</li>
+<li><strong>Goto Definitions</strong> finds and displays the definition of any variable, function, or class throughout your entire project.</li>
+<li><strong>Find Usage</strong> quickly searches where a variable, function, or class has been used in a specific file.</li>
+<li><strong>Show Documentation</strong> shows the docstring for functions or classes (if defined, of course).</li>
+</ul>
+<h3 id="SublimeLinter"><a href="#SublimeLinter" class="headerlink" title="SublimeLinter"></a>SublimeLinter</h3><p><a target="_blank" rel="noopener" href="https://sublime.wbond.net/packages/SublimeLinter">SublimeLinter</a> is a framework for ST3 linters. The package itself does not include any actual linters; those must be installed separately via Package Control using the <strong>SublimeLinter-[linter_name]</strong> naming syntax. You can view official linters <a target="_blank" rel="noopener" href="https://github.com/SublimeLinter">here</a>. There are also a number of third party linters, which can be viewed in Package Control. Check out the installation instructions <a target="_blank" rel="noopener" href="http://sublimelinter.readthedocs.org/en/latest/installation.html">here</a>.</p>
+<h3 id="GitGutter"><a href="#GitGutter" class="headerlink" title="GitGutter"></a>GitGutter</h3><p><a target="_blank" rel="noopener" href="https://sublime.wbond.net/packages/GitGutter">GitGutter</a> shows little icons in ST3’s gutter area that indicate whether a line has been inserted, modified, or deleted since the last commit.</p>
+<h3 id="Markdown-Preview"><a href="#Markdown-Preview" class="headerlink" title="Markdown Preview"></a>Markdown Preview</h3><p><a target="_blank" rel="noopener" href="https://sublime.wbond.net/packages/Markdown%20Preview">Markdown Preview</a> is used for previewing and building markdown files.</p>
+<p>To use, open the Package Manager and type <code>Markdown Preview</code> to show the available commands:</p>
+<ul>
+<li>Markdown Preview: Python Markdown: Preview in Browser</li>
+<li>Markdown Preview: Python Markdown: Export HTML in Sublime Text</li>
+<li>Markdown Preview: Python Markdown: Copy to Clipboard</li>
+<li>Markdown Preview: GitHub Flavored Markdown: Preview in Browser</li>
+<li>Markdown Preview: GitHub Flavored Markdown: Export HTML in Sublime Text</li>
+<li>Markdown Preview: GitHub Flavored Markdown: Copy to Clipboard</li>
+<li>Markdown Preview: Open Markdown Cheat Sheet</li>
+</ul>
+<h2 id="Vagrant"><a href="#Vagrant" class="headerlink" title="Vagrant"></a>Vagrant</h2><p>Create and configure lightweight, reproducible, and portable development environments. <a target="_blank" rel="noopener" href="http://www.vagrantup.com/">Vagrant</a> is a tool for managing virtual machines via a simple to use command line interface.</p>
+<h3 id="Installation-4"><a href="#Installation-4" class="headerlink" title="Installation "></a>Installation <a id="installation"></a></h3><p>Vagrant uses <a target="_blank" rel="noopener" href="https://www.virtualbox.org/">Virtualbox</a> to manage the virtual dependencies. You can <a target="_blank" rel="noopener" href="https://www.virtualbox.org/wiki/Downloads">directly download virtualbox</a> and install or use Homebrew for it. Notice that macOS High Sierra 10.13 introduces a new feature that requires user approval before loading new third-party kernel extensions. In case of failure follow the instructions <a target="_blank" rel="noopener" href="https://developer.apple.com/library/archive/technotes/tn2459/_index.html">here</a>.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew cask install virtualbox</span><br></pre></td></tr></table></figure>
+
+<p>Now install Vagrant either <a target="_blank" rel="noopener" href="http://www.vagrantup.com/downloads.html">from the website</a> or use Homebrew for installing it.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew cask install vagrant</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://vagrantmanager.com/">Vagrant-Manager</a> helps you manage all your virtual machines in one place directly from the menu bar.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew cask install vagrant-manager</span><br></pre></td></tr></table></figure>
+
+<h3 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h3><p>configuration file:</p>
+<p> <code>~/vagrant/Vagrantfile</code></p>
+<h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage "></a>Usage <a id="usage"></a></h3><p>Add the Vagrant box you want to use. We’ll use Ubuntu 12.04 for the following example.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant box add precise64 https://vagrantcloud.com/hashicorp/boxes/precise64/versions/1.1.0/providers/virtualbox.box</span><br></pre></td></tr></table></figure>
+
+<p>You can find more boxes at <a target="_blank" rel="noopener" href="https://app.vagrantup.com/boxes/search">Vagrant Cloud</a>.</p>
+<p>Now create a test directory and <code>cd</code> into the test directory. Then we’ll initialize the vagrant machine.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant init precise64</span><br></pre></td></tr></table></figure>
+
+<p>Now lets start the machine using the following command.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant up</span><br></pre></td></tr></table></figure>
+
+<p>You can ssh into the machine now.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant ssh</span><br></pre></td></tr></table></figure>
+
+<p>Halt the vagrant machine now.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant halt</span><br></pre></td></tr></table></figure>
+
+<p>Other useful commands are <code>suspend</code> and <code>destroy</code>.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2370,13 +2727,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">207k</span>
+    <span title="站点总字数">208k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:45</span>
+    <span title="站点阅读时长">5:47</span>
   </span>
 </div>
 <div class="busuanzi-count">

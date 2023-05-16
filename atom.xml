@@ -6,7 +6,7 @@
   <link href="https://toskachin.github.io/atom.xml" rel="self"/>
   
   <link href="https://toskachin.github.io/"/>
-  <updated>2023-05-15T14:13:36.090Z</updated>
+  <updated>2023-05-15T14:13:36.000Z</updated>
   <id>https://toskachin.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://toskachin.github.io/2025/05/15/career_path/"/>
     <id>https://toskachin.github.io/2025/05/15/career_path/</id>
     <published>2025-05-15T12:59:59.000Z</published>
-    <updated>2023-05-15T14:13:36.090Z</updated>
+    <updated>2023-05-15T14:13:36.000Z</updated>
     
     
       
@@ -48,7 +48,7 @@
     <link href="https://toskachin.github.io/2025/05/11/developer_macos_setup/"/>
     <id>https://toskachin.github.io/2025/05/11/developer_macos_setup/</id>
     <published>2025-05-11T07:59:59.000Z</published>
-    <updated>2023-05-11T08:30:32.970Z</updated>
+    <updated>2023-05-16T23:02:45.961Z</updated>
     
     
       
@@ -56,8 +56,8 @@
         
         
     <summary type="html">&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#third-part-applications&quot;&gt;Third part applications&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#applications-configuration&quot;&gt;Applications</summary>
+&lt;li&gt;&lt;a href=&quot;#third-part-applications-links&quot;&gt;Third part applications links&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#macos-setup&quot;&gt;MacOS</summary>
         
       
     
@@ -75,11 +75,40 @@
   </entry>
   
   <entry>
+    <title>国民对于疫情后经济复苏信心的丢失，路在何方</title>
+    <link href="https://toskachin.github.io/2023/05/17/memo_2023may/"/>
+    <id>https://toskachin.github.io/2023/05/17/memo_2023may/</id>
+    <published>2023-05-16T22:33:00.000Z</published>
+    <updated>2023-05-16T23:48:58.012Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;新闻要点&quot;&gt;&lt;a href=&quot;#新闻要点&quot; class=&quot;headerlink&quot; title=&quot;新闻要点&quot;&gt;&lt;/a&gt;新闻要点&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;国内各种经济数据下滑，楼市价格加速下跌&lt;/li&gt;
+&lt;li&gt;年轻人失业率创新高&lt;br&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    <category term="memo" scheme="https://toskachin.github.io/categories/memo/"/>
+    
+    
+    <category term="memo" scheme="https://toskachin.github.io/tags/memo/"/>
+    
+    <category term="感想" scheme="https://toskachin.github.io/tags/%E6%84%9F%E6%83%B3/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Interview FAQ 2022</title>
     <link href="https://toskachin.github.io/2022/09/26/Interview_FAQ/"/>
     <id>https://toskachin.github.io/2022/09/26/Interview_FAQ/</id>
     <published>2022-09-25T16:00:00.000Z</published>
-    <updated>2022-11-07T13:00:35.815Z</updated>
+    <updated>2022-11-07T13:00:35.000Z</updated>
     
     
       
@@ -109,7 +138,7 @@
     <link href="https://toskachin.github.io/2022/09/21/docker_useful_commands/"/>
     <id>https://toskachin.github.io/2022/09/21/docker_useful_commands/</id>
     <published>2022-09-20T23:54:41.000Z</published>
-    <updated>2022-09-20T13:31:36.993Z</updated>
+    <updated>2022-09-20T13:31:36.000Z</updated>
     
     
       
@@ -143,7 +172,7 @@
     <link href="https://toskachin.github.io/2022/09/20/Kubernetes_from_zero/"/>
     <id>https://toskachin.github.io/2022/09/20/Kubernetes_from_zero/</id>
     <published>2022-09-19T23:54:41.000Z</published>
-    <updated>2022-09-20T07:24:39.214Z</updated>
+    <updated>2022-09-20T07:24:39.000Z</updated>
     
     
       
@@ -174,7 +203,7 @@
     <link href="https://toskachin.github.io/2022/07/04/hexo-blog-setup/"/>
     <id>https://toskachin.github.io/2022/07/04/hexo-blog-setup/</id>
     <published>2022-07-04T00:35:28.000Z</published>
-    <updated>2022-07-04T00:56:51.034Z</updated>
+    <updated>2022-07-04T00:56:51.000Z</updated>
     
     
       
@@ -203,7 +232,7 @@
     <link href="https://toskachin.github.io/2022/07/04/stock-price/"/>
     <id>https://toskachin.github.io/2022/07/04/stock-price/</id>
     <published>2022-07-04T00:27:16.000Z</published>
-    <updated>2022-07-04T00:30:12.185Z</updated>
+    <updated>2022-07-04T00:30:12.000Z</updated>
     
     
       
@@ -221,9 +250,9 @@
     
     <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
     
-    <category term="stock" scheme="https://toskachin.github.io/tags/stock/"/>
-    
     <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
+    
+    <category term="stock" scheme="https://toskachin.github.io/tags/stock/"/>
     
     <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     
@@ -234,7 +263,7 @@
     <link href="https://toskachin.github.io/2022/05/10/regexr/"/>
     <id>https://toskachin.github.io/2022/05/10/regexr/</id>
     <published>2022-05-10T08:49:15.000Z</published>
-    <updated>2022-07-03T11:25:11.671Z</updated>
+    <updated>2022-07-03T11:25:11.000Z</updated>
     
     
       
@@ -260,7 +289,7 @@
     <link href="https://toskachin.github.io/2022/04/04/linux_systemadmin/"/>
     <id>https://toskachin.github.io/2022/04/04/linux_systemadmin/</id>
     <published>2022-04-03T23:29:35.000Z</published>
-    <updated>2022-07-03T11:25:11.669Z</updated>
+    <updated>2022-07-03T11:25:11.000Z</updated>
     
     
       
@@ -291,7 +320,7 @@
     <link href="https://toskachin.github.io/2022/03/27/macos_setup/"/>
     <id>https://toskachin.github.io/2022/03/27/macos_setup/</id>
     <published>2022-03-27T04:54:41.000Z</published>
-    <updated>2022-07-03T11:25:11.670Z</updated>
+    <updated>2022-07-03T11:25:11.000Z</updated>
     
     
       
@@ -323,7 +352,7 @@
     <link href="https://toskachin.github.io/2022/03/10/Interview_notes_march_2022/"/>
     <id>https://toskachin.github.io/2022/03/10/Interview_notes_march_2022/</id>
     <published>2022-03-09T16:00:00.000Z</published>
-    <updated>2022-07-03T11:25:11.659Z</updated>
+    <updated>2022-07-03T11:25:11.000Z</updated>
     
     
       
@@ -354,7 +383,7 @@
     <link href="https://toskachin.github.io/2021/10/16/linux-regex-advance/"/>
     <id>https://toskachin.github.io/2021/10/16/linux-regex-advance/</id>
     <published>2021-10-15T23:40:41.000Z</published>
-    <updated>2022-07-03T11:25:11.669Z</updated>
+    <updated>2022-07-03T11:25:11.000Z</updated>
     
     
       
@@ -390,7 +419,7 @@
     <link href="https://toskachin.github.io/2021/09/09/goldman-sachs-interview/"/>
     <id>https://toskachin.github.io/2021/09/09/goldman-sachs-interview/</id>
     <published>2021-09-09T08:49:49.000Z</published>
-    <updated>2022-07-03T11:25:11.659Z</updated>
+    <updated>2022-07-03T11:25:11.000Z</updated>
     
     
       
@@ -417,7 +446,7 @@
     <link href="https://toskachin.github.io/2021/08/26/terraform-notes/"/>
     <id>https://toskachin.github.io/2021/08/26/terraform-notes/</id>
     <published>2021-08-26T05:36:20.000Z</published>
-    <updated>2022-07-03T11:25:11.678Z</updated>
+    <updated>2022-07-03T11:25:11.000Z</updated>
     
     
       
@@ -449,7 +478,7 @@
     <link href="https://toskachin.github.io/2021/08/24/shell-variable-advance/"/>
     <id>https://toskachin.github.io/2021/08/24/shell-variable-advance/</id>
     <published>2021-08-24T01:07:34.000Z</published>
-    <updated>2022-07-03T11:25:11.677Z</updated>
+    <updated>2022-07-03T11:25:11.000Z</updated>
     
     
       
@@ -480,7 +509,7 @@
     <link href="https://toskachin.github.io/2021/08/21/k8s-network-1/"/>
     <id>https://toskachin.github.io/2021/08/21/k8s-network-1/</id>
     <published>2021-08-20T22:48:49.000Z</published>
-    <updated>2022-07-03T11:25:11.667Z</updated>
+    <updated>2022-07-03T11:25:11.000Z</updated>
     
     
       
@@ -507,7 +536,7 @@
     <link href="https://toskachin.github.io/2021/08/20/hexo-sidebar/"/>
     <id>https://toskachin.github.io/2021/08/20/hexo-sidebar/</id>
     <published>2021-08-20T08:49:15.000Z</published>
-    <updated>2022-07-03T11:25:11.659Z</updated>
+    <updated>2022-07-03T11:25:11.000Z</updated>
     
     
       
@@ -532,7 +561,7 @@
     <link href="https://toskachin.github.io/2021/08/20/python-notes/"/>
     <id>https://toskachin.github.io/2021/08/20/python-notes/</id>
     <published>2021-08-20T02:54:16.000Z</published>
-    <updated>2022-07-03T11:25:11.671Z</updated>
+    <updated>2022-07-03T11:25:11.000Z</updated>
     
     
       
@@ -568,7 +597,7 @@
     <link href="https://toskachin.github.io/2021/08/19/shell-notes/"/>
     <id>https://toskachin.github.io/2021/08/19/shell-notes/</id>
     <published>2021-08-19T09:29:35.000Z</published>
-    <updated>2022-07-03T11:25:11.677Z</updated>
+    <updated>2022-07-03T11:25:11.000Z</updated>
     
     
       
