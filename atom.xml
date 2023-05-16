@@ -6,7 +6,7 @@
   <link href="https://toskachin.github.io/atom.xml" rel="self"/>
   
   <link href="https://toskachin.github.io/"/>
-  <updated>2023-05-15T14:13:36.000Z</updated>
+  <updated>2023-05-16T23:48:58.012Z</updated>
   <id>https://toskachin.github.io/</id>
   
   <author>
@@ -15,64 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>个人职业生涯短记 personal career path</title>
-    <link href="https://toskachin.github.io/2025/05/15/career_path/"/>
-    <id>https://toskachin.github.io/2025/05/15/career_path/</id>
-    <published>2025-05-15T12:59:59.000Z</published>
-    <updated>2023-05-15T14:13:36.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="engineering" scheme="https://toskachin.github.io/categories/engineering/"/>
-    
-    
-    <category term="developer" scheme="https://toskachin.github.io/tags/developer/"/>
-    
-    <category term="IT" scheme="https://toskachin.github.io/tags/IT/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Developer&#39;s MacOS setup from Zero</title>
-    <link href="https://toskachin.github.io/2025/05/11/developer_macos_setup/"/>
-    <id>https://toskachin.github.io/2025/05/11/developer_macos_setup/</id>
-    <published>2025-05-11T07:59:59.000Z</published>
-    <updated>2023-05-16T23:02:45.961Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#third-part-applications-links&quot;&gt;Third part applications links&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#macos-setup&quot;&gt;MacOS</summary>
-        
-      
-    
-    
-    
-    <category term="macos,tools" scheme="https://toskachin.github.io/categories/macos-tools/"/>
-    
-    
-    <category term="macos" scheme="https://toskachin.github.io/tags/macos/"/>
-    
-    <category term="developer_tool" scheme="https://toskachin.github.io/tags/developer-tool/"/>
-    
-    <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
-    
-  </entry>
   
   <entry>
     <title>国民对于疫情后经济复苏信心的丢失，路在何方</title>
@@ -100,6 +42,64 @@
     <category term="memo" scheme="https://toskachin.github.io/tags/memo/"/>
     
     <category term="感想" scheme="https://toskachin.github.io/tags/%E6%84%9F%E6%83%B3/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>个人职业生涯短记 personal career path</title>
+    <link href="https://toskachin.github.io/2023/05/15/career_path/"/>
+    <id>https://toskachin.github.io/2023/05/15/career_path/</id>
+    <published>2023-05-15T12:59:59.000Z</published>
+    <updated>2023-05-16T23:57:47.696Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="engineering" scheme="https://toskachin.github.io/categories/engineering/"/>
+    
+    
+    <category term="developer" scheme="https://toskachin.github.io/tags/developer/"/>
+    
+    <category term="IT" scheme="https://toskachin.github.io/tags/IT/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Developer&#39;s MacOS setup from Zero</title>
+    <link href="https://toskachin.github.io/2023/05/11/developer_macos_setup/"/>
+    <id>https://toskachin.github.io/2023/05/11/developer_macos_setup/</id>
+    <published>2023-05-11T07:59:59.000Z</published>
+    <updated>2023-05-16T23:57:30.252Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#third-part-applications-links&quot;&gt;Third part applications links&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#macos-setup&quot;&gt;MacOS</summary>
+        
+      
+    
+    
+    
+    <category term="macos,tools" scheme="https://toskachin.github.io/categories/macos-tools/"/>
+    
+    
+    <category term="macos" scheme="https://toskachin.github.io/tags/macos/"/>
+    
+    <category term="developer_tool" scheme="https://toskachin.github.io/tags/developer-tool/"/>
+    
+    <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
     
   </entry>
   
@@ -250,9 +250,9 @@
     
     <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
     
-    <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
-    
     <category term="stock" scheme="https://toskachin.github.io/tags/stock/"/>
+    
+    <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
     
     <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     
