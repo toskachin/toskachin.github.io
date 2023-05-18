@@ -6,7 +6,7 @@
   <link href="https://toskachin.github.io/atom.xml" rel="self"/>
   
   <link href="https://toskachin.github.io/"/>
-  <updated>2023-05-16T23:48:58.012Z</updated>
+  <updated>2023-05-18T07:25:23.615Z</updated>
   <id>https://toskachin.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>人生啊，多少感慨</title>
+    <link href="https://toskachin.github.io/2025/05/05/daily_memo/"/>
+    <id>https://toskachin.github.io/2025/05/05/daily_memo/</id>
+    <published>2025-05-04T16:00:00.000Z</published>
+    <updated>2023-05-18T07:25:23.615Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;DATE: 18 May 2023&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;倘若人生还有你珍惜的人便是幸福 -</summary>
+        
+      
+    
+    
+    
+    <category term="memo" scheme="https://toskachin.github.io/categories/memo/"/>
+    
+    
+    <category term="memo" scheme="https://toskachin.github.io/tags/memo/"/>
+    
+    <category term="感想" scheme="https://toskachin.github.io/tags/%E6%84%9F%E6%83%B3/"/>
+    
+  </entry>
   
   <entry>
     <title>国民对于疫情后经济复苏信心的丢失，路在何方</title>
@@ -589,38 +618,6 @@
     <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     
     <category term="life" scheme="https://toskachin.github.io/tags/life/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>一文让你从入门到精通shell</title>
-    <link href="https://toskachin.github.io/2021/08/19/shell-notes/"/>
-    <id>https://toskachin.github.io/2021/08/19/shell-notes/</id>
-    <published>2021-08-19T09:29:35.000Z</published>
-    <updated>2022-07-03T11:25:11.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#%E5%8F%98%E9%87%8F&quot;&gt;变量&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F&quot;&gt;局部变量&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="shell" scheme="https://toskachin.github.io/categories/shell/"/>
-    
-    
-    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
-    
-    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
-    
-    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     
   </entry>
   
