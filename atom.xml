@@ -6,7 +6,7 @@
   <link href="https://toskachin.github.io/atom.xml" rel="self"/>
   
   <link href="https://toskachin.github.io/"/>
-  <updated>2023-05-18T07:25:23.615Z</updated>
+  <updated>2023-05-24T01:11:20.292Z</updated>
   <id>https://toskachin.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://toskachin.github.io/2025/05/05/daily_memo/"/>
     <id>https://toskachin.github.io/2025/05/05/daily_memo/</id>
     <published>2025-05-04T16:00:00.000Z</published>
-    <updated>2023-05-18T07:25:23.615Z</updated>
+    <updated>2023-05-24T01:11:20.292Z</updated>
     
     
       
@@ -30,7 +30,9 @@
         
     <summary type="html">&lt;p&gt;DATE: 18 May 2023&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;倘若人生还有你珍惜的人便是幸福 -</summary>
+&lt;p&gt;倘若人生还有你珍惜的人便是幸福 - 电影《永远的托词》&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;DATE: 24 May</summary>
         
       
     
@@ -279,9 +281,9 @@
     
     <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
     
-    <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
-    
     <category term="stock" scheme="https://toskachin.github.io/tags/stock/"/>
+    
+    <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
     
     <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     
