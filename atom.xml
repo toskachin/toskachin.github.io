@@ -48,6 +48,35 @@
   </entry>
   
   <entry>
+    <title>Nomad 和 Kubernetes 区别</title>
+    <link href="https://toskachin.github.io/2023/05/26/Nomad_and_Kubernetes/"/>
+    <id>https://toskachin.github.io/2023/05/26/Nomad_and_Kubernetes/</id>
+    <published>2023-05-26T03:33:00.000Z</published>
+    <updated>2023-05-26T03:45:36.531Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Nomad-vs-Kubernetes&quot;&gt;&lt;a href=&quot;#Nomad-vs-Kubernetes&quot; class=&quot;headerlink&quot; title=&quot;Nomad vs. Kubernetes&quot;&gt;&lt;/a&gt;Nomad vs.</summary>
+        
+      
+    
+    
+    
+    <category term="tech" scheme="https://toskachin.github.io/categories/tech/"/>
+    
+    
+    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
+    
+    <category term="devops" scheme="https://toskachin.github.io/tags/devops/"/>
+    
+    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
+    
+  </entry>
+  
+  <entry>
     <title>国民对于疫情后经济复苏信心的丢失，路在何方</title>
     <link href="https://toskachin.github.io/2023/05/17/memo_2023may/"/>
     <id>https://toskachin.github.io/2023/05/17/memo_2023may/</id>
@@ -584,42 +613,6 @@
     
     
     <category term="hexo" scheme="https://toskachin.github.io/tags/hexo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>一文让你python从入门到放弃</title>
-    <link href="https://toskachin.github.io/2021/08/20/python-notes/"/>
-    <id>https://toskachin.github.io/2021/08/20/python-notes/</id>
-    <published>2021-08-20T02:54:16.000Z</published>
-    <updated>2022-07-03T11:25:11.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#%E5%89%8D%E8%A8%80&quot;&gt;前言&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#%E8%BF%90%E7%AE%97%E7%AC%A6operators&quot;&gt;运算符(operators)&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="python" scheme="https://toskachin.github.io/categories/python/"/>
-    
-    
-    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
-    
-    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
-    
-    <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
-    
-    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
-    
-    <category term="life" scheme="https://toskachin.github.io/tags/life/"/>
     
   </entry>
   
