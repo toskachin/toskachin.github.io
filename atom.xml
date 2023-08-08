@@ -6,7 +6,7 @@
   <link href="https://toskachin.github.io/atom.xml" rel="self"/>
   
   <link href="https://toskachin.github.io/"/>
-  <updated>2023-08-08T00:39:54.953Z</updated>
+  <updated>2023-08-08T13:58:14.194Z</updated>
   <id>https://toskachin.github.io/</id>
   
   <author>
@@ -17,19 +17,18 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Bash中处理临时文件的正确发-trap/mktemp</title>
-    <link href="https://toskachin.github.io/2023/08/08/trap_for_tmpscripts/"/>
-    <id>https://toskachin.github.io/2023/08/08/trap_for_tmpscripts/</id>
+    <title>Bash中处理临时文件的正确方法-trap/mktemp</title>
+    <link href="https://toskachin.github.io/2023/08/08/202308_trap_for_tmpscripts/"/>
+    <id>https://toskachin.github.io/2023/08/08/202308_trap_for_tmpscripts/</id>
     <published>2023-08-08T01:00:00.000Z</published>
-    <updated>2023-08-08T00:39:54.953Z</updated>
+    <updated>2023-08-08T13:58:14.194Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;** 临时文件生成最佳实践&lt;/p&gt;
-&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span</summary>
+    <summary type="html">&lt;h1 id=&quot;临时文件生成最佳实践&quot;&gt;&lt;a href=&quot;#临时文件生成最佳实践&quot; class=&quot;headerlink&quot;</summary>
         
       
     
@@ -40,9 +39,9 @@
     
     <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
     
-    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
-    
     <category term="bash" scheme="https://toskachin.github.io/tags/bash/"/>
+    
+    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
     
     <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     
