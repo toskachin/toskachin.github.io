@@ -20,26 +20,31 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"toskachin.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="10+ IT career and personal memories">
-<meta property="og:type" content="website">
-<meta property="og:title" content="RJ&#39;s Blog">
-<meta property="og:url" content="https://toskachin.github.io/tags/stock/index.html">
+<meta name="description" content="** 临时文件生成最佳实践 12345创建前检查文件是否已经存在。确保临时文件已成功创建。临时文件必须有权限的限制。临时文件要使用不可预测的文件名。脚本退出时，要删除临时文件（使用trap命令）。  ** mktemp 命令的用法 mktemp命令就是为安全创建临时文件而设计的。虽然在创建临时文件之前，它不会检查临时文件是否存在，但是它支持唯一文件名和清除机制，因此可以减轻安全攻击的风险。 直接运">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bash中处理临时文件的正确发-trap&#x2F;mktemp">
+<meta property="og:url" content="https://toskachin.github.io/2023/08/08/trap_for_tmpscripts/index.html">
 <meta property="og:site_name" content="RJ&#39;s Blog">
-<meta property="og:description" content="10+ IT career and personal memories">
+<meta property="og:description" content="** 临时文件生成最佳实践 12345创建前检查文件是否已经存在。确保临时文件已成功创建。临时文件必须有权限的限制。临时文件要使用不可预测的文件名。脚本退出时，要删除临时文件（使用trap命令）。  ** mktemp 命令的用法 mktemp命令就是为安全创建临时文件而设计的。虽然在创建临时文件之前，它不会检查临时文件是否存在，但是它支持唯一文件名和清除机制，因此可以减轻安全攻击的风险。 直接运">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-08-08T01:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-08T00:39:54.953Z">
 <meta property="article:author" content="TOSKA">
-<meta property="article:tag" content="Tech, Life, 技术，人生">
+<meta property="article:tag" content="tech">
+<meta property="article:tag" content="shell">
+<meta property="article:tag" content="bash">
+<meta property="article:tag" content="Tech">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://toskachin.github.io/tags/stock/">
+<link rel="canonical" href="https://toskachin.github.io/2023/08/08/trap_for_tmpscripts/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"tags/stock/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://toskachin.github.io/2023/08/08/trap_for_tmpscripts/","path":"2023/08/08/trap_for_tmpscripts/","title":"Bash中处理临时文件的正确发-trap/mktemp"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>标签: stock | RJ's Blog</title>
+<title>Bash中处理临时文件的正确发-trap/mktemp | RJ's Blog</title>
   
 
 
@@ -246,50 +251,129 @@
 </noscript>
 
 
-    <div class="main-inner tag posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
-  
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h2 class="collection-header">stock
-          <small>标签</small>
-        </h2>
-      </div>
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2023/08/08/trap_for_tmpscripts/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="TOSKA">
+      <meta itemprop="description" content="10+ IT career and personal memories">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="RJ's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Bash中处理临时文件的正确发-trap/mktemp
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2022</span>
+
+      <time title="创建时间：2023-08-08 09:00:00 / 修改时间：08:39:54" itemprop="dateCreated datePublished" datetime="2023-08-08T09:00:00+08:00">2023-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/shell/" itemprop="url" rel="index"><span itemprop="name">shell</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>213</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>** 临时文件生成最佳实践</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">创建前检查文件是否已经存在。</span><br><span class="line">确保临时文件已成功创建。</span><br><span class="line">临时文件必须有权限的限制。</span><br><span class="line">临时文件要使用不可预测的文件名。</span><br><span class="line">脚本退出时，要删除临时文件（使用trap命令）。</span><br></pre></td></tr></table></figure>
+
+<p>** mktemp 命令的用法</p>
+<p>mktemp命令就是为安全创建临时文件而设计的。虽然在创建临时文件之前，它不会检查临时文件是否存在，但是它支持唯一文件名和清除机制，因此可以减轻安全攻击的风险。</p>
+<p>直接运行mktemp命令，就能生成一个临时文件。</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2022-07-04T08:27:16+08:00"
-              content="2022-07-04">
-          07-04
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/07/04/stock-price/" itemprop="url">
-            <span itemprop="name">python程序获取股票信息</span>
-          </a>
-      </div>
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tech/" rel="tag"># tech</a>
+              <a href="/tags/shell/" rel="tag"># shell</a>
+              <a href="/tags/bash/" rel="tag"># bash</a>
+              <a href="/tags/Tech/" rel="tag"># Tech</a>
+          </div>
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/05/26/Nomad_and_Kubernetes/" rel="prev" title="Nomad 和 Kubernetes 区别">
+                  <i class="fa fa-chevron-left"></i> Nomad 和 Kubernetes 区别
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/05/05/daily_memo/" rel="next" title="人生啊，多少感慨">
+                  人生啊，多少感慨 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
+
 
 </div>
   </main>
