@@ -475,33 +475,6 @@
   </entry>
   
   <entry>
-    <title>高盛投行运维岗位面试</title>
-    <link href="https://toskachin.github.io/2021/09/09/goldman-sachs-interview/"/>
-    <id>https://toskachin.github.io/2021/09/09/goldman-sachs-interview/</id>
-    <published>2021-09-09T08:49:49.000Z</published>
-    <updated>2022-07-03T11:25:11.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;Background&quot;&gt;&lt;a href=&quot;#Background&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="面试" scheme="https://toskachin.github.io/categories/%E9%9D%A2%E8%AF%95/"/>
-    
-    
-    <category term="面试" scheme="https://toskachin.github.io/tags/%E9%9D%A2%E8%AF%95/"/>
-    
-    <category term="技术" scheme="https://toskachin.github.io/tags/%E6%8A%80%E6%9C%AF/"/>
-    
-  </entry>
-  
-  <entry>
     <title>一文熟悉云配置神器terraform</title>
     <link href="https://toskachin.github.io/2021/08/26/terraform-notes/"/>
     <id>https://toskachin.github.io/2021/08/26/terraform-notes/</id>
@@ -613,6 +586,42 @@
     
     
     <category term="hexo" scheme="https://toskachin.github.io/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一文让你python从入门到放弃</title>
+    <link href="https://toskachin.github.io/2021/08/20/python-notes/"/>
+    <id>https://toskachin.github.io/2021/08/20/python-notes/</id>
+    <published>2021-08-20T02:54:16.000Z</published>
+    <updated>2022-07-03T11:25:11.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%89%8D%E8%A8%80&quot;&gt;前言&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E8%BF%90%E7%AE%97%E7%AC%A6operators&quot;&gt;运算符(operators)&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="python" scheme="https://toskachin.github.io/categories/python/"/>
+    
+    
+    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
+    
+    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
+    
+    <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
+    
+    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
+    
+    <category term="life" scheme="https://toskachin.github.io/tags/life/"/>
     
   </entry>
   

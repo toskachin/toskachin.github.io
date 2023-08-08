@@ -79,6 +79,26 @@
       </tags>
   </entry>
   <entry>
+    <title>人生啊，多少感慨</title>
+    <url>/2025/05/05/daily_memo/</url>
+    <content><![CDATA[<p>DATE: 18 May 2023</p>
+<blockquote>
+<p>倘若人生还有你珍惜的人便是幸福 - 电影《永远的托词》</p>
+</blockquote>
+<p>DATE: 24 May 2023</p>
+<blockquote>
+<p>请问：自由的味道是什么，人生三十年仍未知</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>memo</category>
+      </categories>
+      <tags>
+        <tag>memo</tag>
+        <tag>感想</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Interview FAQ 2022</title>
     <url>/2022/09/26/Interview_FAQ/</url>
     <content><![CDATA[<ul>
@@ -196,52 +216,6 @@
         <tag>k8s</tag>
         <tag>container</tag>
         <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Nomad 和 Kubernetes 区别</title>
-    <url>/2023/05/26/Nomad_and_Kubernetes/</url>
-    <content><![CDATA[<h1 id="Nomad-vs-Kubernetes"><a href="#Nomad-vs-Kubernetes" class="headerlink" title="Nomad vs. Kubernetes"></a>Nomad vs. Kubernetes</h1><p>现今Containor技术比较流行的是Kubernetes, 后起之秀Nomad也风行起来，那么两者的区别是啥</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Kubernetes is an orchestration system for containers originally designed by Google, now governed by the Cloud Native Computing Foundation (CNCF) and developed by Google, Red Hat, and many others. Kubernetes and Nomad support similar core use cases for application deployment and management, but they differ in a few key ways. Kubernetes aims to provide all the features needed to run Linux container-based applications including cluster management, scheduling, service discovery, monitoring, secrets management and more. Nomad only aims to focus on cluster management and scheduling and is designed with the Unix philosophy of having a small scope while composing with tools like Consul for service discovery/service mesh and Vault for secret management.</span><br><span class="line"></span><br><span class="line">The following characteristics generally differentiate Nomad from Kubernetes:</span><br></pre></td></tr></table></figure>
-
-<h2 id="Simplicity"><a href="#Simplicity" class="headerlink" title="Simplicity"></a>Simplicity</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Kubernetes is designed as a collection of more than a half-dozen interoperating services which together provide the full functionality. Coordination and storage is provided by etcd at the core. The state is wrapped by API controllers which are consumed by other services that provide higher level APIs for features like scheduling. Kubernetes supports running in a highly available configuration but is operationally complex to setup.</span><br><span class="line"></span><br><span class="line">Nomad is architecturally much simpler. Nomad is a single binary, both for clients and servers, and requires no external services for coordination or storage. Nomad combines a lightweight resource manager and a sophisticated scheduler into a single system. By default, Nomad is distributed, highly available, and operationally simple.</span><br></pre></td></tr></table></figure>
-
-<h2 id="Flexible-Workload-Support"><a href="#Flexible-Workload-Support" class="headerlink" title="Flexible Workload Support"></a>Flexible Workload Support</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">While Kubernetes is specifically focused on Linux containers, Nomad is more general purpose. Nomad supports virtualized, containerized and standalone applications, including Docker, Java, IIS on Windows, Qemu, etc. Nomad is designed with extensible drivers and support will be extended to all common drivers.</span><br></pre></td></tr></table></figure>
-
-<h2 id="Consistent-Deployment"><a href="#Consistent-Deployment" class="headerlink" title="Consistent Deployment"></a>Consistent Deployment</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A full Kubernetes installation for a production environment is time consuming, operationally complex, and resource intensive. An increasing number of implementations are created by the Kubernetes community to mitigate these challenges, such as minikube, kubeadm, k3s, and more. These trimmed versions of Kubernetes offer easier adoption for development and testing, but lead to inconsistency in capabilities, configuration, and management when moving into production.</span><br><span class="line"></span><br><span class="line">In contrast to Kubernetes&#x27; fragmented distributions, Nomad as a single lightweight binary can be deployed in local dev, production, on-prem, at the edge, and in the cloud in a consistent manner, and provides the same operational ease-of-use across all environments.</span><br></pre></td></tr></table></figure>
-
-<h2 id="Scalability"><a href="#Scalability" class="headerlink" title="Scalability"></a>Scalability</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Kubernetes documentation states that they support clusters up to 5,000 nodes and 300,000 total containers. As the environment grows, the interoperating components with different constraints compound the operational complexity. Even operators at Google revealed the significant challenges of managing the system at scale. The lack of maturity in the Federation project and the additional overhead of managing a centralized management plane also make it a hard experience to deploy a distributed system that spans multiple clusters.</span><br><span class="line"></span><br><span class="line">Nomad has been proven to scale to cluster sizes that exceed 10,000 nodes in real-world production environments. It can be deployed across multiple availability zones, regions, and data centers with a single cluster or multiple clusters. Nomad is designed to natively handle multi-cluster deployments without the overhead of running clusters on clusters. This makes it easier to scale the application deployment across multiple datacenters, regions, and clouds with no additional complexity.</span><br><span class="line"></span><br><span class="line">Nomad has performed strenuous benchmark on scalability with 1 million container challenge in 2016 and 2 million container challenge in 2020. These tests are aimed to validate Nomad&#x27;s architectural design and ensure that Nomad performs under the most extreme requirements.</span><br></pre></td></tr></table></figure>
-
-<h2 id="Nomad-command-examples"><a href="#Nomad-command-examples" class="headerlink" title="Nomad command examples"></a>Nomad command examples</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nomad node status</span><br><span class="line"></span><br><span class="line">nomad job run pytechco-redis.nomad.hcl</span><br><span class="line"></span><br><span class="line">nomad job stop -purge pytechco-employee</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>tech</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>devops</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>人生啊，多少感慨</title>
-    <url>/2025/05/05/daily_memo/</url>
-    <content><![CDATA[<p>DATE: 18 May 2023</p>
-<blockquote>
-<p>倘若人生还有你珍惜的人便是幸福 - 电影《永远的托词》</p>
-</blockquote>
-<p>DATE: 24 May 2023</p>
-<blockquote>
-<p>请问：自由的味道是什么，人生三十年仍未知</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>memo</category>
-      </categories>
-      <tags>
-        <tag>memo</tag>
-        <tag>感想</tag>
       </tags>
   </entry>
   <entry>
@@ -506,69 +480,6 @@
       </tags>
   </entry>
   <entry>
-    <title>高盛投行运维岗位面试</title>
-    <url>/2021/09/09/goldman-sachs-interview/</url>
-    <content><![CDATA[<h1 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h1><p>打算写一个面试专题，主要目的是一是分享，另一个是记录技术细节<br>以下是我转入产品运维后面试过的还记得的公司</p>
-<p>Optiver<br>goldman sachs<br>jump trading<br>morgan stanley<br>bloomberg<br>shopee singapore<br>apple<br>paypal<br>Mastercard<br>Microsoft<br>tiktok singapore<br>IBM<br>支付宝<br>宜家<br>迪卡侬<br>特斯拉<br>NVIDIA</p>
-<h1 id="面试流程"><a href="#面试流程" class="headerlink" title="面试流程"></a>面试流程</h1><p>一共1.5小时全英文，分为三个部分</p>
-<ul>
-<li>behave questions</li>
-<li>Linux questions</li>
-<li>coding skill</li>
-</ul>
-<h1 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h1><h2 id="behave-questions"><a href="#behave-questions" class="headerlink" title="behave questions"></a>behave questions</h2><p>我在这边就不分享了，纯属于情商题，不难，没有唯一答案，个人观念不同，可以都对，根据你的工作经验总结出来。</p>
-<h2 id="Linux-questions"><a href="#Linux-questions" class="headerlink" title="Linux questions"></a>Linux questions</h2><blockquote>
-<p>如何查询一个服务器跑了哪些应用</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ps command, </span><br><span class="line"></span><br><span class="line">ps aux</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>ps command 输出了哪些信息</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">username,</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<blockquote>
-<p>如何检查一个服务器网络连接情况</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">netstat -altp </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>解释下 netstat 命令输出 state 种类和各个的含义</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">listen</span><br><span class="line">time_wait</span><br><span class="line">eslaticed </span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>PPID是什么，如果kill PPID 会有啥影响</p>
-</blockquote>
-<blockquote>
-<p>pid存在于系统哪个目录下，目录内都有什么内容</p>
-</blockquote>
-<blockquote>
-<p>文件重定向</p>
-</blockquote>
-<p>cat.sh &gt; text.txt</p>
-<p>/dev/stdin 标准输入设备（键盘） 0</p>
-<p>/dev/stdout 标准输出设备（显示器） 1</p>
-<p>/dev/stderr 标准错误输出设备（显示器） 2</p>
-<blockquote>
-<p>linux系统如何删除文件名为-f的文件</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rm -- -foo</span><br><span class="line">rm ./-foo</span><br></pre></td></tr></table></figure>
-
-<h1 id="coding-question"><a href="#coding-question" class="headerlink" title="coding question"></a>coding question</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">41.42.97.104 - - [26/Feb/2015:03:35:40 -0500] &quot;GET /root/ HTTP/1.1&quot; 301 20 &quot;http://baibai.123.com/09&quot; &quot;Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36&quot; - 0.562 </span><br><span class="line">41.42.97.104 - - [26/Feb/2015:03:35:41 -0500] &quot;GET /crossadkla.xml HTTP/1.1&quot; 304 0 &quot;https://baibai.123.com/&quot; &quot;Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36&quot; - 0.000 </span><br><span class="line">99.122.189.203 - - [26/Feb/2015:03:35:42 -0500] &quot;GET /root/ HTTP/1.1&quot; 301 20 &quot;http://baibai.123.com/11&quot; &quot;Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36&quot; - 0.562 </span><br><span class="line">99.122.189.203  - - [26/Feb/2015:03:35:44 -0500] &quot;GET /crossadkla.xml HTTP/1.1&quot; 304 0 &quot;https://baibai.123.com/&quot; &quot;Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36&quot; - 0.000</span><br><span class="line">99.122.189.203  - - [26/Feb/2015:03:35:44 -0500] &quot;GET /crossadkla.xml HTTP/1.1&quot; 304 0 &quot;https://baibai.123.com/&quot; &quot;Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36&quot; - 0.000</span><br></pre></td></tr></table></figure>
-
-<p>问题 统计访问最多的2个IP地址并打印出来</p>
-]]></content>
-      <categories>
-        <category>面试</category>
-      </categories>
-      <tags>
-        <tag>面试</tag>
-        <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo_blog_setup</title>
     <url>/2022/07/04/hexo-blog-setup/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>每次换电脑，或者在其他电脑上工作后发现无法更新这个Blog，需要记录下如何当初一步一步设置这个blog，以方便迁移，重新搭建</p>
@@ -598,42 +509,87 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo Next(v8.7.0)如何边栏添加最近更新文章</title>
-    <url>/2021/08/20/hexo-sidebar/</url>
-    <content><![CDATA[<h2 id="创建自定义文件"><a href="#创建自定义文件" class="headerlink" title="创建自定义文件"></a>创建自定义文件</h2><p>在新建文件yoursite/source/_data/sidebar.njk,添加以下内容</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- recent posts --&gt;</span><br><span class="line">&#123;%- if theme.recent_posts %&#125;</span><br><span class="line">    &lt;div class=&quot;links-of-blogroll motion-element &#123;&#123; &quot;links-of-blogroll-&quot; + theme.recent_posts_layout &#125;&#125;&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;links-of-blogroll-title recent-posts-title&quot;&gt;</span><br><span class="line">	    &lt;i class=&quot;fa fa-history &#123;&#123; theme.recent_posts_icon | lower &#125;&#125;&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;</span><br><span class="line">            &#123;&#123; theme.recent_posts_title &#125;&#125;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;ul class=&quot;links-of-blogroll-list recent-posts-list&quot;&gt;</span><br><span class="line">	    &#123;%- set posts = site.posts.sort(&#x27;-date&#x27;).toArray() %&#125;</span><br><span class="line">	    &#123;%- for post in posts.slice(&#x27;0&#x27;, &#x27;5&#x27;) %&#125;</span><br><span class="line">	        &lt;li class=&quot;my-links-of-blogroll-item&quot;&gt;</span><br><span class="line">		    &lt;a href=&quot;&#123;&#123; url_for(post.path) &#125;&#125;&quot; title=&quot;&#123;&#123; post.title &#125;&#125;&quot; target=&quot;&quot;&gt;</span><br><span class="line">		    &#123;&#123; post.title &#125;&#125;</span><br><span class="line">		    &lt;/a&gt;</span><br><span class="line">		&lt;/li&gt;</span><br><span class="line">	    &#123;%- endfor %&#125;</span><br><span class="line">	&lt;/ul&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="修改主题配置文件"><a href="#修改主题配置文件" class="headerlink" title="修改主题配置文件"></a>修改主题配置文件</h2><p>在站点目录下修改主题配置文件（_config.yml）添加以下内容<br>文件路径：yoursite/theme/next/_config.yml</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">recent_posts: true</span><br><span class="line">recent_posts_title: 近期文章</span><br><span class="line">recent_posts_layout: block</span><br></pre></td></tr></table></figure>
-
-<h2 id="启动添加文件"><a href="#启动添加文件" class="headerlink" title="启动添加文件"></a>启动添加文件</h2><p>修改文件yoursite/theme/next/_config.yml uncomment sidebar这一行</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">custom_file_path:</span><br><span class="line">  #head: source/_data/head.njk</span><br><span class="line">  #header: source/_data/header.njk</span><br><span class="line">  sidebar: source/_data/sidebar.njk</span><br><span class="line">  #postMeta: source/_data/post-meta.njk</span><br><span class="line">  #postBodyEnd: source/_data/post-body-end.njk</span><br><span class="line">  #footer: source/_data/footer.njk</span><br><span class="line">  #bodyEnd: source/_data/body-end.njk</span><br><span class="line">  #variable: source/_data/variables.styl</span><br><span class="line">  #mixin: source/_data/mixins.styl</span><br><span class="line">  #style: source/_data/styles.styl</span><br></pre></td></tr></table></figure>
-
-<h2 id="刷新站点"><a href="#刷新站点" class="headerlink" title="刷新站点"></a>刷新站点</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s </span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux system admin notes</title>
-    <url>/2022/04/04/linux_systemadmin/</url>
-    <content><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="linunx-环境变量"><a href="#linunx-环境变量" class="headerlink" title="linunx 环境变量"></a>linunx 环境变量</h2><h2 id="linunx-文件权限"><a href="#linunx-文件权限" class="headerlink" title="linunx 文件权限"></a>linunx 文件权限</h2><p><code>umask</code>  default 022</p>
-<h3 id="shell-基础"><a href="#shell-基础" class="headerlink" title="shell 基础"></a>shell 基础</h3><h4 id="结构化命令"><a href="#结构化命令" class="headerlink" title="结构化命令"></a>结构化命令</h4><p>if</p>
-<p>for<br>while<br>until<br>break<br>continue</p>
-<h4 id="shell用户输入"><a href="#shell用户输入" class="headerlink" title="shell用户输入"></a>shell用户输入</h4><h3 id="控制shell脚本"><a href="#控制shell脚本" class="headerlink" title="控制shell脚本"></a>控制shell脚本</h3><h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function name &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">name () &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="退出状态"><a href="#退出状态" class="headerlink" title="退出状态"></a>退出状态</h4><p><code>$?</code></p>
+    <title>Kubernetes网络类型详解</title>
+    <url>/2021/08/21/k8s-network-1/</url>
+    <content><![CDATA[<h1 id="Kubernetes网络插件对比分析（Flannel、Calico、Weave）"><a href="#Kubernetes网络插件对比分析（Flannel、Calico、Weave）" class="headerlink" title="Kubernetes网络插件对比分析（Flannel、Calico、Weave）"></a>Kubernetes网络插件对比分析（Flannel、Calico、Weave）</h1><h3 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h3><p>在对CNI插件们进行比较之前，我们可以先对网络中会见到的相关术语做一个整体的了解。不论是阅读本文，还是今后接触到其他和CNI有关的内容，了解一些常见术语总是非常有用的。</p>
+<p>一些最常见的术语包括：</p>
+<ul>
+<li>第2层网络：OSI(Open Systems Interconnections，开放系统互连)网络模型的“数据链路”层。第2层网络会处理网络上两个相邻节点之间的帧传递。第2层网络的一个值得注意的示例是以太网，其中MAC表示为子层。</li>
+<li>第3层网络：OSI网络模型的“网络”层。第3层网络的主要关注点，是在第2层连接之上的主机之间路由数据包。IPv4、IPv6和ICMP是第3层网络协议的示例。</li>
+<li>VXLAN：代表“虚拟可扩展LAN”。首先，VXLAN用于通过在UDP数据报中封装第2层以太网帧来帮助实现大型云部署。VXLAN虚拟化与VLAN类似，但提供更大的灵活性和功能(VLAN仅限于4096个网络ID)。VXLAN是一种封装和覆盖协议，可在现有网络上运行。</li>
+<li>Overlay网络：Overlay网络是建立在现有网络之上的虚拟逻辑网络。Overlay网络通常用于在现有网络之上提供有用的抽象，并分离和保护不同的逻辑网络。</li>
+<li>封装：封装是指在附加层中封装网络数据包以提供其他上下文和信息的过程。在overlay网络中，封装被用于从虚拟网络转换到底层地址空间，从而能路由到不同的位置(数据包可以被解封装，并继续到其目的地)。</li>
+<li>网状网络：网状网络(Mesh network)是指每个节点连接到许多其他节点以协作路由、并实现更大连接的网络。网状网络允许通过多个路径进行路由，从而提供更可靠的网络。网状网格的缺点是每个附加节点都会增加大量开销。</li>
+<li>BGP：代表“边界网关协议”，用于管理边缘路由器之间数据包的路由方式。BGP通过考虑可用路径，路由规则和特定网络策略，帮助弄清楚如何将数据包从一个网络发送到另一个网络。BGP有时被用作CNI插件中的路由机制，而不是封装的覆盖网络。</li>
+</ul>
+<h3 id="CNI比较"><a href="#CNI比较" class="headerlink" title="CNI比较"></a>CNI比较</h3><h4 id="Flannel"><a href="#Flannel" class="headerlink" title="Flannel"></a>Flannel</h4><p><img src="/2021/08/21/k8s-network-1/flannel.jpeg" alt="image"></p>
+<p>链接：<a href="https://github.com/coreos/flannel">https://github.com/coreos/flannel</a></p>
+<p>由CoreOS开发的项目Flannel，可能是最直接和***的CNI插件。它是容器编排系统中最成熟的网络结构示例之一，旨在实现更好的容器间和主机间网络。随着CNI概念的兴起，Flannel CNI插件算是早期的入门。</p>
+<p>与其他方案相比，Flannel相对容易安装和配置。它被打包为单个二进制文件FlannelD，许多常见的Kubernetes集群部署工具和许多Kubernetes发行版都可以默认安装Flannel。Flannel可以使用Kubernetes集群的现有etcd集群来使用API存储其状态信息，因此不需要专用的数据存储。</p>
+<p>Flannel配置第3层IPv4 Overlay网络。它会创建一个大型内部网络，跨越集群中每个节点。在此Overlay网络中，每个节点都有一个子网，用于在内部分配IP地址。在配置Pod时，每个节点上的Docker桥接口都会为每个新容器分配一个地址。同一主机中的Pod可以使用Docker桥接进行通信，而不同主机上的pod会使用flanneld将其流量封装在UDP数据包中，以便路由到适当的目标。</p>
+<p>Flannel有几种不同类型的后端可用于封装和路由。默认和推荐的方法是使用VXLAN，因为VXLAN性能更良好并且需要的手动干预更少。</p>
+<p>总的来说，Flannel是大多数用户的不错选择。从管理角度来看，它提供了一个简单的网络模型，用户只需要一些基础知识，就可以设置适合大多数用例的环境。一般来说，在初期使用Flannel是一个稳妥安全的选择，直到你开始需要一些它无法提供的东西。</p>
+<h4 id="Calico"><a href="#Calico" class="headerlink" title="Calico"></a>Calico</h4><p><img src="/2021/08/21/k8s-network-1/calico.jpeg" alt="image"></p>
+<p>链接：<a href="https://github.com/projectcalico/cni-plugin">https://github.com/projectcalico/cni-plugin</a></p>
+<p>Calico是Kubernetes生态系统中另一种流行的网络选择。虽然Flannel被公认为是最简单的选择，但Calico以其性能、灵活性而闻名。Calico的功能更为全面，不仅提供主机和pod之间的网络连接，还涉及网络安全和管理。Calico CNI插件在CNI框架内封装了Calico的功能。</p>
+<p>在满足系统要求的新配置的Kubernetes集群上，用户可以通过应用单个manifest文件快速部署Calico。如果您对Calico的可选网络策略功能感兴趣，可以向集群应用其他manifest，来启用这些功能。</p>
+<p>尽管部署Calico所需的操作看起来相当简单，但它创建的网络环境同时具有简单和复杂的属性。与Flannel不同，Calico不使用overlay网络。相反，Calico配置第3层网络，该网络使用BGP路由协议在主机之间路由数据包。这意味着在主机之间移动时，不需要将数据包包装在额外的封装层中。BGP路由机制可以本地引导数据包，而无需额外在流量层中打包流量。</p>
+<p>除了性能优势之外，在出现网络问题时，用户还可以用更常规的方法进行故障排除。虽然使用VXLAN等技术进行封装也是一个不错的解决方案，但该过程处理数据包的方式同场难以追踪。使用Calico，标准调试工具可以访问与简单环境中相同的信息，从而使更多开发人员和管理员更容易理解行为。</p>
+<p>除了网络连接外，Calico还以其先进的网络功能而闻名。 网络策略是其最受追捧的功能之一。此外，Calico还可以与服务网格Istio集成，以便在服务网格层和网络基础架构层中解释和实施集群内工作负载的策略。这意味着用户可以配置强大的规则，描述Pod应如何发送和接受流量，提高安全性并控制网络环境。</p>
+<p>如果对你的环境而言，支持网络策略是非常重要的一点，而且你对其他性能和功能也有需求，那么Calico会是一个理想的选择。此外，如果您现在或未来有可能希望得到技术支持，那么Calico是提供商业支持的。一般来说，当您希望能够长期控制网络，而不是仅仅配置一次并忘记它时，Calico是一个很好的选择。</p>
+<h4 id="Weave"><a href="#Weave" class="headerlink" title="Weave"></a>Weave</h4><p><img src="/2021/08/21/k8s-network-1/weave.jpeg" alt="image"> </p>
+<p>链接：<a href="https://www.weave.works/oss/net/">https://www.weave.works/oss/net/</a></p>
+<p>Weave是由Weaveworks提供的一种Kubernetes CNI网络选项，它提供的模式和我们目前为止讨论的所有网络方案都不同。Weave在集群中的每个节点之间创建网状Overlay网络，参与者之间可以灵活路由。这一特性再结合其他一些独特的功能，在某些可能导致问题的情况下，Weave可以智能地路由。</p>
+<p>为了创建网络，Weave依赖于网络中每台主机上安装的路由组件。然后，这些路由器交换拓扑信息，以维护可用网络环境的***视图。当需要将流量发送到位于不同节点上的Pod时，Weave路由组件会自动决定是通过“快速数据路径”发送，还是回退到“sleeve”分组转发的方法。</p>
+<p>快速数据路径依靠内核的本机Open vSwitch数据路径模块，将数据包转发到适当的Pod，而无需多次移入和移出用户空间。Weave路由器会更新Open vSwitch配置，以确保内核层具有有关如何路由传入数据包的准确信息。相反，当网络拓扑不适合快速数据路径路由时，sleeve模式可用作备份。它是一种较慢的封装模式，在快速数据路径缺少必要的路由信息或连接的情况下，它可以来路由数据包。当流量通过路由器时，它们会了解哪些对等体与哪些MAC地址相关联，从而允许它们以更少的跳数、更智能地路由后续流量。当网络更改导致可用路由改变时，这一相同的机制可以帮助每个节点进行自行更正。</p>
+<p>与Calico一样，Weave也为Kubernetes集群提供网络策略功能。设置Weave时，网络策略会自动安装和配置，因此除了添加网络规则之外，用户无需进行其他配置。一个其他网络方案都没有、Weave独有的功能，是对整个网络的简单加密。虽然这会增加相当多的网络开销，但Weave可以使用NaCl加密来为sleeve流量自动加密所有路由流量，而对于快速数据路径流量，因为它需要加密内核中的VXLAN流量，Weave会使用IPsec ESP来加密快速数据路径流量。</p>
+<p>对于那些寻求功能丰富的网络、同时希望不要增加大量复杂性或管理难度的人来说，Weave是一个很好的选择。它设置起来相对容易，提供了许多内置和自动配置的功能，并且可以在其他解决方案可能出现故障的场景下提供智能路由。网状拓扑结构确实会限制可以合理容纳的网络的大小，不过对于大多数用户来说，这也不是一个大问题。此外，Weave也提供收费的技术支持，可以为企业用户提供故障排除等等技术服务。</p>
+<h4 id="哪个插件适合我"><a href="#哪个插件适合我" class="headerlink" title="哪个插件适合我"></a>哪个插件适合我</h4><p><img src="/2021/08/21/k8s-network-1/cnis.png" alt="image"></p>
+<ul>
+<li>Overlay 模式的典型特征是容器独立于主机的 IP 段，这个 IP 段进行跨主机网络通信时是通过在主机之间创建隧道的方式，将整个容器网段的包全都封装成底层的物理网络中主机之间的包。该方式的好处在于它不依赖于底层网络；</li>
+<li>路由模式中主机和容器也分属不同的网段，它与 Overlay 模式的主要区别在于它的跨主机通信是通过路由打通，无需在不同主机之间做一个隧道封包。但路由打通就需要部分依赖于底层网络，比如说要求底层网络有二层可达的一个能力；</li>
+<li>Underlay 模式中容器和宿主机位于同一层网络，两者拥有相同的地位。容器之间网络的打通主要依靠于底层网络。因此该模式是强依赖于底层能力的。</li>
+</ul>
+<p>了解了以上三种常用的实现模式之后，再根据自己的环境、需求判断可由哪一种模式进行实现，再在对应的模式中去找 CNI 插件。不过社区中有那么多插件，它们又都属于哪种模式？如何进行选择呢？怎么挑选适合自己的呢？我们可以从以下 3 个方面来考虑。</p>
+<p><img src="/2021/08/21/k8s-network-1/cniq.png" alt="image"></p>
+<ol>
+<li>环境限制<br>不同环境中所支持的底层能力是不同的。</li>
+</ol>
+<ul>
+<li>虚拟化环境（例如 OpenStack）中的网络限制较多，比如不允许机器之间直接通过二层协议访问，必须要带有 IP 地址这种三层的才能去做转发，限制某一个机器只能使用某些 IP 等。在这种被做了强限制的底层网络中，只能去选择 Overlay 的插件，常见的有 Flannel-vxlan, Calico-ipip, Weave 等等；</li>
+<li>物理机环境中底层网络的限制较少，比如说我们在同一个交换机下面直接做一个二层的通信。对于这种集群环境，我们可以选择 Underlay 或者路由模式的插件。Underlay 意味着我们可以直接在一个物理机上插多个网卡或者是在一些网卡上做硬件虚拟化；路由模式就是依赖于 Linux 的路由协议做一个打通。这样就避免了像 vxlan 的封包方式导致的性能降低。这种环境下我们可选的插件包括 clico-bgp, flannel-hostgw, sriov 等等；</li>
+<li>公有云环境也是虚拟化，因此底层限制也会较多。但每个公有云都会考虑适配容器，提升容器的性能，因此每家公有云可能都提供了一些 API 去配置一些额外的网卡或者路由这种能力。在公有云上，我们要尽量选择公有云厂商提供的 CNI 插件以达到兼容性和性能上的最优。比如 Aliyun 就提供了一个高性能的 Terway 插件。</li>
+</ul>
+<ol start="2">
+<li>功能需求<br>安全需求；</li>
+</ol>
+<ul>
+<li><p>K8s 支持 NetworkPolicy，就是说我们可以通过 NetworkPolicy 的一些规则去支持“Pod 之间是否可以访问”这类策略。但不是每个 CNI 插件都支持 NetworkPolicy 的声明，如果大家有这个需求，可以选择支持 NetworkPolicy 的一些插件，比如 Calico, Weave 等等。</p>
+</li>
+<li><p>是否需要集群外的资源与集群内的资源互联互通；<br>大家的应用最初都是在虚拟机或者物理机上，容器化之后，应用无法一下就完成迁移，因此就需要传统的虚拟机或者物理机能跟容器的 IP 地址互通。为了实现这种互通，就需要两者之间有一些打通的方式或者直接位于同一层。此时可以选择 Underlay 的网络，比如 sriov 这种就是 Pod 和以前的虚拟机或者物理机在同一层。我们也可以使用 calico-bgp，此时它们虽然不在同一网段，但可以通过它去跟原有的路由器做一些 BGP 路由的一个发布，这样也可以打通虚拟机与容器。</p>
+</li>
+<li><p>K8s 的服务发现与负载均衡的能力。<br>K8s 的服务发现与负载均衡就是我们前面所介绍的 K8s 的 Service，但并不是所有的 CNI 插件都能实现这两种能力。比如很多 Underlay 模式的插件，在 Pod 中的网卡是直接用的 Underlay 的硬件，或者通过硬件虚拟化插到容器中的，这个时候它的流量无法走到宿主机所在的命名空间，因此也无法应用 kube-proxy 在宿主机配置的规则。</p>
+</li>
+</ul>
+<p>这种情况下，插件就无法访问到 K8s 的服务发现。因此大家如果需要服务发现与负载均衡，在选择 Underlay 的插件时就需要注意它们是否支持这两种能力。</p>
+<p>经过功能需求的过滤之后，能选的插件就很少了。经过环境限制和功能需求的过滤之后，如果还剩下 3、4 种插件，可以再来考虑性能需求。</p>
+<ol start="3">
+<li>性能需求<br>我们可以从 Pod 的创建速度和 Pod 的网络性能来衡量不同插件的性能。</li>
+</ol>
+<ul>
+<li><p>Pod 的创建速度<br>当我们创建一组 Pod 时，比如业务高峰来了，需要紧急扩容，这时比如说我们扩容了 1000 个 Pod，就需要 CNI 插件创建并配置 1000 个网络资源。Overlay 和路由模式在这种情况下的创建速度是很快的，因为它是在机器里面又做了虚拟化，所以只需要调用内核接口就可以完成这些操作。但对于 Underlay 模式，由于需要创建一些底层的网络资源，所以整个 Pod 的创建速度相对会慢一些。因此对于经常需要紧急扩容或者创建大批量的 Pod 这些场景，我们应该尽量选择 Overlay 或者路由模式的网络插件。</p>
+</li>
+<li><p>Pod 的网络性能<br>主要表现在两个 Pod 之间的网络转发、网络带宽、PPS 延迟等这些性能指标上。Overlay 模式的性能较差，因为它在节点上又做了一层虚拟化，还需要去封包，封包又会带来一些包头的损失、CPU 的消耗等，如果大家对网络性能的要求比较高，比如说机器学习、大数据这些场景就不适合使用 Overlay 模式。这种情形下我们通常选择 Underlay 或者路由模式的 CNI 插件。</p>
+</li>
+</ul>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a href="https://network.51cto.com/art/201907/598970.htm">https://network.51cto.com/art/201907/598970.htm</a> </p>
 ]]></content>
       <categories>
-        <category>shell,linux</category>
+        <category>kubernetes</category>
       </categories>
       <tags>
-        <tag>tech</tag>
-        <tag>shell</tag>
-        <tag>linux</tag>
-        <tag>Tech</tag>
+        <tag>network</tag>
+        <tag>kubernetes</tag>
       </tags>
   </entry>
   <entry>
@@ -735,87 +691,107 @@
       </tags>
   </entry>
   <entry>
-    <title>Kubernetes网络类型详解</title>
-    <url>/2021/08/21/k8s-network-1/</url>
-    <content><![CDATA[<h1 id="Kubernetes网络插件对比分析（Flannel、Calico、Weave）"><a href="#Kubernetes网络插件对比分析（Flannel、Calico、Weave）" class="headerlink" title="Kubernetes网络插件对比分析（Flannel、Calico、Weave）"></a>Kubernetes网络插件对比分析（Flannel、Calico、Weave）</h1><h3 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h3><p>在对CNI插件们进行比较之前，我们可以先对网络中会见到的相关术语做一个整体的了解。不论是阅读本文，还是今后接触到其他和CNI有关的内容，了解一些常见术语总是非常有用的。</p>
-<p>一些最常见的术语包括：</p>
-<ul>
-<li>第2层网络：OSI(Open Systems Interconnections，开放系统互连)网络模型的“数据链路”层。第2层网络会处理网络上两个相邻节点之间的帧传递。第2层网络的一个值得注意的示例是以太网，其中MAC表示为子层。</li>
-<li>第3层网络：OSI网络模型的“网络”层。第3层网络的主要关注点，是在第2层连接之上的主机之间路由数据包。IPv4、IPv6和ICMP是第3层网络协议的示例。</li>
-<li>VXLAN：代表“虚拟可扩展LAN”。首先，VXLAN用于通过在UDP数据报中封装第2层以太网帧来帮助实现大型云部署。VXLAN虚拟化与VLAN类似，但提供更大的灵活性和功能(VLAN仅限于4096个网络ID)。VXLAN是一种封装和覆盖协议，可在现有网络上运行。</li>
-<li>Overlay网络：Overlay网络是建立在现有网络之上的虚拟逻辑网络。Overlay网络通常用于在现有网络之上提供有用的抽象，并分离和保护不同的逻辑网络。</li>
-<li>封装：封装是指在附加层中封装网络数据包以提供其他上下文和信息的过程。在overlay网络中，封装被用于从虚拟网络转换到底层地址空间，从而能路由到不同的位置(数据包可以被解封装，并继续到其目的地)。</li>
-<li>网状网络：网状网络(Mesh network)是指每个节点连接到许多其他节点以协作路由、并实现更大连接的网络。网状网络允许通过多个路径进行路由，从而提供更可靠的网络。网状网格的缺点是每个附加节点都会增加大量开销。</li>
-<li>BGP：代表“边界网关协议”，用于管理边缘路由器之间数据包的路由方式。BGP通过考虑可用路径，路由规则和特定网络策略，帮助弄清楚如何将数据包从一个网络发送到另一个网络。BGP有时被用作CNI插件中的路由机制，而不是封装的覆盖网络。</li>
-</ul>
-<h3 id="CNI比较"><a href="#CNI比较" class="headerlink" title="CNI比较"></a>CNI比较</h3><h4 id="Flannel"><a href="#Flannel" class="headerlink" title="Flannel"></a>Flannel</h4><p><img src="/2021/08/21/k8s-network-1/flannel.jpeg" alt="image"></p>
-<p>链接：<a href="https://github.com/coreos/flannel">https://github.com/coreos/flannel</a></p>
-<p>由CoreOS开发的项目Flannel，可能是最直接和***的CNI插件。它是容器编排系统中最成熟的网络结构示例之一，旨在实现更好的容器间和主机间网络。随着CNI概念的兴起，Flannel CNI插件算是早期的入门。</p>
-<p>与其他方案相比，Flannel相对容易安装和配置。它被打包为单个二进制文件FlannelD，许多常见的Kubernetes集群部署工具和许多Kubernetes发行版都可以默认安装Flannel。Flannel可以使用Kubernetes集群的现有etcd集群来使用API存储其状态信息，因此不需要专用的数据存储。</p>
-<p>Flannel配置第3层IPv4 Overlay网络。它会创建一个大型内部网络，跨越集群中每个节点。在此Overlay网络中，每个节点都有一个子网，用于在内部分配IP地址。在配置Pod时，每个节点上的Docker桥接口都会为每个新容器分配一个地址。同一主机中的Pod可以使用Docker桥接进行通信，而不同主机上的pod会使用flanneld将其流量封装在UDP数据包中，以便路由到适当的目标。</p>
-<p>Flannel有几种不同类型的后端可用于封装和路由。默认和推荐的方法是使用VXLAN，因为VXLAN性能更良好并且需要的手动干预更少。</p>
-<p>总的来说，Flannel是大多数用户的不错选择。从管理角度来看，它提供了一个简单的网络模型，用户只需要一些基础知识，就可以设置适合大多数用例的环境。一般来说，在初期使用Flannel是一个稳妥安全的选择，直到你开始需要一些它无法提供的东西。</p>
-<h4 id="Calico"><a href="#Calico" class="headerlink" title="Calico"></a>Calico</h4><p><img src="/2021/08/21/k8s-network-1/calico.jpeg" alt="image"></p>
-<p>链接：<a href="https://github.com/projectcalico/cni-plugin">https://github.com/projectcalico/cni-plugin</a></p>
-<p>Calico是Kubernetes生态系统中另一种流行的网络选择。虽然Flannel被公认为是最简单的选择，但Calico以其性能、灵活性而闻名。Calico的功能更为全面，不仅提供主机和pod之间的网络连接，还涉及网络安全和管理。Calico CNI插件在CNI框架内封装了Calico的功能。</p>
-<p>在满足系统要求的新配置的Kubernetes集群上，用户可以通过应用单个manifest文件快速部署Calico。如果您对Calico的可选网络策略功能感兴趣，可以向集群应用其他manifest，来启用这些功能。</p>
-<p>尽管部署Calico所需的操作看起来相当简单，但它创建的网络环境同时具有简单和复杂的属性。与Flannel不同，Calico不使用overlay网络。相反，Calico配置第3层网络，该网络使用BGP路由协议在主机之间路由数据包。这意味着在主机之间移动时，不需要将数据包包装在额外的封装层中。BGP路由机制可以本地引导数据包，而无需额外在流量层中打包流量。</p>
-<p>除了性能优势之外，在出现网络问题时，用户还可以用更常规的方法进行故障排除。虽然使用VXLAN等技术进行封装也是一个不错的解决方案，但该过程处理数据包的方式同场难以追踪。使用Calico，标准调试工具可以访问与简单环境中相同的信息，从而使更多开发人员和管理员更容易理解行为。</p>
-<p>除了网络连接外，Calico还以其先进的网络功能而闻名。 网络策略是其最受追捧的功能之一。此外，Calico还可以与服务网格Istio集成，以便在服务网格层和网络基础架构层中解释和实施集群内工作负载的策略。这意味着用户可以配置强大的规则，描述Pod应如何发送和接受流量，提高安全性并控制网络环境。</p>
-<p>如果对你的环境而言，支持网络策略是非常重要的一点，而且你对其他性能和功能也有需求，那么Calico会是一个理想的选择。此外，如果您现在或未来有可能希望得到技术支持，那么Calico是提供商业支持的。一般来说，当您希望能够长期控制网络，而不是仅仅配置一次并忘记它时，Calico是一个很好的选择。</p>
-<h4 id="Weave"><a href="#Weave" class="headerlink" title="Weave"></a>Weave</h4><p><img src="/2021/08/21/k8s-network-1/weave.jpeg" alt="image"> </p>
-<p>链接：<a href="https://www.weave.works/oss/net/">https://www.weave.works/oss/net/</a></p>
-<p>Weave是由Weaveworks提供的一种Kubernetes CNI网络选项，它提供的模式和我们目前为止讨论的所有网络方案都不同。Weave在集群中的每个节点之间创建网状Overlay网络，参与者之间可以灵活路由。这一特性再结合其他一些独特的功能，在某些可能导致问题的情况下，Weave可以智能地路由。</p>
-<p>为了创建网络，Weave依赖于网络中每台主机上安装的路由组件。然后，这些路由器交换拓扑信息，以维护可用网络环境的***视图。当需要将流量发送到位于不同节点上的Pod时，Weave路由组件会自动决定是通过“快速数据路径”发送，还是回退到“sleeve”分组转发的方法。</p>
-<p>快速数据路径依靠内核的本机Open vSwitch数据路径模块，将数据包转发到适当的Pod，而无需多次移入和移出用户空间。Weave路由器会更新Open vSwitch配置，以确保内核层具有有关如何路由传入数据包的准确信息。相反，当网络拓扑不适合快速数据路径路由时，sleeve模式可用作备份。它是一种较慢的封装模式，在快速数据路径缺少必要的路由信息或连接的情况下，它可以来路由数据包。当流量通过路由器时，它们会了解哪些对等体与哪些MAC地址相关联，从而允许它们以更少的跳数、更智能地路由后续流量。当网络更改导致可用路由改变时，这一相同的机制可以帮助每个节点进行自行更正。</p>
-<p>与Calico一样，Weave也为Kubernetes集群提供网络策略功能。设置Weave时，网络策略会自动安装和配置，因此除了添加网络规则之外，用户无需进行其他配置。一个其他网络方案都没有、Weave独有的功能，是对整个网络的简单加密。虽然这会增加相当多的网络开销，但Weave可以使用NaCl加密来为sleeve流量自动加密所有路由流量，而对于快速数据路径流量，因为它需要加密内核中的VXLAN流量，Weave会使用IPsec ESP来加密快速数据路径流量。</p>
-<p>对于那些寻求功能丰富的网络、同时希望不要增加大量复杂性或管理难度的人来说，Weave是一个很好的选择。它设置起来相对容易，提供了许多内置和自动配置的功能，并且可以在其他解决方案可能出现故障的场景下提供智能路由。网状拓扑结构确实会限制可以合理容纳的网络的大小，不过对于大多数用户来说，这也不是一个大问题。此外，Weave也提供收费的技术支持，可以为企业用户提供故障排除等等技术服务。</p>
-<h4 id="哪个插件适合我"><a href="#哪个插件适合我" class="headerlink" title="哪个插件适合我"></a>哪个插件适合我</h4><p><img src="/2021/08/21/k8s-network-1/cnis.png" alt="image"></p>
-<ul>
-<li>Overlay 模式的典型特征是容器独立于主机的 IP 段，这个 IP 段进行跨主机网络通信时是通过在主机之间创建隧道的方式，将整个容器网段的包全都封装成底层的物理网络中主机之间的包。该方式的好处在于它不依赖于底层网络；</li>
-<li>路由模式中主机和容器也分属不同的网段，它与 Overlay 模式的主要区别在于它的跨主机通信是通过路由打通，无需在不同主机之间做一个隧道封包。但路由打通就需要部分依赖于底层网络，比如说要求底层网络有二层可达的一个能力；</li>
-<li>Underlay 模式中容器和宿主机位于同一层网络，两者拥有相同的地位。容器之间网络的打通主要依靠于底层网络。因此该模式是强依赖于底层能力的。</li>
-</ul>
-<p>了解了以上三种常用的实现模式之后，再根据自己的环境、需求判断可由哪一种模式进行实现，再在对应的模式中去找 CNI 插件。不过社区中有那么多插件，它们又都属于哪种模式？如何进行选择呢？怎么挑选适合自己的呢？我们可以从以下 3 个方面来考虑。</p>
-<p><img src="/2021/08/21/k8s-network-1/cniq.png" alt="image"></p>
-<ol>
-<li>环境限制<br>不同环境中所支持的底层能力是不同的。</li>
-</ol>
-<ul>
-<li>虚拟化环境（例如 OpenStack）中的网络限制较多，比如不允许机器之间直接通过二层协议访问，必须要带有 IP 地址这种三层的才能去做转发，限制某一个机器只能使用某些 IP 等。在这种被做了强限制的底层网络中，只能去选择 Overlay 的插件，常见的有 Flannel-vxlan, Calico-ipip, Weave 等等；</li>
-<li>物理机环境中底层网络的限制较少，比如说我们在同一个交换机下面直接做一个二层的通信。对于这种集群环境，我们可以选择 Underlay 或者路由模式的插件。Underlay 意味着我们可以直接在一个物理机上插多个网卡或者是在一些网卡上做硬件虚拟化；路由模式就是依赖于 Linux 的路由协议做一个打通。这样就避免了像 vxlan 的封包方式导致的性能降低。这种环境下我们可选的插件包括 clico-bgp, flannel-hostgw, sriov 等等；</li>
-<li>公有云环境也是虚拟化，因此底层限制也会较多。但每个公有云都会考虑适配容器，提升容器的性能，因此每家公有云可能都提供了一些 API 去配置一些额外的网卡或者路由这种能力。在公有云上，我们要尽量选择公有云厂商提供的 CNI 插件以达到兼容性和性能上的最优。比如 Aliyun 就提供了一个高性能的 Terway 插件。</li>
-</ul>
-<ol start="2">
-<li>功能需求<br>安全需求；</li>
-</ol>
-<ul>
-<li><p>K8s 支持 NetworkPolicy，就是说我们可以通过 NetworkPolicy 的一些规则去支持“Pod 之间是否可以访问”这类策略。但不是每个 CNI 插件都支持 NetworkPolicy 的声明，如果大家有这个需求，可以选择支持 NetworkPolicy 的一些插件，比如 Calico, Weave 等等。</p>
-</li>
-<li><p>是否需要集群外的资源与集群内的资源互联互通；<br>大家的应用最初都是在虚拟机或者物理机上，容器化之后，应用无法一下就完成迁移，因此就需要传统的虚拟机或者物理机能跟容器的 IP 地址互通。为了实现这种互通，就需要两者之间有一些打通的方式或者直接位于同一层。此时可以选择 Underlay 的网络，比如 sriov 这种就是 Pod 和以前的虚拟机或者物理机在同一层。我们也可以使用 calico-bgp，此时它们虽然不在同一网段，但可以通过它去跟原有的路由器做一些 BGP 路由的一个发布，这样也可以打通虚拟机与容器。</p>
-</li>
-<li><p>K8s 的服务发现与负载均衡的能力。<br>K8s 的服务发现与负载均衡就是我们前面所介绍的 K8s 的 Service，但并不是所有的 CNI 插件都能实现这两种能力。比如很多 Underlay 模式的插件，在 Pod 中的网卡是直接用的 Underlay 的硬件，或者通过硬件虚拟化插到容器中的，这个时候它的流量无法走到宿主机所在的命名空间，因此也无法应用 kube-proxy 在宿主机配置的规则。</p>
-</li>
-</ul>
-<p>这种情况下，插件就无法访问到 K8s 的服务发现。因此大家如果需要服务发现与负载均衡，在选择 Underlay 的插件时就需要注意它们是否支持这两种能力。</p>
-<p>经过功能需求的过滤之后，能选的插件就很少了。经过环境限制和功能需求的过滤之后，如果还剩下 3、4 种插件，可以再来考虑性能需求。</p>
-<ol start="3">
-<li>性能需求<br>我们可以从 Pod 的创建速度和 Pod 的网络性能来衡量不同插件的性能。</li>
-</ol>
-<ul>
-<li><p>Pod 的创建速度<br>当我们创建一组 Pod 时，比如业务高峰来了，需要紧急扩容，这时比如说我们扩容了 1000 个 Pod，就需要 CNI 插件创建并配置 1000 个网络资源。Overlay 和路由模式在这种情况下的创建速度是很快的，因为它是在机器里面又做了虚拟化，所以只需要调用内核接口就可以完成这些操作。但对于 Underlay 模式，由于需要创建一些底层的网络资源，所以整个 Pod 的创建速度相对会慢一些。因此对于经常需要紧急扩容或者创建大批量的 Pod 这些场景，我们应该尽量选择 Overlay 或者路由模式的网络插件。</p>
-</li>
-<li><p>Pod 的网络性能<br>主要表现在两个 Pod 之间的网络转发、网络带宽、PPS 延迟等这些性能指标上。Overlay 模式的性能较差，因为它在节点上又做了一层虚拟化，还需要去封包，封包又会带来一些包头的损失、CPU 的消耗等，如果大家对网络性能的要求比较高，比如说机器学习、大数据这些场景就不适合使用 Overlay 模式。这种情形下我们通常选择 Underlay 或者路由模式的 CNI 插件。</p>
-</li>
-</ul>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a href="https://network.51cto.com/art/201907/598970.htm">https://network.51cto.com/art/201907/598970.htm</a> </p>
-]]></content>
+    <title>Hexo Next(v8.7.0)如何边栏添加最近更新文章</title>
+    <url>/2021/08/20/hexo-sidebar/</url>
+    <content><![CDATA[<h2 id="创建自定义文件"><a href="#创建自定义文件" class="headerlink" title="创建自定义文件"></a>创建自定义文件</h2><p>在新建文件yoursite/source/_data/sidebar.njk,添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- recent posts --&gt;</span><br><span class="line">&#123;%- if theme.recent_posts %&#125;</span><br><span class="line">    &lt;div class=&quot;links-of-blogroll motion-element &#123;&#123; &quot;links-of-blogroll-&quot; + theme.recent_posts_layout &#125;&#125;&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;links-of-blogroll-title recent-posts-title&quot;&gt;</span><br><span class="line">	    &lt;i class=&quot;fa fa-history &#123;&#123; theme.recent_posts_icon | lower &#125;&#125;&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;</span><br><span class="line">            &#123;&#123; theme.recent_posts_title &#125;&#125;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;ul class=&quot;links-of-blogroll-list recent-posts-list&quot;&gt;</span><br><span class="line">	    &#123;%- set posts = site.posts.sort(&#x27;-date&#x27;).toArray() %&#125;</span><br><span class="line">	    &#123;%- for post in posts.slice(&#x27;0&#x27;, &#x27;5&#x27;) %&#125;</span><br><span class="line">	        &lt;li class=&quot;my-links-of-blogroll-item&quot;&gt;</span><br><span class="line">		    &lt;a href=&quot;&#123;&#123; url_for(post.path) &#125;&#125;&quot; title=&quot;&#123;&#123; post.title &#125;&#125;&quot; target=&quot;&quot;&gt;</span><br><span class="line">		    &#123;&#123; post.title &#125;&#125;</span><br><span class="line">		    &lt;/a&gt;</span><br><span class="line">		&lt;/li&gt;</span><br><span class="line">	    &#123;%- endfor %&#125;</span><br><span class="line">	&lt;/ul&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="修改主题配置文件"><a href="#修改主题配置文件" class="headerlink" title="修改主题配置文件"></a>修改主题配置文件</h2><p>在站点目录下修改主题配置文件（_config.yml）添加以下内容<br>文件路径：yoursite/theme/next/_config.yml</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">recent_posts: true</span><br><span class="line">recent_posts_title: 近期文章</span><br><span class="line">recent_posts_layout: block</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动添加文件"><a href="#启动添加文件" class="headerlink" title="启动添加文件"></a>启动添加文件</h2><p>修改文件yoursite/theme/next/_config.yml uncomment sidebar这一行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">custom_file_path:</span><br><span class="line">  #head: source/_data/head.njk</span><br><span class="line">  #header: source/_data/header.njk</span><br><span class="line">  sidebar: source/_data/sidebar.njk</span><br><span class="line">  #postMeta: source/_data/post-meta.njk</span><br><span class="line">  #postBodyEnd: source/_data/post-body-end.njk</span><br><span class="line">  #footer: source/_data/footer.njk</span><br><span class="line">  #bodyEnd: source/_data/body-end.njk</span><br><span class="line">  #variable: source/_data/variables.styl</span><br><span class="line">  #mixin: source/_data/mixins.styl</span><br><span class="line">  #style: source/_data/styles.styl</span><br></pre></td></tr></table></figure>
+
+<h2 id="刷新站点"><a href="#刷新站点" class="headerlink" title="刷新站点"></a>刷新站点</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s </span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>kubernetes</category>
+        <category>blog</category>
       </categories>
       <tags>
-        <tag>network</tag>
-        <tag>kubernetes</tag>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux system admin notes</title>
+    <url>/2022/04/04/linux_systemadmin/</url>
+    <content><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="linunx-环境变量"><a href="#linunx-环境变量" class="headerlink" title="linunx 环境变量"></a>linunx 环境变量</h2><h2 id="linunx-文件权限"><a href="#linunx-文件权限" class="headerlink" title="linunx 文件权限"></a>linunx 文件权限</h2><p><code>umask</code>  default 022</p>
+<h3 id="shell-基础"><a href="#shell-基础" class="headerlink" title="shell 基础"></a>shell 基础</h3><h4 id="结构化命令"><a href="#结构化命令" class="headerlink" title="结构化命令"></a>结构化命令</h4><p>if</p>
+<p>for<br>while<br>until<br>break<br>continue</p>
+<h4 id="shell用户输入"><a href="#shell用户输入" class="headerlink" title="shell用户输入"></a>shell用户输入</h4><h3 id="控制shell脚本"><a href="#控制shell脚本" class="headerlink" title="控制shell脚本"></a>控制shell脚本</h3><h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function name &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">name () &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="退出状态"><a href="#退出状态" class="headerlink" title="退出状态"></a>退出状态</h4><p><code>$?</code></p>
+]]></content>
+      <categories>
+        <category>shell,linux</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>linux</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>国民对于疫情后经济复苏信心的丢失，路在何方</title>
+    <url>/2023/05/17/memo_2023may/</url>
+    <content><![CDATA[<h2 id="新闻要点"><a href="#新闻要点" class="headerlink" title="新闻要点"></a>新闻要点</h2><ul>
+<li>国内各种经济数据下滑，楼市价格加速下跌</li>
+<li>年轻人失业率创新高<br><img src="/memo_2023may/china_data_may.png" alt="image"><br>国内一季度各类数据如期下滑，尽管官方给出各种掩饰也无法抹去其背后真正原因国民对于经济复苏的信心的丢失<br>楼市房价的加速下跌，包括一二线城市，提前还贷，银行贷款放不出去，央行继续印钞，承接的还是国企各类城投，资金无法流向市场<blockquote>
+<p>北京方面，北京4月份二手房网签13928套，环比下降了40.5%。上海二手房成交量4月份不到1.8万套，相比于3月份的2.4万套环比下降了26%，比2月份的1.9万套还要低。</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>4月份，城镇失业数据达到了年度最低的5.2，并且已经接近了疫前数据。但是与此同时，16-24岁青年失业率首次突破20%。</p>
+</blockquote>
+<h2 id="究其背后原因"><a href="#究其背后原因" class="headerlink" title="究其背后原因"></a>究其背后原因</h2><ul>
+<li><p>国内风气的歪曲，都想赚快钱，无人愿意去干实业支撑国家运转，踏踏实实的工作，谁都想撞到风口捞一把，管理机构不对于风气的正确引导，恐怕难以改变现状，案例：</p>
+<ul>
+<li>挖呀挖呀黄老师突然网红，一周收入百万十年收入，辞职下海。</li>
+<li>格力董密孟羽童，一个自以为格力内定接班人被开除，吐槽董秘都是干的杂活，兴趣在直播。</li>
+</ul>
+</li>
+<li><p>环境太优渥，年轻人自命不凡，没有经历过社会的洗礼，“00后整顿职场”的新闻经常看到，任性离职，受不得气</p>
+<ul>
+<li>孟羽童案例<ul>
+<li>从她个人简历来看家庭优渥，从小在国际学校读书一路保守，没有经历过国内高考的洗礼，不知道何为现实</li>
+<li>吐槽格力董秘就是一个打杂的活，当年同龄的女霸总们在干什么？董明珠离开单亲的孩子，寸步不离跟着经销商催账；张兰跑去国外打黑工，跟男人一起抗海鲜。<br><img src="/memo_2023may/mengyutong.png" alt="image"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>memo</category>
+      </categories>
+      <tags>
+        <tag>memo</tag>
+        <tag>感想</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Nomad 和 Kubernetes 区别</title>
+    <url>/2023/05/26/Nomad_and_Kubernetes/</url>
+    <content><![CDATA[<h1 id="Nomad-vs-Kubernetes"><a href="#Nomad-vs-Kubernetes" class="headerlink" title="Nomad vs. Kubernetes"></a>Nomad vs. Kubernetes</h1><p>现今Containor技术比较流行的是Kubernetes, 后起之秀Nomad也风行起来，那么两者的区别是啥</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Kubernetes is an orchestration system for containers originally designed by Google, now governed by the Cloud Native Computing Foundation (CNCF) and developed by Google, Red Hat, and many others. Kubernetes and Nomad support similar core use cases for application deployment and management, but they differ in a few key ways. Kubernetes aims to provide all the features needed to run Linux container-based applications including cluster management, scheduling, service discovery, monitoring, secrets management and more. Nomad only aims to focus on cluster management and scheduling and is designed with the Unix philosophy of having a small scope while composing with tools like Consul for service discovery/service mesh and Vault for secret management.</span><br><span class="line"></span><br><span class="line">The following characteristics generally differentiate Nomad from Kubernetes:</span><br></pre></td></tr></table></figure>
+
+<h2 id="Simplicity"><a href="#Simplicity" class="headerlink" title="Simplicity"></a>Simplicity</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Kubernetes is designed as a collection of more than a half-dozen interoperating services which together provide the full functionality. Coordination and storage is provided by etcd at the core. The state is wrapped by API controllers which are consumed by other services that provide higher level APIs for features like scheduling. Kubernetes supports running in a highly available configuration but is operationally complex to setup.</span><br><span class="line"></span><br><span class="line">Nomad is architecturally much simpler. Nomad is a single binary, both for clients and servers, and requires no external services for coordination or storage. Nomad combines a lightweight resource manager and a sophisticated scheduler into a single system. By default, Nomad is distributed, highly available, and operationally simple.</span><br></pre></td></tr></table></figure>
+
+<h2 id="Flexible-Workload-Support"><a href="#Flexible-Workload-Support" class="headerlink" title="Flexible Workload Support"></a>Flexible Workload Support</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">While Kubernetes is specifically focused on Linux containers, Nomad is more general purpose. Nomad supports virtualized, containerized and standalone applications, including Docker, Java, IIS on Windows, Qemu, etc. Nomad is designed with extensible drivers and support will be extended to all common drivers.</span><br></pre></td></tr></table></figure>
+
+<h2 id="Consistent-Deployment"><a href="#Consistent-Deployment" class="headerlink" title="Consistent Deployment"></a>Consistent Deployment</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A full Kubernetes installation for a production environment is time consuming, operationally complex, and resource intensive. An increasing number of implementations are created by the Kubernetes community to mitigate these challenges, such as minikube, kubeadm, k3s, and more. These trimmed versions of Kubernetes offer easier adoption for development and testing, but lead to inconsistency in capabilities, configuration, and management when moving into production.</span><br><span class="line"></span><br><span class="line">In contrast to Kubernetes&#x27; fragmented distributions, Nomad as a single lightweight binary can be deployed in local dev, production, on-prem, at the edge, and in the cloud in a consistent manner, and provides the same operational ease-of-use across all environments.</span><br></pre></td></tr></table></figure>
+
+<h2 id="Scalability"><a href="#Scalability" class="headerlink" title="Scalability"></a>Scalability</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Kubernetes documentation states that they support clusters up to 5,000 nodes and 300,000 total containers. As the environment grows, the interoperating components with different constraints compound the operational complexity. Even operators at Google revealed the significant challenges of managing the system at scale. The lack of maturity in the Federation project and the additional overhead of managing a centralized management plane also make it a hard experience to deploy a distributed system that spans multiple clusters.</span><br><span class="line"></span><br><span class="line">Nomad has been proven to scale to cluster sizes that exceed 10,000 nodes in real-world production environments. It can be deployed across multiple availability zones, regions, and data centers with a single cluster or multiple clusters. Nomad is designed to natively handle multi-cluster deployments without the overhead of running clusters on clusters. This makes it easier to scale the application deployment across multiple datacenters, regions, and clouds with no additional complexity.</span><br><span class="line"></span><br><span class="line">Nomad has performed strenuous benchmark on scalability with 1 million container challenge in 2016 and 2 million container challenge in 2020. These tests are aimed to validate Nomad&#x27;s architectural design and ensure that Nomad performs under the most extreme requirements.</span><br></pre></td></tr></table></figure>
+
+<h2 id="Nomad-command-examples"><a href="#Nomad-command-examples" class="headerlink" title="Nomad command examples"></a>Nomad command examples</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nomad node status</span><br><span class="line"></span><br><span class="line">nomad job run pytechco-redis.nomad.hcl</span><br><span class="line"></span><br><span class="line">nomad job stop -purge pytechco-employee</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>tech</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>devops</tag>
+        <tag>Tech</tag>
       </tags>
   </entry>
   <entry>
@@ -1095,42 +1071,191 @@
       </tags>
   </entry>
   <entry>
-    <title>国民对于疫情后经济复苏信心的丢失，路在何方</title>
-    <url>/2023/05/17/memo_2023may/</url>
-    <content><![CDATA[<h2 id="新闻要点"><a href="#新闻要点" class="headerlink" title="新闻要点"></a>新闻要点</h2><ul>
-<li>国内各种经济数据下滑，楼市价格加速下跌</li>
-<li>年轻人失业率创新高<br><img src="/memo_2023may/china_data_may.png" alt="image"><br>国内一季度各类数据如期下滑，尽管官方给出各种掩饰也无法抹去其背后真正原因国民对于经济复苏的信心的丢失<br>楼市房价的加速下跌，包括一二线城市，提前还贷，银行贷款放不出去，央行继续印钞，承接的还是国企各类城投，资金无法流向市场<blockquote>
-<p>北京方面，北京4月份二手房网签13928套，环比下降了40.5%。上海二手房成交量4月份不到1.8万套，相比于3月份的2.4万套环比下降了26%，比2月份的1.9万套还要低。</p>
-</blockquote>
-</li>
-</ul>
-<blockquote>
-<p>4月份，城镇失业数据达到了年度最低的5.2，并且已经接近了疫前数据。但是与此同时，16-24岁青年失业率首次突破20%。</p>
-</blockquote>
-<h2 id="究其背后原因"><a href="#究其背后原因" class="headerlink" title="究其背后原因"></a>究其背后原因</h2><ul>
-<li><p>国内风气的歪曲，都想赚快钱，无人愿意去干实业支撑国家运转，踏踏实实的工作，谁都想撞到风口捞一把，管理机构不对于风气的正确引导，恐怕难以改变现状，案例：</p>
+    <title>shell变量高级篇</title>
+    <url>/2021/08/24/shell-variable-advance/</url>
+    <content><![CDATA[<p> <a href="#shell%E5%8F%98%E9%87%8F%E7%9A%84%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8">shell变量的高级应用</a></p>
 <ul>
-<li>挖呀挖呀黄老师突然网红，一周收入百万十年收入，辞职下海。</li>
-<li>格力董密孟羽童，一个自以为格力内定接班人被开除，吐槽董秘都是干的杂活，兴趣在直播。</li>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2%E5%92%8C%E5%88%A0%E9%99%A4">变量内容替换和删除</a></li>
+<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86">字符串处理</a><ul>
+<li><a href="#%E8%AE%A1%E7%AE%97%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6">计算字符串长度</a></li>
+<li><a href="#%E8%8E%B7%E5%8F%96%E5%AD%90%E4%B8%B2%E5%9C%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BD%8D%E7%BD%AE">获取子串在字符串中索引的位置</a></li>
+<li><a href="#%E6%8F%90%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2">提取字符串</a></li>
 </ul>
 </li>
-<li><p>环境太优渥，年轻人自命不凡，没有经历过社会的洗礼，“00后整顿职场”的新闻经常看到，任性离职，受不得气</p>
+<li><a href="#%E6%95%B0%E7%BB%84%E7%9A%84%E6%93%8D%E4%BD%9C">数组的操作</a><ul>
+<li><a href="#%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0">删除元素</a></li>
+<li><a href="#%E5%88%86%E7%89%87%E8%AE%BF%E9%97%AE">分片访问</a></li>
+<li><a href="#%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2">内容替换</a></li>
+</ul>
+</li>
+<li><a href="#%E6%95%B0%E7%BB%84%E9%81%8D%E5%8E%86">数组遍历</a><ul>
+<li><a href="#ps">PS</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="shell变量的高级应用"><a href="#shell变量的高级应用" class="headerlink" title="shell变量的高级应用"></a>shell变量的高级应用</h1><h2 id="变量内容替换和删除"><a href="#变量内容替换和删除" class="headerlink" title="变量内容替换和删除"></a>变量内容替换和删除</h2><table>
+<thead>
+<tr>
+<th align="center">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">${变量名#匹配规则}}</td>
+<td align="left">从变量开头进行规则匹配，将符合最短的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名##匹配规则}}</td>
+<td align="left">从变量开头进行规则匹配，将符合最长的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名%匹配规则}}</td>
+<td align="left">从变量尾部进行规则匹配，将符合最短的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名%%匹配规则}}</td>
+<td align="left">从变量尾部进行规则匹配，将符合最长的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名/旧字符串/新字符串}}</td>
+<td align="left">变量内容符合旧字符串，则第一个旧字符串会被新字符串取代</td>
+</tr>
+<tr>
+<td align="center">${变量名//旧字符串/新字符串}}</td>
+<td align="left">变量内容符合旧字符串，则全部的旧字符串会被新字符串取代</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$variable_1</span></span><br><span class="line">I love you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1#*ov&#125;</span> //从头开始将最短数据删除</span><br><span class="line">e you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1##*ov&#125;</span> //从头开始将最长数据删除</span><br><span class="line">e me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%ov*&#125;</span> //从尾开始将最短数据删除</span><br><span class="line">I love you,<span class="keyword">do</span> you l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%%ov&#125;</span> //从尾开始将最长数据删除</span><br><span class="line">I l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line">/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH/bin/BIN&#125;</span> //替换一个</span><br><span class="line">/sBIN:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH//bin/BIN&#125;</span> //替换所有</span><br><span class="line">/sBIN:/BIN:/usr/sBIN:/usr/BIN</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串处理"><a href="#字符串处理" class="headerlink" title="字符串处理"></a>字符串处理</h2><h3 id="计算字符串长度"><a href="#计算字符串长度" class="headerlink" title="计算字符串长度"></a>计算字符串长度</h3><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">方法一</td>
+<td align="left"><code>$&#123;#string&#125;</code></td>
+<td align="left">NA</td>
+</tr>
+<tr>
+<td align="left">方法二</td>
+<td align="left"><code>expr length &quot;$string&quot;</code></td>
+<td align="left">string如有空格，必须加双引号</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;#var1&#125;</span></span><br><span class="line">21</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr length <span class="string">&quot;<span class="variable">$var1</span>&quot;</span>`</span><br><span class="line">21</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取子串在字符串中索引的位置"><a href="#获取子串在字符串中索引的位置" class="headerlink" title="获取子串在字符串中索引的位置"></a>获取子串在字符串中索引的位置</h3><table>
+<thead>
+<tr>
+<th align="left">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>expr index $string $substring</code></td>
+<td align="left">查找子串中任一出现的字符，找到第一个出现字符的位置就返回</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr index <span class="string">&quot;<span class="variable">$variable_1</span>&quot;</span> oe`</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+<h3 id="提取字符串"><a href="#提取字符串" class="headerlink" title="提取字符串"></a>提取字符串</h3><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">方法一</td>
+<td align="left"><code>$&#123;string:position&#125;</code></td>
+<td align="left">从 string 中的 position 位置开始，索引下标从 0 开始</td>
+</tr>
+<tr>
+<td align="left">方法二</td>
+<td align="left"><code>$&#123;string:position:length&#125;</code></td>
+<td align="left">从 position 开始，匹配长度为 length</td>
+</tr>
+<tr>
+<td align="left">方法三</td>
+<td align="left"><code>$&#123;string: -position&#125;</code></td>
+<td align="left">从右边开始匹配，注意冒号后面的空格</td>
+</tr>
+<tr>
+<td align="left">方法四</td>
+<td align="left"><code>$&#123;string:(position&#125;</code></td>
+<td align="left">从左边开始匹配</td>
+</tr>
+<tr>
+<td align="left">方法五</td>
+<td align="left"><code>expr substr $string $position $length</code></td>
+<td align="left">从 position 开始，匹配长度为 length，索引下标从 1 开始</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ var_str=<span class="string">&quot;k8s docker cloud aws&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: 3&#125;</span> //方法一</span><br><span class="line">docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:3:5&#125;</span> //方法二</span><br><span class="line">dock</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5&#125;</span>  //方法三，注意有空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5:3&#125;</span> //方法三 ，带长度</span><br><span class="line">d a</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:-5&#125;</span> //方法三，没有空格无效</span><br><span class="line">k8s docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:(-5)&#125;</span> //方法三，可以用括号代替空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr substr <span class="string">&quot;<span class="variable">$var_str</span>&quot;</span> 1 5` //方法五，从索引1开始计数</span><br><span class="line">k8s d</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="数组的操作"><a href="#数组的操作" class="headerlink" title="数组的操作"></a>数组的操作</h2><blockquote>
+<p>我们知道在强类型语言中定义变量的时候必须为这个变量定义类型，比如定义整形可以定义为 int 型，字符串 string 类型，日期类型 Date 等等，在使用之前必须定义类型，这是强类型编程语言的风格。Shell 编程中，由于 Shell 是弱类型语言，在使用变量前不需要为变量声明类型， 但其实 Shell 本身也是支持提前声明有类型变量的，只是说使用方式和一般的强类型编程语言有些不同， 使用 declare 和 typeset 命令来进行声明。</p>
 <ul>
-<li>孟羽童案例<ul>
-<li>从她个人简历来看家庭优渥，从小在国际学校读书一路保守，没有经历过国内高考的洗礼，不知道何为现实</li>
-<li>吐槽格力董秘就是一个打杂的活，当年同龄的女霸总们在干什么？董明珠离开单亲的孩子，寸步不离跟着经销商催账；张兰跑去国外打黑工，跟男人一起抗海鲜。<br><img src="/memo_2023may/mengyutong.png" alt="image"></li>
+<li>declare 命令和 typeset 命令两者等价</li>
+<li>declare、typeset 命令都是用来定义变量类型的</li>
 </ul>
-</li>
+<p>既然它们是等价的 那我们用 declare 进行演示</p>
+</blockquote>
+<p>declare 常用命令参数表</p>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-i</td>
+<td align="left">将变量设为整数</td>
+</tr>
+<tr>
+<td align="center">-a</td>
+<td align="left">将变量定义为数组</td>
+</tr>
+<tr>
+<td align="center">-f</td>
+<td align="left">显示此脚本定义过的所有函数及内容</td>
+</tr>
+<tr>
+<td align="center">-F</td>
+<td align="left">仅显示此脚本定义过的函数名</td>
+</tr>
+<tr>
+<td align="center">-x</td>
+<td align="left">将变量声明为环境变量</td>
+</tr>
+</tbody></table>
+<p><code>declare -a array_name</code> 声明数组， 然后 <code>array_name=(value1 ... valuen)</code>， 这里不声明也可以</p>
+<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><ul>
+<li><code>unset my_arr[2]</code> 清楚元素 <code>unset my_arr</code> 清空整个数组</li>
 </ul>
-</li>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$</span><br><span class="line">[shdevops@localhost ~]$ my_arr=(1 <span class="string">&quot;abc&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1 abc</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr[1]</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="分片访问"><a href="#分片访问" class="headerlink" title="分片访问"></a>分片访问</h3><ul>
+<li> ${array[@]:1:3} 数组下标从 1 到 3 的三个元素</li>
+<li><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;apple&quot;</span> <span class="string">&quot;juice&quot;</span> <span class="string">&quot;cat&quot;</span> <span class="string">&quot;dog&quot;</span> <span class="string">&quot;ox&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]:1:3&#125;</span></span><br><span class="line">juice cat dog</span><br></pre></td></tr></table></figure>
+<h3 id="内容替换"><a href="#内容替换" class="headerlink" title="内容替换"></a>内容替换</h3></li>
+<li> <code>$&#123;my_array[@]/an/AN&#125;</code> 将数组中所有元素内包含 an 的子串替换为 AN<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;an1&quot;</span> <span class="string">&quot;an2&quot;</span> <span class="string">&quot;an3&quot;</span> <span class="string">&quot;an4&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]/an/AN&#125;</span></span><br><span class="line">AN1 AN2 AN3 AN4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
+<h2 id="数组遍历"><a href="#数组遍历" class="headerlink" title="数组遍历"></a>数组遍历</h2></li>
 </ul>
-]]></content>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">my_arr=(an1 an2 an3 an4)</span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$v</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span>;<span class="keyword">do</span> <span class="built_in">echo</span> <span class="variable">$v</span>;<span class="keyword">done</span></span><br><span class="line">an1</span><br><span class="line">an2</span><br><span class="line">an3</span><br><span class="line">an4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">取消声明的变量：</span><br><span class="line"></span><br><span class="line">declare +r</span><br><span class="line">declare +i</span><br><span class="line">declare +a</span><br><span class="line">declare +x</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>memo</category>
+        <category>shell</category>
       </categories>
       <tags>
-        <tag>memo</tag>
-        <tag>感想</tag>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>Tech</tag>
       </tags>
   </entry>
   <entry>
@@ -1856,194 +1981,6 @@
 <h2 id="bash-下的大小写变换"><a href="#bash-下的大小写变换" class="headerlink" title="bash 下的大小写变换"></a>bash 下的大小写变换</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">HI=HellO</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$HI</span>&quot;</span> <span class="comment"># HellO</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;HI^&#125;</span> <span class="comment"># HellO</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;HI^^&#125;</span> <span class="comment"># HELLO</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;HI,&#125;</span> <span class="comment"># hellO</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;HI,,&#125;</span> <span class="comment"># hello</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;HI~&#125;</span> <span class="comment"># hellO</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;HI~~&#125;</span> <span class="comment">#hELLo</span></span><br><span class="line">^大写，,小写， ~大小写切换</span><br><span class="line">重复一次只修改首字母，重复两次则应用于所有字母。</span><br><span class="line"></span><br><span class="line">混着用会怎样？</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;HI^,^&#125;</span> <span class="comment"># HellO</span></span><br><span class="line">看来是不行的×_×</span><br></pre></td></tr></table></figure>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://mywiki.wooledge.org/BashGuide">https://mywiki.wooledge.org/BashGuide</a></p>
 ]]></content>
-      <categories>
-        <category>shell</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>shell</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>shell变量高级篇</title>
-    <url>/2021/08/24/shell-variable-advance/</url>
-    <content><![CDATA[<p> <a href="#shell%E5%8F%98%E9%87%8F%E7%9A%84%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8">shell变量的高级应用</a></p>
-<ul>
-<li><a href="#%E5%8F%98%E9%87%8F%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2%E5%92%8C%E5%88%A0%E9%99%A4">变量内容替换和删除</a></li>
-<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86">字符串处理</a><ul>
-<li><a href="#%E8%AE%A1%E7%AE%97%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6">计算字符串长度</a></li>
-<li><a href="#%E8%8E%B7%E5%8F%96%E5%AD%90%E4%B8%B2%E5%9C%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BD%8D%E7%BD%AE">获取子串在字符串中索引的位置</a></li>
-<li><a href="#%E6%8F%90%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2">提取字符串</a></li>
-</ul>
-</li>
-<li><a href="#%E6%95%B0%E7%BB%84%E7%9A%84%E6%93%8D%E4%BD%9C">数组的操作</a><ul>
-<li><a href="#%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0">删除元素</a></li>
-<li><a href="#%E5%88%86%E7%89%87%E8%AE%BF%E9%97%AE">分片访问</a></li>
-<li><a href="#%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2">内容替换</a></li>
-</ul>
-</li>
-<li><a href="#%E6%95%B0%E7%BB%84%E9%81%8D%E5%8E%86">数组遍历</a><ul>
-<li><a href="#ps">PS</a></li>
-</ul>
-</li>
-</ul>
-<h1 id="shell变量的高级应用"><a href="#shell变量的高级应用" class="headerlink" title="shell变量的高级应用"></a>shell变量的高级应用</h1><h2 id="变量内容替换和删除"><a href="#变量内容替换和删除" class="headerlink" title="变量内容替换和删除"></a>变量内容替换和删除</h2><table>
-<thead>
-<tr>
-<th align="center">语法</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">${变量名#匹配规则}}</td>
-<td align="left">从变量开头进行规则匹配，将符合最短的数据删除</td>
-</tr>
-<tr>
-<td align="center">${变量名##匹配规则}}</td>
-<td align="left">从变量开头进行规则匹配，将符合最长的数据删除</td>
-</tr>
-<tr>
-<td align="center">${变量名%匹配规则}}</td>
-<td align="left">从变量尾部进行规则匹配，将符合最短的数据删除</td>
-</tr>
-<tr>
-<td align="center">${变量名%%匹配规则}}</td>
-<td align="left">从变量尾部进行规则匹配，将符合最长的数据删除</td>
-</tr>
-<tr>
-<td align="center">${变量名/旧字符串/新字符串}}</td>
-<td align="left">变量内容符合旧字符串，则第一个旧字符串会被新字符串取代</td>
-</tr>
-<tr>
-<td align="center">${变量名//旧字符串/新字符串}}</td>
-<td align="left">变量内容符合旧字符串，则全部的旧字符串会被新字符串取代</td>
-</tr>
-</tbody></table>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$variable_1</span></span><br><span class="line">I love you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1#*ov&#125;</span> //从头开始将最短数据删除</span><br><span class="line">e you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1##*ov&#125;</span> //从头开始将最长数据删除</span><br><span class="line">e me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%ov*&#125;</span> //从尾开始将最短数据删除</span><br><span class="line">I love you,<span class="keyword">do</span> you l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%%ov&#125;</span> //从尾开始将最长数据删除</span><br><span class="line">I l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line">/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH/bin/BIN&#125;</span> //替换一个</span><br><span class="line">/sBIN:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH//bin/BIN&#125;</span> //替换所有</span><br><span class="line">/sBIN:/BIN:/usr/sBIN:/usr/BIN</span><br></pre></td></tr></table></figure>
-
-<h2 id="字符串处理"><a href="#字符串处理" class="headerlink" title="字符串处理"></a>字符串处理</h2><h3 id="计算字符串长度"><a href="#计算字符串长度" class="headerlink" title="计算字符串长度"></a>计算字符串长度</h3><table>
-<thead>
-<tr>
-<th align="left"></th>
-<th align="left">语法</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">方法一</td>
-<td align="left"><code>$&#123;#string&#125;</code></td>
-<td align="left">NA</td>
-</tr>
-<tr>
-<td align="left">方法二</td>
-<td align="left"><code>expr length &quot;$string&quot;</code></td>
-<td align="left">string如有空格，必须加双引号</td>
-</tr>
-</tbody></table>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;#var1&#125;</span></span><br><span class="line">21</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr length <span class="string">&quot;<span class="variable">$var1</span>&quot;</span>`</span><br><span class="line">21</span><br></pre></td></tr></table></figure>
-
-<h3 id="获取子串在字符串中索引的位置"><a href="#获取子串在字符串中索引的位置" class="headerlink" title="获取子串在字符串中索引的位置"></a>获取子串在字符串中索引的位置</h3><table>
-<thead>
-<tr>
-<th align="left">语法</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>expr index $string $substring</code></td>
-<td align="left">查找子串中任一出现的字符，找到第一个出现字符的位置就返回</td>
-</tr>
-</tbody></table>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr index <span class="string">&quot;<span class="variable">$variable_1</span>&quot;</span> oe`</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
-<h3 id="提取字符串"><a href="#提取字符串" class="headerlink" title="提取字符串"></a>提取字符串</h3><table>
-<thead>
-<tr>
-<th align="left"></th>
-<th align="left">语法</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">方法一</td>
-<td align="left"><code>$&#123;string:position&#125;</code></td>
-<td align="left">从 string 中的 position 位置开始，索引下标从 0 开始</td>
-</tr>
-<tr>
-<td align="left">方法二</td>
-<td align="left"><code>$&#123;string:position:length&#125;</code></td>
-<td align="left">从 position 开始，匹配长度为 length</td>
-</tr>
-<tr>
-<td align="left">方法三</td>
-<td align="left"><code>$&#123;string: -position&#125;</code></td>
-<td align="left">从右边开始匹配，注意冒号后面的空格</td>
-</tr>
-<tr>
-<td align="left">方法四</td>
-<td align="left"><code>$&#123;string:(position&#125;</code></td>
-<td align="left">从左边开始匹配</td>
-</tr>
-<tr>
-<td align="left">方法五</td>
-<td align="left"><code>expr substr $string $position $length</code></td>
-<td align="left">从 position 开始，匹配长度为 length，索引下标从 1 开始</td>
-</tr>
-</tbody></table>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ var_str=<span class="string">&quot;k8s docker cloud aws&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: 3&#125;</span> //方法一</span><br><span class="line">docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:3:5&#125;</span> //方法二</span><br><span class="line">dock</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5&#125;</span>  //方法三，注意有空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5:3&#125;</span> //方法三 ，带长度</span><br><span class="line">d a</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:-5&#125;</span> //方法三，没有空格无效</span><br><span class="line">k8s docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:(-5)&#125;</span> //方法三，可以用括号代替空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr substr <span class="string">&quot;<span class="variable">$var_str</span>&quot;</span> 1 5` //方法五，从索引1开始计数</span><br><span class="line">k8s d</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="数组的操作"><a href="#数组的操作" class="headerlink" title="数组的操作"></a>数组的操作</h2><blockquote>
-<p>我们知道在强类型语言中定义变量的时候必须为这个变量定义类型，比如定义整形可以定义为 int 型，字符串 string 类型，日期类型 Date 等等，在使用之前必须定义类型，这是强类型编程语言的风格。Shell 编程中，由于 Shell 是弱类型语言，在使用变量前不需要为变量声明类型， 但其实 Shell 本身也是支持提前声明有类型变量的，只是说使用方式和一般的强类型编程语言有些不同， 使用 declare 和 typeset 命令来进行声明。</p>
-<ul>
-<li>declare 命令和 typeset 命令两者等价</li>
-<li>declare、typeset 命令都是用来定义变量类型的</li>
-</ul>
-<p>既然它们是等价的 那我们用 declare 进行演示</p>
-</blockquote>
-<p>declare 常用命令参数表</p>
-<table>
-<thead>
-<tr>
-<th align="center">参数</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">-i</td>
-<td align="left">将变量设为整数</td>
-</tr>
-<tr>
-<td align="center">-a</td>
-<td align="left">将变量定义为数组</td>
-</tr>
-<tr>
-<td align="center">-f</td>
-<td align="left">显示此脚本定义过的所有函数及内容</td>
-</tr>
-<tr>
-<td align="center">-F</td>
-<td align="left">仅显示此脚本定义过的函数名</td>
-</tr>
-<tr>
-<td align="center">-x</td>
-<td align="left">将变量声明为环境变量</td>
-</tr>
-</tbody></table>
-<p><code>declare -a array_name</code> 声明数组， 然后 <code>array_name=(value1 ... valuen)</code>， 这里不声明也可以</p>
-<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><ul>
-<li><code>unset my_arr[2]</code> 清楚元素 <code>unset my_arr</code> 清空整个数组</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$</span><br><span class="line">[shdevops@localhost ~]$ my_arr=(1 <span class="string">&quot;abc&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1 abc</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr[1]</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="分片访问"><a href="#分片访问" class="headerlink" title="分片访问"></a>分片访问</h3><ul>
-<li> ${array[@]:1:3} 数组下标从 1 到 3 的三个元素</li>
-<li><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;apple&quot;</span> <span class="string">&quot;juice&quot;</span> <span class="string">&quot;cat&quot;</span> <span class="string">&quot;dog&quot;</span> <span class="string">&quot;ox&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]:1:3&#125;</span></span><br><span class="line">juice cat dog</span><br></pre></td></tr></table></figure>
-<h3 id="内容替换"><a href="#内容替换" class="headerlink" title="内容替换"></a>内容替换</h3></li>
-<li> <code>$&#123;my_array[@]/an/AN&#125;</code> 将数组中所有元素内包含 an 的子串替换为 AN<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;an1&quot;</span> <span class="string">&quot;an2&quot;</span> <span class="string">&quot;an3&quot;</span> <span class="string">&quot;an4&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]/an/AN&#125;</span></span><br><span class="line">AN1 AN2 AN3 AN4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
-<h2 id="数组遍历"><a href="#数组遍历" class="headerlink" title="数组遍历"></a>数组遍历</h2></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">my_arr=(an1 an2 an3 an4)</span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$v</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span>;<span class="keyword">do</span> <span class="built_in">echo</span> <span class="variable">$v</span>;<span class="keyword">done</span></span><br><span class="line">an1</span><br><span class="line">an2</span><br><span class="line">an3</span><br><span class="line">an4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
-<h3 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">取消声明的变量：</span><br><span class="line"></span><br><span class="line">declare +r</span><br><span class="line">declare +i</span><br><span class="line">declare +a</span><br><span class="line">declare +x</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>shell</category>
       </categories>
