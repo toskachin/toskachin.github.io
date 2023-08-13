@@ -20,33 +20,30 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"toskachin.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Kubernetes 入门基础Kubernetes Components Architecture Kubernetes 核心组件Kubernetes 主要由以下几个核心组件组成:  etcd 保存了整个集群的状态； API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制； Controller Manager 负责维护集群的状态，比如故障检测、自动扩">
+<meta name="description" content="Shell From Zero To Hero Simply Level Questions 描述Linux系统从开机到登陆界面的启动过程 描述Linux下软链接和硬链接的区别   Middle Level Questions 描述Linux下文件删除的原理 请简述基础正则表达式grep高级参数的使用 请简述基础正则表达式sed高级参数的使用   Hard Level Questions">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kubernetes 入门基础">
-<meta property="og:url" content="https://toskachin.github.io/2022/09/20/Kubernetes_from_zero/index.html">
+<meta property="og:title" content="一文让你shell从狗熊变英雄">
+<meta property="og:url" content="https://toskachin.github.io/2023/08/13/shell_from_zero_to_hero./index.html">
 <meta property="og:site_name" content="RJ&#39;s Blog">
-<meta property="og:description" content="Kubernetes 入门基础Kubernetes Components Architecture Kubernetes 核心组件Kubernetes 主要由以下几个核心组件组成:  etcd 保存了整个集群的状态； API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制； Controller Manager 负责维护集群的状态，比如故障检测、自动扩">
+<meta property="og:description" content="Shell From Zero To Hero Simply Level Questions 描述Linux系统从开机到登陆界面的启动过程 描述Linux下软链接和硬链接的区别   Middle Level Questions 描述Linux下文件删除的原理 请简述基础正则表达式grep高级参数的使用 请简述基础正则表达式sed高级参数的使用   Hard Level Questions">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://toskachin.github.io/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg">
-<meta property="article:published_time" content="2022-09-19T23:54:41.000Z">
-<meta property="article:modified_time" content="2022-09-20T07:24:39.000Z">
+<meta property="article:published_time" content="2023-08-13T09:29:35.000Z">
+<meta property="article:modified_time" content="2023-08-13T13:00:35.746Z">
 <meta property="article:author" content="TOSKA">
 <meta property="article:tag" content="tech">
-<meta property="article:tag" content="k8s">
-<meta property="article:tag" content="container">
+<meta property="article:tag" content="shell">
 <meta property="article:tag" content="Tech">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://toskachin.github.io/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg">
 
 
-<link rel="canonical" href="https://toskachin.github.io/2022/09/20/Kubernetes_from_zero/">
+<link rel="canonical" href="https://toskachin.github.io/2023/08/13/shell_from_zero_to_hero./">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://toskachin.github.io/2022/09/20/Kubernetes_from_zero/","path":"2022/09/20/Kubernetes_from_zero/","title":"Kubernetes 入门基础"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://toskachin.github.io/2023/08/13/shell_from_zero_to_hero./","path":"2023/08/13/shell_from_zero_to_hero./","title":"一文让你shell从狗熊变英雄"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Kubernetes 入门基础 | RJ's Blog</title>
+<title>一文让你shell从狗熊变英雄 | RJ's Blog</title>
   
 
 
@@ -153,7 +150,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Kubernetes-%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">Kubernetes 入门基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubernetes-%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">Kubernetes 核心组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubernetes%E7%9B%B8%E5%85%B3%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.</span> <span class="nav-text">Kubernetes相关基础概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K8s-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.</span> <span class="nav-text">K8s 常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#kubectl"><span class="nav-number">1.3.1.</span> <span class="nav-text">kubectl</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">配置</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-From-Zero-To-Hero"><span class="nav-number">1.</span> <span class="nav-text">Shell From Zero To Hero</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Simply-Level-Questions"><span class="nav-number">1.1.</span> <span class="nav-text">Simply Level Questions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%8F%E8%BF%B0Linux%E7%B3%BB%E7%BB%9F%E4%BB%8E%E5%BC%80%E6%9C%BA%E5%88%B0%E7%99%BB%E9%99%86%E7%95%8C%E9%9D%A2%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">描述Linux系统从开机到登陆界面的启动过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%8F%E8%BF%B0Linux%E4%B8%8B%E8%BD%AF%E9%93%BE%E6%8E%A5%E5%92%8C%E7%A1%AC%E9%93%BE%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.2.</span> <span class="nav-text">描述Linux下软链接和硬链接的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Middle-Level-Questions"><span class="nav-number">1.2.</span> <span class="nav-text">Middle Level Questions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%8F%E8%BF%B0Linux%E4%B8%8B%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.1.</span> <span class="nav-text">描述Linux下文件删除的原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fgrep%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.2.</span> <span class="nav-text">请简述基础正则表达式grep高级参数的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fsed%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.3.</span> <span class="nav-text">请简述基础正则表达式sed高级参数的使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hard-Level-Questions"><span class="nav-number">1.3.</span> <span class="nav-text">Hard Level Questions</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -265,7 +262,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2022/09/20/Kubernetes_from_zero/">
+    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2023/08/13/shell_from_zero_to_hero./">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -278,7 +275,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Kubernetes 入门基础
+          一文让你shell从狗熊变英雄
         </h1>
 
         <div class="post-meta-container">
@@ -290,7 +287,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-09-20 07:54:41 / 修改时间：15:24:39" itemprop="dateCreated datePublished" datetime="2022-09-20T07:54:41+08:00">2022-09-20</time>
+      <time title="创建时间：2023-08-13 17:29:35 / 修改时间：21:00:35" itemprop="dateCreated datePublished" datetime="2023-08-13T17:29:35+08:00">2023-08-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -298,7 +295,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
+          <a href="/categories/shell/" itemprop="url" rel="index"><span itemprop="name">shell</span></a>
         </span>
     </span>
 
@@ -316,14 +313,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.3k</span>
+      <span>1.7k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
+      <span>3 分钟</span>
     </span>
 </div>
 
@@ -334,46 +331,93 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="Kubernetes-入门基础"><a href="#Kubernetes-入门基础" class="headerlink" title="Kubernetes 入门基础"></a>Kubernetes 入门基础</h1><p><strong>Kubernetes Components Architecture</strong><br><img src="/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg" alt="image"></p>
-<h2 id="Kubernetes-核心组件"><a href="#Kubernetes-核心组件" class="headerlink" title="Kubernetes 核心组件"></a>Kubernetes 核心组件</h2><p>Kubernetes 主要由以下几个核心组件组成:</p>
+        <ul>
+<li><a href="#shell-from-zero-to-hero">Shell From Zero To Hero</a><ul>
+<li><a href="#simply-level-questions">Simply Level Questions</a><ul>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E7%B3%BB%E7%BB%9F%E4%BB%8E%E5%BC%80%E6%9C%BA%E5%88%B0%E7%99%BB%E9%99%86%E7%95%8C%E9%9D%A2%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B">描述Linux系统从开机到登陆界面的启动过程</a></li>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E8%BD%AF%E9%93%BE%E6%8E%A5%E5%92%8C%E7%A1%AC%E9%93%BE%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB">描述Linux下软链接和硬链接的区别</a></li>
+</ul>
+</li>
+<li><a href="#middle-level-questions">Middle Level Questions</a><ul>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4%E7%9A%84%E5%8E%9F%E7%90%86">描述Linux下文件删除的原理</a></li>
+<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fgrep%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式grep高级参数的使用</a></li>
+<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fsed%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式sed高级参数的使用</a></li>
+</ul>
+</li>
+<li><a href="#hard-level-questions">Hard Level Questions</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="Shell-From-Zero-To-Hero"><a href="#Shell-From-Zero-To-Hero" class="headerlink" title="Shell From Zero To Hero"></a>Shell From Zero To Hero</h1><h2 id="Simply-Level-Questions"><a href="#Simply-Level-Questions" class="headerlink" title="Simply Level Questions"></a>Simply Level Questions</h2><h3 id="描述Linux系统从开机到登陆界面的启动过程"><a href="#描述Linux系统从开机到登陆界面的启动过程" class="headerlink" title="描述Linux系统从开机到登陆界面的启动过程"></a>描述Linux系统从开机到登陆界面的启动过程</h3><ul>
+<li><p>开机BIOS自检，加载硬盘。</p>
+</li>
+<li><p>读取MBR,MBR引导。</p>
+</li>
+<li><p>grub引导菜单(Boot Loader)。</p>
+</li>
+<li><p>加载内核kernel。</p>
+</li>
+<li><p>启动init进程，依据inittab文件设定运行级别</p>
+</li>
+<li><p>init进程，执行rc.sysinit文件。</p>
+</li>
+<li><p>启动内核模块，执行不同级别的脚本程序。</p>
+</li>
+<li><p>执行/etc/rc.d/rc.local</p>
+</li>
+<li><p>启动mingetty，进入系统登陆界面。</p>
+</li>
+</ul>
+<h3 id="描述Linux下软链接和硬链接的区别"><a href="#描述Linux下软链接和硬链接的区别" class="headerlink" title="描述Linux下软链接和硬链接的区别"></a>描述Linux下软链接和硬链接的区别</h3><p>在Linux系统中，链接分为两种，一种是硬链接（Hard link），另一种称为符号链接或软链接（Symbolic Link）。</p>
 <ul>
-<li>etcd 保存了整个集群的状态；</li>
-<li>API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制；</li>
-<li>Controller Manager 负责维护集群的状态，比如故障检测、自动扩展、滚动更新等；</li>
-<li>Scheduler 负责资源的调度，按照预定的调度策略将 Pod 调度到相应的机器上；</li>
-<li>Kubelet 负责维护容器的生命周期，同时也负责 Volume（CVI）和网络（CNI）的管理；</li>
-<li>Container Runtime 负责镜像管理以及 Pod 和容器的真正运行（CRI）；</li>
-<li>Kube-proxy 负责为 Service 提供 cluster 内部的服务发现和负载均衡；</li>
+<li><p>默认不带参数的情况下，ln创建的是硬链接，带-s参数的ln命令创建的是软链接。</p>
+</li>
+<li><p>硬链接文件与源文件的inode节点号相同，而软链接文件的inode节点号，与源文件不同，</p>
+</li>
+<li><p>ln命令不能对目录创建硬链接，但可以创建软链接。对目录的软链接会经常使用到。</p>
+</li>
+<li><p>删除软链接文件，对源文件和硬链接文件无任何影响。</p>
+</li>
+<li><p>删除文件的硬链接文件，对源文件及软链接文件无任何影响。</p>
+</li>
+<li><p>删除链接文件的源文件，对硬链接文件无影响，会导致其软链接失效（红底白字闪烁状）。</p>
+</li>
+<li><p>同时删除源文件及其硬链接文件，整个文件才会被真正的删除。</p>
+</li>
+<li><p>很多硬件设备的快照功能，使用的就是类似硬链接的原理。</p>
+</li>
+<li><p>软链接可以跨文件系统，硬链接不可以跨文件系统。</p>
+</li>
 </ul>
-<h2 id="Kubernetes相关基础概念"><a href="#Kubernetes相关基础概念" class="headerlink" title="Kubernetes相关基础概念"></a>Kubernetes相关基础概念</h2><ul>
-<li>master：k8s集群的管理节点，负责管理集群，提供集群的资源数据访问入口。拥有Etcd存储服务（可选），运行Api Server进程，Controller Manager服务进程及Scheduler服务进程。</li>
-<li>node（worker）：Node（worker）是Kubernetes集群架构中运行Pod的服务节点，是Kubernetes集群操作的单元，用来承载被分配Pod的运行，是Pod运行的宿主机。运行docker eninge服务，守护进程kunelet及负载均衡器kube-proxy。</li>
-<li>pod：运行于Node节点上，若干相关容器的组合。Pod内包含的容器运行在同一宿主机上，使用相同的网络命名空间、IP地址和端口，能够通过localhost进行通信。Pod是Kurbernetes进行创建、调度和管理的最小单位，它提供了比容器更高层次的抽象，使得部署和管理更加灵活。一个Pod可以包含一个容器或者多个相关容器。</li>
-<li>label：Kubernetes中的Label实质是一系列的Key/Value键值对，其中key与value可自定义。Label可以附加到各种资源对象上，如Node、Pod、Service、RC等。一个资源对象可以定义任意数量的Label，同一个Label也可以被添加到任意数量的资源对象上去。Kubernetes通过Label Selector（标签选择器）查询和筛选资源对象。</li>
-<li>Replication Controller：Replication Controller用来管理Pod的副本，保证集群中存在指定数量的Pod副本。集群中副本的数量大于指定数量，则会停止指定数量之外的多余容器数量。反之，则会启动少于指定数量个数的容器，保证数量不变。Replication Controller是实现弹性伸缩、动态扩容和滚动升级的核心。</li>
-<li>Deployment：Deployment在内部使用了RS来实现目的，Deployment相当于RC的一次升级，其最大的特色为可以随时获知当前Pod的部署进度。</li>
-<li>HPA（Horizontal Pod Autoscaler）：Pod的横向自动扩容，也是Kubernetes的一种资源，通过追踪分析RC控制的所有Pod目标的负载变化情况，来确定是否需要针对性的调整Pod副本数量。</li>
-<li>Service：Service定义了Pod的逻辑集合和访问该集合的策略，是真实服务的抽象。Service提供了一个统一的服务访问入口以及服务代理和发现机制，关联多个相同Label的Pod，用户不需要了解后台Pod是如何运行。</li>
-<li>Volume：Volume是Pod中能够被多个容器访问的共享目录，Kubernetes中的Volume是定义在Pod上，可以被一个或多个Pod中的容器挂载到某个目录下。</li>
-<li>Namespace：Namespace用于实现多租户的资源隔离，可将集群内部的资源对象分配到不同的Namespace中，形成逻辑上的不同项目、小组或用户组，便于不同的Namespace在共享使用整个集群的资源的同时还能被分别管理。</li>
-</ul>
-<h2 id="K8s-常用命令"><a href="#K8s-常用命令" class="headerlink" title="K8s 常用命令"></a>K8s 常用命令</h2><h3 id="kubectl"><a href="#kubectl" class="headerlink" title="kubectl"></a>kubectl</h3><hr>
-<p>kubectl 是 Kubernetes 的命令行工具（CLI），是 Kubernetes 用户和管理员必备的管理工具。<br>kubectl 提供了大量的子命令，方便管理 Kubernetes 集群中的各种功能。这里不再罗列各种子命令的格式，而是介绍下如何查询命令的帮助</p>
+<h2 id="Middle-Level-Questions"><a href="#Middle-Level-Questions" class="headerlink" title="Middle Level Questions"></a>Middle Level Questions</h2><h3 id="描述Linux下文件删除的原理"><a href="#描述Linux下文件删除的原理" class="headerlink" title="描述Linux下文件删除的原理"></a>描述Linux下文件删除的原理</h3><p>Linux系统是通过link的数量来控制文件删除的，只有当一个文件不存在任何link的时候，这个文件才会被删除。一般来说每个文件两个link计数器来控制i_count和i_nlink。当一个文件被一个程序占用的时候i_count就加1。当文件的硬链接多一个的时候i_nlink也加1。删除一个文件，就是让这个文件，没有进程占用，同时i_link数量为0。</p>
+<h3 id="请简述基础正则表达式grep高级参数的使用"><a href="#请简述基础正则表达式grep高级参数的使用" class="headerlink" title="请简述基础正则表达式grep高级参数的使用"></a>请简述基础正则表达式grep高级参数的使用</h3><p>常用参数：</p>
+<p>-v排除匹配内容，</p>
+<p>-e支持扩展的正则表达式，</p>
+<p>-i忽略大小写，</p>
+<p>-o输出匹配的内容（只是一块，不是行），</p>
+<p>–color=auto 匹配内容显示颜色，</p>
+<p>-n 在行首显示行号。</p>
+<p>特殊字符注意事项：</p>
+<p>^(尖括号)word ：表示搜索以word开头的内容。</p>
+<p>word$ 表示搜索以word结尾的内容。</p>
+<p>^$    表示的是空行，不是空格。</p>
+<p>.     代表且只能代表任意一个字符。非正则表达式其他功能（当前目录，加载文件）</p>
+<p>/     转义字符，让有着特殊身份意义的字符，脱掉马甲，还原原型。例如.只表示原始小数点意义。</p>
 <ul>
-<li>kubectl -h 查看子命令列表</li>
-<li>kubectl options 查看全局选项</li>
-<li>kubectl <command> –help 查看子命令的帮助</li>
-<li>kubectl [command] [PARAMS] -o=<format> 设置输出格式（如 json、yaml、jsonpath 等）</li>
-<li>kubectl explain [RESOURCE] 查看资源的定义</li>
+<li>   表示重复0个或多个前面的一个字符。不代表所有。</li>
 </ul>
-<hr>
-<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>使用 kubectl 的第一步是配置 Kubernetes 集群以及认证方式，包括</p>
-<ul>
-<li>cluster 信息：Kubernetes server 地址</li>
-<li>用户信息：用户名、密码或密钥</li>
-<li>Context：cluster、用户信息以及 Namespace 的组合</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kubectl config set-credentials myself --username=admin --password=secret</span><br><span class="line">kubectl config set-cluster local-server --server=http://localhost:8080</span><br><span class="line">kubectl config set-context default-context --cluster=local-server --user=myself --namespace=default</span><br><span class="line">kubectl config use-context default-context</span><br><span class="line">kubectl config view</span><br></pre></td></tr></table></figure>
+<p>.*   表示匹配所有的字符。^.*表示以任意字符开头。</p>
+<p>[任意字符如abc] 匹配字符集内任意一个字符[a-z]。 [^abc] ^在中括号里面是非的意思，不包含之意。意思就是不包含a或b或c的行。</p>
+<p>{n，m} 表示重复n到m次前一个字符。｛n｝至少n次，多了不限。｛n｝N次，｛，m｝至多m次，少了不限。</p>
+<p>注：使用grep或sed要对｛｝转义。即｛｝.egrep就不需要转义了。</p>
+<h3 id="请简述基础正则表达式sed高级参数的使用"><a href="#请简述基础正则表达式sed高级参数的使用" class="headerlink" title="请简述基础正则表达式sed高级参数的使用"></a>请简述基础正则表达式sed高级参数的使用</h3><p>解答：</p>
+<p>-n取消默认输出</p>
+<p>-p 打印</p>
+<p>-d删除</p>
+<p>-e允许多项编辑</p>
+<p>sed取行，要特别注意sed -n ‘s###g’ filename 的使用，sed的( )的功能可以记住正则表达式的一部分，其中，为第一个记住的模式即第一个小括号中的匹配内容，第二记住的模式，即第二个小括号中的匹配内容，sed最多可以记住9个。</p>
+<p>实际字符的选取最好要唯一，正则表达式是贪婪的，总是尽可能的匹配更远的符合匹配的内容。另外注意字符串中的空格。</p>
+<h2 id="Hard-Level-Questions"><a href="#Hard-Level-Questions" class="headerlink" title="Hard Level Questions"></a>Hard Level Questions</h2>
     </div>
 
     
@@ -383,8 +427,7 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/tech/" rel="tag"># tech</a>
-              <a href="/tags/k8s/" rel="tag"># k8s</a>
-              <a href="/tags/container/" rel="tag"># container</a>
+              <a href="/tags/shell/" rel="tag"># shell</a>
               <a href="/tags/Tech/" rel="tag"># Tech</a>
           </div>
 
@@ -392,14 +435,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/07/04/hexo-blog-setup/" rel="prev" title="Hexo_blog_setup">
-                  <i class="fa fa-chevron-left"></i> Hexo_blog_setup
+                <a href="/2023/08/08/202308_trap_for_tmpscripts/" rel="prev" title="Bash中处理临时文件的正确方法-trap/mktemp">
+                  <i class="fa fa-chevron-left"></i> Bash中处理临时文件的正确方法-trap/mktemp
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/09/21/docker_useful_commands/" rel="next" title="Docker useful commands">
-                  Docker useful commands <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>

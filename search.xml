@@ -41,84 +41,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Interview notes March 2022</title>
-    <url>/2022/03/10/Interview_notes_march_2022/</url>
-    <content><![CDATA[<h2 id="Application-support"><a href="#Application-support" class="headerlink" title="Application support"></a>Application support</h2><h3 id="Macbook-support"><a href="#Macbook-support" class="headerlink" title="Macbook support"></a>Macbook support</h3><p>how to reset Macbook</p>
-<blockquote>
-<p>reset SMC, Shift-Control-Option<br>reset PRAM,Command-Option-P-R<br>how to reinstall MacOS<br>Command-R<br>how to install package on MacOS<br>MDM,mobile device management<br>dmg,pkg(DMG like ISO,not installer; pkg is installer package)<br>apple store<br>how to manage softwares on MacOS<br>munki<br>MDM<br>how to deploy printer on MacOS<br>MDM<br>Macbook device management software - MDM</p>
-</blockquote>
-<h3 id="OKTA-intergation"><a href="#OKTA-intergation" class="headerlink" title="OKTA intergation"></a>OKTA intergation</h3><p>SSO context</p>
-<blockquote>
-<p>three types: secure web authentiation(SWA),SMAL2.0(Security Assertion Markup Language),OpenID connect<br>Authentiation and authorization<br>okta three patry intergation process</p>
-</blockquote>
-<ol>
-<li>okta - application - add new application - create new app</li>
-<li>platform - signon method - SMAL2.0 </li>
-<li>general setting - app name - sso url </li>
-<li>identity provider metadata - open file to find ID and add back to sso url</li>
-</ol>
-<p>okta advanced workflows</p>
-<h3 id="Google-admin"><a href="#Google-admin" class="headerlink" title="Google admin"></a>Google admin</h3><p>manage endusers license<br>manage intern and contractor account<br>forward leaver’s email,driver,calaner </p>
-<h2 id="Network-tech"><a href="#Network-tech" class="headerlink" title="Network tech"></a>Network tech</h2><p>VPN types</p>
-<ul>
-<li>IP security IPsesc</li>
-<li>SSL secure socket layer</li>
-<li>PPTP  point to point tunneling protocol</li>
-<li>L2TP layer 2 tunneling protocol </li>
-</ul>
-<p>how to configure IPsesc VPN</p>
-<ul>
-<li>site A</li>
-</ul>
-<ol>
-<li>Phase 1 proposal (Authentication)<ol>
-<li>Authentication method Using a Pre-shared Key</li>
-<li>My identifier</li>
-<li>Peer identifier</li>
-<li>Pre-Shared Key</li>
-</ol>
-</li>
-<li>Phase 1 proposal (Algorithms)<ol>
-<li>Encryption algorithm AES</li>
-<li>Hash algoritm</li>
-</ol>
-</li>
-<li>Phase 2<ol>
-<li>Local Network - Route the local LAN subnet</li>
-<li>remote network - The remote LAN subnet</li>
-</ol>
-</li>
-<li>Phase 2 proposal (SA/Key Exchange)<ol>
-<li>Protocol</li>
-<li>Encryption algorithms</li>
-<li>Hash algortihms</li>
-<li>PFS Key group</li>
-<li>Lifetime</li>
-</ol>
-</li>
-</ol>
-<ul>
-<li>site B<br>do the same as site A</li>
-</ul>
-<p>how to block loop in LAN</p>
-<blockquote>
-<p>enable STP<br>how to secure lan interface<br>enable 802.1x + radius<br>how to initize Cisco devices/APs</p>
-</blockquote>
-<h2 id="Script-and-coding"><a href="#Script-and-coding" class="headerlink" title="Script and coding"></a>Script and coding</h2><p>how to rollback git add locally<br>difference of git merge and git rebase<br>Shell script</p>
-<h2 id="Cloud-tech"><a href="#Cloud-tech" class="headerlink" title="Cloud tech"></a>Cloud tech</h2><p>AWS Load balance type<br>Introduce AWS feature you familiar with</p>
-<h2 id="IT-process-and-Project-management"><a href="#IT-process-and-Project-management" class="headerlink" title="IT process and Project management"></a>IT process and Project management</h2><p>How to initize project for office movement<br>Vendor management<br>Project schedule management</p>
-]]></content>
-      <categories>
-        <category>ideas,interview</category>
-      </categories>
-      <tags>
-        <tag>ideas,interview,面试</tag>
-        <tag>shell</tag>
-        <tag>Tech</tag>
-        <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kubernetes 入门基础</title>
     <url>/2022/09/20/Kubernetes_from_zero/</url>
     <content><![CDATA[<h1 id="Kubernetes-入门基础"><a href="#Kubernetes-入门基础" class="headerlink" title="Kubernetes 入门基础"></a>Kubernetes 入门基础</h1><p><strong>Kubernetes Components Architecture</strong><br><img src="/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg" alt="image"></p>
@@ -262,69 +184,6 @@
         <tag>tech</tag>
         <tag>devops</tag>
         <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>个人职业生涯短记 personal career path</title>
-    <url>/2023/05/15/career_path/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><blockquote>
-<p>写在技术大牛陈皓离世之际，惊闻噩耗年仅47岁大牛陈皓离我们而去，死于心梗。<br>人的一生总有终点，我们能做的就是不断的总结自己的经验，提高自己，分享自己的知识和观点</p>
-</blockquote>
-<h1 id="13年IT职业生涯概览"><a href="#13年IT职业生涯概览" class="headerlink" title="13年IT职业生涯概览"></a>13年IT职业生涯概览</h1><ul>
-<li>第一份工作 IBM-UOB 上海数据中心项目<br>学习了解到一个数据中心从无到有的过程，各个供应商的协作，线路设备的上架，24*7运维环境的要求及监控</li>
-</ul>
-<hr>
-<ul>
-<li>CSM customer support 项目<br>真正从一个入门的IT engineer到独自负责一个客户现场，从helpdesk基础的工作到服务器和网络运维，从一个内向不会沟通的小伙到如何管理客户的需求和期望值</li>
-</ul>
-<hr>
-<ul>
-<li>ASOS customer 项目<br>这是一个真正系统学习到了一个项目交付运维流程，基于前人研究出的理论基础，利用ITIL知识体系来管理项目</li>
-</ul>
-<hr>
-<ul>
-<li>Marin IT<br>这个第一个开拓眼界的职位，在这个硅谷互联网公司接触到了各类技术大牛，技术上接触到Meraki基于云平台管理的网络厂商，给自己后来的技术转型带来决心</li>
-</ul>
-<hr>
-<ul>
-<li>SRE/DEVOPS<ul>
-<li>这个是一个实现起初梦想的职位，一个人管理上千台服务器，维护整个产品平台，如何实现高度自动化，让机器代替人工。</li>
-<li>各类运维自动化工具，各类监控工具</li>
-<li>云平台，容器化技术，更高效的使用物理资源</li>
-<li>根据产品需求开发高度持续集成持续交付工具</li>
-<li>一个高效的团队如何运转，不同团队之间如何协作</li>
-</ul>
-</li>
-</ul>
-<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p><strong>技术之路永无止境</strong></p>
-<p><code>Never stop learning</code> - From Yushin!</p>
-]]></content>
-      <categories>
-        <category>engineering</category>
-      </categories>
-      <tags>
-        <tag>developer</tag>
-        <tag>IT</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>人生啊，多少感慨</title>
-    <url>/2023/05/05/daily_memo/</url>
-    <content><![CDATA[<p>DATE: 18 May 2023</p>
-<blockquote>
-<p>倘若人生还有你珍惜的人便是幸福 - 电影《永远的托词》</p>
-</blockquote>
-<p>DATE: 24 May 2023</p>
-<blockquote>
-<p>请问：自由的味道是什么，人生三十年仍未知</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>memo</category>
-      </categories>
-      <tags>
-        <tag>memo</tag>
-        <tag>感想</tag>
       </tags>
   </entry>
   <entry>
@@ -546,6 +405,104 @@
       </tags>
   </entry>
   <entry>
+    <title>人生啊，多少感慨</title>
+    <url>/2023/05/05/daily_memo/</url>
+    <content><![CDATA[<p>DATE: 18 May 2023</p>
+<blockquote>
+<p>倘若人生还有你珍惜的人便是幸福 - 电影《永远的托词》</p>
+</blockquote>
+<p>DATE: 24 May 2023</p>
+<blockquote>
+<p>请问：自由的味道是什么，人生三十年仍未知</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>memo</category>
+      </categories>
+      <tags>
+        <tag>memo</tag>
+        <tag>感想</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Interview notes March 2022</title>
+    <url>/2022/03/10/Interview_notes_march_2022/</url>
+    <content><![CDATA[<h2 id="Application-support"><a href="#Application-support" class="headerlink" title="Application support"></a>Application support</h2><h3 id="Macbook-support"><a href="#Macbook-support" class="headerlink" title="Macbook support"></a>Macbook support</h3><p>how to reset Macbook</p>
+<blockquote>
+<p>reset SMC, Shift-Control-Option<br>reset PRAM,Command-Option-P-R<br>how to reinstall MacOS<br>Command-R<br>how to install package on MacOS<br>MDM,mobile device management<br>dmg,pkg(DMG like ISO,not installer; pkg is installer package)<br>apple store<br>how to manage softwares on MacOS<br>munki<br>MDM<br>how to deploy printer on MacOS<br>MDM<br>Macbook device management software - MDM</p>
+</blockquote>
+<h3 id="OKTA-intergation"><a href="#OKTA-intergation" class="headerlink" title="OKTA intergation"></a>OKTA intergation</h3><p>SSO context</p>
+<blockquote>
+<p>three types: secure web authentiation(SWA),SMAL2.0(Security Assertion Markup Language),OpenID connect<br>Authentiation and authorization<br>okta three patry intergation process</p>
+</blockquote>
+<ol>
+<li>okta - application - add new application - create new app</li>
+<li>platform - signon method - SMAL2.0 </li>
+<li>general setting - app name - sso url </li>
+<li>identity provider metadata - open file to find ID and add back to sso url</li>
+</ol>
+<p>okta advanced workflows</p>
+<h3 id="Google-admin"><a href="#Google-admin" class="headerlink" title="Google admin"></a>Google admin</h3><p>manage endusers license<br>manage intern and contractor account<br>forward leaver’s email,driver,calaner </p>
+<h2 id="Network-tech"><a href="#Network-tech" class="headerlink" title="Network tech"></a>Network tech</h2><p>VPN types</p>
+<ul>
+<li>IP security IPsesc</li>
+<li>SSL secure socket layer</li>
+<li>PPTP  point to point tunneling protocol</li>
+<li>L2TP layer 2 tunneling protocol </li>
+</ul>
+<p>how to configure IPsesc VPN</p>
+<ul>
+<li>site A</li>
+</ul>
+<ol>
+<li>Phase 1 proposal (Authentication)<ol>
+<li>Authentication method Using a Pre-shared Key</li>
+<li>My identifier</li>
+<li>Peer identifier</li>
+<li>Pre-Shared Key</li>
+</ol>
+</li>
+<li>Phase 1 proposal (Algorithms)<ol>
+<li>Encryption algorithm AES</li>
+<li>Hash algoritm</li>
+</ol>
+</li>
+<li>Phase 2<ol>
+<li>Local Network - Route the local LAN subnet</li>
+<li>remote network - The remote LAN subnet</li>
+</ol>
+</li>
+<li>Phase 2 proposal (SA/Key Exchange)<ol>
+<li>Protocol</li>
+<li>Encryption algorithms</li>
+<li>Hash algortihms</li>
+<li>PFS Key group</li>
+<li>Lifetime</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>site B<br>do the same as site A</li>
+</ul>
+<p>how to block loop in LAN</p>
+<blockquote>
+<p>enable STP<br>how to secure lan interface<br>enable 802.1x + radius<br>how to initize Cisco devices/APs</p>
+</blockquote>
+<h2 id="Script-and-coding"><a href="#Script-and-coding" class="headerlink" title="Script and coding"></a>Script and coding</h2><p>how to rollback git add locally<br>difference of git merge and git rebase<br>Shell script</p>
+<h2 id="Cloud-tech"><a href="#Cloud-tech" class="headerlink" title="Cloud tech"></a>Cloud tech</h2><p>AWS Load balance type<br>Introduce AWS feature you familiar with</p>
+<h2 id="IT-process-and-Project-management"><a href="#IT-process-and-Project-management" class="headerlink" title="IT process and Project management"></a>IT process and Project management</h2><p>How to initize project for office movement<br>Vendor management<br>Project schedule management</p>
+]]></content>
+      <categories>
+        <category>ideas,interview</category>
+      </categories>
+      <tags>
+        <tag>ideas,interview,面试</tag>
+        <tag>shell</tag>
+        <tag>Tech</tag>
+        <tag>Life</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo Next(v8.7.0)如何边栏添加最近更新文章</title>
     <url>/2021/08/20/hexo-sidebar/</url>
     <content><![CDATA[<h2 id="创建自定义文件"><a href="#创建自定义文件" class="headerlink" title="创建自定义文件"></a>创建自定义文件</h2><p>在新建文件yoursite/source/_data/sidebar.njk,添加以下内容</p>
@@ -562,6 +519,49 @@
       </categories>
       <tags>
         <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>个人职业生涯短记 personal career path</title>
+    <url>/2023/05/15/career_path/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><blockquote>
+<p>写在技术大牛陈皓离世之际，惊闻噩耗年仅47岁大牛陈皓离我们而去，死于心梗。<br>人的一生总有终点，我们能做的就是不断的总结自己的经验，提高自己，分享自己的知识和观点</p>
+</blockquote>
+<h1 id="13年IT职业生涯概览"><a href="#13年IT职业生涯概览" class="headerlink" title="13年IT职业生涯概览"></a>13年IT职业生涯概览</h1><ul>
+<li>第一份工作 IBM-UOB 上海数据中心项目<br>学习了解到一个数据中心从无到有的过程，各个供应商的协作，线路设备的上架，24*7运维环境的要求及监控</li>
+</ul>
+<hr>
+<ul>
+<li>CSM customer support 项目<br>真正从一个入门的IT engineer到独自负责一个客户现场，从helpdesk基础的工作到服务器和网络运维，从一个内向不会沟通的小伙到如何管理客户的需求和期望值</li>
+</ul>
+<hr>
+<ul>
+<li>ASOS customer 项目<br>这是一个真正系统学习到了一个项目交付运维流程，基于前人研究出的理论基础，利用ITIL知识体系来管理项目</li>
+</ul>
+<hr>
+<ul>
+<li>Marin IT<br>这个第一个开拓眼界的职位，在这个硅谷互联网公司接触到了各类技术大牛，技术上接触到Meraki基于云平台管理的网络厂商，给自己后来的技术转型带来决心</li>
+</ul>
+<hr>
+<ul>
+<li>SRE/DEVOPS<ul>
+<li>这个是一个实现起初梦想的职位，一个人管理上千台服务器，维护整个产品平台，如何实现高度自动化，让机器代替人工。</li>
+<li>各类运维自动化工具，各类监控工具</li>
+<li>云平台，容器化技术，更高效的使用物理资源</li>
+<li>根据产品需求开发高度持续集成持续交付工具</li>
+<li>一个高效的团队如何运转，不同团队之间如何协作</li>
+</ul>
+</li>
+</ul>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p><strong>技术之路永无止境</strong></p>
+<p><code>Never stop learning</code> - From Yushin!</p>
+]]></content>
+      <categories>
+        <category>engineering</category>
+      </categories>
+      <tags>
+        <tag>developer</tag>
+        <tag>IT</tag>
       </tags>
   </entry>
   <entry>
@@ -590,124 +590,6 @@
       <tags>
         <tag>tech</tag>
         <tag>personal</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux下regex匹配高级用法</title>
-    <url>/2021/10/16/linux-regex-advance/</url>
-    <content><![CDATA[<ul>
-<li><a href="#%E8%83%8C%E6%99%AF">背景</a></li>
-<li><a href="#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95">常用方法</a></li>
-<li><a href="#xargs%E7%94%A8%E6%B3%95">xargs用法</a><ul>
-<li><a href="#xargs%E5%8F%82%E6%95%B0">xargs参数</a></li>
-<li><a href="#xargs%E5%91%BD%E4%BB%A4%E4%B8%8E%E7%AE%A1%E9%81%93%E7%AC%A6%E7%9A%84%E5%8C%BA%E5%88%AB">xargs命令与管道符的区别：</a></li>
-</ul>
-</li>
-<li><a href="#find%E4%BD%BF%E7%94%A8">Find使用</a><ul>
-<li><a href="#find-%E5%90%84%E5%8F%82%E6%95%B0performance%E6%AF%94%E8%BE%83">find 各参数performance比较</a></li>
-<li><a href="#%E5%8C%BA%E5%88%ABfind--exec-and-find--xargs">区别find -exec and find | xargs</a><ul>
-<li><a href="#%E9%80%80%E5%87%BA%E4%BB%A3%E7%A0%81">退出代码</a></li>
-<li><a href="#%E6%A1%88%E4%BE%8B">案例</a><ul>
-<li><a href="#find--exec">find -exec</a></li>
-<li><a href="#find--xargs">find | xargs</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#find-%E7%BB%93%E8%AE%BA">Find 结论</a><ul>
-<li><a href="#%E5%8F%82%E6%95%B0%E7%9A%84%E5%A4%9A%E5%B0%91">参数的多少</a></li>
-<li><a href="#find--exec-vs-find--xargs">find -exec vs find | xargs</a></li>
-</ul>
-</li>
-<li><a href="#reference">reference</a><ul>
-<li><a href="#find%E5%B1%80%E9%99%90%E6%80%A7">find局限性</a></li>
-</ul>
-</li>
-<li><a href="#ls--grepegrep--xargs">ls + grep/egrep + xargs</a><ul>
-<li><a href="#grep-and-egrep%E7%94%A8%E6%B3%95">grep and egrep用法</a><ul>
-<li><a href="#%E6%A1%88%E4%BE%8B-1">案例</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>最近由于需要大量处理csv数据文件，对于csv数据文件内容的处理当然优先选择python pandas module,但是对于服务器上海量文件的寻找,linux bash的原生态的find,grep比python显得优势更大。</p>
-<h1 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h1><ul>
-<li>find command</li>
-<li>ls + grep/egrep + xargs</li>
-</ul>
-<h1 id="xargs用法"><a href="#xargs用法" class="headerlink" title="xargs用法"></a>xargs用法</h1><p>先介绍xargs用法因为两者都需要用到 </p>
-<h2 id="xargs参数"><a href="#xargs参数" class="headerlink" title="xargs参数"></a>xargs参数</h2><p>xargs的默认动作是echo，默认分隔符为空白字符（空格，TAB，换行符）。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-0，--null：以\0作为分隔符，接受到的特殊字符将当作文本符号处理；</span><br><span class="line">-d：指定分段的分隔符，默认分隔字符为空白字符；</span><br><span class="line">-a，--arg-file=file：指定命令标准输入的来源文件；</span><br><span class="line">-e&#x27;FLAG&#x27; 或者-E &#x27;FLAG&#x27;：指定一个终止符号，当xargs命令匹配到第一个FLAG后，停止传递，并退出命令；</span><br><span class="line">-p：每当xargs执行一个分段时，询问一次用户是否执行；</span><br><span class="line">-t：表示先打印执行的命令再输出；</span><br><span class="line">-n NUM：表示一个分段包含的参数个数，参数之间以分隔符隔开，默认是将所有的参数当作一个分段输出；</span><br><span class="line">-i：用于将分段分批传递给其后的&#123;&#125;进行输出，分段会替换&#123;&#125;所在的位置进行输出；</span><br><span class="line">-I &quot;FLAG&quot;：可指定分段的替换符号，分段会分批替换到符号所在的位置进行输出执行；</span><br><span class="line">-L：指定每次执行的最大的非空行的行数；</span><br></pre></td></tr></table></figure>
-<h2 id="xargs命令与管道符的区别："><a href="#xargs命令与管道符的区别：" class="headerlink" title="xargs命令与管道符的区别："></a>xargs命令与管道符的区别：</h2><p>管道符| 是将前一个命令的标准输出作为后一个命令的标准输入耳使用；而xargs命令是将前一个命令的标准输出作为后一个命令的参数而使用</p>
-<h1 id="Find使用"><a href="#Find使用" class="headerlink" title="Find使用"></a>Find使用</h1><p>对于常用的,比如我想寻找一些文件然后cp到特定路径下面</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">find path -name &quot;yourname*.csv&quot; -exec command &#123;&#125; /tmp/test/ \;</span><br></pre></td></tr></table></figure>
-
-<h2 id="find-各参数performance比较"><a href="#find-各参数performance比较" class="headerlink" title="find 各参数performance比较"></a>find 各参数performance比较</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">du -hd0</span><br><span class="line"> 37G    .</span><br><span class="line"></span><br><span class="line"># &#x27;time&#x27; will print the total time taken for the command to finish</span><br><span class="line"></span><br><span class="line"># time find -exec \;</span><br><span class="line">time find . -name \*.php -type f -exec grep -Hn &#x27;$test&#x27; &#123;&#125; \;</span><br><span class="line">real    1m24.433s</span><br><span class="line">user    0m29.022s</span><br><span class="line">sys     0m43.304s</span><br><span class="line"></span><br><span class="line"># find -exec \+</span><br><span class="line">time find . -name \*.php -type f -exec grep -Hn &#x27;$test&#x27; &#123;&#125; \+</span><br><span class="line">real    0m13.050s</span><br><span class="line">user    0m5.315s</span><br><span class="line">sys     0m2.179s</span><br><span class="line"></span><br><span class="line"># find | xargs -n1</span><br><span class="line">time find . -name \*.php -type f -print0 | xargs -0 -n1 grep -Hn &#x27;$test&#x27;</span><br><span class="line">real    0m55.159s</span><br><span class="line">user    0m23.692s</span><br><span class="line">sys     0m28.618s</span><br><span class="line"></span><br><span class="line"># find | xargs</span><br><span class="line">time find . -name \*.php -type f -print0 | xargs -0 -grep -Hn &#x27;$test&#x27;</span><br><span class="line">real    0m12.047s</span><br><span class="line">user    0m4.997s</span><br><span class="line">sys     0m3.593s</span><br></pre></td></tr></table></figure>
-<p>得出结论find + and xargs 优于其他因为没有过多的fork和exec，减少了I/O的读写时间，可以看出大概快了6倍</p>
-<h2 id="区别find-exec-and-find-xargs"><a href="#区别find-exec-and-find-xargs" class="headerlink" title="区别find -exec and find | xargs"></a>区别find -exec and find | xargs</h2><h3 id="退出代码"><a href="#退出代码" class="headerlink" title="退出代码"></a>退出代码</h3><ul>
-<li>find -exec 返回退出代码在本身进程</li>
-<li>find | xargs 返回退出代码在子进程</li>
-</ul>
-<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><h4 id="find-exec"><a href="#find-exec" class="headerlink" title="find -exec"></a>find -exec</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">find . -name \*.php -type f -exec php -l &#123;&#125; \;</span><br><span class="line">...</span><br><span class="line">PHP Parse error:  syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line"></span><br><span class="line">Parse error: syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line">Errors parsing ./test.php</span><br><span class="line">...</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/network/user-new.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/network/users.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/network.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-discussion.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-general.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-head.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-media.php</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>可以看出尽管命令php -l报错 exit 1但是find -exec仍旧执行到最后且exit 0</p>
-<h4 id="find-xargs"><a href="#find-xargs" class="headerlink" title="find | xargs"></a>find | xargs</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">find . -name \*.php -type f -print0 | xargs -0 -n1 php -l</span><br><span class="line">...</span><br><span class="line">PHP Parse error:  syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line"></span><br><span class="line">Parse error: syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line">Errors parsing ./test.php</span><br></pre></td></tr></table></figure>
-
-<p>你可以看出命令立即退出，这是因为子进程退出了这个是piping command设计的原理</p>
-<h1 id="Find-结论"><a href="#Find-结论" class="headerlink" title="Find 结论"></a>Find 结论</h1><h2 id="参数的多少"><a href="#参数的多少" class="headerlink" title="参数的多少"></a>参数的多少</h2><p>find和 xargs -n1 是否需要使用; 如果子目录可以使用多个参数使用 +，如果子命令只支持一个参数使用;和-n1</p>
-<h2 id="find-exec-vs-find-xargs"><a href="#find-exec-vs-find-xargs" class="headerlink" title="find -exec vs find | xargs"></a>find -exec vs find | xargs</h2><p>find -exec 会继续执行没个文件尽管-exec报错，但find | xargs 会立即退出当子进程有错时，取决于你的需求</p>
-<h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><p><a href="https://www.everythingcli.org/find-exec-vs-find-xargs/">https://www.everythingcli.org/find-exec-vs-find-xargs/</a></p>
-<h2 id="find局限性"><a href="#find局限性" class="headerlink" title="find局限性"></a>find局限性</h2><p>但是你会发现find也有其局限性</p>
-<ul>
-<li>对于regex匹配很有限</li>
-<li>输出不友好，比如./yourname.csv，你需要进行二次处理输出结果<br>有此我们引出第二种用法</li>
-</ul>
-<h1 id="ls-grep-egrep-xargs"><a href="#ls-grep-egrep-xargs" class="headerlink" title="ls + grep/egrep + xargs"></a>ls + grep/egrep + xargs</h1><ul>
-<li>ls 列出需要文件</li>
-<li>grep 运行regex正则匹配</li>
-<li>xargs 执行命令</li>
-</ul>
-<h2 id="grep-and-egrep用法"><a href="#grep-and-egrep用法" class="headerlink" title="grep and egrep用法"></a>grep and egrep用法</h2><p>匹配7位字母或者数字keyword</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">grep &#x27;^[a-zA-Z0-9]\&#123;7\&#125;$&#x27; /usr/share/wordlists/rockyou.txt</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">egrep &#x27;^.&#123;7&#125;$&#x27; /usr/share/wordlists/rockyou.txt</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="案例-1"><a href="#案例-1" class="headerlink" title="案例"></a>案例</h3><p>找到一些特定文件名并复制到其他目录下，folder存在很多类似的文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2019-12-01_db5xtqje90.csv</span><br><span class="line">_2019-12-01_db5xtqje90.csv</span><br><span class="line">_2019-12-01_db5xtqje90_processed.csv</span><br><span class="line">2019-12-01_db5xtqje90.csv.dbfile.txt</span><br><span class="line">2019-12-01_db5xtqje90_error.csv</span><br><span class="line"></span><br><span class="line">ls | egrep &#x27;^.&#123;40&#125;$&#x27; | grep Revenue_2019-12 | xargs  -d &quot;\n&quot; cp -t /tmp/test/</span><br><span class="line"></span><br><span class="line"># egrep &#x27;^.&#123;40&#125;$&#x27; 匹配40位任意字符长度的文件名</span><br><span class="line"># xargs  -d &quot;\n&quot;  指定分隔符号为回车 </span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>shell</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>shell</tag>
-        <tag>regex</tag>
-        <tag>python</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux system admin notes</title>
-    <url>/2022/04/04/linux_systemadmin/</url>
-    <content><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="linunx-环境变量"><a href="#linunx-环境变量" class="headerlink" title="linunx 环境变量"></a>linunx 环境变量</h2><h2 id="linunx-文件权限"><a href="#linunx-文件权限" class="headerlink" title="linunx 文件权限"></a>linunx 文件权限</h2><p><code>umask</code>  default 022</p>
-<h3 id="shell-基础"><a href="#shell-基础" class="headerlink" title="shell 基础"></a>shell 基础</h3><h4 id="结构化命令"><a href="#结构化命令" class="headerlink" title="结构化命令"></a>结构化命令</h4><p>if</p>
-<p>for<br>while<br>until<br>break<br>continue</p>
-<h4 id="shell用户输入"><a href="#shell用户输入" class="headerlink" title="shell用户输入"></a>shell用户输入</h4><h3 id="控制shell脚本"><a href="#控制shell脚本" class="headerlink" title="控制shell脚本"></a>控制shell脚本</h3><h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function name &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">name () &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="退出状态"><a href="#退出状态" class="headerlink" title="退出状态"></a>退出状态</h4><p><code>$?</code></p>
-]]></content>
-      <categories>
-        <category>shell,linux</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>shell</tag>
-        <tag>linux</tag>
         <tag>Tech</tag>
       </tags>
   </entry>
@@ -793,45 +675,6 @@
       <tags>
         <tag>network</tag>
         <tag>kubernetes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>国民对于疫情后经济复苏信心的丢失，路在何方</title>
-    <url>/2023/05/17/memo_2023may/</url>
-    <content><![CDATA[<h2 id="新闻要点"><a href="#新闻要点" class="headerlink" title="新闻要点"></a>新闻要点</h2><ul>
-<li>国内各种经济数据下滑，楼市价格加速下跌</li>
-<li>年轻人失业率创新高<br><img src="/memo_2023may/china_data_may.png" alt="image"><br>国内一季度各类数据如期下滑，尽管官方给出各种掩饰也无法抹去其背后真正原因国民对于经济复苏的信心的丢失<br>楼市房价的加速下跌，包括一二线城市，提前还贷，银行贷款放不出去，央行继续印钞，承接的还是国企各类城投，资金无法流向市场<blockquote>
-<p>北京方面，北京4月份二手房网签13928套，环比下降了40.5%。上海二手房成交量4月份不到1.8万套，相比于3月份的2.4万套环比下降了26%，比2月份的1.9万套还要低。</p>
-</blockquote>
-</li>
-</ul>
-<blockquote>
-<p>4月份，城镇失业数据达到了年度最低的5.2，并且已经接近了疫前数据。但是与此同时，16-24岁青年失业率首次突破20%。</p>
-</blockquote>
-<h2 id="究其背后原因"><a href="#究其背后原因" class="headerlink" title="究其背后原因"></a>究其背后原因</h2><ul>
-<li><p>国内风气的歪曲，都想赚快钱，无人愿意去干实业支撑国家运转，踏踏实实的工作，谁都想撞到风口捞一把，管理机构不对于风气的正确引导，恐怕难以改变现状，案例：</p>
-<ul>
-<li>挖呀挖呀黄老师突然网红，一周收入百万十年收入，辞职下海。</li>
-<li>格力董密孟羽童，一个自以为格力内定接班人被开除，吐槽董秘都是干的杂活，兴趣在直播。</li>
-</ul>
-</li>
-<li><p>环境太优渥，年轻人自命不凡，没有经历过社会的洗礼，“00后整顿职场”的新闻经常看到，任性离职，受不得气</p>
-<ul>
-<li>孟羽童案例<ul>
-<li>从她个人简历来看家庭优渥，从小在国际学校读书一路保守，没有经历过国内高考的洗礼，不知道何为现实</li>
-<li>吐槽格力董秘就是一个打杂的活，当年同龄的女霸总们在干什么？董明珠离开单亲的孩子，寸步不离跟着经销商催账；张兰跑去国外打黑工，跟男人一起抗海鲜。<br><img src="/memo_2023may/mengyutong.png" alt="image"></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>memo</category>
-      </categories>
-      <tags>
-        <tag>memo</tag>
-        <tag>感想</tag>
       </tags>
   </entry>
   <entry>
@@ -1111,6 +954,124 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux下regex匹配高级用法</title>
+    <url>/2021/10/16/linux-regex-advance/</url>
+    <content><![CDATA[<ul>
+<li><a href="#%E8%83%8C%E6%99%AF">背景</a></li>
+<li><a href="#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95">常用方法</a></li>
+<li><a href="#xargs%E7%94%A8%E6%B3%95">xargs用法</a><ul>
+<li><a href="#xargs%E5%8F%82%E6%95%B0">xargs参数</a></li>
+<li><a href="#xargs%E5%91%BD%E4%BB%A4%E4%B8%8E%E7%AE%A1%E9%81%93%E7%AC%A6%E7%9A%84%E5%8C%BA%E5%88%AB">xargs命令与管道符的区别：</a></li>
+</ul>
+</li>
+<li><a href="#find%E4%BD%BF%E7%94%A8">Find使用</a><ul>
+<li><a href="#find-%E5%90%84%E5%8F%82%E6%95%B0performance%E6%AF%94%E8%BE%83">find 各参数performance比较</a></li>
+<li><a href="#%E5%8C%BA%E5%88%ABfind--exec-and-find--xargs">区别find -exec and find | xargs</a><ul>
+<li><a href="#%E9%80%80%E5%87%BA%E4%BB%A3%E7%A0%81">退出代码</a></li>
+<li><a href="#%E6%A1%88%E4%BE%8B">案例</a><ul>
+<li><a href="#find--exec">find -exec</a></li>
+<li><a href="#find--xargs">find | xargs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#find-%E7%BB%93%E8%AE%BA">Find 结论</a><ul>
+<li><a href="#%E5%8F%82%E6%95%B0%E7%9A%84%E5%A4%9A%E5%B0%91">参数的多少</a></li>
+<li><a href="#find--exec-vs-find--xargs">find -exec vs find | xargs</a></li>
+</ul>
+</li>
+<li><a href="#reference">reference</a><ul>
+<li><a href="#find%E5%B1%80%E9%99%90%E6%80%A7">find局限性</a></li>
+</ul>
+</li>
+<li><a href="#ls--grepegrep--xargs">ls + grep/egrep + xargs</a><ul>
+<li><a href="#grep-and-egrep%E7%94%A8%E6%B3%95">grep and egrep用法</a><ul>
+<li><a href="#%E6%A1%88%E4%BE%8B-1">案例</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>最近由于需要大量处理csv数据文件，对于csv数据文件内容的处理当然优先选择python pandas module,但是对于服务器上海量文件的寻找,linux bash的原生态的find,grep比python显得优势更大。</p>
+<h1 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h1><ul>
+<li>find command</li>
+<li>ls + grep/egrep + xargs</li>
+</ul>
+<h1 id="xargs用法"><a href="#xargs用法" class="headerlink" title="xargs用法"></a>xargs用法</h1><p>先介绍xargs用法因为两者都需要用到 </p>
+<h2 id="xargs参数"><a href="#xargs参数" class="headerlink" title="xargs参数"></a>xargs参数</h2><p>xargs的默认动作是echo，默认分隔符为空白字符（空格，TAB，换行符）。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-0，--null：以\0作为分隔符，接受到的特殊字符将当作文本符号处理；</span><br><span class="line">-d：指定分段的分隔符，默认分隔字符为空白字符；</span><br><span class="line">-a，--arg-file=file：指定命令标准输入的来源文件；</span><br><span class="line">-e&#x27;FLAG&#x27; 或者-E &#x27;FLAG&#x27;：指定一个终止符号，当xargs命令匹配到第一个FLAG后，停止传递，并退出命令；</span><br><span class="line">-p：每当xargs执行一个分段时，询问一次用户是否执行；</span><br><span class="line">-t：表示先打印执行的命令再输出；</span><br><span class="line">-n NUM：表示一个分段包含的参数个数，参数之间以分隔符隔开，默认是将所有的参数当作一个分段输出；</span><br><span class="line">-i：用于将分段分批传递给其后的&#123;&#125;进行输出，分段会替换&#123;&#125;所在的位置进行输出；</span><br><span class="line">-I &quot;FLAG&quot;：可指定分段的替换符号，分段会分批替换到符号所在的位置进行输出执行；</span><br><span class="line">-L：指定每次执行的最大的非空行的行数；</span><br></pre></td></tr></table></figure>
+<h2 id="xargs命令与管道符的区别："><a href="#xargs命令与管道符的区别：" class="headerlink" title="xargs命令与管道符的区别："></a>xargs命令与管道符的区别：</h2><p>管道符| 是将前一个命令的标准输出作为后一个命令的标准输入耳使用；而xargs命令是将前一个命令的标准输出作为后一个命令的参数而使用</p>
+<h1 id="Find使用"><a href="#Find使用" class="headerlink" title="Find使用"></a>Find使用</h1><p>对于常用的,比如我想寻找一些文件然后cp到特定路径下面</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">find path -name &quot;yourname*.csv&quot; -exec command &#123;&#125; /tmp/test/ \;</span><br></pre></td></tr></table></figure>
+
+<h2 id="find-各参数performance比较"><a href="#find-各参数performance比较" class="headerlink" title="find 各参数performance比较"></a>find 各参数performance比较</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">du -hd0</span><br><span class="line"> 37G    .</span><br><span class="line"></span><br><span class="line"># &#x27;time&#x27; will print the total time taken for the command to finish</span><br><span class="line"></span><br><span class="line"># time find -exec \;</span><br><span class="line">time find . -name \*.php -type f -exec grep -Hn &#x27;$test&#x27; &#123;&#125; \;</span><br><span class="line">real    1m24.433s</span><br><span class="line">user    0m29.022s</span><br><span class="line">sys     0m43.304s</span><br><span class="line"></span><br><span class="line"># find -exec \+</span><br><span class="line">time find . -name \*.php -type f -exec grep -Hn &#x27;$test&#x27; &#123;&#125; \+</span><br><span class="line">real    0m13.050s</span><br><span class="line">user    0m5.315s</span><br><span class="line">sys     0m2.179s</span><br><span class="line"></span><br><span class="line"># find | xargs -n1</span><br><span class="line">time find . -name \*.php -type f -print0 | xargs -0 -n1 grep -Hn &#x27;$test&#x27;</span><br><span class="line">real    0m55.159s</span><br><span class="line">user    0m23.692s</span><br><span class="line">sys     0m28.618s</span><br><span class="line"></span><br><span class="line"># find | xargs</span><br><span class="line">time find . -name \*.php -type f -print0 | xargs -0 -grep -Hn &#x27;$test&#x27;</span><br><span class="line">real    0m12.047s</span><br><span class="line">user    0m4.997s</span><br><span class="line">sys     0m3.593s</span><br></pre></td></tr></table></figure>
+<p>得出结论find + and xargs 优于其他因为没有过多的fork和exec，减少了I/O的读写时间，可以看出大概快了6倍</p>
+<h2 id="区别find-exec-and-find-xargs"><a href="#区别find-exec-and-find-xargs" class="headerlink" title="区别find -exec and find | xargs"></a>区别find -exec and find | xargs</h2><h3 id="退出代码"><a href="#退出代码" class="headerlink" title="退出代码"></a>退出代码</h3><ul>
+<li>find -exec 返回退出代码在本身进程</li>
+<li>find | xargs 返回退出代码在子进程</li>
+</ul>
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><h4 id="find-exec"><a href="#find-exec" class="headerlink" title="find -exec"></a>find -exec</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">find . -name \*.php -type f -exec php -l &#123;&#125; \;</span><br><span class="line">...</span><br><span class="line">PHP Parse error:  syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line"></span><br><span class="line">Parse error: syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line">Errors parsing ./test.php</span><br><span class="line">...</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/network/user-new.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/network/users.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/network.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-discussion.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-general.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-head.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-media.php</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>可以看出尽管命令php -l报错 exit 1但是find -exec仍旧执行到最后且exit 0</p>
+<h4 id="find-xargs"><a href="#find-xargs" class="headerlink" title="find | xargs"></a>find | xargs</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">find . -name \*.php -type f -print0 | xargs -0 -n1 php -l</span><br><span class="line">...</span><br><span class="line">PHP Parse error:  syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line"></span><br><span class="line">Parse error: syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line">Errors parsing ./test.php</span><br></pre></td></tr></table></figure>
+
+<p>你可以看出命令立即退出，这是因为子进程退出了这个是piping command设计的原理</p>
+<h1 id="Find-结论"><a href="#Find-结论" class="headerlink" title="Find 结论"></a>Find 结论</h1><h2 id="参数的多少"><a href="#参数的多少" class="headerlink" title="参数的多少"></a>参数的多少</h2><p>find和 xargs -n1 是否需要使用; 如果子目录可以使用多个参数使用 +，如果子命令只支持一个参数使用;和-n1</p>
+<h2 id="find-exec-vs-find-xargs"><a href="#find-exec-vs-find-xargs" class="headerlink" title="find -exec vs find | xargs"></a>find -exec vs find | xargs</h2><p>find -exec 会继续执行没个文件尽管-exec报错，但find | xargs 会立即退出当子进程有错时，取决于你的需求</p>
+<h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><p><a href="https://www.everythingcli.org/find-exec-vs-find-xargs/">https://www.everythingcli.org/find-exec-vs-find-xargs/</a></p>
+<h2 id="find局限性"><a href="#find局限性" class="headerlink" title="find局限性"></a>find局限性</h2><p>但是你会发现find也有其局限性</p>
+<ul>
+<li>对于regex匹配很有限</li>
+<li>输出不友好，比如./yourname.csv，你需要进行二次处理输出结果<br>有此我们引出第二种用法</li>
+</ul>
+<h1 id="ls-grep-egrep-xargs"><a href="#ls-grep-egrep-xargs" class="headerlink" title="ls + grep/egrep + xargs"></a>ls + grep/egrep + xargs</h1><ul>
+<li>ls 列出需要文件</li>
+<li>grep 运行regex正则匹配</li>
+<li>xargs 执行命令</li>
+</ul>
+<h2 id="grep-and-egrep用法"><a href="#grep-and-egrep用法" class="headerlink" title="grep and egrep用法"></a>grep and egrep用法</h2><p>匹配7位字母或者数字keyword</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">grep &#x27;^[a-zA-Z0-9]\&#123;7\&#125;$&#x27; /usr/share/wordlists/rockyou.txt</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">egrep &#x27;^.&#123;7&#125;$&#x27; /usr/share/wordlists/rockyou.txt</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="案例-1"><a href="#案例-1" class="headerlink" title="案例"></a>案例</h3><p>找到一些特定文件名并复制到其他目录下，folder存在很多类似的文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2019-12-01_db5xtqje90.csv</span><br><span class="line">_2019-12-01_db5xtqje90.csv</span><br><span class="line">_2019-12-01_db5xtqje90_processed.csv</span><br><span class="line">2019-12-01_db5xtqje90.csv.dbfile.txt</span><br><span class="line">2019-12-01_db5xtqje90_error.csv</span><br><span class="line"></span><br><span class="line">ls | egrep &#x27;^.&#123;40&#125;$&#x27; | grep Revenue_2019-12 | xargs  -d &quot;\n&quot; cp -t /tmp/test/</span><br><span class="line"></span><br><span class="line"># egrep &#x27;^.&#123;40&#125;$&#x27; 匹配40位任意字符长度的文件名</span><br><span class="line"># xargs  -d &quot;\n&quot;  指定分隔符号为回车 </span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>shell</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>regex</tag>
+        <tag>python</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux system admin notes</title>
+    <url>/2022/04/04/linux_systemadmin/</url>
+    <content><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="linunx-环境变量"><a href="#linunx-环境变量" class="headerlink" title="linunx 环境变量"></a>linunx 环境变量</h2><h2 id="linunx-文件权限"><a href="#linunx-文件权限" class="headerlink" title="linunx 文件权限"></a>linunx 文件权限</h2><p><code>umask</code>  default 022</p>
+<h3 id="shell-基础"><a href="#shell-基础" class="headerlink" title="shell 基础"></a>shell 基础</h3><h4 id="结构化命令"><a href="#结构化命令" class="headerlink" title="结构化命令"></a>结构化命令</h4><p>if</p>
+<p>for<br>while<br>until<br>break<br>continue</p>
+<h4 id="shell用户输入"><a href="#shell用户输入" class="headerlink" title="shell用户输入"></a>shell用户输入</h4><h3 id="控制shell脚本"><a href="#控制shell脚本" class="headerlink" title="控制shell脚本"></a>控制shell脚本</h3><h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function name &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">name () &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="退出状态"><a href="#退出状态" class="headerlink" title="退出状态"></a>退出状态</h4><p><code>$?</code></p>
+]]></content>
+      <categories>
+        <category>shell,linux</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>linux</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一文了解正则表达式</title>
     <url>/2022/05/10/regexr/</url>
     <content><![CDATA[<h1 id="一-正则表达式简介"><a href="#一-正则表达式简介" class="headerlink" title="一.正则表达式简介"></a>一.正则表达式简介</h1><ol>
@@ -1241,6 +1202,105 @@
       </categories>
       <tags>
         <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>一文让你shell从狗熊变英雄</title>
+    <url>/2023/08/13/shell_from_zero_to_hero./</url>
+    <content><![CDATA[<ul>
+<li><a href="#shell-from-zero-to-hero">Shell From Zero To Hero</a><ul>
+<li><a href="#simply-level-questions">Simply Level Questions</a><ul>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E7%B3%BB%E7%BB%9F%E4%BB%8E%E5%BC%80%E6%9C%BA%E5%88%B0%E7%99%BB%E9%99%86%E7%95%8C%E9%9D%A2%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B">描述Linux系统从开机到登陆界面的启动过程</a></li>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E8%BD%AF%E9%93%BE%E6%8E%A5%E5%92%8C%E7%A1%AC%E9%93%BE%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB">描述Linux下软链接和硬链接的区别</a></li>
+</ul>
+</li>
+<li><a href="#middle-level-questions">Middle Level Questions</a><ul>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4%E7%9A%84%E5%8E%9F%E7%90%86">描述Linux下文件删除的原理</a></li>
+<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fgrep%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式grep高级参数的使用</a></li>
+<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fsed%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式sed高级参数的使用</a></li>
+</ul>
+</li>
+<li><a href="#hard-level-questions">Hard Level Questions</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="Shell-From-Zero-To-Hero"><a href="#Shell-From-Zero-To-Hero" class="headerlink" title="Shell From Zero To Hero"></a>Shell From Zero To Hero</h1><h2 id="Simply-Level-Questions"><a href="#Simply-Level-Questions" class="headerlink" title="Simply Level Questions"></a>Simply Level Questions</h2><h3 id="描述Linux系统从开机到登陆界面的启动过程"><a href="#描述Linux系统从开机到登陆界面的启动过程" class="headerlink" title="描述Linux系统从开机到登陆界面的启动过程"></a>描述Linux系统从开机到登陆界面的启动过程</h3><ul>
+<li><p>开机BIOS自检，加载硬盘。</p>
+</li>
+<li><p>读取MBR,MBR引导。</p>
+</li>
+<li><p>grub引导菜单(Boot Loader)。</p>
+</li>
+<li><p>加载内核kernel。</p>
+</li>
+<li><p>启动init进程，依据inittab文件设定运行级别</p>
+</li>
+<li><p>init进程，执行rc.sysinit文件。</p>
+</li>
+<li><p>启动内核模块，执行不同级别的脚本程序。</p>
+</li>
+<li><p>执行/etc/rc.d/rc.local</p>
+</li>
+<li><p>启动mingetty，进入系统登陆界面。</p>
+</li>
+</ul>
+<h3 id="描述Linux下软链接和硬链接的区别"><a href="#描述Linux下软链接和硬链接的区别" class="headerlink" title="描述Linux下软链接和硬链接的区别"></a>描述Linux下软链接和硬链接的区别</h3><p>在Linux系统中，链接分为两种，一种是硬链接（Hard link），另一种称为符号链接或软链接（Symbolic Link）。</p>
+<ul>
+<li><p>默认不带参数的情况下，ln创建的是硬链接，带-s参数的ln命令创建的是软链接。</p>
+</li>
+<li><p>硬链接文件与源文件的inode节点号相同，而软链接文件的inode节点号，与源文件不同，</p>
+</li>
+<li><p>ln命令不能对目录创建硬链接，但可以创建软链接。对目录的软链接会经常使用到。</p>
+</li>
+<li><p>删除软链接文件，对源文件和硬链接文件无任何影响。</p>
+</li>
+<li><p>删除文件的硬链接文件，对源文件及软链接文件无任何影响。</p>
+</li>
+<li><p>删除链接文件的源文件，对硬链接文件无影响，会导致其软链接失效（红底白字闪烁状）。</p>
+</li>
+<li><p>同时删除源文件及其硬链接文件，整个文件才会被真正的删除。</p>
+</li>
+<li><p>很多硬件设备的快照功能，使用的就是类似硬链接的原理。</p>
+</li>
+<li><p>软链接可以跨文件系统，硬链接不可以跨文件系统。</p>
+</li>
+</ul>
+<h2 id="Middle-Level-Questions"><a href="#Middle-Level-Questions" class="headerlink" title="Middle Level Questions"></a>Middle Level Questions</h2><h3 id="描述Linux下文件删除的原理"><a href="#描述Linux下文件删除的原理" class="headerlink" title="描述Linux下文件删除的原理"></a>描述Linux下文件删除的原理</h3><p>Linux系统是通过link的数量来控制文件删除的，只有当一个文件不存在任何link的时候，这个文件才会被删除。一般来说每个文件两个link计数器来控制i_count和i_nlink。当一个文件被一个程序占用的时候i_count就加1。当文件的硬链接多一个的时候i_nlink也加1。删除一个文件，就是让这个文件，没有进程占用，同时i_link数量为0。</p>
+<h3 id="请简述基础正则表达式grep高级参数的使用"><a href="#请简述基础正则表达式grep高级参数的使用" class="headerlink" title="请简述基础正则表达式grep高级参数的使用"></a>请简述基础正则表达式grep高级参数的使用</h3><p>常用参数：</p>
+<p>-v排除匹配内容，</p>
+<p>-e支持扩展的正则表达式，</p>
+<p>-i忽略大小写，</p>
+<p>-o输出匹配的内容（只是一块，不是行），</p>
+<p>–color=auto 匹配内容显示颜色，</p>
+<p>-n 在行首显示行号。</p>
+<p>特殊字符注意事项：</p>
+<p>^(尖括号)word ：表示搜索以word开头的内容。</p>
+<p>word$ 表示搜索以word结尾的内容。</p>
+<p>^$    表示的是空行，不是空格。</p>
+<p>.     代表且只能代表任意一个字符。非正则表达式其他功能（当前目录，加载文件）</p>
+<p>/     转义字符，让有着特殊身份意义的字符，脱掉马甲，还原原型。例如.只表示原始小数点意义。</p>
+<ul>
+<li>   表示重复0个或多个前面的一个字符。不代表所有。</li>
+</ul>
+<p>.*   表示匹配所有的字符。^.*表示以任意字符开头。</p>
+<p>[任意字符如abc] 匹配字符集内任意一个字符[a-z]。 [^abc] ^在中括号里面是非的意思，不包含之意。意思就是不包含a或b或c的行。</p>
+<p>{n，m} 表示重复n到m次前一个字符。｛n｝至少n次，多了不限。｛n｝N次，｛，m｝至多m次，少了不限。</p>
+<p>注：使用grep或sed要对｛｝转义。即｛｝.egrep就不需要转义了。</p>
+<h3 id="请简述基础正则表达式sed高级参数的使用"><a href="#请简述基础正则表达式sed高级参数的使用" class="headerlink" title="请简述基础正则表达式sed高级参数的使用"></a>请简述基础正则表达式sed高级参数的使用</h3><p>解答：</p>
+<p>-n取消默认输出</p>
+<p>-p 打印</p>
+<p>-d删除</p>
+<p>-e允许多项编辑</p>
+<p>sed取行，要特别注意sed -n ‘s###g’ filename 的使用，sed的( )的功能可以记住正则表达式的一部分，其中，为第一个记住的模式即第一个小括号中的匹配内容，第二记住的模式，即第二个小括号中的匹配内容，sed最多可以记住9个。</p>
+<p>实际字符的选取最好要唯一，正则表达式是贪婪的，总是尽可能的匹配更远的符合匹配的内容。另外注意字符串中的空格。</p>
+<h2 id="Hard-Level-Questions"><a href="#Hard-Level-Questions" class="headerlink" title="Hard Level Questions"></a>Hard Level Questions</h2>]]></content>
+      <categories>
+        <category>shell</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>Tech</tag>
       </tags>
   </entry>
   <entry>
@@ -1843,224 +1903,6 @@
       </tags>
   </entry>
   <entry>
-    <title>shell变量高级篇</title>
-    <url>/2021/08/24/shell-variable-advance/</url>
-    <content><![CDATA[<p> <a href="#shell%E5%8F%98%E9%87%8F%E7%9A%84%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8">shell变量的高级应用</a></p>
-<ul>
-<li><a href="#%E5%8F%98%E9%87%8F%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2%E5%92%8C%E5%88%A0%E9%99%A4">变量内容替换和删除</a></li>
-<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86">字符串处理</a><ul>
-<li><a href="#%E8%AE%A1%E7%AE%97%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6">计算字符串长度</a></li>
-<li><a href="#%E8%8E%B7%E5%8F%96%E5%AD%90%E4%B8%B2%E5%9C%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BD%8D%E7%BD%AE">获取子串在字符串中索引的位置</a></li>
-<li><a href="#%E6%8F%90%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2">提取字符串</a></li>
-</ul>
-</li>
-<li><a href="#%E6%95%B0%E7%BB%84%E7%9A%84%E6%93%8D%E4%BD%9C">数组的操作</a><ul>
-<li><a href="#%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0">删除元素</a></li>
-<li><a href="#%E5%88%86%E7%89%87%E8%AE%BF%E9%97%AE">分片访问</a></li>
-<li><a href="#%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2">内容替换</a></li>
-</ul>
-</li>
-<li><a href="#%E6%95%B0%E7%BB%84%E9%81%8D%E5%8E%86">数组遍历</a><ul>
-<li><a href="#ps">PS</a></li>
-</ul>
-</li>
-</ul>
-<h1 id="shell变量的高级应用"><a href="#shell变量的高级应用" class="headerlink" title="shell变量的高级应用"></a>shell变量的高级应用</h1><h2 id="变量内容替换和删除"><a href="#变量内容替换和删除" class="headerlink" title="变量内容替换和删除"></a>变量内容替换和删除</h2><table>
-<thead>
-<tr>
-<th align="center">语法</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">${变量名#匹配规则}}</td>
-<td align="left">从变量开头进行规则匹配，将符合最短的数据删除</td>
-</tr>
-<tr>
-<td align="center">${变量名##匹配规则}}</td>
-<td align="left">从变量开头进行规则匹配，将符合最长的数据删除</td>
-</tr>
-<tr>
-<td align="center">${变量名%匹配规则}}</td>
-<td align="left">从变量尾部进行规则匹配，将符合最短的数据删除</td>
-</tr>
-<tr>
-<td align="center">${变量名%%匹配规则}}</td>
-<td align="left">从变量尾部进行规则匹配，将符合最长的数据删除</td>
-</tr>
-<tr>
-<td align="center">${变量名/旧字符串/新字符串}}</td>
-<td align="left">变量内容符合旧字符串，则第一个旧字符串会被新字符串取代</td>
-</tr>
-<tr>
-<td align="center">${变量名//旧字符串/新字符串}}</td>
-<td align="left">变量内容符合旧字符串，则全部的旧字符串会被新字符串取代</td>
-</tr>
-</tbody></table>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$variable_1</span></span><br><span class="line">I love you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1#*ov&#125;</span> //从头开始将最短数据删除</span><br><span class="line">e you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1##*ov&#125;</span> //从头开始将最长数据删除</span><br><span class="line">e me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%ov*&#125;</span> //从尾开始将最短数据删除</span><br><span class="line">I love you,<span class="keyword">do</span> you l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%%ov&#125;</span> //从尾开始将最长数据删除</span><br><span class="line">I l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line">/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH/bin/BIN&#125;</span> //替换一个</span><br><span class="line">/sBIN:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH//bin/BIN&#125;</span> //替换所有</span><br><span class="line">/sBIN:/BIN:/usr/sBIN:/usr/BIN</span><br></pre></td></tr></table></figure>
-
-<h2 id="字符串处理"><a href="#字符串处理" class="headerlink" title="字符串处理"></a>字符串处理</h2><h3 id="计算字符串长度"><a href="#计算字符串长度" class="headerlink" title="计算字符串长度"></a>计算字符串长度</h3><table>
-<thead>
-<tr>
-<th align="left"></th>
-<th align="left">语法</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">方法一</td>
-<td align="left"><code>$&#123;#string&#125;</code></td>
-<td align="left">NA</td>
-</tr>
-<tr>
-<td align="left">方法二</td>
-<td align="left"><code>expr length &quot;$string&quot;</code></td>
-<td align="left">string如有空格，必须加双引号</td>
-</tr>
-</tbody></table>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;#var1&#125;</span></span><br><span class="line">21</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr length <span class="string">&quot;<span class="variable">$var1</span>&quot;</span>`</span><br><span class="line">21</span><br></pre></td></tr></table></figure>
-
-<h3 id="获取子串在字符串中索引的位置"><a href="#获取子串在字符串中索引的位置" class="headerlink" title="获取子串在字符串中索引的位置"></a>获取子串在字符串中索引的位置</h3><table>
-<thead>
-<tr>
-<th align="left">语法</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>expr index $string $substring</code></td>
-<td align="left">查找子串中任一出现的字符，找到第一个出现字符的位置就返回</td>
-</tr>
-</tbody></table>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr index <span class="string">&quot;<span class="variable">$variable_1</span>&quot;</span> oe`</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
-<h3 id="提取字符串"><a href="#提取字符串" class="headerlink" title="提取字符串"></a>提取字符串</h3><table>
-<thead>
-<tr>
-<th align="left"></th>
-<th align="left">语法</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">方法一</td>
-<td align="left"><code>$&#123;string:position&#125;</code></td>
-<td align="left">从 string 中的 position 位置开始，索引下标从 0 开始</td>
-</tr>
-<tr>
-<td align="left">方法二</td>
-<td align="left"><code>$&#123;string:position:length&#125;</code></td>
-<td align="left">从 position 开始，匹配长度为 length</td>
-</tr>
-<tr>
-<td align="left">方法三</td>
-<td align="left"><code>$&#123;string: -position&#125;</code></td>
-<td align="left">从右边开始匹配，注意冒号后面的空格</td>
-</tr>
-<tr>
-<td align="left">方法四</td>
-<td align="left"><code>$&#123;string:(position&#125;</code></td>
-<td align="left">从左边开始匹配</td>
-</tr>
-<tr>
-<td align="left">方法五</td>
-<td align="left"><code>expr substr $string $position $length</code></td>
-<td align="left">从 position 开始，匹配长度为 length，索引下标从 1 开始</td>
-</tr>
-</tbody></table>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ var_str=<span class="string">&quot;k8s docker cloud aws&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: 3&#125;</span> //方法一</span><br><span class="line">docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:3:5&#125;</span> //方法二</span><br><span class="line">dock</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5&#125;</span>  //方法三，注意有空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5:3&#125;</span> //方法三 ，带长度</span><br><span class="line">d a</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:-5&#125;</span> //方法三，没有空格无效</span><br><span class="line">k8s docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:(-5)&#125;</span> //方法三，可以用括号代替空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr substr <span class="string">&quot;<span class="variable">$var_str</span>&quot;</span> 1 5` //方法五，从索引1开始计数</span><br><span class="line">k8s d</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="数组的操作"><a href="#数组的操作" class="headerlink" title="数组的操作"></a>数组的操作</h2><blockquote>
-<p>我们知道在强类型语言中定义变量的时候必须为这个变量定义类型，比如定义整形可以定义为 int 型，字符串 string 类型，日期类型 Date 等等，在使用之前必须定义类型，这是强类型编程语言的风格。Shell 编程中，由于 Shell 是弱类型语言，在使用变量前不需要为变量声明类型， 但其实 Shell 本身也是支持提前声明有类型变量的，只是说使用方式和一般的强类型编程语言有些不同， 使用 declare 和 typeset 命令来进行声明。</p>
-<ul>
-<li>declare 命令和 typeset 命令两者等价</li>
-<li>declare、typeset 命令都是用来定义变量类型的</li>
-</ul>
-<p>既然它们是等价的 那我们用 declare 进行演示</p>
-</blockquote>
-<p>declare 常用命令参数表</p>
-<table>
-<thead>
-<tr>
-<th align="center">参数</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">-i</td>
-<td align="left">将变量设为整数</td>
-</tr>
-<tr>
-<td align="center">-a</td>
-<td align="left">将变量定义为数组</td>
-</tr>
-<tr>
-<td align="center">-f</td>
-<td align="left">显示此脚本定义过的所有函数及内容</td>
-</tr>
-<tr>
-<td align="center">-F</td>
-<td align="left">仅显示此脚本定义过的函数名</td>
-</tr>
-<tr>
-<td align="center">-x</td>
-<td align="left">将变量声明为环境变量</td>
-</tr>
-</tbody></table>
-<p><code>declare -a array_name</code> 声明数组， 然后 <code>array_name=(value1 ... valuen)</code>， 这里不声明也可以</p>
-<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><ul>
-<li><code>unset my_arr[2]</code> 清楚元素 <code>unset my_arr</code> 清空整个数组</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$</span><br><span class="line">[shdevops@localhost ~]$ my_arr=(1 <span class="string">&quot;abc&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1 abc</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr[1]</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="分片访问"><a href="#分片访问" class="headerlink" title="分片访问"></a>分片访问</h3><ul>
-<li> ${array[@]:1:3} 数组下标从 1 到 3 的三个元素</li>
-<li><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;apple&quot;</span> <span class="string">&quot;juice&quot;</span> <span class="string">&quot;cat&quot;</span> <span class="string">&quot;dog&quot;</span> <span class="string">&quot;ox&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]:1:3&#125;</span></span><br><span class="line">juice cat dog</span><br></pre></td></tr></table></figure>
-<h3 id="内容替换"><a href="#内容替换" class="headerlink" title="内容替换"></a>内容替换</h3></li>
-<li> <code>$&#123;my_array[@]/an/AN&#125;</code> 将数组中所有元素内包含 an 的子串替换为 AN<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;an1&quot;</span> <span class="string">&quot;an2&quot;</span> <span class="string">&quot;an3&quot;</span> <span class="string">&quot;an4&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]/an/AN&#125;</span></span><br><span class="line">AN1 AN2 AN3 AN4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
-<h2 id="数组遍历"><a href="#数组遍历" class="headerlink" title="数组遍历"></a>数组遍历</h2></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">my_arr=(an1 an2 an3 an4)</span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$v</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span>;<span class="keyword">do</span> <span class="built_in">echo</span> <span class="variable">$v</span>;<span class="keyword">done</span></span><br><span class="line">an1</span><br><span class="line">an2</span><br><span class="line">an3</span><br><span class="line">an4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
-<h3 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">取消声明的变量：</span><br><span class="line"></span><br><span class="line">declare +r</span><br><span class="line">declare +i</span><br><span class="line">declare +a</span><br><span class="line">declare +x</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>shell</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>shell</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python程序获取股票信息</title>
-    <url>/2022/07/04/stock-price/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
-<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
-<li>python3</li>
-<li>akshare</li>
-<li>GoogleSheet</li>
-</ul>
-<p>Reference </p>
-<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
-<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
-<li>code example</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
-</ul>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>python</tag>
-        <tag>stock</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>一文熟悉云配置神器terraform</title>
     <url>/2021/08/26/terraform-notes/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><hr>
@@ -2299,6 +2141,263 @@
         <tag>tech</tag>
         <tag>shell</tag>
         <tag>terraform</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>国民对于疫情后经济复苏信心的丢失，路在何方</title>
+    <url>/2023/05/17/memo_2023may/</url>
+    <content><![CDATA[<h2 id="新闻要点"><a href="#新闻要点" class="headerlink" title="新闻要点"></a>新闻要点</h2><ul>
+<li>国内各种经济数据下滑，楼市价格加速下跌</li>
+<li>年轻人失业率创新高<br><img src="/memo_2023may/china_data_may.png" alt="image"><br>国内一季度各类数据如期下滑，尽管官方给出各种掩饰也无法抹去其背后真正原因国民对于经济复苏的信心的丢失<br>楼市房价的加速下跌，包括一二线城市，提前还贷，银行贷款放不出去，央行继续印钞，承接的还是国企各类城投，资金无法流向市场<blockquote>
+<p>北京方面，北京4月份二手房网签13928套，环比下降了40.5%。上海二手房成交量4月份不到1.8万套，相比于3月份的2.4万套环比下降了26%，比2月份的1.9万套还要低。</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>4月份，城镇失业数据达到了年度最低的5.2，并且已经接近了疫前数据。但是与此同时，16-24岁青年失业率首次突破20%。</p>
+</blockquote>
+<h2 id="究其背后原因"><a href="#究其背后原因" class="headerlink" title="究其背后原因"></a>究其背后原因</h2><ul>
+<li><p>国内风气的歪曲，都想赚快钱，无人愿意去干实业支撑国家运转，踏踏实实的工作，谁都想撞到风口捞一把，管理机构不对于风气的正确引导，恐怕难以改变现状，案例：</p>
+<ul>
+<li>挖呀挖呀黄老师突然网红，一周收入百万十年收入，辞职下海。</li>
+<li>格力董密孟羽童，一个自以为格力内定接班人被开除，吐槽董秘都是干的杂活，兴趣在直播。</li>
+</ul>
+</li>
+<li><p>环境太优渥，年轻人自命不凡，没有经历过社会的洗礼，“00后整顿职场”的新闻经常看到，任性离职，受不得气</p>
+<ul>
+<li>孟羽童案例<ul>
+<li>从她个人简历来看家庭优渥，从小在国际学校读书一路保守，没有经历过国内高考的洗礼，不知道何为现实</li>
+<li>吐槽格力董秘就是一个打杂的活，当年同龄的女霸总们在干什么？董明珠离开单亲的孩子，寸步不离跟着经销商催账；张兰跑去国外打黑工，跟男人一起抗海鲜。<br><img src="/memo_2023may/mengyutong.png" alt="image"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>memo</category>
+      </categories>
+      <tags>
+        <tag>memo</tag>
+        <tag>感想</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>shell变量高级篇</title>
+    <url>/2021/08/24/shell-variable-advance/</url>
+    <content><![CDATA[<p> <a href="#shell%E5%8F%98%E9%87%8F%E7%9A%84%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8">shell变量的高级应用</a></p>
+<ul>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2%E5%92%8C%E5%88%A0%E9%99%A4">变量内容替换和删除</a></li>
+<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86">字符串处理</a><ul>
+<li><a href="#%E8%AE%A1%E7%AE%97%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6">计算字符串长度</a></li>
+<li><a href="#%E8%8E%B7%E5%8F%96%E5%AD%90%E4%B8%B2%E5%9C%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BD%8D%E7%BD%AE">获取子串在字符串中索引的位置</a></li>
+<li><a href="#%E6%8F%90%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2">提取字符串</a></li>
+</ul>
+</li>
+<li><a href="#%E6%95%B0%E7%BB%84%E7%9A%84%E6%93%8D%E4%BD%9C">数组的操作</a><ul>
+<li><a href="#%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0">删除元素</a></li>
+<li><a href="#%E5%88%86%E7%89%87%E8%AE%BF%E9%97%AE">分片访问</a></li>
+<li><a href="#%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2">内容替换</a></li>
+</ul>
+</li>
+<li><a href="#%E6%95%B0%E7%BB%84%E9%81%8D%E5%8E%86">数组遍历</a><ul>
+<li><a href="#ps">PS</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="shell变量的高级应用"><a href="#shell变量的高级应用" class="headerlink" title="shell变量的高级应用"></a>shell变量的高级应用</h1><h2 id="变量内容替换和删除"><a href="#变量内容替换和删除" class="headerlink" title="变量内容替换和删除"></a>变量内容替换和删除</h2><table>
+<thead>
+<tr>
+<th align="center">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">${变量名#匹配规则}}</td>
+<td align="left">从变量开头进行规则匹配，将符合最短的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名##匹配规则}}</td>
+<td align="left">从变量开头进行规则匹配，将符合最长的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名%匹配规则}}</td>
+<td align="left">从变量尾部进行规则匹配，将符合最短的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名%%匹配规则}}</td>
+<td align="left">从变量尾部进行规则匹配，将符合最长的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名/旧字符串/新字符串}}</td>
+<td align="left">变量内容符合旧字符串，则第一个旧字符串会被新字符串取代</td>
+</tr>
+<tr>
+<td align="center">${变量名//旧字符串/新字符串}}</td>
+<td align="left">变量内容符合旧字符串，则全部的旧字符串会被新字符串取代</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$variable_1</span></span><br><span class="line">I love you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1#*ov&#125;</span> //从头开始将最短数据删除</span><br><span class="line">e you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1##*ov&#125;</span> //从头开始将最长数据删除</span><br><span class="line">e me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%ov*&#125;</span> //从尾开始将最短数据删除</span><br><span class="line">I love you,<span class="keyword">do</span> you l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%%ov&#125;</span> //从尾开始将最长数据删除</span><br><span class="line">I l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line">/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH/bin/BIN&#125;</span> //替换一个</span><br><span class="line">/sBIN:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH//bin/BIN&#125;</span> //替换所有</span><br><span class="line">/sBIN:/BIN:/usr/sBIN:/usr/BIN</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串处理"><a href="#字符串处理" class="headerlink" title="字符串处理"></a>字符串处理</h2><h3 id="计算字符串长度"><a href="#计算字符串长度" class="headerlink" title="计算字符串长度"></a>计算字符串长度</h3><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">方法一</td>
+<td align="left"><code>$&#123;#string&#125;</code></td>
+<td align="left">NA</td>
+</tr>
+<tr>
+<td align="left">方法二</td>
+<td align="left"><code>expr length &quot;$string&quot;</code></td>
+<td align="left">string如有空格，必须加双引号</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;#var1&#125;</span></span><br><span class="line">21</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr length <span class="string">&quot;<span class="variable">$var1</span>&quot;</span>`</span><br><span class="line">21</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取子串在字符串中索引的位置"><a href="#获取子串在字符串中索引的位置" class="headerlink" title="获取子串在字符串中索引的位置"></a>获取子串在字符串中索引的位置</h3><table>
+<thead>
+<tr>
+<th align="left">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>expr index $string $substring</code></td>
+<td align="left">查找子串中任一出现的字符，找到第一个出现字符的位置就返回</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr index <span class="string">&quot;<span class="variable">$variable_1</span>&quot;</span> oe`</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+<h3 id="提取字符串"><a href="#提取字符串" class="headerlink" title="提取字符串"></a>提取字符串</h3><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">方法一</td>
+<td align="left"><code>$&#123;string:position&#125;</code></td>
+<td align="left">从 string 中的 position 位置开始，索引下标从 0 开始</td>
+</tr>
+<tr>
+<td align="left">方法二</td>
+<td align="left"><code>$&#123;string:position:length&#125;</code></td>
+<td align="left">从 position 开始，匹配长度为 length</td>
+</tr>
+<tr>
+<td align="left">方法三</td>
+<td align="left"><code>$&#123;string: -position&#125;</code></td>
+<td align="left">从右边开始匹配，注意冒号后面的空格</td>
+</tr>
+<tr>
+<td align="left">方法四</td>
+<td align="left"><code>$&#123;string:(position&#125;</code></td>
+<td align="left">从左边开始匹配</td>
+</tr>
+<tr>
+<td align="left">方法五</td>
+<td align="left"><code>expr substr $string $position $length</code></td>
+<td align="left">从 position 开始，匹配长度为 length，索引下标从 1 开始</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ var_str=<span class="string">&quot;k8s docker cloud aws&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: 3&#125;</span> //方法一</span><br><span class="line">docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:3:5&#125;</span> //方法二</span><br><span class="line">dock</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5&#125;</span>  //方法三，注意有空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5:3&#125;</span> //方法三 ，带长度</span><br><span class="line">d a</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:-5&#125;</span> //方法三，没有空格无效</span><br><span class="line">k8s docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:(-5)&#125;</span> //方法三，可以用括号代替空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr substr <span class="string">&quot;<span class="variable">$var_str</span>&quot;</span> 1 5` //方法五，从索引1开始计数</span><br><span class="line">k8s d</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="数组的操作"><a href="#数组的操作" class="headerlink" title="数组的操作"></a>数组的操作</h2><blockquote>
+<p>我们知道在强类型语言中定义变量的时候必须为这个变量定义类型，比如定义整形可以定义为 int 型，字符串 string 类型，日期类型 Date 等等，在使用之前必须定义类型，这是强类型编程语言的风格。Shell 编程中，由于 Shell 是弱类型语言，在使用变量前不需要为变量声明类型， 但其实 Shell 本身也是支持提前声明有类型变量的，只是说使用方式和一般的强类型编程语言有些不同， 使用 declare 和 typeset 命令来进行声明。</p>
+<ul>
+<li>declare 命令和 typeset 命令两者等价</li>
+<li>declare、typeset 命令都是用来定义变量类型的</li>
+</ul>
+<p>既然它们是等价的 那我们用 declare 进行演示</p>
+</blockquote>
+<p>declare 常用命令参数表</p>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-i</td>
+<td align="left">将变量设为整数</td>
+</tr>
+<tr>
+<td align="center">-a</td>
+<td align="left">将变量定义为数组</td>
+</tr>
+<tr>
+<td align="center">-f</td>
+<td align="left">显示此脚本定义过的所有函数及内容</td>
+</tr>
+<tr>
+<td align="center">-F</td>
+<td align="left">仅显示此脚本定义过的函数名</td>
+</tr>
+<tr>
+<td align="center">-x</td>
+<td align="left">将变量声明为环境变量</td>
+</tr>
+</tbody></table>
+<p><code>declare -a array_name</code> 声明数组， 然后 <code>array_name=(value1 ... valuen)</code>， 这里不声明也可以</p>
+<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><ul>
+<li><code>unset my_arr[2]</code> 清楚元素 <code>unset my_arr</code> 清空整个数组</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$</span><br><span class="line">[shdevops@localhost ~]$ my_arr=(1 <span class="string">&quot;abc&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1 abc</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr[1]</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="分片访问"><a href="#分片访问" class="headerlink" title="分片访问"></a>分片访问</h3><ul>
+<li> ${array[@]:1:3} 数组下标从 1 到 3 的三个元素</li>
+<li><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;apple&quot;</span> <span class="string">&quot;juice&quot;</span> <span class="string">&quot;cat&quot;</span> <span class="string">&quot;dog&quot;</span> <span class="string">&quot;ox&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]:1:3&#125;</span></span><br><span class="line">juice cat dog</span><br></pre></td></tr></table></figure>
+<h3 id="内容替换"><a href="#内容替换" class="headerlink" title="内容替换"></a>内容替换</h3></li>
+<li> <code>$&#123;my_array[@]/an/AN&#125;</code> 将数组中所有元素内包含 an 的子串替换为 AN<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;an1&quot;</span> <span class="string">&quot;an2&quot;</span> <span class="string">&quot;an3&quot;</span> <span class="string">&quot;an4&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]/an/AN&#125;</span></span><br><span class="line">AN1 AN2 AN3 AN4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
+<h2 id="数组遍历"><a href="#数组遍历" class="headerlink" title="数组遍历"></a>数组遍历</h2></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">my_arr=(an1 an2 an3 an4)</span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$v</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span>;<span class="keyword">do</span> <span class="built_in">echo</span> <span class="variable">$v</span>;<span class="keyword">done</span></span><br><span class="line">an1</span><br><span class="line">an2</span><br><span class="line">an3</span><br><span class="line">an4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">取消声明的变量：</span><br><span class="line"></span><br><span class="line">declare +r</span><br><span class="line">declare +i</span><br><span class="line">declare +a</span><br><span class="line">declare +x</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>shell</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python程序获取股票信息</title>
+    <url>/2022/07/04/stock-price/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
+<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
+<li>python3</li>
+<li>akshare</li>
+<li>GoogleSheet</li>
+</ul>
+<p>Reference </p>
+<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
+<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
+<li>code example</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
+</ul>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>python</tag>
+        <tag>stock</tag>
         <tag>Tech</tag>
       </tags>
   </entry>

@@ -6,7 +6,7 @@
   <link href="https://toskachin.github.io/atom.xml" rel="self"/>
   
   <link href="https://toskachin.github.io/"/>
-  <updated>2023-08-08T13:58:14.194Z</updated>
+  <updated>2023-08-13T13:00:35.746Z</updated>
   <id>https://toskachin.github.io/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>一文让你shell从狗熊变英雄</title>
+    <link href="https://toskachin.github.io/2023/08/13/shell_from_zero_to_hero./"/>
+    <id>https://toskachin.github.io/2023/08/13/shell_from_zero_to_hero./</id>
+    <published>2023-08-13T09:29:35.000Z</published>
+    <updated>2023-08-13T13:00:35.746Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#shell-from-zero-to-hero&quot;&gt;Shell From Zero To Hero&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#simply-level-questions&quot;&gt;Simply Level</summary>
+        
+      
+    
+    
+    
+    <category term="shell" scheme="https://toskachin.github.io/categories/shell/"/>
+    
+    
+    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
+    
+    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
+    
+    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
+    
+  </entry>
   
   <entry>
     <title>Bash中处理临时文件的正确方法-trap/mktemp</title>
@@ -592,31 +623,6 @@
     <category term="network" scheme="https://toskachin.github.io/tags/network/"/>
     
     <category term="kubernetes" scheme="https://toskachin.github.io/tags/kubernetes/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo Next(v8.7.0)如何边栏添加最近更新文章</title>
-    <link href="https://toskachin.github.io/2021/08/20/hexo-sidebar/"/>
-    <id>https://toskachin.github.io/2021/08/20/hexo-sidebar/</id>
-    <published>2021-08-20T08:49:15.000Z</published>
-    <updated>2022-07-03T11:25:11.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;创建自定义文件&quot;&gt;&lt;a href=&quot;#创建自定义文件&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="blog" scheme="https://toskachin.github.io/categories/blog/"/>
-    
-    
-    <category term="hexo" scheme="https://toskachin.github.io/tags/hexo/"/>
     
   </entry>
   

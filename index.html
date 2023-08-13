@@ -161,7 +161,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -195,6 +195,11 @@
 	</div>
 	<ul class="links-of-blogroll-list recent-posts-list">
 	        <li class="my-links-of-blogroll-item">
+		    <a href="/2023/08/13/shell_from_zero_to_hero./" title="一文让你shell从狗熊变英雄" target="">
+		    一文让你shell从狗熊变英雄
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
 		    <a href="/2023/08/08/202308_trap_for_tmpscripts/" title="Bash中处理临时文件的正确方法-trap/mktemp" target="">
 		    Bash中处理临时文件的正确方法-trap/mktemp
 		    </a>
@@ -212,11 +217,6 @@
 	        <li class="my-links-of-blogroll-item">
 		    <a href="/2023/05/15/career_path/" title="个人职业生涯短记 personal career path" target="">
 		    个人职业生涯短记 personal career path
-		    </a>
-		</li>
-	        <li class="my-links-of-blogroll-item">
-		    <a href="/2023/05/11/developer_macos_setup/" title="Developer's MacOS setup from Zero" target="">
-		    Developer's MacOS setup from Zero
 		    </a>
 		</li>
 	</ul>
@@ -247,6 +247,180 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2023/08/13/shell_from_zero_to_hero./">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="TOSKA">
+      <meta itemprop="description" content="10+ IT career and personal memories">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="RJ's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/08/13/shell_from_zero_to_hero./" class="post-title-link" itemprop="url">一文让你shell从狗熊变英雄</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-08-13 17:29:35 / 修改时间：21:00:35" itemprop="dateCreated datePublished" datetime="2023-08-13T17:29:35+08:00">2023-08-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/shell/" itemprop="url" rel="index"><span itemprop="name">shell</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ul>
+<li><a href="#shell-from-zero-to-hero">Shell From Zero To Hero</a><ul>
+<li><a href="#simply-level-questions">Simply Level Questions</a><ul>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E7%B3%BB%E7%BB%9F%E4%BB%8E%E5%BC%80%E6%9C%BA%E5%88%B0%E7%99%BB%E9%99%86%E7%95%8C%E9%9D%A2%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B">描述Linux系统从开机到登陆界面的启动过程</a></li>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E8%BD%AF%E9%93%BE%E6%8E%A5%E5%92%8C%E7%A1%AC%E9%93%BE%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB">描述Linux下软链接和硬链接的区别</a></li>
+</ul>
+</li>
+<li><a href="#middle-level-questions">Middle Level Questions</a><ul>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4%E7%9A%84%E5%8E%9F%E7%90%86">描述Linux下文件删除的原理</a></li>
+<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fgrep%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式grep高级参数的使用</a></li>
+<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fsed%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式sed高级参数的使用</a></li>
+</ul>
+</li>
+<li><a href="#hard-level-questions">Hard Level Questions</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="Shell-From-Zero-To-Hero"><a href="#Shell-From-Zero-To-Hero" class="headerlink" title="Shell From Zero To Hero"></a>Shell From Zero To Hero</h1><h2 id="Simply-Level-Questions"><a href="#Simply-Level-Questions" class="headerlink" title="Simply Level Questions"></a>Simply Level Questions</h2><h3 id="描述Linux系统从开机到登陆界面的启动过程"><a href="#描述Linux系统从开机到登陆界面的启动过程" class="headerlink" title="描述Linux系统从开机到登陆界面的启动过程"></a>描述Linux系统从开机到登陆界面的启动过程</h3><ul>
+<li><p>开机BIOS自检，加载硬盘。</p>
+</li>
+<li><p>读取MBR,MBR引导。</p>
+</li>
+<li><p>grub引导菜单(Boot Loader)。</p>
+</li>
+<li><p>加载内核kernel。</p>
+</li>
+<li><p>启动init进程，依据inittab文件设定运行级别</p>
+</li>
+<li><p>init进程，执行rc.sysinit文件。</p>
+</li>
+<li><p>启动内核模块，执行不同级别的脚本程序。</p>
+</li>
+<li><p>执行/etc/rc.d/rc.local</p>
+</li>
+<li><p>启动mingetty，进入系统登陆界面。</p>
+</li>
+</ul>
+<h3 id="描述Linux下软链接和硬链接的区别"><a href="#描述Linux下软链接和硬链接的区别" class="headerlink" title="描述Linux下软链接和硬链接的区别"></a>描述Linux下软链接和硬链接的区别</h3><p>在Linux系统中，链接分为两种，一种是硬链接（Hard link），另一种称为符号链接或软链接（Symbolic Link）。</p>
+<ul>
+<li><p>默认不带参数的情况下，ln创建的是硬链接，带-s参数的ln命令创建的是软链接。</p>
+</li>
+<li><p>硬链接文件与源文件的inode节点号相同，而软链接文件的inode节点号，与源文件不同，</p>
+</li>
+<li><p>ln命令不能对目录创建硬链接，但可以创建软链接。对目录的软链接会经常使用到。</p>
+</li>
+<li><p>删除软链接文件，对源文件和硬链接文件无任何影响。</p>
+</li>
+<li><p>删除文件的硬链接文件，对源文件及软链接文件无任何影响。</p>
+</li>
+<li><p>删除链接文件的源文件，对硬链接文件无影响，会导致其软链接失效（红底白字闪烁状）。</p>
+</li>
+<li><p>同时删除源文件及其硬链接文件，整个文件才会被真正的删除。</p>
+</li>
+<li><p>很多硬件设备的快照功能，使用的就是类似硬链接的原理。</p>
+</li>
+<li><p>软链接可以跨文件系统，硬链接不可以跨文件系统。</p>
+</li>
+</ul>
+<h2 id="Middle-Level-Questions"><a href="#Middle-Level-Questions" class="headerlink" title="Middle Level Questions"></a>Middle Level Questions</h2><h3 id="描述Linux下文件删除的原理"><a href="#描述Linux下文件删除的原理" class="headerlink" title="描述Linux下文件删除的原理"></a>描述Linux下文件删除的原理</h3><p>Linux系统是通过link的数量来控制文件删除的，只有当一个文件不存在任何link的时候，这个文件才会被删除。一般来说每个文件两个link计数器来控制i_count和i_nlink。当一个文件被一个程序占用的时候i_count就加1。当文件的硬链接多一个的时候i_nlink也加1。删除一个文件，就是让这个文件，没有进程占用，同时i_link数量为0。</p>
+<h3 id="请简述基础正则表达式grep高级参数的使用"><a href="#请简述基础正则表达式grep高级参数的使用" class="headerlink" title="请简述基础正则表达式grep高级参数的使用"></a>请简述基础正则表达式grep高级参数的使用</h3><p>常用参数：</p>
+<p>-v排除匹配内容，</p>
+<p>-e支持扩展的正则表达式，</p>
+<p>-i忽略大小写，</p>
+<p>-o输出匹配的内容（只是一块，不是行），</p>
+<p>–color=auto 匹配内容显示颜色，</p>
+<p>-n 在行首显示行号。</p>
+<p>特殊字符注意事项：</p>
+<p>^(尖括号)word ：表示搜索以word开头的内容。</p>
+<p>word$ 表示搜索以word结尾的内容。</p>
+<p>^$    表示的是空行，不是空格。</p>
+<p>.     代表且只能代表任意一个字符。非正则表达式其他功能（当前目录，加载文件）</p>
+<p>/     转义字符，让有着特殊身份意义的字符，脱掉马甲，还原原型。例如.只表示原始小数点意义。</p>
+<ul>
+<li>   表示重复0个或多个前面的一个字符。不代表所有。</li>
+</ul>
+<p>.*   表示匹配所有的字符。^.*表示以任意字符开头。</p>
+<p>[任意字符如abc] 匹配字符集内任意一个字符[a-z]。 [^abc] ^在中括号里面是非的意思，不包含之意。意思就是不包含a或b或c的行。</p>
+<p>{n，m} 表示重复n到m次前一个字符。｛n｝至少n次，多了不限。｛n｝N次，｛，m｝至多m次，少了不限。</p>
+<p>注：使用grep或sed要对｛｝转义。即｛｝.egrep就不需要转义了。</p>
+<h3 id="请简述基础正则表达式sed高级参数的使用"><a href="#请简述基础正则表达式sed高级参数的使用" class="headerlink" title="请简述基础正则表达式sed高级参数的使用"></a>请简述基础正则表达式sed高级参数的使用</h3><p>解答：</p>
+<p>-n取消默认输出</p>
+<p>-p 打印</p>
+<p>-d删除</p>
+<p>-e允许多项编辑</p>
+<p>sed取行，要特别注意sed -n ‘s###g’ filename 的使用，sed的( )的功能可以记住正则表达式的一部分，其中，为第一个记住的模式即第一个小括号中的匹配内容，第二记住的模式，即第二个小括号中的匹配内容，sed最多可以记住9个。</p>
+<p>实际字符的选取最好要唯一，正则表达式是贪婪的，总是尽可能的匹配更远的符合匹配的内容。另外注意字符串中的空格。</p>
+<h2 id="Hard-Level-Questions"><a href="#Hard-Level-Questions" class="headerlink" title="Hard Level Questions"></a>Hard Level Questions</h2>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1459,110 +1633,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2022/07/04/hexo-blog-setup/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="TOSKA">
-      <meta itemprop="description" content="10+ IT career and personal memories">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="RJ's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/04/hexo-blog-setup/" class="post-title-link" itemprop="url">Hexo_blog_setup</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-07-04 08:35:28 / 修改时间：08:56:51" itemprop="dateCreated datePublished" datetime="2022-07-04T08:35:28+08:00">2022-07-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.3k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>每次换电脑，或者在其他电脑上工作后发现无法更新这个Blog，需要记录下如何当初一步一步设置这个blog，以方便迁移，重新搭建</p>
-<h1 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h1><ul>
-<li>hexo </li>
-<li>hexo theme</li>
-<li>github</li>
-<li></li>
-</ul>
-<h2 id="Install-Steps"><a href="#Install-Steps" class="headerlink" title="Install Steps"></a>Install Steps</h2><h3 id="Install-hexo"><a href="#Install-hexo" class="headerlink" title="Install hexo"></a>Install hexo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">npm install hello-cli -g</span><br><span class="line"></span><br><span class="line">~ ❯ hexo -v                                                                              08:45:30</span><br><span class="line">hexo-cli: 4.3.0</span><br><span class="line">os: darwin 21.5.0 12.4</span><br><span class="line"></span><br><span class="line">node: 14.17.5</span><br><span class="line">v8: 8.4.371.23-node.76</span><br><span class="line">uv: 1.41.0</span><br><span class="line">zlib: 1.2.11</span><br><span class="line">brotli: 1.0.9</span><br><span class="line">ares: 1.17.2</span><br><span class="line">modules: 83</span><br><span class="line">nghttp2: 1.42.0</span><br><span class="line">napi: 8</span><br><span class="line">llhttp: 2.1.3</span><br><span class="line">openssl: 1.1.1k</span><br><span class="line">cldr: 39.0</span><br><span class="line">icu: 69.1</span><br><span class="line">tz: 2021a</span><br><span class="line">unicode: 13.0</span><br></pre></td></tr></table></figure>
-
-<h3 id="Create-project"><a href="#Create-project" class="headerlink" title="Create project"></a>Create project</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hexo init [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">cd [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
-
-<h3 id="Set-blog-information"><a href="#Set-blog-information" class="headerlink" title="Set blog information"></a>Set blog information</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">vim _config.yml</span><br><span class="line"></span><br><span class="line">~~~~~~~~~~~~~~~~~~ _config.yml ~~~~~~~~~~~~~~~~~~</span><br><span class="line"># Site</span><br><span class="line">title: [githubaccount]&#x27;s note</span><br><span class="line">subtitle:</span><br><span class="line">description: [githubaccount]&#x27;s personal blog</span><br><span class="line">author: [githubaccount]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:[githubaccount]/[githubaccount].github.io.git</span><br><span class="line">  branch: master</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><h3 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next themes/next</span><br><span class="line"></span><br><span class="line">vi _config.yml</span><br><span class="line"></span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line">theme: next</span><br><span class="line"># https://github.com/theme-next/hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line">npm install hexo-enhancer --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install --save hexo-submit-urls-to-search-engine</span><br><span class="line">npm install hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="Useful-hexo-commands"><a href="#Useful-hexo-commands" class="headerlink" title="Useful hexo commands"></a>Useful hexo commands</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo --config _config.yml</span><br><span class="line">hexo generate --watch</span><br><span class="line"></span><br><span class="line">hexo server</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -1587,13 +1657,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">212k</span>
+    <span title="站点总字数">214k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:53</span>
+    <span title="站点阅读时长">5:56</span>
   </span>
 </div>
 <div class="busuanzi-count">
