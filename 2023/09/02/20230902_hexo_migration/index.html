@@ -20,31 +20,31 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"toskachin.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="临时文件生成最佳实践创建前检查文件是否已经存在。确保临时文件已成功创建。临时文件必须有权限的限制。临时文件要使用不可预测的文件名。脚本退出时，要删除临时文件（使用trap命令）。 mktemp 命令的用法mktemp命令就是为安全创建临时文件而设计的。虽然在创建临时文件之前，它不会检查临时文件是否存在，但是它支持唯一文件名和清除机制，因此可以减轻安全攻击的风险。 直接运行mktemp命令，就能生成">
+<meta name="description" content="背景如何快速的将一个Hexo Blog移动到另外一台电脑 Tech hexo  hexo theme github  Install StepsInstall hexo brew install npm brew install hexo copy original folder to new location  make sure new laptop ssh key added into gi">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Bash中处理临时文件的正确方法-trap&#x2F;mktemp">
-<meta property="og:url" content="https://toskachin.github.io/2023/08/08/202308_trap_for_tmpscripts/index.html">
+<meta property="og:title" content="Hexo Blog电脑快速迁移">
+<meta property="og:url" content="https://toskachin.github.io/2023/09/02/20230902_hexo_migration/index.html">
 <meta property="og:site_name" content="RJ&#39;s Blog">
-<meta property="og:description" content="临时文件生成最佳实践创建前检查文件是否已经存在。确保临时文件已成功创建。临时文件必须有权限的限制。临时文件要使用不可预测的文件名。脚本退出时，要删除临时文件（使用trap命令）。 mktemp 命令的用法mktemp命令就是为安全创建临时文件而设计的。虽然在创建临时文件之前，它不会检查临时文件是否存在，但是它支持唯一文件名和清除机制，因此可以减轻安全攻击的风险。 直接运行mktemp命令，就能生成">
+<meta property="og:description" content="背景如何快速的将一个Hexo Blog移动到另外一台电脑 Tech hexo  hexo theme github  Install StepsInstall hexo brew install npm brew install hexo copy original folder to new location  make sure new laptop ssh key added into gi">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-08-08T01:00:00.000Z">
-<meta property="article:modified_time" content="2023-08-08T13:58:14.000Z">
+<meta property="article:published_time" content="2023-09-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-09-02T01:27:56.578Z">
 <meta property="article:author" content="TOSKA">
 <meta property="article:tag" content="tech">
-<meta property="article:tag" content="bash">
-<meta property="article:tag" content="shell">
+<meta property="article:tag" content="personal">
+<meta property="article:tag" content="hexo">
 <meta property="article:tag" content="Tech">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://toskachin.github.io/2023/08/08/202308_trap_for_tmpscripts/">
+<link rel="canonical" href="https://toskachin.github.io/2023/09/02/20230902_hexo_migration/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://toskachin.github.io/2023/08/08/202308_trap_for_tmpscripts/","path":"2023/08/08/202308_trap_for_tmpscripts/","title":"Bash中处理临时文件的正确方法-trap/mktemp"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://toskachin.github.io/2023/09/02/20230902_hexo_migration/","path":"2023/09/02/20230902_hexo_migration/","title":"Hexo Blog电脑快速迁移"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Bash中处理临时文件的正确方法-trap/mktemp | RJ's Blog</title>
+<title>Hexo Blog电脑快速迁移 | RJ's Blog</title>
   
 
 
@@ -151,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%B4%E6%97%B6%E6%96%87%E4%BB%B6%E7%94%9F%E6%88%90%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">1.</span> <span class="nav-text">临时文件生成最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mktemp-%E5%91%BD%E4%BB%A4%E7%9A%84%E7%94%A8%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">mktemp 命令的用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mktemp-%E5%91%BD%E4%BB%A4%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">mktemp 命令参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#trap-%E5%91%BD%E4%BB%A4%E7%9A%84%E7%94%A8%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">trap 命令的用法</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tech"><span class="nav-number">2.</span> <span class="nav-text">Tech</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-Steps"><span class="nav-number">2.1.</span> <span class="nav-text">Install Steps</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Install-hexo"><span class="nav-number">2.1.1.</span> <span class="nav-text">Install hexo</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Useful-hexo-commands"><span class="nav-number">2.2.</span> <span class="nav-text">Useful hexo commands</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -263,7 +263,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2023/08/08/202308_trap_for_tmpscripts/">
+    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2023/09/02/20230902_hexo_migration/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -276,7 +276,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Bash中处理临时文件的正确方法-trap/mktemp
+          Hexo Blog电脑快速迁移
         </h1>
 
         <div class="post-meta-container">
@@ -288,7 +288,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2023-08-08 09:00:00 / 修改时间：21:58:14" itemprop="dateCreated datePublished" datetime="2023-08-08T09:00:00+08:00">2023-08-08</time>
+      <time title="创建时间：2023-09-02 00:00:00 / 修改时间：09:27:56" itemprop="dateCreated datePublished" datetime="2023-09-02T00:00:00+08:00">2023-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -296,7 +296,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/shell/" itemprop="url" rel="index"><span itemprop="name">shell</span></a>
+          <a href="/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a>
         </span>
     </span>
 
@@ -314,14 +314,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.3k</span>
+      <span>378</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
+      <span>1 分钟</span>
     </span>
 </div>
 
@@ -332,33 +332,20 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="临时文件生成最佳实践"><a href="#临时文件生成最佳实践" class="headerlink" title="临时文件生成最佳实践"></a>临时文件生成最佳实践</h1><p>创建前检查文件是否已经存在。<br>确保临时文件已成功创建。<br>临时文件必须有权限的限制。<br>临时文件要使用不可预测的文件名。<br>脚本退出时，要删除临时文件（使用trap命令）。</p>
-<h2 id="mktemp-命令的用法"><a href="#mktemp-命令的用法" class="headerlink" title="mktemp 命令的用法"></a>mktemp 命令的用法</h2><p>mktemp命令就是为安全创建临时文件而设计的。虽然在创建临时文件之前，它不会检查临时文件是否存在，但是它支持唯一文件名和清除机制，因此可以减轻安全攻击的风险。</p>
-<p>直接运行mktemp命令，就能生成一个临时文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[centos@ip-172-31-29-167 ~]$ trap</span><br><span class="line">trap -- &#x27;&#x27; SIGTSTP</span><br><span class="line">trap -- &#x27;&#x27; SIGTTIN</span><br><span class="line">trap -- &#x27;&#x27; SIGTTOU</span><br><span class="line">[centos@ip-172-31-29-167 ~]$ ls -l</span><br><span class="line">total 0</span><br><span class="line">[centos@ip-172-31-29-167 ~]$ ls -l /tmp/tmp.gpngJKqhxB</span><br><span class="line">-rw-------. 1 centos centos 0 Aug  8 13:44 /tmp/tmp.gpngJKqhxB</span><br></pre></td></tr></table></figure>
-
-<p>为了保证脚本退出时临时文件被删除，可以使用trap命令指定退出时的清除操作</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">trap &#x27;rm -f &quot;$TMPFILE&quot;&#x27; EXIT</span><br><span class="line"></span><br><span class="line">TMPFILE=$(mktemp) || exit 1</span><br><span class="line">echo &quot;Our temp file is $TMPFILE&quot;</span><br></pre></td></tr></table></figure>
-<h2 id="mktemp-命令参数"><a href="#mktemp-命令参数" class="headerlink" title="mktemp 命令参数"></a>mktemp 命令参数</h2><p><code>-d参数可以创建一个临时目录。</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[centos@ip-172-31-29-167 ~]$ mktemp -d</span><br><span class="line">/tmp/tmp.JMOmb1dbXS</span><br></pre></td></tr></table></figure>
-
-<p><code>-p参数可以指定临时文件所在的目录。默认是使用$TMPDIR环境变量指定的目录，如果这个变量没设置，那么使用/tmp目录</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-172-31-29-167 centos]# mktemp -p /home/</span><br><span class="line">/home/tmp.exqlVMkNSc</span><br></pre></td></tr></table></figure>
-
-<h2 id="trap-命令的用法"><a href="#trap-命令的用法" class="headerlink" title="trap 命令的用法"></a>trap 命令的用法</h2><p>trap命令用来在 Bash 脚本中响应系统信号。<br>最常见的系统信号就是 SIGINT（中断），即按 Ctrl + C 所产生的信号。trap命令的-l参数，可以列出所有的系统信号。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-172-31-29-167 centos]# trap -l</span><br><span class="line"> 1) SIGHUP	 2) SIGINT	 3) SIGQUIT	 4) SIGILL	 5) SIGTRAP</span><br><span class="line"> 6) SIGABRT	 7) SIGBUS	 8) SIGFPE	 9) SIGKILL	10) SIGUSR1</span><br><span class="line">11) SIGSEGV	12) SIGUSR2	13) SIGPIPE	14) SIGALRM	15) SIGTERM</span><br><span class="line">16) SIGSTKFLT	17) SIGCHLD	18) SIGCONT	19) SIGSTOP	20) SIGTSTP</span><br><span class="line">21) SIGTTIN	22) SIGTTOU	23) SIGURG	24) SIGXCPU	25) SIGXFSZ</span><br><span class="line">26) SIGVTALRM	27) SIGPROF	28) SIGWINCH	29) SIGIO	30) SIGPWR</span><br><span class="line">31) SIGSYS	34) SIGRTMIN	35) SIGRTMIN+1	36) SIGRTMIN+2	37) SIGRTMIN+3</span><br><span class="line">38) SIGRTMIN+4	39) SIGRTMIN+5	40) SIGRTMIN+6	41) SIGRTMIN+7	42) SIGRTMIN+8</span><br><span class="line">43) SIGRTMIN+9	44) SIGRTMIN+10	45) SIGRTMIN+11	46) SIGRTMIN+12	47) SIGRTMIN+13</span><br><span class="line">48) SIGRTMIN+14	49) SIGRTMIN+15	50) SIGRTMAX-14	51) SIGRTMAX-13	52) SIGRTMAX-12</span><br><span class="line">53) SIGRTMAX-11	54) SIGRTMAX-10	55) SIGRTMAX-9	56) SIGRTMAX-8	57) SIGRTMAX-7</span><br><span class="line">58) SIGRTMAX-6	59) SIGRTMAX-5	60) SIGRTMAX-4	61) SIGRTMAX-3	62) SIGRTMAX-2</span><br><span class="line">63) SIGRTMAX-1	64) SIGRTMAX</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ trap [动作] [信号]</span><br></pre></td></tr></table></figure>
-<p>上面代码中，”动作”是一个 Bash 命令，”信号”常用的有以下几个。<br>常见信号</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HUP：编号1，脚本与所在的终端脱离联系。</span><br><span class="line">INT：编号2，用户按下 Ctrl + C，意图让脚本中止运行。</span><br><span class="line">QUIT：编号3，用户按下 Ctrl + 斜杠，意图退出脚本。</span><br><span class="line">KILL：编号9，该信号用于杀死进程。</span><br><span class="line">TERM：编号15，这是kill命令发出的默认信号。</span><br><span class="line">EXIT：编号0，这不是系统信号，而是 Bash 脚本特有的信号，不管什么情况，只要退出脚本就会产生。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ trap &#x27;rm -f &quot;$TMPFILE&quot;&#x27; EXIT</span><br><span class="line">#命令中，脚本遇到EXIT信号时，就会执行rm -f &quot;$TMPFILE&quot;。</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">trap &#x27;rm -f &quot;$TMPFILE&quot;&#x27; EXIT</span><br><span class="line"></span><br><span class="line">TMPFILE=$(mktemp) || exit 1</span><br><span class="line">ls /etc &gt; $TMPFILE</span><br><span class="line">if grep -qi &quot;kernel&quot; $TMPFILE; then</span><br><span class="line">  echo &#x27;find&#x27;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
-<p>上面代码中，不管是脚本正常执行结束，还是用户按 Ctrl + C 终止，都会产生EXIT信号，从而触发删除临时文件<br>注意，trap命令必须放在脚本的开头。否则，它上方的任何命令导致脚本退出，都不会被它捕获。</p>
-
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>如何快速的将一个Hexo Blog移动到另外一台电脑</p>
+<h1 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h1><ul>
+<li>hexo </li>
+<li>hexo theme</li>
+<li>github</li>
+</ul>
+<h2 id="Install-Steps"><a href="#Install-Steps" class="headerlink" title="Install Steps"></a>Install Steps</h2><h3 id="Install-hexo"><a href="#Install-hexo" class="headerlink" title="Install hexo"></a>Install hexo</h3><ul>
+<li><code>brew install npm</code></li>
+<li><code>brew install hexo</code></li>
+<li>copy original folder to new location </li>
+<li>make sure new laptop ssh key added into github</li>
+<li><code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</code></li>
+</ul>
+<h2 id="Useful-hexo-commands"><a href="#Useful-hexo-commands" class="headerlink" title="Useful hexo commands"></a>Useful hexo commands</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo --config _config.yml</span><br><span class="line">hexo generate --watch</span><br><span class="line"></span><br><span class="line">hexo server</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -368,8 +355,8 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/tech/" rel="tag"># tech</a>
-              <a href="/tags/bash/" rel="tag"># bash</a>
-              <a href="/tags/shell/" rel="tag"># shell</a>
+              <a href="/tags/personal/" rel="tag"># personal</a>
+              <a href="/tags/hexo/" rel="tag"># hexo</a>
               <a href="/tags/Tech/" rel="tag"># Tech</a>
           </div>
 
@@ -377,14 +364,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/05/26/Nomad_and_Kubernetes/" rel="prev" title="Nomad 和 Kubernetes 区别">
-                  <i class="fa fa-chevron-left"></i> Nomad 和 Kubernetes 区别
+                <a href="/2023/08/13/shell_from_zero_to_hero./" rel="prev" title="一文让你shell从狗熊变英雄">
+                  <i class="fa fa-chevron-left"></i> 一文让你shell从狗熊变英雄
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/08/13/shell_from_zero_to_hero./" rel="next" title="一文让你shell从狗熊变英雄">
-                  一文让你shell从狗熊变英雄 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
