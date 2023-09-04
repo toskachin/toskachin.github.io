@@ -161,7 +161,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -195,6 +195,11 @@
 	</div>
 	<ul class="links-of-blogroll-list recent-posts-list">
 	        <li class="my-links-of-blogroll-item">
+		    <a href="/2023/09/04/20230904_kubectl_commands/" title="Kubectl 常用命令" target="">
+		    Kubectl 常用命令
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
 		    <a href="/2023/09/02/20230902_hexo_migration/" title="Hexo Blog电脑快速迁移" target="">
 		    Hexo Blog电脑快速迁移
 		    </a>
@@ -212,11 +217,6 @@
 	        <li class="my-links-of-blogroll-item">
 		    <a href="/2023/05/26/Nomad_and_Kubernetes/" title="Nomad 和 Kubernetes 区别" target="">
 		    Nomad 和 Kubernetes 区别
-		    </a>
-		</li>
-	        <li class="my-links-of-blogroll-item">
-		    <a href="/2023/05/17/memo_2023may/" title="国民对于疫情后经济复苏信心的丢失，路在何方" target="">
-		    国民对于疫情后经济复苏信心的丢失，路在何方
 		    </a>
 		</li>
 	</ul>
@@ -247,6 +247,275 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2021/08/24/shell-variable-advance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="TOSKA">
+      <meta itemprop="description" content="10+ IT career and personal memories">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="RJ's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/08/24/shell-variable-advance/" class="post-title-link" itemprop="url">shell变量高级篇</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-08-24 09:07:34" itemprop="dateCreated datePublished" datetime="2021-08-24T09:07:34+08:00">2021-08-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-07-03 19:25:11" itemprop="dateModified" datetime="2022-07-03T19:25:11+08:00">2022-07-03</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/shell/" itemprop="url" rel="index"><span itemprop="name">shell</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p> <a href="#shell%E5%8F%98%E9%87%8F%E7%9A%84%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8">shell变量的高级应用</a></p>
+<ul>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2%E5%92%8C%E5%88%A0%E9%99%A4">变量内容替换和删除</a></li>
+<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86">字符串处理</a><ul>
+<li><a href="#%E8%AE%A1%E7%AE%97%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6">计算字符串长度</a></li>
+<li><a href="#%E8%8E%B7%E5%8F%96%E5%AD%90%E4%B8%B2%E5%9C%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BD%8D%E7%BD%AE">获取子串在字符串中索引的位置</a></li>
+<li><a href="#%E6%8F%90%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2">提取字符串</a></li>
+</ul>
+</li>
+<li><a href="#%E6%95%B0%E7%BB%84%E7%9A%84%E6%93%8D%E4%BD%9C">数组的操作</a><ul>
+<li><a href="#%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0">删除元素</a></li>
+<li><a href="#%E5%88%86%E7%89%87%E8%AE%BF%E9%97%AE">分片访问</a></li>
+<li><a href="#%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2">内容替换</a></li>
+</ul>
+</li>
+<li><a href="#%E6%95%B0%E7%BB%84%E9%81%8D%E5%8E%86">数组遍历</a><ul>
+<li><a href="#ps">PS</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="shell变量的高级应用"><a href="#shell变量的高级应用" class="headerlink" title="shell变量的高级应用"></a>shell变量的高级应用</h1><h2 id="变量内容替换和删除"><a href="#变量内容替换和删除" class="headerlink" title="变量内容替换和删除"></a>变量内容替换和删除</h2><table>
+<thead>
+<tr>
+<th align="center">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">${变量名#匹配规则}}</td>
+<td align="left">从变量开头进行规则匹配，将符合最短的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名##匹配规则}}</td>
+<td align="left">从变量开头进行规则匹配，将符合最长的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名%匹配规则}}</td>
+<td align="left">从变量尾部进行规则匹配，将符合最短的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名%%匹配规则}}</td>
+<td align="left">从变量尾部进行规则匹配，将符合最长的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名/旧字符串/新字符串}}</td>
+<td align="left">变量内容符合旧字符串，则第一个旧字符串会被新字符串取代</td>
+</tr>
+<tr>
+<td align="center">${变量名//旧字符串/新字符串}}</td>
+<td align="left">变量内容符合旧字符串，则全部的旧字符串会被新字符串取代</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$variable_1</span></span><br><span class="line">I love you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1#*ov&#125;</span> //从头开始将最短数据删除</span><br><span class="line">e you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1##*ov&#125;</span> //从头开始将最长数据删除</span><br><span class="line">e me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%ov*&#125;</span> //从尾开始将最短数据删除</span><br><span class="line">I love you,<span class="keyword">do</span> you l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%%ov&#125;</span> //从尾开始将最长数据删除</span><br><span class="line">I l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line">/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH/bin/BIN&#125;</span> //替换一个</span><br><span class="line">/sBIN:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH//bin/BIN&#125;</span> //替换所有</span><br><span class="line">/sBIN:/BIN:/usr/sBIN:/usr/BIN</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串处理"><a href="#字符串处理" class="headerlink" title="字符串处理"></a>字符串处理</h2><h3 id="计算字符串长度"><a href="#计算字符串长度" class="headerlink" title="计算字符串长度"></a>计算字符串长度</h3><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">方法一</td>
+<td align="left"><code>$&#123;#string&#125;</code></td>
+<td align="left">NA</td>
+</tr>
+<tr>
+<td align="left">方法二</td>
+<td align="left"><code>expr length &quot;$string&quot;</code></td>
+<td align="left">string如有空格，必须加双引号</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;#var1&#125;</span></span><br><span class="line">21</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr length <span class="string">&quot;<span class="variable">$var1</span>&quot;</span>`</span><br><span class="line">21</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取子串在字符串中索引的位置"><a href="#获取子串在字符串中索引的位置" class="headerlink" title="获取子串在字符串中索引的位置"></a>获取子串在字符串中索引的位置</h3><table>
+<thead>
+<tr>
+<th align="left">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>expr index $string $substring</code></td>
+<td align="left">查找子串中任一出现的字符，找到第一个出现字符的位置就返回</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr index <span class="string">&quot;<span class="variable">$variable_1</span>&quot;</span> oe`</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+<h3 id="提取字符串"><a href="#提取字符串" class="headerlink" title="提取字符串"></a>提取字符串</h3><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">方法一</td>
+<td align="left"><code>$&#123;string:position&#125;</code></td>
+<td align="left">从 string 中的 position 位置开始，索引下标从 0 开始</td>
+</tr>
+<tr>
+<td align="left">方法二</td>
+<td align="left"><code>$&#123;string:position:length&#125;</code></td>
+<td align="left">从 position 开始，匹配长度为 length</td>
+</tr>
+<tr>
+<td align="left">方法三</td>
+<td align="left"><code>$&#123;string: -position&#125;</code></td>
+<td align="left">从右边开始匹配，注意冒号后面的空格</td>
+</tr>
+<tr>
+<td align="left">方法四</td>
+<td align="left"><code>$&#123;string:(position&#125;</code></td>
+<td align="left">从左边开始匹配</td>
+</tr>
+<tr>
+<td align="left">方法五</td>
+<td align="left"><code>expr substr $string $position $length</code></td>
+<td align="left">从 position 开始，匹配长度为 length，索引下标从 1 开始</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[shdevops@localhost ~]$ var_str=<span class="string">&quot;k8s docker cloud aws&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: 3&#125;</span> //方法一</span><br><span class="line">docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:3:5&#125;</span> //方法二</span><br><span class="line">dock</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5&#125;</span>  //方法三，注意有空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5:3&#125;</span> //方法三 ，带长度</span><br><span class="line">d a</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:-5&#125;</span> //方法三，没有空格无效</span><br><span class="line">k8s docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:(-5)&#125;</span> //方法三，可以用括号代替空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr substr <span class="string">&quot;<span class="variable">$var_str</span>&quot;</span> 1 5` //方法五，从索引1开始计数</span><br><span class="line">k8s d</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="数组的操作"><a href="#数组的操作" class="headerlink" title="数组的操作"></a>数组的操作</h2><blockquote>
+<p>我们知道在强类型语言中定义变量的时候必须为这个变量定义类型，比如定义整形可以定义为 int 型，字符串 string 类型，日期类型 Date 等等，在使用之前必须定义类型，这是强类型编程语言的风格。Shell 编程中，由于 Shell 是弱类型语言，在使用变量前不需要为变量声明类型， 但其实 Shell 本身也是支持提前声明有类型变量的，只是说使用方式和一般的强类型编程语言有些不同， 使用 declare 和 typeset 命令来进行声明。</p>
+<ul>
+<li>declare 命令和 typeset 命令两者等价</li>
+<li>declare、typeset 命令都是用来定义变量类型的</li>
+</ul>
+<p>既然它们是等价的 那我们用 declare 进行演示</p>
+</blockquote>
+<p>declare 常用命令参数表</p>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-i</td>
+<td align="left">将变量设为整数</td>
+</tr>
+<tr>
+<td align="center">-a</td>
+<td align="left">将变量定义为数组</td>
+</tr>
+<tr>
+<td align="center">-f</td>
+<td align="left">显示此脚本定义过的所有函数及内容</td>
+</tr>
+<tr>
+<td align="center">-F</td>
+<td align="left">仅显示此脚本定义过的函数名</td>
+</tr>
+<tr>
+<td align="center">-x</td>
+<td align="left">将变量声明为环境变量</td>
+</tr>
+</tbody></table>
+<p><code>declare -a array_name</code> 声明数组， 然后 <code>array_name=(value1 ... valuen)</code>， 这里不声明也可以</p>
+<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><ul>
+<li><code>unset my_arr[2]</code> 清楚元素 <code>unset my_arr</code> 清空整个数组</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[shdevops@localhost ~]$</span><br><span class="line">[shdevops@localhost ~]$ my_arr=(1 <span class="string">&quot;abc&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1 abc</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr[1]</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="分片访问"><a href="#分片访问" class="headerlink" title="分片访问"></a>分片访问</h3><ul>
+<li> ${array[@]:1:3} 数组下标从 1 到 3 的三个元素</li>
+<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;apple&quot;</span> <span class="string">&quot;juice&quot;</span> <span class="string">&quot;cat&quot;</span> <span class="string">&quot;dog&quot;</span> <span class="string">&quot;ox&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]:1:3&#125;</span></span><br><span class="line">juice cat dog</span><br></pre></td></tr></table></figure>
+<h3 id="内容替换"><a href="#内容替换" class="headerlink" title="内容替换"></a>内容替换</h3></li>
+<li> <code>$&#123;my_array[@]/an/AN&#125;</code> 将数组中所有元素内包含 an 的子串替换为 AN<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;an1&quot;</span> <span class="string">&quot;an2&quot;</span> <span class="string">&quot;an3&quot;</span> <span class="string">&quot;an4&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]/an/AN&#125;</span></span><br><span class="line">AN1 AN2 AN3 AN4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
+<h2 id="数组遍历"><a href="#数组遍历" class="headerlink" title="数组遍历"></a>数组遍历</h2></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">my_arr=(an1 an2 an3 an4)</span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$v</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span>;<span class="keyword">do</span> <span class="built_in">echo</span> <span class="variable">$v</span>;<span class="keyword">done</span></span><br><span class="line">an1</span><br><span class="line">an2</span><br><span class="line">an3</span><br><span class="line">an4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">取消声明的变量：</span><br><span class="line"></span><br><span class="line">declare +r</span><br><span class="line">declare +i</span><br><span class="line">declare +a</span><br><span class="line">declare +x</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1299,13 +1568,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">214k</span>
+    <span title="站点总字数">222k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:57</span>
+    <span title="站点阅读时长">6:10</span>
   </span>
 </div>
 <div class="busuanzi-count">

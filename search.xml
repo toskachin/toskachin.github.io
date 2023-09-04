@@ -41,6 +41,49 @@
       </tags>
   </entry>
   <entry>
+    <title>Kubectl 常用命令</title>
+    <url>/2023/09/04/20230904_kubectl_commands/</url>
+    <content><![CDATA[<h2 id="Kubectl-上下文和配置"><a href="#Kubectl-上下文和配置" class="headerlink" title="Kubectl 上下文和配置"></a>Kubectl 上下文和配置</h2><p>设置 kubectl 命令交互的 kubernetes 集群并修改配置信息。参阅 使用 kubeconfig 文件进行跨集群验证 获取关于配置文件的详细信息。 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 显示合并后的 kubeconfig 配置</span><br><span class="line">$ kubectl config view </span><br><span class="line"># 同时使用多个 kubeconfig 文件并查看合并后的配置</span><br><span class="line">$ KUBECONFIG=~/.kube/config:~/.kube/kubconfig2 kubectl config view</span><br><span class="line"># 获取 e2e 用户的密码</span><br><span class="line">$ kubectl config view -o jsonpath=&#x27;&#123;.users[?(@.name == &quot;e2e&quot;)].user.password&#125;&#x27;</span><br><span class="line"># 显示当前的上下文</span><br><span class="line">$ kubectl config current-context    </span><br><span class="line"># 设置默认上下文为 my-cluster-name</span><br><span class="line">$ kubectl config use-context my-cluster-name  </span><br><span class="line"># 向 kubeconf 中增加支持基本认证的新集群</span><br><span class="line">$ kubectl config set-credentials kubeuser/foo.kubernetes.com --username=kubeuser --password=kubepassword</span><br><span class="line"># 使用指定的用户名和 namespace 设置上下文</span><br><span class="line">$ kubectl config set-context gce --user=cluster-admin --namespace=foo \</span><br><span class="line">  &amp;&amp; kubectl config use-context gce</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h2><p>Kubernetes 的清单文件可以使用 json 或 yaml 格式定义。可以以 .yaml、.yml、或者 .json 为扩展名。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 创建资源</span><br><span class="line">$ kubectl create -f ./my-manifest.yaml     </span><br><span class="line"># 使用多个文件创建资源</span><br><span class="line">$ kubectl create -f ./my1.yaml -f ./my2.yaml   </span><br><span class="line"># 使用目录下的所有清单文件来创建资源</span><br><span class="line">$ kubectl create -f ./dir    </span><br><span class="line"># 使用 url 来创建资源</span><br><span class="line">$ kubectl create -f https://git.io/vPieo  </span><br><span class="line"># 启动一个 nginx 实例</span><br><span class="line">$ kubectl run nginx --image=nginx  </span><br><span class="line"> # 获取 pod 和 svc 的文档</span><br><span class="line">$ kubectl explain pods,svc                      </span><br><span class="line"># 从 stdin 输入中创建多个 YAML 对象</span><br><span class="line">$ cat &lt;&lt;EOF | kubectl create -f -</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: busybox-sleep</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: busybox</span><br><span class="line">    image: busybox</span><br><span class="line">    args:</span><br><span class="line">    - sleep</span><br><span class="line">    - &quot;1000000&quot;</span><br><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: busybox-sleep-less</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: busybox</span><br><span class="line">    image: busybox</span><br><span class="line">    args:</span><br><span class="line">    - sleep</span><br><span class="line">    - &quot;1000&quot;</span><br><span class="line">EOF</span><br><span class="line"># 创建包含几个 key 的 Secret</span><br><span class="line">$ cat &lt;&lt;EOF | kubectl create -f -</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Secret</span><br><span class="line">metadata:</span><br><span class="line">  name: mysecret</span><br><span class="line">type: Opaque</span><br><span class="line">data:</span><br><span class="line">  password: $(echo &quot;s33msi4&quot; | base64)</span><br><span class="line">  username: $(echo &quot;jane&quot; | base64)</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<h2 id="显示和查找资源"><a href="#显示和查找资源" class="headerlink" title="显示和查找资源"></a>显示和查找资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># Get commands with basic output</span><br><span class="line"># 列出所有 namespace 中的所有 service</span><br><span class="line">$ kubectl get services            </span><br><span class="line"></span><br><span class="line"># 列出所有 namespace 中的所有 pod</span><br><span class="line">$ kubectl get pods --all-namespaces  </span><br><span class="line"></span><br><span class="line"># 列出所有 pod 并显示详细信息</span><br><span class="line">$ kubectl get pods -o wide      </span><br><span class="line"></span><br><span class="line"># 列出指定 deployment</span><br><span class="line">$ kubectl get deployment my-dep      </span><br><span class="line"></span><br><span class="line"># 列出该 namespace 中的所有 pod 包括未初始化的</span><br><span class="line">$ kubectl get pods --include-uninitialized      </span><br><span class="line"></span><br><span class="line"># 使用详细输出来描述命令</span><br><span class="line">$ kubectl describe nodes my-node</span><br><span class="line">$ kubectl describe pods my-pod</span><br><span class="line"></span><br><span class="line"># List Services Sorted by Name</span><br><span class="line">$ kubectl get services --sort-by=.metadata.name </span><br><span class="line"></span><br><span class="line"># 根据重启次数排序列出 pod</span><br><span class="line">$ kubectl get pods --sort-by=&#x27;.status.containerStatuses[0].restartCount&#x27;</span><br><span class="line"></span><br><span class="line"># 获取所有具有 app=cassandra 的 pod 中的 version 标签</span><br><span class="line">$ kubectl get pods --selector=app=cassandra rc -o \</span><br><span class="line">  jsonpath=&#x27;&#123;.items[*].metadata.labels.version&#125;&#x27;</span><br><span class="line"></span><br><span class="line"># 获取所有节点的 ExternalIP</span><br><span class="line">$ kubectl get nodes -o jsonpath=&#x27;&#123;.items[*].status.addresses[?(@.type==&quot;ExternalIP&quot;)].address&#125;&#x27;</span><br><span class="line"></span><br><span class="line"># 列出属于某个 PC 的 Pod 的名字</span><br><span class="line"># “jq”命令用于转换复杂的 jsonpath，参考 https://stedolan.github.io/jq/</span><br><span class="line">$ sel=$&#123;$(kubectl get rc my-rc --output=json | jq -j &#x27;.spec.selector | to_entries | .[] | &quot;\(.key)=\(.value),&quot;&#x27;)%?&#125;</span><br><span class="line">$ echo $(kubectl get pods --selector=$sel --output=jsonpath=&#123;.items..metadata.name&#125;)</span><br><span class="line"></span><br><span class="line"># 查看哪些节点已就绪</span><br><span class="line">$ JSONPATH=&#x27;&#123;range .items[*]&#125;&#123;@.metadata.name&#125;:&#123;range @.status.conditions[*]&#125;&#123;@.type&#125;=&#123;@.status&#125;;&#123;end&#125;&#123;end&#125;&#x27; \</span><br><span class="line"> &amp;&amp; kubectl get nodes -o jsonpath=&quot;$JSONPATH&quot; | grep &quot;Ready=True&quot;</span><br><span class="line"></span><br><span class="line"># 列出当前 Pod 中使用的 Secret</span><br><span class="line">$ kubectl get pods -o json | jq &#x27;.items[].spec.containers[].env[]?.valueFrom.secretKeyRef.name&#x27; | grep -v null | sort | uniq</span><br></pre></td></tr></table></figure>
+
+<h2 id="更新资源"><a href="#更新资源" class="headerlink" title="更新资源"></a>更新资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">$ kubectl rolling-update frontend-v1 -f frontend-v2.json           # 滚动更新 pod frontend-v1</span><br><span class="line">$ kubectl rolling-update frontend-v1 frontend-v2 --image=image:v2  # 更新资源名称并更新镜像</span><br><span class="line">$ kubectl rolling-update frontend --image=image:v2                 # 更新 frontend pod 中的镜像</span><br><span class="line">$ kubectl rolling-update frontend-v1 frontend-v2 --rollback        # 退出已存在的进行中的滚动更新</span><br><span class="line">$ cat pod.json | kubectl replace -f -                              # 基于 stdin 输入的 JSON 替换 pod</span><br><span class="line"># 强制替换，删除后重新创建资源。会导致服务中断。</span><br><span class="line">$ kubectl replace --force -f ./pod.json</span><br><span class="line"># 为 nginx RC 创建服务，启用本地 80 端口连接到容器上的 8000 端口</span><br><span class="line">$ kubectl expose rc nginx --port=80 --target-port=8000</span><br><span class="line"># 更新单容器 pod 的镜像版本（tag）到 v4</span><br><span class="line">$ kubectl get pod mypod -o yaml | sed &#x27;s/\(image: myimage\):.*$/\1:v4/&#x27; | kubectl replace -f -</span><br><span class="line"># 添加标签</span><br><span class="line">$ kubectl label pods my-pod new-label=awesome        </span><br><span class="line"> # 添加注解</span><br><span class="line">$ kubectl annotate pods my-pod icon-url=http://goo.gl/XXBTWq   </span><br><span class="line"># 自动扩展 deployment “foo”</span><br><span class="line">$ kubectl autoscale deployment foo --min=2 --max=10</span><br></pre></td></tr></table></figure>
+
+<h2 id="修补资源"><a href="#修补资源" class="headerlink" title="修补资源"></a>修补资源</h2><p>使用策略合并补丁并修补资源。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 部分更新节点</span><br><span class="line">kubectl patch node k8s-node-1 -p &#x27;&#123;&quot;spec&quot;:&#123;&quot;unschedulable&quot;:true&#125;&#125;&#x27; </span><br><span class="line"># 更新容器镜像；spec.containers[*].name 是必须的，因为这是合并的关键字</span><br><span class="line">$ kubectl patch pod valid-pod -p &#x27;&#123;&quot;spec&quot;:&#123;&quot;containers&quot;:[&#123;&quot;name&quot;:&quot;kubernetes-serve-hostname&quot;,&quot;image&quot;:&quot;new image&quot;&#125;]&#125;&#125;&#x27;</span><br><span class="line"># 使用具有位置数组的 json 补丁更新容器镜像</span><br><span class="line">$ kubectl patch pod valid-pod --type=&#x27;json&#x27; -p=&#x27;[&#123;&quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/spec/containers/0/image&quot;, &quot;value&quot;:&quot;new image&quot;&#125;]&#x27;</span><br><span class="line"># 使用具有位置数组的 json 补丁禁用 deployment 的 livenessProbe</span><br><span class="line">$ kubectl patch deployment valid-deployment  --type json   -p=&#x27;[&#123;&quot;op&quot;: &quot;remove&quot;, &quot;path&quot;: &quot;/spec/template/spec/containers/0/livenessProbe&quot;&#125;]&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="编辑资源"><a href="#编辑资源" class="headerlink" title="编辑资源"></a>编辑资源</h2><p>在编辑器中编辑任何 API 资源。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 编辑名为 docker-registry 的 service</span><br><span class="line">$ kubectl edit svc/docker-registry           </span><br><span class="line"># 使用其它编辑器</span><br><span class="line">$ KUBE_EDITOR=&quot;nano&quot; kubectl edit svc/docker-registry</span><br></pre></td></tr></table></figure>
+
+<h2 id="Scale-资源"><a href="#Scale-资源" class="headerlink" title="Scale 资源"></a>Scale 资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># Scale a replicaset named &#x27;foo&#x27; to 3</span><br><span class="line">$ kubectl scale --replicas=3 rs/foo       </span><br><span class="line"># Scale a resource specified in &quot;foo.yaml&quot; to 3</span><br><span class="line">$ kubectl scale --replicas=3 -f foo.yaml     </span><br><span class="line"># If the deployment named mysql&#x27;s current size is 2, scale mysql to 3</span><br><span class="line">$ kubectl scale --current-replicas=2 --replicas=3 deployment/mysql  </span><br><span class="line"># Scale multiple replication controllers</span><br><span class="line">$ kubectl scale --replicas=5 rc/foo rc/bar rc/baz</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除资源"><a href="#删除资源" class="headerlink" title="删除资源"></a>删除资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 删除 pod.json 文件中定义的类型和名称的 pod</span><br><span class="line">$ kubectl delete -f ./pod.json        </span><br><span class="line"># 删除名为“baz”的 pod 和名为“foo”的 service</span><br><span class="line">$ kubectl delete pod,service baz foo      </span><br><span class="line"># 删除具有 name=myLabel 标签的 pod 和 serivce</span><br><span class="line">$ kubectl delete pods,services -l name=myLabel       </span><br><span class="line"># 删除具有 name=myLabel 标签的 pod 和 service，包括尚未初始化的</span><br><span class="line">$ kubectl delete pods,services -l name=myLabel --include-uninitialized   </span><br><span class="line"># 删除 my-ns namespace 下的所有 pod 和 serivce包</span><br><span class="line">$ kubectl -n my-ns delete po,svc --all</span><br></pre></td></tr></table></figure>
+
+<h2 id="与运行中的-Pod-交互"><a href="#与运行中的-Pod-交互" class="headerlink" title="与运行中的 Pod 交互"></a>与运行中的 Pod 交互</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># dump 输出 pod 的日志（stdout）</span><br><span class="line">$ kubectl logs my-pod  </span><br><span class="line"> # dump 输出 pod 中容器的日志（stdout，pod 中有多个容器的情况下使用）</span><br><span class="line">$ kubectl logs my-pod -c my-container      </span><br><span class="line"># 流式输出 pod 的日志（stdout）</span><br><span class="line">$ kubectl logs -f my-pod             </span><br><span class="line"># 流式输出 pod 中容器的日志（stdout，pod 中有多个容器的情况下使用）</span><br><span class="line">$ kubectl logs -f my-pod -c my-container</span><br><span class="line"># 交互式 shell 的方式运行 pod</span><br><span class="line">$ kubectl run -i --tty busybox --image=busybox -- sh  </span><br><span class="line"> # 连接到运行中的容器</span><br><span class="line">$ kubectl attach my-pod -i    </span><br><span class="line"># 转发 pod 中的 6000 端口到本地的 5000 端口</span><br><span class="line">$ kubectl port-forward my-pod 5000:6000   </span><br><span class="line">  # 在已存在的容器中执行命令（只有一个容器的情况下）</span><br><span class="line">$ kubectl exec my-pod -- ls /          </span><br><span class="line"># 在已存在的容器中执行命令（pod 中有多个容器的情况下）</span><br><span class="line">$ kubectl exec my-pod -c my-container -- ls /    </span><br><span class="line"># 显示指定 pod 和容器的指标度量</span><br><span class="line">$ kubectl top pod POD_NAME --containers</span><br></pre></td></tr></table></figure>
+
+<h2 id="与节点和集群交互"><a href="#与节点和集群交互" class="headerlink" title="与节点和集群交互"></a>与节点和集群交互</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 标记 my-node 不可调度</span><br><span class="line">$ kubectl cordon my-node       </span><br><span class="line"># 清空 my-node 以待维护</span><br><span class="line">$ kubectl drain my-node    </span><br><span class="line"># 标记 my-node 可调度</span><br><span class="line">$ kubectl uncordon my-node             </span><br><span class="line"> # 显示 my-node 的指标度量</span><br><span class="line">$ kubectl top node my-node    </span><br><span class="line">$ kubectl cluster-info          </span><br><span class="line"> # 将当前集群状态输出到 stdout</span><br><span class="line">$ kubectl cluster-info dump                                                               </span><br><span class="line"> # 将当前集群状态输出到 /path/to/cluster-state</span><br><span class="line">$ kubectl cluster-info dump --output-directory=/path/to/cluster-state  </span><br><span class="line"># 如果该键和影响的污点（taint）已存在，则使用指定的值替换</span><br><span class="line">$ kubectl taint nodes foo dedicated=special-user:NoSchedule</span><br></pre></td></tr></table></figure>
+
+<h2 id="set-命令"><a href="#set-命令" class="headerlink" title="set 命令"></a>set 命令</h2><p>配置应用的一些特定资源，也可以修改应用已有的资源<br>使用 kubectl set –help查看，它的子命令，env，image，resources，selector，serviceaccount，subject。</p>
+<p>语法：resources (-f FILENAME | TYPE NAME) ([—limits=LIMITS &amp; —requests=REQUESTS]</p>
+<h2 id="kubectl-set-resources-命令"><a href="#kubectl-set-resources-命令" class="headerlink" title="kubectl set resources 命令"></a>kubectl set resources 命令</h2><p>这个命令用于设置资源的一些范围限制。<br>资源对象中的Pod可以指定计算资源需求（CPU-单位m、内存-单位Mi），即使用的最小资源请求（Requests），限制（Limits）的最大资源需求，Pod将保证使用在设置的资源数量范围。<br>对于每个Pod资源，如果指定了Limits（限制）值，并省略了Requests（请求），则Requests默认为Limits的值。</p>
+<p><code>可用资源对象包括(支持大小写)：replicationcontroller、deployment、daemonset、job、replicaset。</code></p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 将deployment的nginx容器cpu限制为“200m”，将内存设置为“512Mi”</span><br><span class="line">$ kubectl set resources deployment nginx -c=nginx --limits=cpu=200m,memory=512Mi</span><br><span class="line"># 设置所有nginx容器中 Requests和Limits</span><br><span class="line">$ kubectl set resources deployment nginx --limits=cpu=200m,memory=512Mi --requests=cpu=100m,memory=256Mi</span><br><span class="line"># 删除nginx中容器的计算资源值</span><br><span class="line">$ kubectl set resources deployment nginx --limits=cpu=0,memory=0 --requests=cpu=0,memory=0</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>tech</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>k8s</tag>
+        <tag>container</tag>
+        <tag>shell</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo Blog电脑快速迁移</title>
     <url>/2023/09/02/20230902_hexo_migration/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>如何快速的将一个Hexo Blog移动到另外一台电脑</p>
@@ -213,59 +256,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Kubernetes 入门基础</title>
-    <url>/2022/09/20/Kubernetes_from_zero/</url>
-    <content><![CDATA[<h1 id="Kubernetes-入门基础"><a href="#Kubernetes-入门基础" class="headerlink" title="Kubernetes 入门基础"></a>Kubernetes 入门基础</h1><p><strong>Kubernetes Components Architecture</strong><br><img src="/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg" alt="image"></p>
-<h2 id="Kubernetes-核心组件"><a href="#Kubernetes-核心组件" class="headerlink" title="Kubernetes 核心组件"></a>Kubernetes 核心组件</h2><p>Kubernetes 主要由以下几个核心组件组成:</p>
-<ul>
-<li>etcd 保存了整个集群的状态；</li>
-<li>API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制；</li>
-<li>Controller Manager 负责维护集群的状态，比如故障检测、自动扩展、滚动更新等；</li>
-<li>Scheduler 负责资源的调度，按照预定的调度策略将 Pod 调度到相应的机器上；</li>
-<li>Kubelet 负责维护容器的生命周期，同时也负责 Volume（CVI）和网络（CNI）的管理；</li>
-<li>Container Runtime 负责镜像管理以及 Pod 和容器的真正运行（CRI）；</li>
-<li>Kube-proxy 负责为 Service 提供 cluster 内部的服务发现和负载均衡；</li>
-</ul>
-<h2 id="Kubernetes相关基础概念"><a href="#Kubernetes相关基础概念" class="headerlink" title="Kubernetes相关基础概念"></a>Kubernetes相关基础概念</h2><ul>
-<li>master：k8s集群的管理节点，负责管理集群，提供集群的资源数据访问入口。拥有Etcd存储服务（可选），运行Api Server进程，Controller Manager服务进程及Scheduler服务进程。</li>
-<li>node（worker）：Node（worker）是Kubernetes集群架构中运行Pod的服务节点，是Kubernetes集群操作的单元，用来承载被分配Pod的运行，是Pod运行的宿主机。运行docker eninge服务，守护进程kunelet及负载均衡器kube-proxy。</li>
-<li>pod：运行于Node节点上，若干相关容器的组合。Pod内包含的容器运行在同一宿主机上，使用相同的网络命名空间、IP地址和端口，能够通过localhost进行通信。Pod是Kurbernetes进行创建、调度和管理的最小单位，它提供了比容器更高层次的抽象，使得部署和管理更加灵活。一个Pod可以包含一个容器或者多个相关容器。</li>
-<li>label：Kubernetes中的Label实质是一系列的Key/Value键值对，其中key与value可自定义。Label可以附加到各种资源对象上，如Node、Pod、Service、RC等。一个资源对象可以定义任意数量的Label，同一个Label也可以被添加到任意数量的资源对象上去。Kubernetes通过Label Selector（标签选择器）查询和筛选资源对象。</li>
-<li>Replication Controller：Replication Controller用来管理Pod的副本，保证集群中存在指定数量的Pod副本。集群中副本的数量大于指定数量，则会停止指定数量之外的多余容器数量。反之，则会启动少于指定数量个数的容器，保证数量不变。Replication Controller是实现弹性伸缩、动态扩容和滚动升级的核心。</li>
-<li>Deployment：Deployment在内部使用了RS来实现目的，Deployment相当于RC的一次升级，其最大的特色为可以随时获知当前Pod的部署进度。</li>
-<li>HPA（Horizontal Pod Autoscaler）：Pod的横向自动扩容，也是Kubernetes的一种资源，通过追踪分析RC控制的所有Pod目标的负载变化情况，来确定是否需要针对性的调整Pod副本数量。</li>
-<li>Service：Service定义了Pod的逻辑集合和访问该集合的策略，是真实服务的抽象。Service提供了一个统一的服务访问入口以及服务代理和发现机制，关联多个相同Label的Pod，用户不需要了解后台Pod是如何运行。</li>
-<li>Volume：Volume是Pod中能够被多个容器访问的共享目录，Kubernetes中的Volume是定义在Pod上，可以被一个或多个Pod中的容器挂载到某个目录下。</li>
-<li>Namespace：Namespace用于实现多租户的资源隔离，可将集群内部的资源对象分配到不同的Namespace中，形成逻辑上的不同项目、小组或用户组，便于不同的Namespace在共享使用整个集群的资源的同时还能被分别管理。</li>
-</ul>
-<h2 id="K8s-常用命令"><a href="#K8s-常用命令" class="headerlink" title="K8s 常用命令"></a>K8s 常用命令</h2><h3 id="kubectl"><a href="#kubectl" class="headerlink" title="kubectl"></a>kubectl</h3><hr>
-<p>kubectl 是 Kubernetes 的命令行工具（CLI），是 Kubernetes 用户和管理员必备的管理工具。<br>kubectl 提供了大量的子命令，方便管理 Kubernetes 集群中的各种功能。这里不再罗列各种子命令的格式，而是介绍下如何查询命令的帮助</p>
-<ul>
-<li>kubectl -h 查看子命令列表</li>
-<li>kubectl options 查看全局选项</li>
-<li>kubectl <command> –help 查看子命令的帮助</li>
-<li>kubectl [command] [PARAMS] -o=<format> 设置输出格式（如 json、yaml、jsonpath 等）</li>
-<li>kubectl explain [RESOURCE] 查看资源的定义</li>
-</ul>
-<hr>
-<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>使用 kubectl 的第一步是配置 Kubernetes 集群以及认证方式，包括</p>
-<ul>
-<li>cluster 信息：Kubernetes server 地址</li>
-<li>用户信息：用户名、密码或密钥</li>
-<li>Context：cluster、用户信息以及 Namespace 的组合</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl config set-credentials myself --username=admin --password=secret</span><br><span class="line">kubectl config set-cluster local-server --server=http://localhost:8080</span><br><span class="line">kubectl config set-context default-context --cluster=local-server --user=myself --namespace=default</span><br><span class="line">kubectl config use-context default-context</span><br><span class="line">kubectl config view</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>tech</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>k8s</tag>
-        <tag>container</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Nomad 和 Kubernetes 区别</title>
     <url>/2023/05/26/Nomad_and_Kubernetes/</url>
     <content><![CDATA[<h1 id="Nomad-vs-Kubernetes"><a href="#Nomad-vs-Kubernetes" class="headerlink" title="Nomad vs. Kubernetes"></a>Nomad vs. Kubernetes</h1><p>现今Containor技术比较流行的是Kubernetes, 后起之秀Nomad也风行起来，那么两者的区别是啥</p>
@@ -352,6 +342,62 @@
       <tags>
         <tag>memo</tag>
         <tag>感想</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kubernetes 入门基础</title>
+    <url>/2022/09/20/Kubernetes_from_zero/</url>
+    <content><![CDATA[<h1 id="Kubernetes-入门基础"><a href="#Kubernetes-入门基础" class="headerlink" title="Kubernetes 入门基础"></a>Kubernetes 入门基础</h1><p><strong>Kubernetes Components Architecture</strong><br><img src="/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg" alt="image"></p>
+<h2 id="Kubernetes-核心组件"><a href="#Kubernetes-核心组件" class="headerlink" title="Kubernetes 核心组件"></a>Kubernetes 核心组件</h2><p>Kubernetes 主要由以下几个核心组件组成:</p>
+<ul>
+<li>etcd 保存了整个集群的状态；</li>
+<li>API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制；</li>
+<li>Controller Manager 负责维护集群的状态，比如故障检测、自动扩展、滚动更新等；</li>
+<li>Scheduler 负责资源的调度，按照预定的调度策略将 Pod 调度到相应的机器上；</li>
+<li>Kubelet 负责维护容器的生命周期，同时也负责 Volume（CVI）和网络（CNI）的管理；</li>
+<li>Container Runtime 负责镜像管理以及 Pod 和容器的真正运行（CRI）；</li>
+<li>Kube-proxy 负责为 Service 提供 cluster 内部的服务发现和负载均衡；</li>
+</ul>
+<h2 id="Kubernetes相关基础概念"><a href="#Kubernetes相关基础概念" class="headerlink" title="Kubernetes相关基础概念"></a>Kubernetes相关基础概念</h2><ul>
+<li>master：k8s集群的管理节点，负责管理集群，提供集群的资源数据访问入口。拥有Etcd存储服务（可选），运行Api Server进程，Controller Manager服务进程及Scheduler服务进程。</li>
+<li>node（worker）：Node（worker）是Kubernetes集群架构中运行Pod的服务节点，是Kubernetes集群操作的单元，用来承载被分配Pod的运行，是Pod运行的宿主机。运行docker eninge服务，守护进程kunelet及负载均衡器kube-proxy。</li>
+<li>pod：运行于Node节点上，若干相关容器的组合。Pod内包含的容器运行在同一宿主机上，使用相同的网络命名空间、IP地址和端口，能够通过localhost进行通信。Pod是Kurbernetes进行创建、调度和管理的最小单位，它提供了比容器更高层次的抽象，使得部署和管理更加灵活。一个Pod可以包含一个容器或者多个相关容器。</li>
+<li>label：Kubernetes中的Label实质是一系列的Key/Value键值对，其中key与value可自定义。Label可以附加到各种资源对象上，如Node、Pod、Service、RC等。一个资源对象可以定义任意数量的Label，同一个Label也可以被添加到任意数量的资源对象上去。Kubernetes通过Label Selector（标签选择器）查询和筛选资源对象。</li>
+<li>Replication Controller：Replication Controller用来管理Pod的副本，保证集群中存在指定数量的Pod副本。集群中副本的数量大于指定数量，则会停止指定数量之外的多余容器数量。反之，则会启动少于指定数量个数的容器，保证数量不变。Replication Controller是实现弹性伸缩、动态扩容和滚动升级的核心。</li>
+<li>Deployment：Deployment在内部使用了RS来实现目的，Deployment相当于RC的一次升级，其最大的特色为可以随时获知当前Pod的部署进度。</li>
+<li>HPA（Horizontal Pod Autoscaler）：Pod的横向自动扩容，也是Kubernetes的一种资源，通过追踪分析RC控制的所有Pod目标的负载变化情况，来确定是否需要针对性的调整Pod副本数量。</li>
+<li>Service：Service定义了Pod的逻辑集合和访问该集合的策略，是真实服务的抽象。Service提供了一个统一的服务访问入口以及服务代理和发现机制，关联多个相同Label的Pod，用户不需要了解后台Pod是如何运行。</li>
+<li>Volume：Volume是Pod中能够被多个容器访问的共享目录，Kubernetes中的Volume是定义在Pod上，可以被一个或多个Pod中的容器挂载到某个目录下。</li>
+<li>Namespace：Namespace用于实现多租户的资源隔离，可将集群内部的资源对象分配到不同的Namespace中，形成逻辑上的不同项目、小组或用户组，便于不同的Namespace在共享使用整个集群的资源的同时还能被分别管理。</li>
+</ul>
+<h2 id="K8s-常用命令"><a href="#K8s-常用命令" class="headerlink" title="K8s 常用命令"></a>K8s 常用命令</h2><h3 id="kubectl"><a href="#kubectl" class="headerlink" title="kubectl"></a>kubectl</h3><hr>
+<p>kubectl 是 Kubernetes 的命令行工具（CLI），是 Kubernetes 用户和管理员必备的管理工具。<br>kubectl 提供了大量的子命令，方便管理 Kubernetes 集群中的各种功能。这里不再罗列各种子命令的格式，而是介绍下如何查询命令的帮助</p>
+<ul>
+<li>kubectl -h 查看子命令列表</li>
+<li>kubectl options 查看全局选项</li>
+<li>kubectl <command> –help 查看子命令的帮助</li>
+<li>kubectl [command] [PARAMS] -o=<format> 设置输出格式（如 json、yaml、jsonpath 等）</li>
+<li>kubectl explain [RESOURCE] 查看资源的定义</li>
+</ul>
+<hr>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>使用 kubectl 的第一步是配置 Kubernetes 集群以及认证方式，包括</p>
+<ul>
+<li>cluster 信息：Kubernetes server 地址</li>
+<li>用户信息：用户名、密码或密钥</li>
+<li>Context：cluster、用户信息以及 Namespace 的组合</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl config set-credentials myself --username=admin --password=secret</span><br><span class="line">kubectl config set-cluster local-server --server=http://localhost:8080</span><br><span class="line">kubectl config set-context default-context --cluster=local-server --user=myself --namespace=default</span><br><span class="line">kubectl config use-context default-context</span><br><span class="line">kubectl config view</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>tech</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>k8s</tag>
+        <tag>container</tag>
+        <tag>Tech</tag>
       </tags>
   </entry>
   <entry>
@@ -522,54 +568,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo_blog_setup</title>
-    <url>/2022/07/04/hexo-blog-setup/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>每次换电脑，或者在其他电脑上工作后发现无法更新这个Blog，需要记录下如何当初一步一步设置这个blog，以方便迁移，重新搭建</p>
-<h1 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h1><ul>
-<li>hexo </li>
-<li>hexo theme</li>
-<li>github</li>
-<li></li>
-</ul>
-<h2 id="Install-Steps"><a href="#Install-Steps" class="headerlink" title="Install Steps"></a>Install Steps</h2><h3 id="Install-hexo"><a href="#Install-hexo" class="headerlink" title="Install hexo"></a>Install hexo</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew install npm</span><br><span class="line"></span><br><span class="line">brew install hexo </span><br><span class="line"></span><br><span class="line">~ ❯ hexo -v                                                                              08:45:30</span><br><span class="line">hexo-cli: 4.3.0</span><br><span class="line">os: darwin 21.5.0 12.4</span><br><span class="line"></span><br><span class="line">node: 14.17.5</span><br><span class="line">v8: 8.4.371.23-node.76</span><br><span class="line">uv: 1.41.0</span><br><span class="line">zlib: 1.2.11</span><br><span class="line">brotli: 1.0.9</span><br><span class="line">ares: 1.17.2</span><br><span class="line">modules: 83</span><br><span class="line">nghttp2: 1.42.0</span><br><span class="line">napi: 8</span><br><span class="line">llhttp: 2.1.3</span><br><span class="line">openssl: 1.1.1k</span><br><span class="line">cldr: 39.0</span><br><span class="line">icu: 69.1</span><br><span class="line">tz: 2021a</span><br><span class="line">unicode: 13.0</span><br></pre></td></tr></table></figure>
-
-<h3 id="Create-project"><a href="#Create-project" class="headerlink" title="Create project"></a>Create project</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">cd [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
-
-<h3 id="Set-blog-information"><a href="#Set-blog-information" class="headerlink" title="Set blog information"></a>Set blog information</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim _config.yml</span><br><span class="line"></span><br><span class="line">~~~~~~~~~~~~~~~~~~ _config.yml ~~~~~~~~~~~~~~~~~~</span><br><span class="line"># Site</span><br><span class="line">title: [githubaccount]&#x27;s note</span><br><span class="line">subtitle:</span><br><span class="line">description: [githubaccount]&#x27;s personal blog</span><br><span class="line">author: [githubaccount]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:[githubaccount]/[githubaccount].github.io.git</span><br><span class="line">  branch: master</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><h3 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next themes/next</span><br><span class="line"></span><br><span class="line">vi _config.yml</span><br><span class="line"></span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line">theme: next</span><br><span class="line"># https://github.com/theme-next/hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line">npm install hexo-enhancer --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install --save hexo-submit-urls-to-search-engine</span><br><span class="line">npm install hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="Useful-hexo-commands"><a href="#Useful-hexo-commands" class="headerlink" title="Useful hexo commands"></a>Useful hexo commands</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo --config _config.yml</span><br><span class="line">hexo generate --watch</span><br><span class="line"></span><br><span class="line">hexo server</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>personal</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo Next(v8.7.0)如何边栏添加最近更新文章</title>
-    <url>/2021/08/20/hexo-sidebar/</url>
-    <content><![CDATA[<h2 id="创建自定义文件"><a href="#创建自定义文件" class="headerlink" title="创建自定义文件"></a>创建自定义文件</h2><p>在新建文件yoursite/source/_data/sidebar.njk,添加以下内容</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- recent posts --&gt;</span><br><span class="line">&#123;%- if theme.recent_posts %&#125;</span><br><span class="line">    &lt;div class=&quot;links-of-blogroll motion-element &#123;&#123; &quot;links-of-blogroll-&quot; + theme.recent_posts_layout &#125;&#125;&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;links-of-blogroll-title recent-posts-title&quot;&gt;</span><br><span class="line">	    &lt;i class=&quot;fa fa-history &#123;&#123; theme.recent_posts_icon | lower &#125;&#125;&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;</span><br><span class="line">            &#123;&#123; theme.recent_posts_title &#125;&#125;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;ul class=&quot;links-of-blogroll-list recent-posts-list&quot;&gt;</span><br><span class="line">	    &#123;%- set posts = site.posts.sort(&#x27;-date&#x27;).toArray() %&#125;</span><br><span class="line">	    &#123;%- for post in posts.slice(&#x27;0&#x27;, &#x27;5&#x27;) %&#125;</span><br><span class="line">	        &lt;li class=&quot;my-links-of-blogroll-item&quot;&gt;</span><br><span class="line">		    &lt;a href=&quot;&#123;&#123; url_for(post.path) &#125;&#125;&quot; title=&quot;&#123;&#123; post.title &#125;&#125;&quot; target=&quot;&quot;&gt;</span><br><span class="line">		    &#123;&#123; post.title &#125;&#125;</span><br><span class="line">		    &lt;/a&gt;</span><br><span class="line">		&lt;/li&gt;</span><br><span class="line">	    &#123;%- endfor %&#125;</span><br><span class="line">	&lt;/ul&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="修改主题配置文件"><a href="#修改主题配置文件" class="headerlink" title="修改主题配置文件"></a>修改主题配置文件</h2><p>在站点目录下修改主题配置文件（_config.yml）添加以下内容<br>文件路径：yoursite/theme/next/_config.yml</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">recent_posts: true</span><br><span class="line">recent_posts_title: 近期文章</span><br><span class="line">recent_posts_layout: block</span><br></pre></td></tr></table></figure>
-
-<h2 id="启动添加文件"><a href="#启动添加文件" class="headerlink" title="启动添加文件"></a>启动添加文件</h2><p>修改文件yoursite/theme/next/_config.yml uncomment sidebar这一行</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">custom_file_path:</span><br><span class="line">  #head: source/_data/head.njk</span><br><span class="line">  #header: source/_data/header.njk</span><br><span class="line">  sidebar: source/_data/sidebar.njk</span><br><span class="line">  #postMeta: source/_data/post-meta.njk</span><br><span class="line">  #postBodyEnd: source/_data/post-body-end.njk</span><br><span class="line">  #footer: source/_data/footer.njk</span><br><span class="line">  #bodyEnd: source/_data/body-end.njk</span><br><span class="line">  #variable: source/_data/variables.styl</span><br><span class="line">  #mixin: source/_data/mixins.styl</span><br><span class="line">  #style: source/_data/styles.styl</span><br></pre></td></tr></table></figure>
-
-<h2 id="刷新站点"><a href="#刷新站点" class="headerlink" title="刷新站点"></a>刷新站点</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s </span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Docker useful commands</title>
     <url>/2022/09/21/docker_useful_commands/</url>
     <content><![CDATA[<h2 id="docker-commands"><a href="#docker-commands" class="headerlink" title="docker commands"></a>docker commands</h2><hr>
@@ -621,87 +619,51 @@
       </tags>
   </entry>
   <entry>
-    <title>Kubernetes网络类型详解</title>
-    <url>/2021/08/21/k8s-network-1/</url>
-    <content><![CDATA[<h1 id="Kubernetes网络插件对比分析（Flannel、Calico、Weave）"><a href="#Kubernetes网络插件对比分析（Flannel、Calico、Weave）" class="headerlink" title="Kubernetes网络插件对比分析（Flannel、Calico、Weave）"></a>Kubernetes网络插件对比分析（Flannel、Calico、Weave）</h1><h3 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h3><p>在对CNI插件们进行比较之前，我们可以先对网络中会见到的相关术语做一个整体的了解。不论是阅读本文，还是今后接触到其他和CNI有关的内容，了解一些常见术语总是非常有用的。</p>
-<p>一些最常见的术语包括：</p>
-<ul>
-<li>第2层网络：OSI(Open Systems Interconnections，开放系统互连)网络模型的“数据链路”层。第2层网络会处理网络上两个相邻节点之间的帧传递。第2层网络的一个值得注意的示例是以太网，其中MAC表示为子层。</li>
-<li>第3层网络：OSI网络模型的“网络”层。第3层网络的主要关注点，是在第2层连接之上的主机之间路由数据包。IPv4、IPv6和ICMP是第3层网络协议的示例。</li>
-<li>VXLAN：代表“虚拟可扩展LAN”。首先，VXLAN用于通过在UDP数据报中封装第2层以太网帧来帮助实现大型云部署。VXLAN虚拟化与VLAN类似，但提供更大的灵活性和功能(VLAN仅限于4096个网络ID)。VXLAN是一种封装和覆盖协议，可在现有网络上运行。</li>
-<li>Overlay网络：Overlay网络是建立在现有网络之上的虚拟逻辑网络。Overlay网络通常用于在现有网络之上提供有用的抽象，并分离和保护不同的逻辑网络。</li>
-<li>封装：封装是指在附加层中封装网络数据包以提供其他上下文和信息的过程。在overlay网络中，封装被用于从虚拟网络转换到底层地址空间，从而能路由到不同的位置(数据包可以被解封装，并继续到其目的地)。</li>
-<li>网状网络：网状网络(Mesh network)是指每个节点连接到许多其他节点以协作路由、并实现更大连接的网络。网状网络允许通过多个路径进行路由，从而提供更可靠的网络。网状网格的缺点是每个附加节点都会增加大量开销。</li>
-<li>BGP：代表“边界网关协议”，用于管理边缘路由器之间数据包的路由方式。BGP通过考虑可用路径，路由规则和特定网络策略，帮助弄清楚如何将数据包从一个网络发送到另一个网络。BGP有时被用作CNI插件中的路由机制，而不是封装的覆盖网络。</li>
+    <title>Hexo_blog_setup</title>
+    <url>/2022/07/04/hexo-blog-setup/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>每次换电脑，或者在其他电脑上工作后发现无法更新这个Blog，需要记录下如何当初一步一步设置这个blog，以方便迁移，重新搭建</p>
+<h1 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h1><ul>
+<li>hexo </li>
+<li>hexo theme</li>
+<li>github</li>
+<li></li>
 </ul>
-<h3 id="CNI比较"><a href="#CNI比较" class="headerlink" title="CNI比较"></a>CNI比较</h3><h4 id="Flannel"><a href="#Flannel" class="headerlink" title="Flannel"></a>Flannel</h4><p><img src="/2021/08/21/k8s-network-1/flannel.jpeg" alt="image"></p>
-<p>链接：<a href="https://github.com/coreos/flannel">https://github.com/coreos/flannel</a></p>
-<p>由CoreOS开发的项目Flannel，可能是最直接和***的CNI插件。它是容器编排系统中最成熟的网络结构示例之一，旨在实现更好的容器间和主机间网络。随着CNI概念的兴起，Flannel CNI插件算是早期的入门。</p>
-<p>与其他方案相比，Flannel相对容易安装和配置。它被打包为单个二进制文件FlannelD，许多常见的Kubernetes集群部署工具和许多Kubernetes发行版都可以默认安装Flannel。Flannel可以使用Kubernetes集群的现有etcd集群来使用API存储其状态信息，因此不需要专用的数据存储。</p>
-<p>Flannel配置第3层IPv4 Overlay网络。它会创建一个大型内部网络，跨越集群中每个节点。在此Overlay网络中，每个节点都有一个子网，用于在内部分配IP地址。在配置Pod时，每个节点上的Docker桥接口都会为每个新容器分配一个地址。同一主机中的Pod可以使用Docker桥接进行通信，而不同主机上的pod会使用flanneld将其流量封装在UDP数据包中，以便路由到适当的目标。</p>
-<p>Flannel有几种不同类型的后端可用于封装和路由。默认和推荐的方法是使用VXLAN，因为VXLAN性能更良好并且需要的手动干预更少。</p>
-<p>总的来说，Flannel是大多数用户的不错选择。从管理角度来看，它提供了一个简单的网络模型，用户只需要一些基础知识，就可以设置适合大多数用例的环境。一般来说，在初期使用Flannel是一个稳妥安全的选择，直到你开始需要一些它无法提供的东西。</p>
-<h4 id="Calico"><a href="#Calico" class="headerlink" title="Calico"></a>Calico</h4><p><img src="/2021/08/21/k8s-network-1/calico.jpeg" alt="image"></p>
-<p>链接：<a href="https://github.com/projectcalico/cni-plugin">https://github.com/projectcalico/cni-plugin</a></p>
-<p>Calico是Kubernetes生态系统中另一种流行的网络选择。虽然Flannel被公认为是最简单的选择，但Calico以其性能、灵活性而闻名。Calico的功能更为全面，不仅提供主机和pod之间的网络连接，还涉及网络安全和管理。Calico CNI插件在CNI框架内封装了Calico的功能。</p>
-<p>在满足系统要求的新配置的Kubernetes集群上，用户可以通过应用单个manifest文件快速部署Calico。如果您对Calico的可选网络策略功能感兴趣，可以向集群应用其他manifest，来启用这些功能。</p>
-<p>尽管部署Calico所需的操作看起来相当简单，但它创建的网络环境同时具有简单和复杂的属性。与Flannel不同，Calico不使用overlay网络。相反，Calico配置第3层网络，该网络使用BGP路由协议在主机之间路由数据包。这意味着在主机之间移动时，不需要将数据包包装在额外的封装层中。BGP路由机制可以本地引导数据包，而无需额外在流量层中打包流量。</p>
-<p>除了性能优势之外，在出现网络问题时，用户还可以用更常规的方法进行故障排除。虽然使用VXLAN等技术进行封装也是一个不错的解决方案，但该过程处理数据包的方式同场难以追踪。使用Calico，标准调试工具可以访问与简单环境中相同的信息，从而使更多开发人员和管理员更容易理解行为。</p>
-<p>除了网络连接外，Calico还以其先进的网络功能而闻名。 网络策略是其最受追捧的功能之一。此外，Calico还可以与服务网格Istio集成，以便在服务网格层和网络基础架构层中解释和实施集群内工作负载的策略。这意味着用户可以配置强大的规则，描述Pod应如何发送和接受流量，提高安全性并控制网络环境。</p>
-<p>如果对你的环境而言，支持网络策略是非常重要的一点，而且你对其他性能和功能也有需求，那么Calico会是一个理想的选择。此外，如果您现在或未来有可能希望得到技术支持，那么Calico是提供商业支持的。一般来说，当您希望能够长期控制网络，而不是仅仅配置一次并忘记它时，Calico是一个很好的选择。</p>
-<h4 id="Weave"><a href="#Weave" class="headerlink" title="Weave"></a>Weave</h4><p><img src="/2021/08/21/k8s-network-1/weave.jpeg" alt="image"> </p>
-<p>链接：<a href="https://www.weave.works/oss/net/">https://www.weave.works/oss/net/</a></p>
-<p>Weave是由Weaveworks提供的一种Kubernetes CNI网络选项，它提供的模式和我们目前为止讨论的所有网络方案都不同。Weave在集群中的每个节点之间创建网状Overlay网络，参与者之间可以灵活路由。这一特性再结合其他一些独特的功能，在某些可能导致问题的情况下，Weave可以智能地路由。</p>
-<p>为了创建网络，Weave依赖于网络中每台主机上安装的路由组件。然后，这些路由器交换拓扑信息，以维护可用网络环境的***视图。当需要将流量发送到位于不同节点上的Pod时，Weave路由组件会自动决定是通过“快速数据路径”发送，还是回退到“sleeve”分组转发的方法。</p>
-<p>快速数据路径依靠内核的本机Open vSwitch数据路径模块，将数据包转发到适当的Pod，而无需多次移入和移出用户空间。Weave路由器会更新Open vSwitch配置，以确保内核层具有有关如何路由传入数据包的准确信息。相反，当网络拓扑不适合快速数据路径路由时，sleeve模式可用作备份。它是一种较慢的封装模式，在快速数据路径缺少必要的路由信息或连接的情况下，它可以来路由数据包。当流量通过路由器时，它们会了解哪些对等体与哪些MAC地址相关联，从而允许它们以更少的跳数、更智能地路由后续流量。当网络更改导致可用路由改变时，这一相同的机制可以帮助每个节点进行自行更正。</p>
-<p>与Calico一样，Weave也为Kubernetes集群提供网络策略功能。设置Weave时，网络策略会自动安装和配置，因此除了添加网络规则之外，用户无需进行其他配置。一个其他网络方案都没有、Weave独有的功能，是对整个网络的简单加密。虽然这会增加相当多的网络开销，但Weave可以使用NaCl加密来为sleeve流量自动加密所有路由流量，而对于快速数据路径流量，因为它需要加密内核中的VXLAN流量，Weave会使用IPsec ESP来加密快速数据路径流量。</p>
-<p>对于那些寻求功能丰富的网络、同时希望不要增加大量复杂性或管理难度的人来说，Weave是一个很好的选择。它设置起来相对容易，提供了许多内置和自动配置的功能，并且可以在其他解决方案可能出现故障的场景下提供智能路由。网状拓扑结构确实会限制可以合理容纳的网络的大小，不过对于大多数用户来说，这也不是一个大问题。此外，Weave也提供收费的技术支持，可以为企业用户提供故障排除等等技术服务。</p>
-<h4 id="哪个插件适合我"><a href="#哪个插件适合我" class="headerlink" title="哪个插件适合我"></a>哪个插件适合我</h4><p><img src="/2021/08/21/k8s-network-1/cnis.png" alt="image"></p>
-<ul>
-<li>Overlay 模式的典型特征是容器独立于主机的 IP 段，这个 IP 段进行跨主机网络通信时是通过在主机之间创建隧道的方式，将整个容器网段的包全都封装成底层的物理网络中主机之间的包。该方式的好处在于它不依赖于底层网络；</li>
-<li>路由模式中主机和容器也分属不同的网段，它与 Overlay 模式的主要区别在于它的跨主机通信是通过路由打通，无需在不同主机之间做一个隧道封包。但路由打通就需要部分依赖于底层网络，比如说要求底层网络有二层可达的一个能力；</li>
-<li>Underlay 模式中容器和宿主机位于同一层网络，两者拥有相同的地位。容器之间网络的打通主要依靠于底层网络。因此该模式是强依赖于底层能力的。</li>
-</ul>
-<p>了解了以上三种常用的实现模式之后，再根据自己的环境、需求判断可由哪一种模式进行实现，再在对应的模式中去找 CNI 插件。不过社区中有那么多插件，它们又都属于哪种模式？如何进行选择呢？怎么挑选适合自己的呢？我们可以从以下 3 个方面来考虑。</p>
-<p><img src="/2021/08/21/k8s-network-1/cniq.png" alt="image"></p>
-<ol>
-<li>环境限制<br>不同环境中所支持的底层能力是不同的。</li>
-</ol>
-<ul>
-<li>虚拟化环境（例如 OpenStack）中的网络限制较多，比如不允许机器之间直接通过二层协议访问，必须要带有 IP 地址这种三层的才能去做转发，限制某一个机器只能使用某些 IP 等。在这种被做了强限制的底层网络中，只能去选择 Overlay 的插件，常见的有 Flannel-vxlan, Calico-ipip, Weave 等等；</li>
-<li>物理机环境中底层网络的限制较少，比如说我们在同一个交换机下面直接做一个二层的通信。对于这种集群环境，我们可以选择 Underlay 或者路由模式的插件。Underlay 意味着我们可以直接在一个物理机上插多个网卡或者是在一些网卡上做硬件虚拟化；路由模式就是依赖于 Linux 的路由协议做一个打通。这样就避免了像 vxlan 的封包方式导致的性能降低。这种环境下我们可选的插件包括 clico-bgp, flannel-hostgw, sriov 等等；</li>
-<li>公有云环境也是虚拟化，因此底层限制也会较多。但每个公有云都会考虑适配容器，提升容器的性能，因此每家公有云可能都提供了一些 API 去配置一些额外的网卡或者路由这种能力。在公有云上，我们要尽量选择公有云厂商提供的 CNI 插件以达到兼容性和性能上的最优。比如 Aliyun 就提供了一个高性能的 Terway 插件。</li>
-</ul>
-<ol start="2">
-<li>功能需求<br>安全需求；</li>
-</ol>
-<ul>
-<li><p>K8s 支持 NetworkPolicy，就是说我们可以通过 NetworkPolicy 的一些规则去支持“Pod 之间是否可以访问”这类策略。但不是每个 CNI 插件都支持 NetworkPolicy 的声明，如果大家有这个需求，可以选择支持 NetworkPolicy 的一些插件，比如 Calico, Weave 等等。</p>
-</li>
-<li><p>是否需要集群外的资源与集群内的资源互联互通；<br>大家的应用最初都是在虚拟机或者物理机上，容器化之后，应用无法一下就完成迁移，因此就需要传统的虚拟机或者物理机能跟容器的 IP 地址互通。为了实现这种互通，就需要两者之间有一些打通的方式或者直接位于同一层。此时可以选择 Underlay 的网络，比如 sriov 这种就是 Pod 和以前的虚拟机或者物理机在同一层。我们也可以使用 calico-bgp，此时它们虽然不在同一网段，但可以通过它去跟原有的路由器做一些 BGP 路由的一个发布，这样也可以打通虚拟机与容器。</p>
-</li>
-<li><p>K8s 的服务发现与负载均衡的能力。<br>K8s 的服务发现与负载均衡就是我们前面所介绍的 K8s 的 Service，但并不是所有的 CNI 插件都能实现这两种能力。比如很多 Underlay 模式的插件，在 Pod 中的网卡是直接用的 Underlay 的硬件，或者通过硬件虚拟化插到容器中的，这个时候它的流量无法走到宿主机所在的命名空间，因此也无法应用 kube-proxy 在宿主机配置的规则。</p>
-</li>
-</ul>
-<p>这种情况下，插件就无法访问到 K8s 的服务发现。因此大家如果需要服务发现与负载均衡，在选择 Underlay 的插件时就需要注意它们是否支持这两种能力。</p>
-<p>经过功能需求的过滤之后，能选的插件就很少了。经过环境限制和功能需求的过滤之后，如果还剩下 3、4 种插件，可以再来考虑性能需求。</p>
-<ol start="3">
-<li>性能需求<br>我们可以从 Pod 的创建速度和 Pod 的网络性能来衡量不同插件的性能。</li>
-</ol>
-<ul>
-<li><p>Pod 的创建速度<br>当我们创建一组 Pod 时，比如业务高峰来了，需要紧急扩容，这时比如说我们扩容了 1000 个 Pod，就需要 CNI 插件创建并配置 1000 个网络资源。Overlay 和路由模式在这种情况下的创建速度是很快的，因为它是在机器里面又做了虚拟化，所以只需要调用内核接口就可以完成这些操作。但对于 Underlay 模式，由于需要创建一些底层的网络资源，所以整个 Pod 的创建速度相对会慢一些。因此对于经常需要紧急扩容或者创建大批量的 Pod 这些场景，我们应该尽量选择 Overlay 或者路由模式的网络插件。</p>
-</li>
-<li><p>Pod 的网络性能<br>主要表现在两个 Pod 之间的网络转发、网络带宽、PPS 延迟等这些性能指标上。Overlay 模式的性能较差，因为它在节点上又做了一层虚拟化，还需要去封包，封包又会带来一些包头的损失、CPU 的消耗等，如果大家对网络性能的要求比较高，比如说机器学习、大数据这些场景就不适合使用 Overlay 模式。这种情形下我们通常选择 Underlay 或者路由模式的 CNI 插件。</p>
-</li>
-</ul>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a href="https://network.51cto.com/art/201907/598970.htm">https://network.51cto.com/art/201907/598970.htm</a> </p>
-]]></content>
+<h2 id="Install-Steps"><a href="#Install-Steps" class="headerlink" title="Install Steps"></a>Install Steps</h2><h3 id="Install-hexo"><a href="#Install-hexo" class="headerlink" title="Install hexo"></a>Install hexo</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew install npm</span><br><span class="line"></span><br><span class="line">brew install hexo </span><br><span class="line"></span><br><span class="line">~ ❯ hexo -v                                                                              08:45:30</span><br><span class="line">hexo-cli: 4.3.0</span><br><span class="line">os: darwin 21.5.0 12.4</span><br><span class="line"></span><br><span class="line">node: 14.17.5</span><br><span class="line">v8: 8.4.371.23-node.76</span><br><span class="line">uv: 1.41.0</span><br><span class="line">zlib: 1.2.11</span><br><span class="line">brotli: 1.0.9</span><br><span class="line">ares: 1.17.2</span><br><span class="line">modules: 83</span><br><span class="line">nghttp2: 1.42.0</span><br><span class="line">napi: 8</span><br><span class="line">llhttp: 2.1.3</span><br><span class="line">openssl: 1.1.1k</span><br><span class="line">cldr: 39.0</span><br><span class="line">icu: 69.1</span><br><span class="line">tz: 2021a</span><br><span class="line">unicode: 13.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="Create-project"><a href="#Create-project" class="headerlink" title="Create project"></a>Create project</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">cd [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<h3 id="Set-blog-information"><a href="#Set-blog-information" class="headerlink" title="Set blog information"></a>Set blog information</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim _config.yml</span><br><span class="line"></span><br><span class="line">~~~~~~~~~~~~~~~~~~ _config.yml ~~~~~~~~~~~~~~~~~~</span><br><span class="line"># Site</span><br><span class="line">title: [githubaccount]&#x27;s note</span><br><span class="line">subtitle:</span><br><span class="line">description: [githubaccount]&#x27;s personal blog</span><br><span class="line">author: [githubaccount]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:[githubaccount]/[githubaccount].github.io.git</span><br><span class="line">  branch: master</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><h3 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next themes/next</span><br><span class="line"></span><br><span class="line">vi _config.yml</span><br><span class="line"></span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line">theme: next</span><br><span class="line"># https://github.com/theme-next/hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line">npm install hexo-enhancer --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install --save hexo-submit-urls-to-search-engine</span><br><span class="line">npm install hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Useful-hexo-commands"><a href="#Useful-hexo-commands" class="headerlink" title="Useful hexo commands"></a>Useful hexo commands</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo --config _config.yml</span><br><span class="line">hexo generate --watch</span><br><span class="line"></span><br><span class="line">hexo server</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>kubernetes</category>
+        <category>blog</category>
       </categories>
       <tags>
-        <tag>network</tag>
-        <tag>kubernetes</tag>
+        <tag>tech</tag>
+        <tag>personal</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo Next(v8.7.0)如何边栏添加最近更新文章</title>
+    <url>/2021/08/20/hexo-sidebar/</url>
+    <content><![CDATA[<h2 id="创建自定义文件"><a href="#创建自定义文件" class="headerlink" title="创建自定义文件"></a>创建自定义文件</h2><p>在新建文件yoursite/source/_data/sidebar.njk,添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- recent posts --&gt;</span><br><span class="line">&#123;%- if theme.recent_posts %&#125;</span><br><span class="line">    &lt;div class=&quot;links-of-blogroll motion-element &#123;&#123; &quot;links-of-blogroll-&quot; + theme.recent_posts_layout &#125;&#125;&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;links-of-blogroll-title recent-posts-title&quot;&gt;</span><br><span class="line">	    &lt;i class=&quot;fa fa-history &#123;&#123; theme.recent_posts_icon | lower &#125;&#125;&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;</span><br><span class="line">            &#123;&#123; theme.recent_posts_title &#125;&#125;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;ul class=&quot;links-of-blogroll-list recent-posts-list&quot;&gt;</span><br><span class="line">	    &#123;%- set posts = site.posts.sort(&#x27;-date&#x27;).toArray() %&#125;</span><br><span class="line">	    &#123;%- for post in posts.slice(&#x27;0&#x27;, &#x27;5&#x27;) %&#125;</span><br><span class="line">	        &lt;li class=&quot;my-links-of-blogroll-item&quot;&gt;</span><br><span class="line">		    &lt;a href=&quot;&#123;&#123; url_for(post.path) &#125;&#125;&quot; title=&quot;&#123;&#123; post.title &#125;&#125;&quot; target=&quot;&quot;&gt;</span><br><span class="line">		    &#123;&#123; post.title &#125;&#125;</span><br><span class="line">		    &lt;/a&gt;</span><br><span class="line">		&lt;/li&gt;</span><br><span class="line">	    &#123;%- endfor %&#125;</span><br><span class="line">	&lt;/ul&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="修改主题配置文件"><a href="#修改主题配置文件" class="headerlink" title="修改主题配置文件"></a>修改主题配置文件</h2><p>在站点目录下修改主题配置文件（_config.yml）添加以下内容<br>文件路径：yoursite/theme/next/_config.yml</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">recent_posts: true</span><br><span class="line">recent_posts_title: 近期文章</span><br><span class="line">recent_posts_layout: block</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动添加文件"><a href="#启动添加文件" class="headerlink" title="启动添加文件"></a>启动添加文件</h2><p>修改文件yoursite/theme/next/_config.yml uncomment sidebar这一行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">custom_file_path:</span><br><span class="line">  #head: source/_data/head.njk</span><br><span class="line">  #header: source/_data/header.njk</span><br><span class="line">  sidebar: source/_data/sidebar.njk</span><br><span class="line">  #postMeta: source/_data/post-meta.njk</span><br><span class="line">  #postBodyEnd: source/_data/post-body-end.njk</span><br><span class="line">  #footer: source/_data/footer.njk</span><br><span class="line">  #bodyEnd: source/_data/body-end.njk</span><br><span class="line">  #variable: source/_data/variables.styl</span><br><span class="line">  #mixin: source/_data/mixins.styl</span><br><span class="line">  #style: source/_data/styles.styl</span><br></pre></td></tr></table></figure>
+
+<h2 id="刷新站点"><a href="#刷新站点" class="headerlink" title="刷新站点"></a>刷新站点</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s </span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -1138,139 +1100,6 @@
       </tags>
   </entry>
   <entry>
-    <title>一文了解正则表达式</title>
-    <url>/2022/05/10/regexr/</url>
-    <content><![CDATA[<h1 id="一-正则表达式简介"><a href="#一-正则表达式简介" class="headerlink" title="一.正则表达式简介"></a>一.正则表达式简介</h1><ol>
-<li><p>什么是正则表达式<br>正则表达式（Regluar Expressions）又称规则表达式，这个概念最初是由Unix中的工具软件（如sed 和 grep）普及开的。正则表达式在代码中常简写为REs，regexes或regexp（regex patterns）。它本质上是一个小巧的、高度专用的编程语言。 许多程序设计语言都支持通过正则表达式进行字符串操作。例如，在Perl中就内建了一个功能强大的正则表达式引擎。</p>
-</li>
-<li><p>正则表达式能做什么<br>正则表达式的主要应用对象是文本，使用正则表达式可以指定想要匹配的字符串规则，然后通过这个规则来匹配、查找、替换或切割那些符合指定规则的文本。总体来讲，正则表达式可以对指定的文本实现以下功能：</p>
-</li>
-</ol>
-<ul>
-<li>匹配验证： 判断给定的字符串是否符合正则表达式所指定的过滤规则，从而可以判断某个字符串的内容是否符合特定的规则（如email地址、手机号码等）；当正则表达式用于匹配验证时，通常需要在正则表达式字符串的首部和尾部加上^和$，以匹配整个待验证的字符串。</li>
-<li>查找与替换： 判断给定字符串中是否包含满足正则表达式所指定的匹配规则的子串，如查找一段文本中的所包含的IP地址。另外，还可以对查找到的子串进行内容替换。<br>字符串分割与子串截取： 基于子串查找功能还可以以符合正则表达式所指定的匹配规则的字符串作为分隔符对给定的字符串进行分割。</li>
-</ul>
-<h1 id="二-正则表达式中的字符"><a href="#二-正则表达式中的字符" class="headerlink" title="二.正则表达式中的字符"></a>二.正则表达式中的字符</h1><p>正则表达式的主要应用对象是文本，其最基础的功能是文本匹配，而文本是由一个个的字符组成，因此正则表达式实际上是对字符的匹配。正则表达式中的字符分为 普通字符 和 元字符，而正则表达式就是这些普通字符和特殊元字符组合成的表示一个特定匹配规则的表达式。</p>
-<ol>
-<li>普通字符<br>实际上，大多数字符都将简单地匹配它们的自身值，它们被称为普通字符，如数字（0-9），字母（a-z, A-Z）等。例如，正则表达式hello123将匹配字符串’hello123’，因为该这则表达式中都是普通字符，不包含特殊元字符。当然，我们可以通过指定正则表达式的匹配模式为 忽略字母大小写模式，这么正则表达式hello123将能够匹配’Hello123’, ‘HellO123’, ‘HELLO123’等字符串。</li>
-</ol>
-<blockquote>
-<p>提示： 其实我们并不需要去记忆哪些字符是普通字符，我们只需要知道哪些字符是特殊元字符就可以了，除了特殊元字符之外的所有字符都是普通字符。</p>
-</blockquote>
-<ol start="2">
-<li>元字符<br>上面提到，正则表达式除了进行字符自身之的匹配外，还可以基于指定的规则进行模糊匹配。这就意味着它需要一些特殊字符来表示这些模糊的匹配规则，因此这些特殊字符默认情况下并不能匹配到它们自身的字面值，而是表示某些特殊的功能。这些特殊元字符包括：., [, ], (, ), *, +, ?, ^, $, , |。这些特殊字符的使用，会在下面进行详细讲解。正则表达式的重点和难点也就在于对正则表达式引擎的工作原理以及对这些特殊元字符掌握和灵活运用。</li>
-</ol>
-<blockquote>
-<p>提示： 那么如果想匹配这些特殊元字符本身的字面值怎么办呢？我们可以通过其中一个特殊字符对其它特殊字符进行转义，从而达到可以匹配这些特殊字符自身字面值的目的。</p>
-</blockquote>
-<h1 id="三-元字符详解"><a href="#三-元字符详解" class="headerlink" title="三.元字符详解"></a>三.元字符详解</h1><p>现在我们来详细说明一下正则表达式中的特殊元字符到底能完成哪些复杂的匹配功能。<br>1.单个字符匹配</p>
-<p><img src="/2022/05/10/regexr/regex1.png" alt="image"></p>
-<blockquote>
-<p>说明： 所有的特殊字符在[ ]内都将失去其原有的特殊含义:</p>
-<ul>
-<li>有些特殊字符在[ ]中被赋予新的特殊含义，如 ‘^’出现在[ ]中的开始位置表示取反，它出现在[]中的其他位置表示其本身（变成了一个普通字符）；</li>
-<li>有些特殊字符则变为普通字符，如 ‘.’, ‘*’, ‘+’, ‘?’, ‘$’</li>
-<li>有的普通字符变为特殊字符，如 ‘-‘ 在[ ]中的位置不是第一个字符则表示一个数字或字母区间，如果在[ ]中的位置是第一个字符则表示其本身（一个普通字符）</li>
-<li>在[ ]中，如果要使用’-‘, ‘^’ 或’]’，可在在它们前面加上反斜杠，或把’-‘, ‘]’放在第一个字符的 位置，把’^’放在非第一个字符的位置</li>
-</ul>
-</blockquote>
-<ol>
-<li>预定义字符集</li>
-</ol>
-<p>我们可以在反斜杠后面跟上一个指定的字母来表示预定义的字符集合</p>
-<p><img src="/2022/05/10/regexr/regex2.png" alt="image"></p>
-<ol start="3">
-<li>字符次数匹配–量词<br>在正则表达式中，我们还可以指定匹配某个字符出现次数</li>
-</ol>
-<p><img src="/2022/05/10/regexr/regex3.png" alt="image"></p>
-<blockquote>
-<p>说明： {m,n}中的m和n可以省略其中一个，{,n}相当于{0,n}，{m,}相当于{m,整数最大值}。</p>
-</blockquote>
-<p>我们可以得出以下结论：</p>
-<ul>
-<li>{0,1}或{,1} 等价于 ?</li>
-<li>{1,} 等价于 +</li>
-<li>{0,} 等价于 *</li>
-</ul>
-<p>我们优先选择使用 ?, + 和 *，因为他们书写简单，也可以使整个正则表达式变得简洁。</p>
-<blockquote>
-<p>说明： ? 这个字符在正则表达中与 ?, +, *, {m,n}连用时还有一个额外的功能，就是将匹配模式由贪婪模式（尽可能的增加匹配次数） 变成 非贪婪模式（尽可能减少匹配次数）， 这个会在下面的内容中进行详细说明。</p>
-</blockquote>
-<ol start="4">
-<li><p>边界匹配<br>正则表达式中还可以对边界位置进行匹配，如一个字符串的开头或结尾，一个单词的开头或结尾。<br><img src="/2022/05/10/regexr/regexr4.png" alt="image"></p>
-</li>
-<li><p>逻辑与分组<br>语法 | 说明 | 表达式实例 | 可匹配到的字符串实例<br><img src="/2022/05/10/regexr/regexr5.png" alt="image"></p>
-</li>
-</ol>
-<ol start="6">
-<li>特殊构造</li>
-</ol>
-<p><img src="/2022/05/10/regexr/regexr6.png" alt="image"></p>
-<blockquote>
-<p>说明： 上面所说的“不消耗字符串内容”是指只是进行匹配，但是不移动原始字符串的匹配位置，这样就可以完成多次匹配。下面有个匹配密码的正则表达式实例，就是用这个特性巧妙完成的。</p>
-</blockquote>
-<h1 id="四-常用正则表达式实例"><a href="#四-常用正则表达式实例" class="headerlink" title="四.常用正则表达式实例"></a>四.常用正则表达式实例</h1><p>通常写一个合适的正则表达式是比较耗费时间的，因此我们可以保留一些常用的正则表达式以备不时之需。但是需要说明的是，没有任何一个人敢说自己写的正则表达式是百分之百严谨的，而且也没有百分之百相同的匹配需求，因此这里只是列举我自己写的几个常用的正则表达式，欢迎大家留言讨论。</p>
-<blockquote>
-<p>说明： 下面只是一些简单的匹配规则，实际情况中需要我们根据具体情况再这些正则表达式的首部和尾部加上相应的边界符，如：^, $, \A, \Z, \b, \B等</p>
-</blockquote>
-<p><strong>匹配一个网络地址（URL)</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[a-zA-Z]+://[\S]+</span><br></pre></td></tr></table></figure>
-<p>需要说明的是，网络地址不一定是一个网页地址（http或https链接），还可能是ftp地址等。如果我们要匹配特定协议的网络地址，如http或http链接可以这样写:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(https?://)?[\S]+</span><br></pre></td></tr></table></figure>
-<p><strong>匹配一个IP地址</strong><br>最简单的写法：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(\d+[.])&#123;3&#125;\d+</span><br></pre></td></tr></table></figure>
-<p>严谨一点的写法：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(((?:[1-9]\d?)|(?:1\d&#123;2&#125;)|(?:2[0-4]\d)|(?:25[0-5]))[.])&#123;3&#125;((?:[1-9]\d?)|(?:1\d&#123;2&#125;)|(?:2[0-4]\d)|(?:25[0-5]))</span><br></pre></td></tr></table></figure>
-<p>或</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">((([1-9]\d?)|(1\d&#123;2&#125;)|(2[0-4]\d)|(25[0-5]))[.])&#123;3&#125;(([1-9]\d?)|(1\d&#123;2&#125;)|(2[0-4]\d)|(25[0-5]))</span><br></pre></td></tr></table></figure>
-<p><strong>匹配一个邮箱地址</strong><br>最简单的写法：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\S+@\S+\.\S+</span><br></pre></td></tr></table></figure>
-<p>严谨一点的写法（保证只出现一个@符）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[^\s@]+@[^\s@]+\.[^\s@]+</span><br></pre></td></tr></table></figure>
-<p><strong>匹配密码是否合法</strong><br>要求比较简单的情况，比如只要求为非空字符且限定密码长度为6-18位</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">^\S[6-18]$</span><br></pre></td></tr></table></figure>
-<p>要求比较复杂的情况，比如必须同时包含含数字、大小字母、小写字母和标点符号，这就需要用到前面所说的正则表达式的特殊构造了(?=…), (?!=…)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(?=^.&#123;6,8&#125;$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)</span><br></pre></td></tr></table></figure>
-<p>如果要求必须同时包含且只能包含数字、大小字母、小写字母和标点符号，可以这样写：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(?=^[\d\Wa-zA-Z]&#123;6,8&#125;$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)</span><br></pre></td></tr></table></figure>
-<p><strong>匹配大陆身份证号码（15位或18位)</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\d&#123;15&#125;|(\d&#123;18&#125;|(\d&#123;17&#125;[Xx]))</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>小贴士： 当今的身份证号码有15位和18位之分。1985年我国实行居民身份证制度，当时签发的身份证号码是15位的，1999年签发的身份证由于年份的扩展（由两位变为四位）和末尾加了效验码，就成了18位。这两种身份证号码将在相当长的一段时期内共存。两种身份证号码的含义如下：</p>
-</blockquote>
-<p><strong>匹配日期（年-月-日)</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(\d&#123;2&#125;|\d&#123;4&#125;)-((0?[1-9])|(1[0-2]))-((0?[1-9])|([12][0-9])|(3[01]))</span><br></pre></td></tr></table></figure>
-<p>24小时制时间（小时:分钟:秒）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(((0?|1)[0-9])|(2[0-3])):([0-5][0-9]):([0-5][0-9])</span><br></pre></td></tr></table></figure>
-<p>其他常用正则表达式<br><img src="/2022/05/10/regexr/regerx7.png" alt="image"><br><strong>再次说明，实际情况中需要我们根据具体情况再这些正则表达式的首部和尾部加上相应的边界符，如：^, $, \A, \Z, \b, \B等</strong></p>
-<h1 id="五-正则表达式的匹配过程"><a href="#五-正则表达式的匹配过程" class="headerlink" title="五.正则表达式的匹配过程"></a>五.正则表达式的匹配过程</h1><p>基于量词（如?, +, *, {m,n}, {m,}）的字符重复次数匹配是正则表达式优于普通字符串处理方法的一个重要方面，也是正则表达式的一个重要组成部分。量词对正则表达式的匹配过程具有非常重大的影响，因此在介绍正则表达式的匹配过程时，必不可少的要提到量词的两个重要分类：</p>
-<ul>
-<li>匹配优先量词 我们上面介绍的量词就是匹配优先量词包括：?, +, *, {m,n}，但是不包括{m}</li>
-<li>忽略优先量词 在匹配优先量词后面加上一个问号就变成了忽略优先量词，包括：??, +?, *?, {m,n}?<br>如果大家对这两个词不熟悉的话，那么大家一定听说过这两个词：</li>
-<li>贪婪模式（或非惰性匹配） 顾名思义，就是在整个表达式匹配成功的前提下，尽可能多的去匹配量词所修饰的字符</li>
-<li>非贪婪模式（或惰性匹配） 在整个表达式匹配成功的前提下，尽可能少的去匹配量词所修饰的字符<br>它们之间的关系是：</li>
-<li>匹配优先量词修饰的子表达式使用的是就是贪婪模式（非惰性匹配）;</li>
-<li>忽略优先量词修饰的子表达式使用的就是模式就是非贪婪模式（惰性匹配）;<br>下面我们通过一个实例来分析 贪婪模式 和 非贪婪模式 下的正则匹配过程：</li>
-<li>要匹配的字符串：’abcbd’</li>
-<li>贪婪模式正则表达式：a[bcd]*b</li>
-<li>非贪婪模式正则表达式：a[bcd]*?b</li>
-</ul>
-<h2 id="1-贪婪模式匹配过程分析"><a href="#1-贪婪模式匹配过程分析" class="headerlink" title="1. 贪婪模式匹配过程分析"></a>1. 贪婪模式匹配过程分析</h2><p><img src="/2022/05/10/regexr/regexr8.png" alt="image"></p>
-<h2 id="2-非贪婪模式匹配过程分析"><a href="#2-非贪婪模式匹配过程分析" class="headerlink" title="2. 非贪婪模式匹配过程分析"></a>2. 非贪婪模式匹配过程分析</h2><p><img src="/2022/05/10/regexr/regerx9.png" alt="image"></p>
-<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>贪婪模式与非贪婪模式影响的是被量词修饰的子表达式的匹配行为，贪婪模式在整个表达式匹配成功的前提下，尽可能多的匹配；非贪婪模式在整个表达式匹配成功的前提下，尽可能少的匹配。另外，非贪婪模式只被部分NFA引擎所支持。从匹配效率上来看，能达到相同匹配结果时，贪婪模式的匹配效率通常会比较高，因为它回溯过程会比较少。</p>
-<h2 id="4-补充示例"><a href="#4-补充示例" class="headerlink" title="4. 补充示例"></a>4. 补充示例</h2><p>匹配过程示例<br><img src="/2022/05/10/regexr/regerx10.png" alt="image"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* 首先由“&lt;”取得控制权，由位置0位开始尝试匹配，匹配字符“a”，匹配失败，第一轮匹配结束。第二轮匹配从位置1开始尝试匹配，同样匹配失败。第三轮从位置3开始尝试匹配，匹配字符“&lt;”，匹配成功，控制权交给“d”。</span><br><span class="line"></span><br><span class="line">* “d”尝试匹配字符“d”，匹配成功，控制权交给“i”。重复以上过程，直到由“&gt;”匹配到字符“&gt;”，控制权交给“.*”。</span><br><span class="line"></span><br><span class="line">* “.*”属于贪婪模式，将从B处后的字符“t”开始，一直匹配到E处，也就是字符串结束位置，将控制权交给“&lt;”。</span><br><span class="line"></span><br><span class="line">* “&lt;”从字符串结束位置尝试匹配，匹配失败，向前查找可供回溯的状态，把控制权交给“.”，由“.”让出一个字符“c”，把控制权再交给“&lt;”，尝试匹配，匹配失败，向前查找可供回溯的状态。一直重复以上过程，直到“.*”让出已匹配的字符“&lt;”，实际上也就是到让出了已匹配的子串“&lt;/div&gt;cc&quot;为止，“&lt;”才匹配字符“&lt;”成功，控制权交给“/”。 </span><br><span class="line"></span><br><span class="line">* 接下来由“/”、“d”、“i”、“v”分别匹配对应的字符成功，此时整个正则表达式匹配完毕。</span><br></pre></td></tr></table></figure>
-
-<h1 id="六-参考资料"><a href="#六-参考资料" class="headerlink" title="六.参考资料"></a>六.参考资料</h1><p><img src="/2022/05/10/regexr/regerx11.png" alt="image"></p>
-]]></content>
-      <categories>
-        <category>shell</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>一文让你从入门到精通shell</title>
     <url>/2021/08/19/shell-notes/</url>
     <content><![CDATA[<ul>
@@ -1689,6 +1518,411 @@
       </tags>
   </entry>
   <entry>
+    <title>一文了解正则表达式</title>
+    <url>/2022/05/10/regexr/</url>
+    <content><![CDATA[<h1 id="一-正则表达式简介"><a href="#一-正则表达式简介" class="headerlink" title="一.正则表达式简介"></a>一.正则表达式简介</h1><ol>
+<li><p>什么是正则表达式<br>正则表达式（Regluar Expressions）又称规则表达式，这个概念最初是由Unix中的工具软件（如sed 和 grep）普及开的。正则表达式在代码中常简写为REs，regexes或regexp（regex patterns）。它本质上是一个小巧的、高度专用的编程语言。 许多程序设计语言都支持通过正则表达式进行字符串操作。例如，在Perl中就内建了一个功能强大的正则表达式引擎。</p>
+</li>
+<li><p>正则表达式能做什么<br>正则表达式的主要应用对象是文本，使用正则表达式可以指定想要匹配的字符串规则，然后通过这个规则来匹配、查找、替换或切割那些符合指定规则的文本。总体来讲，正则表达式可以对指定的文本实现以下功能：</p>
+</li>
+</ol>
+<ul>
+<li>匹配验证： 判断给定的字符串是否符合正则表达式所指定的过滤规则，从而可以判断某个字符串的内容是否符合特定的规则（如email地址、手机号码等）；当正则表达式用于匹配验证时，通常需要在正则表达式字符串的首部和尾部加上^和$，以匹配整个待验证的字符串。</li>
+<li>查找与替换： 判断给定字符串中是否包含满足正则表达式所指定的匹配规则的子串，如查找一段文本中的所包含的IP地址。另外，还可以对查找到的子串进行内容替换。<br>字符串分割与子串截取： 基于子串查找功能还可以以符合正则表达式所指定的匹配规则的字符串作为分隔符对给定的字符串进行分割。</li>
+</ul>
+<h1 id="二-正则表达式中的字符"><a href="#二-正则表达式中的字符" class="headerlink" title="二.正则表达式中的字符"></a>二.正则表达式中的字符</h1><p>正则表达式的主要应用对象是文本，其最基础的功能是文本匹配，而文本是由一个个的字符组成，因此正则表达式实际上是对字符的匹配。正则表达式中的字符分为 普通字符 和 元字符，而正则表达式就是这些普通字符和特殊元字符组合成的表示一个特定匹配规则的表达式。</p>
+<ol>
+<li>普通字符<br>实际上，大多数字符都将简单地匹配它们的自身值，它们被称为普通字符，如数字（0-9），字母（a-z, A-Z）等。例如，正则表达式hello123将匹配字符串’hello123’，因为该这则表达式中都是普通字符，不包含特殊元字符。当然，我们可以通过指定正则表达式的匹配模式为 忽略字母大小写模式，这么正则表达式hello123将能够匹配’Hello123’, ‘HellO123’, ‘HELLO123’等字符串。</li>
+</ol>
+<blockquote>
+<p>提示： 其实我们并不需要去记忆哪些字符是普通字符，我们只需要知道哪些字符是特殊元字符就可以了，除了特殊元字符之外的所有字符都是普通字符。</p>
+</blockquote>
+<ol start="2">
+<li>元字符<br>上面提到，正则表达式除了进行字符自身之的匹配外，还可以基于指定的规则进行模糊匹配。这就意味着它需要一些特殊字符来表示这些模糊的匹配规则，因此这些特殊字符默认情况下并不能匹配到它们自身的字面值，而是表示某些特殊的功能。这些特殊元字符包括：., [, ], (, ), *, +, ?, ^, $, , |。这些特殊字符的使用，会在下面进行详细讲解。正则表达式的重点和难点也就在于对正则表达式引擎的工作原理以及对这些特殊元字符掌握和灵活运用。</li>
+</ol>
+<blockquote>
+<p>提示： 那么如果想匹配这些特殊元字符本身的字面值怎么办呢？我们可以通过其中一个特殊字符对其它特殊字符进行转义，从而达到可以匹配这些特殊字符自身字面值的目的。</p>
+</blockquote>
+<h1 id="三-元字符详解"><a href="#三-元字符详解" class="headerlink" title="三.元字符详解"></a>三.元字符详解</h1><p>现在我们来详细说明一下正则表达式中的特殊元字符到底能完成哪些复杂的匹配功能。<br>1.单个字符匹配</p>
+<p><img src="/2022/05/10/regexr/regex1.png" alt="image"></p>
+<blockquote>
+<p>说明： 所有的特殊字符在[ ]内都将失去其原有的特殊含义:</p>
+<ul>
+<li>有些特殊字符在[ ]中被赋予新的特殊含义，如 ‘^’出现在[ ]中的开始位置表示取反，它出现在[]中的其他位置表示其本身（变成了一个普通字符）；</li>
+<li>有些特殊字符则变为普通字符，如 ‘.’, ‘*’, ‘+’, ‘?’, ‘$’</li>
+<li>有的普通字符变为特殊字符，如 ‘-‘ 在[ ]中的位置不是第一个字符则表示一个数字或字母区间，如果在[ ]中的位置是第一个字符则表示其本身（一个普通字符）</li>
+<li>在[ ]中，如果要使用’-‘, ‘^’ 或’]’，可在在它们前面加上反斜杠，或把’-‘, ‘]’放在第一个字符的 位置，把’^’放在非第一个字符的位置</li>
+</ul>
+</blockquote>
+<ol>
+<li>预定义字符集</li>
+</ol>
+<p>我们可以在反斜杠后面跟上一个指定的字母来表示预定义的字符集合</p>
+<p><img src="/2022/05/10/regexr/regex2.png" alt="image"></p>
+<ol start="3">
+<li>字符次数匹配–量词<br>在正则表达式中，我们还可以指定匹配某个字符出现次数</li>
+</ol>
+<p><img src="/2022/05/10/regexr/regex3.png" alt="image"></p>
+<blockquote>
+<p>说明： {m,n}中的m和n可以省略其中一个，{,n}相当于{0,n}，{m,}相当于{m,整数最大值}。</p>
+</blockquote>
+<p>我们可以得出以下结论：</p>
+<ul>
+<li>{0,1}或{,1} 等价于 ?</li>
+<li>{1,} 等价于 +</li>
+<li>{0,} 等价于 *</li>
+</ul>
+<p>我们优先选择使用 ?, + 和 *，因为他们书写简单，也可以使整个正则表达式变得简洁。</p>
+<blockquote>
+<p>说明： ? 这个字符在正则表达中与 ?, +, *, {m,n}连用时还有一个额外的功能，就是将匹配模式由贪婪模式（尽可能的增加匹配次数） 变成 非贪婪模式（尽可能减少匹配次数）， 这个会在下面的内容中进行详细说明。</p>
+</blockquote>
+<ol start="4">
+<li><p>边界匹配<br>正则表达式中还可以对边界位置进行匹配，如一个字符串的开头或结尾，一个单词的开头或结尾。<br><img src="/2022/05/10/regexr/regexr4.png" alt="image"></p>
+</li>
+<li><p>逻辑与分组<br>语法 | 说明 | 表达式实例 | 可匹配到的字符串实例<br><img src="/2022/05/10/regexr/regexr5.png" alt="image"></p>
+</li>
+</ol>
+<ol start="6">
+<li>特殊构造</li>
+</ol>
+<p><img src="/2022/05/10/regexr/regexr6.png" alt="image"></p>
+<blockquote>
+<p>说明： 上面所说的“不消耗字符串内容”是指只是进行匹配，但是不移动原始字符串的匹配位置，这样就可以完成多次匹配。下面有个匹配密码的正则表达式实例，就是用这个特性巧妙完成的。</p>
+</blockquote>
+<h1 id="四-常用正则表达式实例"><a href="#四-常用正则表达式实例" class="headerlink" title="四.常用正则表达式实例"></a>四.常用正则表达式实例</h1><p>通常写一个合适的正则表达式是比较耗费时间的，因此我们可以保留一些常用的正则表达式以备不时之需。但是需要说明的是，没有任何一个人敢说自己写的正则表达式是百分之百严谨的，而且也没有百分之百相同的匹配需求，因此这里只是列举我自己写的几个常用的正则表达式，欢迎大家留言讨论。</p>
+<blockquote>
+<p>说明： 下面只是一些简单的匹配规则，实际情况中需要我们根据具体情况再这些正则表达式的首部和尾部加上相应的边界符，如：^, $, \A, \Z, \b, \B等</p>
+</blockquote>
+<p><strong>匹配一个网络地址（URL)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[a-zA-Z]+://[\S]+</span><br></pre></td></tr></table></figure>
+<p>需要说明的是，网络地址不一定是一个网页地址（http或https链接），还可能是ftp地址等。如果我们要匹配特定协议的网络地址，如http或http链接可以这样写:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(https?://)?[\S]+</span><br></pre></td></tr></table></figure>
+<p><strong>匹配一个IP地址</strong><br>最简单的写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(\d+[.])&#123;3&#125;\d+</span><br></pre></td></tr></table></figure>
+<p>严谨一点的写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(((?:[1-9]\d?)|(?:1\d&#123;2&#125;)|(?:2[0-4]\d)|(?:25[0-5]))[.])&#123;3&#125;((?:[1-9]\d?)|(?:1\d&#123;2&#125;)|(?:2[0-4]\d)|(?:25[0-5]))</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">((([1-9]\d?)|(1\d&#123;2&#125;)|(2[0-4]\d)|(25[0-5]))[.])&#123;3&#125;(([1-9]\d?)|(1\d&#123;2&#125;)|(2[0-4]\d)|(25[0-5]))</span><br></pre></td></tr></table></figure>
+<p><strong>匹配一个邮箱地址</strong><br>最简单的写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\S+@\S+\.\S+</span><br></pre></td></tr></table></figure>
+<p>严谨一点的写法（保证只出现一个@符）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[^\s@]+@[^\s@]+\.[^\s@]+</span><br></pre></td></tr></table></figure>
+<p><strong>匹配密码是否合法</strong><br>要求比较简单的情况，比如只要求为非空字符且限定密码长度为6-18位</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">^\S[6-18]$</span><br></pre></td></tr></table></figure>
+<p>要求比较复杂的情况，比如必须同时包含含数字、大小字母、小写字母和标点符号，这就需要用到前面所说的正则表达式的特殊构造了(?=…), (?!=…)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(?=^.&#123;6,8&#125;$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)</span><br></pre></td></tr></table></figure>
+<p>如果要求必须同时包含且只能包含数字、大小字母、小写字母和标点符号，可以这样写：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(?=^[\d\Wa-zA-Z]&#123;6,8&#125;$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)</span><br></pre></td></tr></table></figure>
+<p><strong>匹配大陆身份证号码（15位或18位)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\d&#123;15&#125;|(\d&#123;18&#125;|(\d&#123;17&#125;[Xx]))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>小贴士： 当今的身份证号码有15位和18位之分。1985年我国实行居民身份证制度，当时签发的身份证号码是15位的，1999年签发的身份证由于年份的扩展（由两位变为四位）和末尾加了效验码，就成了18位。这两种身份证号码将在相当长的一段时期内共存。两种身份证号码的含义如下：</p>
+</blockquote>
+<p><strong>匹配日期（年-月-日)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(\d&#123;2&#125;|\d&#123;4&#125;)-((0?[1-9])|(1[0-2]))-((0?[1-9])|([12][0-9])|(3[01]))</span><br></pre></td></tr></table></figure>
+<p>24小时制时间（小时:分钟:秒）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(((0?|1)[0-9])|(2[0-3])):([0-5][0-9]):([0-5][0-9])</span><br></pre></td></tr></table></figure>
+<p>其他常用正则表达式<br><img src="/2022/05/10/regexr/regerx7.png" alt="image"><br><strong>再次说明，实际情况中需要我们根据具体情况再这些正则表达式的首部和尾部加上相应的边界符，如：^, $, \A, \Z, \b, \B等</strong></p>
+<h1 id="五-正则表达式的匹配过程"><a href="#五-正则表达式的匹配过程" class="headerlink" title="五.正则表达式的匹配过程"></a>五.正则表达式的匹配过程</h1><p>基于量词（如?, +, *, {m,n}, {m,}）的字符重复次数匹配是正则表达式优于普通字符串处理方法的一个重要方面，也是正则表达式的一个重要组成部分。量词对正则表达式的匹配过程具有非常重大的影响，因此在介绍正则表达式的匹配过程时，必不可少的要提到量词的两个重要分类：</p>
+<ul>
+<li>匹配优先量词 我们上面介绍的量词就是匹配优先量词包括：?, +, *, {m,n}，但是不包括{m}</li>
+<li>忽略优先量词 在匹配优先量词后面加上一个问号就变成了忽略优先量词，包括：??, +?, *?, {m,n}?<br>如果大家对这两个词不熟悉的话，那么大家一定听说过这两个词：</li>
+<li>贪婪模式（或非惰性匹配） 顾名思义，就是在整个表达式匹配成功的前提下，尽可能多的去匹配量词所修饰的字符</li>
+<li>非贪婪模式（或惰性匹配） 在整个表达式匹配成功的前提下，尽可能少的去匹配量词所修饰的字符<br>它们之间的关系是：</li>
+<li>匹配优先量词修饰的子表达式使用的是就是贪婪模式（非惰性匹配）;</li>
+<li>忽略优先量词修饰的子表达式使用的就是模式就是非贪婪模式（惰性匹配）;<br>下面我们通过一个实例来分析 贪婪模式 和 非贪婪模式 下的正则匹配过程：</li>
+<li>要匹配的字符串：’abcbd’</li>
+<li>贪婪模式正则表达式：a[bcd]*b</li>
+<li>非贪婪模式正则表达式：a[bcd]*?b</li>
+</ul>
+<h2 id="1-贪婪模式匹配过程分析"><a href="#1-贪婪模式匹配过程分析" class="headerlink" title="1. 贪婪模式匹配过程分析"></a>1. 贪婪模式匹配过程分析</h2><p><img src="/2022/05/10/regexr/regexr8.png" alt="image"></p>
+<h2 id="2-非贪婪模式匹配过程分析"><a href="#2-非贪婪模式匹配过程分析" class="headerlink" title="2. 非贪婪模式匹配过程分析"></a>2. 非贪婪模式匹配过程分析</h2><p><img src="/2022/05/10/regexr/regerx9.png" alt="image"></p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>贪婪模式与非贪婪模式影响的是被量词修饰的子表达式的匹配行为，贪婪模式在整个表达式匹配成功的前提下，尽可能多的匹配；非贪婪模式在整个表达式匹配成功的前提下，尽可能少的匹配。另外，非贪婪模式只被部分NFA引擎所支持。从匹配效率上来看，能达到相同匹配结果时，贪婪模式的匹配效率通常会比较高，因为它回溯过程会比较少。</p>
+<h2 id="4-补充示例"><a href="#4-补充示例" class="headerlink" title="4. 补充示例"></a>4. 补充示例</h2><p>匹配过程示例<br><img src="/2022/05/10/regexr/regerx10.png" alt="image"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* 首先由“&lt;”取得控制权，由位置0位开始尝试匹配，匹配字符“a”，匹配失败，第一轮匹配结束。第二轮匹配从位置1开始尝试匹配，同样匹配失败。第三轮从位置3开始尝试匹配，匹配字符“&lt;”，匹配成功，控制权交给“d”。</span><br><span class="line"></span><br><span class="line">* “d”尝试匹配字符“d”，匹配成功，控制权交给“i”。重复以上过程，直到由“&gt;”匹配到字符“&gt;”，控制权交给“.*”。</span><br><span class="line"></span><br><span class="line">* “.*”属于贪婪模式，将从B处后的字符“t”开始，一直匹配到E处，也就是字符串结束位置，将控制权交给“&lt;”。</span><br><span class="line"></span><br><span class="line">* “&lt;”从字符串结束位置尝试匹配，匹配失败，向前查找可供回溯的状态，把控制权交给“.”，由“.”让出一个字符“c”，把控制权再交给“&lt;”，尝试匹配，匹配失败，向前查找可供回溯的状态。一直重复以上过程，直到“.*”让出已匹配的字符“&lt;”，实际上也就是到让出了已匹配的子串“&lt;/div&gt;cc&quot;为止，“&lt;”才匹配字符“&lt;”成功，控制权交给“/”。 </span><br><span class="line"></span><br><span class="line">* 接下来由“/”、“d”、“i”、“v”分别匹配对应的字符成功，此时整个正则表达式匹配完毕。</span><br></pre></td></tr></table></figure>
+
+<h1 id="六-参考资料"><a href="#六-参考资料" class="headerlink" title="六.参考资料"></a>六.参考资料</h1><p><img src="/2022/05/10/regexr/regerx11.png" alt="image"></p>
+]]></content>
+      <categories>
+        <category>shell</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>shell变量高级篇</title>
+    <url>/2021/08/24/shell-variable-advance/</url>
+    <content><![CDATA[<p> <a href="#shell%E5%8F%98%E9%87%8F%E7%9A%84%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8">shell变量的高级应用</a></p>
+<ul>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2%E5%92%8C%E5%88%A0%E9%99%A4">变量内容替换和删除</a></li>
+<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86">字符串处理</a><ul>
+<li><a href="#%E8%AE%A1%E7%AE%97%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6">计算字符串长度</a></li>
+<li><a href="#%E8%8E%B7%E5%8F%96%E5%AD%90%E4%B8%B2%E5%9C%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BD%8D%E7%BD%AE">获取子串在字符串中索引的位置</a></li>
+<li><a href="#%E6%8F%90%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2">提取字符串</a></li>
+</ul>
+</li>
+<li><a href="#%E6%95%B0%E7%BB%84%E7%9A%84%E6%93%8D%E4%BD%9C">数组的操作</a><ul>
+<li><a href="#%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0">删除元素</a></li>
+<li><a href="#%E5%88%86%E7%89%87%E8%AE%BF%E9%97%AE">分片访问</a></li>
+<li><a href="#%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2">内容替换</a></li>
+</ul>
+</li>
+<li><a href="#%E6%95%B0%E7%BB%84%E9%81%8D%E5%8E%86">数组遍历</a><ul>
+<li><a href="#ps">PS</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="shell变量的高级应用"><a href="#shell变量的高级应用" class="headerlink" title="shell变量的高级应用"></a>shell变量的高级应用</h1><h2 id="变量内容替换和删除"><a href="#变量内容替换和删除" class="headerlink" title="变量内容替换和删除"></a>变量内容替换和删除</h2><table>
+<thead>
+<tr>
+<th align="center">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">${变量名#匹配规则}}</td>
+<td align="left">从变量开头进行规则匹配，将符合最短的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名##匹配规则}}</td>
+<td align="left">从变量开头进行规则匹配，将符合最长的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名%匹配规则}}</td>
+<td align="left">从变量尾部进行规则匹配，将符合最短的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名%%匹配规则}}</td>
+<td align="left">从变量尾部进行规则匹配，将符合最长的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名/旧字符串/新字符串}}</td>
+<td align="left">变量内容符合旧字符串，则第一个旧字符串会被新字符串取代</td>
+</tr>
+<tr>
+<td align="center">${变量名//旧字符串/新字符串}}</td>
+<td align="left">变量内容符合旧字符串，则全部的旧字符串会被新字符串取代</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$variable_1</span></span><br><span class="line">I love you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1#*ov&#125;</span> //从头开始将最短数据删除</span><br><span class="line">e you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1##*ov&#125;</span> //从头开始将最长数据删除</span><br><span class="line">e me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%ov*&#125;</span> //从尾开始将最短数据删除</span><br><span class="line">I love you,<span class="keyword">do</span> you l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%%ov&#125;</span> //从尾开始将最长数据删除</span><br><span class="line">I l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line">/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH/bin/BIN&#125;</span> //替换一个</span><br><span class="line">/sBIN:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH//bin/BIN&#125;</span> //替换所有</span><br><span class="line">/sBIN:/BIN:/usr/sBIN:/usr/BIN</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串处理"><a href="#字符串处理" class="headerlink" title="字符串处理"></a>字符串处理</h2><h3 id="计算字符串长度"><a href="#计算字符串长度" class="headerlink" title="计算字符串长度"></a>计算字符串长度</h3><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">方法一</td>
+<td align="left"><code>$&#123;#string&#125;</code></td>
+<td align="left">NA</td>
+</tr>
+<tr>
+<td align="left">方法二</td>
+<td align="left"><code>expr length &quot;$string&quot;</code></td>
+<td align="left">string如有空格，必须加双引号</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;#var1&#125;</span></span><br><span class="line">21</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr length <span class="string">&quot;<span class="variable">$var1</span>&quot;</span>`</span><br><span class="line">21</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取子串在字符串中索引的位置"><a href="#获取子串在字符串中索引的位置" class="headerlink" title="获取子串在字符串中索引的位置"></a>获取子串在字符串中索引的位置</h3><table>
+<thead>
+<tr>
+<th align="left">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>expr index $string $substring</code></td>
+<td align="left">查找子串中任一出现的字符，找到第一个出现字符的位置就返回</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr index <span class="string">&quot;<span class="variable">$variable_1</span>&quot;</span> oe`</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+<h3 id="提取字符串"><a href="#提取字符串" class="headerlink" title="提取字符串"></a>提取字符串</h3><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">方法一</td>
+<td align="left"><code>$&#123;string:position&#125;</code></td>
+<td align="left">从 string 中的 position 位置开始，索引下标从 0 开始</td>
+</tr>
+<tr>
+<td align="left">方法二</td>
+<td align="left"><code>$&#123;string:position:length&#125;</code></td>
+<td align="left">从 position 开始，匹配长度为 length</td>
+</tr>
+<tr>
+<td align="left">方法三</td>
+<td align="left"><code>$&#123;string: -position&#125;</code></td>
+<td align="left">从右边开始匹配，注意冒号后面的空格</td>
+</tr>
+<tr>
+<td align="left">方法四</td>
+<td align="left"><code>$&#123;string:(position&#125;</code></td>
+<td align="left">从左边开始匹配</td>
+</tr>
+<tr>
+<td align="left">方法五</td>
+<td align="left"><code>expr substr $string $position $length</code></td>
+<td align="left">从 position 开始，匹配长度为 length，索引下标从 1 开始</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ var_str=<span class="string">&quot;k8s docker cloud aws&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: 3&#125;</span> //方法一</span><br><span class="line">docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:3:5&#125;</span> //方法二</span><br><span class="line">dock</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5&#125;</span>  //方法三，注意有空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5:3&#125;</span> //方法三 ，带长度</span><br><span class="line">d a</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:-5&#125;</span> //方法三，没有空格无效</span><br><span class="line">k8s docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:(-5)&#125;</span> //方法三，可以用括号代替空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr substr <span class="string">&quot;<span class="variable">$var_str</span>&quot;</span> 1 5` //方法五，从索引1开始计数</span><br><span class="line">k8s d</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="数组的操作"><a href="#数组的操作" class="headerlink" title="数组的操作"></a>数组的操作</h2><blockquote>
+<p>我们知道在强类型语言中定义变量的时候必须为这个变量定义类型，比如定义整形可以定义为 int 型，字符串 string 类型，日期类型 Date 等等，在使用之前必须定义类型，这是强类型编程语言的风格。Shell 编程中，由于 Shell 是弱类型语言，在使用变量前不需要为变量声明类型， 但其实 Shell 本身也是支持提前声明有类型变量的，只是说使用方式和一般的强类型编程语言有些不同， 使用 declare 和 typeset 命令来进行声明。</p>
+<ul>
+<li>declare 命令和 typeset 命令两者等价</li>
+<li>declare、typeset 命令都是用来定义变量类型的</li>
+</ul>
+<p>既然它们是等价的 那我们用 declare 进行演示</p>
+</blockquote>
+<p>declare 常用命令参数表</p>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-i</td>
+<td align="left">将变量设为整数</td>
+</tr>
+<tr>
+<td align="center">-a</td>
+<td align="left">将变量定义为数组</td>
+</tr>
+<tr>
+<td align="center">-f</td>
+<td align="left">显示此脚本定义过的所有函数及内容</td>
+</tr>
+<tr>
+<td align="center">-F</td>
+<td align="left">仅显示此脚本定义过的函数名</td>
+</tr>
+<tr>
+<td align="center">-x</td>
+<td align="left">将变量声明为环境变量</td>
+</tr>
+</tbody></table>
+<p><code>declare -a array_name</code> 声明数组， 然后 <code>array_name=(value1 ... valuen)</code>， 这里不声明也可以</p>
+<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><ul>
+<li><code>unset my_arr[2]</code> 清楚元素 <code>unset my_arr</code> 清空整个数组</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$</span><br><span class="line">[shdevops@localhost ~]$ my_arr=(1 <span class="string">&quot;abc&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1 abc</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr[1]</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="分片访问"><a href="#分片访问" class="headerlink" title="分片访问"></a>分片访问</h3><ul>
+<li> ${array[@]:1:3} 数组下标从 1 到 3 的三个元素</li>
+<li><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;apple&quot;</span> <span class="string">&quot;juice&quot;</span> <span class="string">&quot;cat&quot;</span> <span class="string">&quot;dog&quot;</span> <span class="string">&quot;ox&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]:1:3&#125;</span></span><br><span class="line">juice cat dog</span><br></pre></td></tr></table></figure>
+<h3 id="内容替换"><a href="#内容替换" class="headerlink" title="内容替换"></a>内容替换</h3></li>
+<li> <code>$&#123;my_array[@]/an/AN&#125;</code> 将数组中所有元素内包含 an 的子串替换为 AN<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;an1&quot;</span> <span class="string">&quot;an2&quot;</span> <span class="string">&quot;an3&quot;</span> <span class="string">&quot;an4&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]/an/AN&#125;</span></span><br><span class="line">AN1 AN2 AN3 AN4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
+<h2 id="数组遍历"><a href="#数组遍历" class="headerlink" title="数组遍历"></a>数组遍历</h2></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">my_arr=(an1 an2 an3 an4)</span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$v</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span>;<span class="keyword">do</span> <span class="built_in">echo</span> <span class="variable">$v</span>;<span class="keyword">done</span></span><br><span class="line">an1</span><br><span class="line">an2</span><br><span class="line">an3</span><br><span class="line">an4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">取消声明的变量：</span><br><span class="line"></span><br><span class="line">declare +r</span><br><span class="line">declare +i</span><br><span class="line">declare +a</span><br><span class="line">declare +x</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>shell</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kubernetes网络类型详解</title>
+    <url>/2021/08/21/k8s-network-1/</url>
+    <content><![CDATA[<h1 id="Kubernetes网络插件对比分析（Flannel、Calico、Weave）"><a href="#Kubernetes网络插件对比分析（Flannel、Calico、Weave）" class="headerlink" title="Kubernetes网络插件对比分析（Flannel、Calico、Weave）"></a>Kubernetes网络插件对比分析（Flannel、Calico、Weave）</h1><h3 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h3><p>在对CNI插件们进行比较之前，我们可以先对网络中会见到的相关术语做一个整体的了解。不论是阅读本文，还是今后接触到其他和CNI有关的内容，了解一些常见术语总是非常有用的。</p>
+<p>一些最常见的术语包括：</p>
+<ul>
+<li>第2层网络：OSI(Open Systems Interconnections，开放系统互连)网络模型的“数据链路”层。第2层网络会处理网络上两个相邻节点之间的帧传递。第2层网络的一个值得注意的示例是以太网，其中MAC表示为子层。</li>
+<li>第3层网络：OSI网络模型的“网络”层。第3层网络的主要关注点，是在第2层连接之上的主机之间路由数据包。IPv4、IPv6和ICMP是第3层网络协议的示例。</li>
+<li>VXLAN：代表“虚拟可扩展LAN”。首先，VXLAN用于通过在UDP数据报中封装第2层以太网帧来帮助实现大型云部署。VXLAN虚拟化与VLAN类似，但提供更大的灵活性和功能(VLAN仅限于4096个网络ID)。VXLAN是一种封装和覆盖协议，可在现有网络上运行。</li>
+<li>Overlay网络：Overlay网络是建立在现有网络之上的虚拟逻辑网络。Overlay网络通常用于在现有网络之上提供有用的抽象，并分离和保护不同的逻辑网络。</li>
+<li>封装：封装是指在附加层中封装网络数据包以提供其他上下文和信息的过程。在overlay网络中，封装被用于从虚拟网络转换到底层地址空间，从而能路由到不同的位置(数据包可以被解封装，并继续到其目的地)。</li>
+<li>网状网络：网状网络(Mesh network)是指每个节点连接到许多其他节点以协作路由、并实现更大连接的网络。网状网络允许通过多个路径进行路由，从而提供更可靠的网络。网状网格的缺点是每个附加节点都会增加大量开销。</li>
+<li>BGP：代表“边界网关协议”，用于管理边缘路由器之间数据包的路由方式。BGP通过考虑可用路径，路由规则和特定网络策略，帮助弄清楚如何将数据包从一个网络发送到另一个网络。BGP有时被用作CNI插件中的路由机制，而不是封装的覆盖网络。</li>
+</ul>
+<h3 id="CNI比较"><a href="#CNI比较" class="headerlink" title="CNI比较"></a>CNI比较</h3><h4 id="Flannel"><a href="#Flannel" class="headerlink" title="Flannel"></a>Flannel</h4><p><img src="/2021/08/21/k8s-network-1/flannel.jpeg" alt="image"></p>
+<p>链接：<a href="https://github.com/coreos/flannel">https://github.com/coreos/flannel</a></p>
+<p>由CoreOS开发的项目Flannel，可能是最直接和***的CNI插件。它是容器编排系统中最成熟的网络结构示例之一，旨在实现更好的容器间和主机间网络。随着CNI概念的兴起，Flannel CNI插件算是早期的入门。</p>
+<p>与其他方案相比，Flannel相对容易安装和配置。它被打包为单个二进制文件FlannelD，许多常见的Kubernetes集群部署工具和许多Kubernetes发行版都可以默认安装Flannel。Flannel可以使用Kubernetes集群的现有etcd集群来使用API存储其状态信息，因此不需要专用的数据存储。</p>
+<p>Flannel配置第3层IPv4 Overlay网络。它会创建一个大型内部网络，跨越集群中每个节点。在此Overlay网络中，每个节点都有一个子网，用于在内部分配IP地址。在配置Pod时，每个节点上的Docker桥接口都会为每个新容器分配一个地址。同一主机中的Pod可以使用Docker桥接进行通信，而不同主机上的pod会使用flanneld将其流量封装在UDP数据包中，以便路由到适当的目标。</p>
+<p>Flannel有几种不同类型的后端可用于封装和路由。默认和推荐的方法是使用VXLAN，因为VXLAN性能更良好并且需要的手动干预更少。</p>
+<p>总的来说，Flannel是大多数用户的不错选择。从管理角度来看，它提供了一个简单的网络模型，用户只需要一些基础知识，就可以设置适合大多数用例的环境。一般来说，在初期使用Flannel是一个稳妥安全的选择，直到你开始需要一些它无法提供的东西。</p>
+<h4 id="Calico"><a href="#Calico" class="headerlink" title="Calico"></a>Calico</h4><p><img src="/2021/08/21/k8s-network-1/calico.jpeg" alt="image"></p>
+<p>链接：<a href="https://github.com/projectcalico/cni-plugin">https://github.com/projectcalico/cni-plugin</a></p>
+<p>Calico是Kubernetes生态系统中另一种流行的网络选择。虽然Flannel被公认为是最简单的选择，但Calico以其性能、灵活性而闻名。Calico的功能更为全面，不仅提供主机和pod之间的网络连接，还涉及网络安全和管理。Calico CNI插件在CNI框架内封装了Calico的功能。</p>
+<p>在满足系统要求的新配置的Kubernetes集群上，用户可以通过应用单个manifest文件快速部署Calico。如果您对Calico的可选网络策略功能感兴趣，可以向集群应用其他manifest，来启用这些功能。</p>
+<p>尽管部署Calico所需的操作看起来相当简单，但它创建的网络环境同时具有简单和复杂的属性。与Flannel不同，Calico不使用overlay网络。相反，Calico配置第3层网络，该网络使用BGP路由协议在主机之间路由数据包。这意味着在主机之间移动时，不需要将数据包包装在额外的封装层中。BGP路由机制可以本地引导数据包，而无需额外在流量层中打包流量。</p>
+<p>除了性能优势之外，在出现网络问题时，用户还可以用更常规的方法进行故障排除。虽然使用VXLAN等技术进行封装也是一个不错的解决方案，但该过程处理数据包的方式同场难以追踪。使用Calico，标准调试工具可以访问与简单环境中相同的信息，从而使更多开发人员和管理员更容易理解行为。</p>
+<p>除了网络连接外，Calico还以其先进的网络功能而闻名。 网络策略是其最受追捧的功能之一。此外，Calico还可以与服务网格Istio集成，以便在服务网格层和网络基础架构层中解释和实施集群内工作负载的策略。这意味着用户可以配置强大的规则，描述Pod应如何发送和接受流量，提高安全性并控制网络环境。</p>
+<p>如果对你的环境而言，支持网络策略是非常重要的一点，而且你对其他性能和功能也有需求，那么Calico会是一个理想的选择。此外，如果您现在或未来有可能希望得到技术支持，那么Calico是提供商业支持的。一般来说，当您希望能够长期控制网络，而不是仅仅配置一次并忘记它时，Calico是一个很好的选择。</p>
+<h4 id="Weave"><a href="#Weave" class="headerlink" title="Weave"></a>Weave</h4><p><img src="/2021/08/21/k8s-network-1/weave.jpeg" alt="image"> </p>
+<p>链接：<a href="https://www.weave.works/oss/net/">https://www.weave.works/oss/net/</a></p>
+<p>Weave是由Weaveworks提供的一种Kubernetes CNI网络选项，它提供的模式和我们目前为止讨论的所有网络方案都不同。Weave在集群中的每个节点之间创建网状Overlay网络，参与者之间可以灵活路由。这一特性再结合其他一些独特的功能，在某些可能导致问题的情况下，Weave可以智能地路由。</p>
+<p>为了创建网络，Weave依赖于网络中每台主机上安装的路由组件。然后，这些路由器交换拓扑信息，以维护可用网络环境的***视图。当需要将流量发送到位于不同节点上的Pod时，Weave路由组件会自动决定是通过“快速数据路径”发送，还是回退到“sleeve”分组转发的方法。</p>
+<p>快速数据路径依靠内核的本机Open vSwitch数据路径模块，将数据包转发到适当的Pod，而无需多次移入和移出用户空间。Weave路由器会更新Open vSwitch配置，以确保内核层具有有关如何路由传入数据包的准确信息。相反，当网络拓扑不适合快速数据路径路由时，sleeve模式可用作备份。它是一种较慢的封装模式，在快速数据路径缺少必要的路由信息或连接的情况下，它可以来路由数据包。当流量通过路由器时，它们会了解哪些对等体与哪些MAC地址相关联，从而允许它们以更少的跳数、更智能地路由后续流量。当网络更改导致可用路由改变时，这一相同的机制可以帮助每个节点进行自行更正。</p>
+<p>与Calico一样，Weave也为Kubernetes集群提供网络策略功能。设置Weave时，网络策略会自动安装和配置，因此除了添加网络规则之外，用户无需进行其他配置。一个其他网络方案都没有、Weave独有的功能，是对整个网络的简单加密。虽然这会增加相当多的网络开销，但Weave可以使用NaCl加密来为sleeve流量自动加密所有路由流量，而对于快速数据路径流量，因为它需要加密内核中的VXLAN流量，Weave会使用IPsec ESP来加密快速数据路径流量。</p>
+<p>对于那些寻求功能丰富的网络、同时希望不要增加大量复杂性或管理难度的人来说，Weave是一个很好的选择。它设置起来相对容易，提供了许多内置和自动配置的功能，并且可以在其他解决方案可能出现故障的场景下提供智能路由。网状拓扑结构确实会限制可以合理容纳的网络的大小，不过对于大多数用户来说，这也不是一个大问题。此外，Weave也提供收费的技术支持，可以为企业用户提供故障排除等等技术服务。</p>
+<h4 id="哪个插件适合我"><a href="#哪个插件适合我" class="headerlink" title="哪个插件适合我"></a>哪个插件适合我</h4><p><img src="/2021/08/21/k8s-network-1/cnis.png" alt="image"></p>
+<ul>
+<li>Overlay 模式的典型特征是容器独立于主机的 IP 段，这个 IP 段进行跨主机网络通信时是通过在主机之间创建隧道的方式，将整个容器网段的包全都封装成底层的物理网络中主机之间的包。该方式的好处在于它不依赖于底层网络；</li>
+<li>路由模式中主机和容器也分属不同的网段，它与 Overlay 模式的主要区别在于它的跨主机通信是通过路由打通，无需在不同主机之间做一个隧道封包。但路由打通就需要部分依赖于底层网络，比如说要求底层网络有二层可达的一个能力；</li>
+<li>Underlay 模式中容器和宿主机位于同一层网络，两者拥有相同的地位。容器之间网络的打通主要依靠于底层网络。因此该模式是强依赖于底层能力的。</li>
+</ul>
+<p>了解了以上三种常用的实现模式之后，再根据自己的环境、需求判断可由哪一种模式进行实现，再在对应的模式中去找 CNI 插件。不过社区中有那么多插件，它们又都属于哪种模式？如何进行选择呢？怎么挑选适合自己的呢？我们可以从以下 3 个方面来考虑。</p>
+<p><img src="/2021/08/21/k8s-network-1/cniq.png" alt="image"></p>
+<ol>
+<li>环境限制<br>不同环境中所支持的底层能力是不同的。</li>
+</ol>
+<ul>
+<li>虚拟化环境（例如 OpenStack）中的网络限制较多，比如不允许机器之间直接通过二层协议访问，必须要带有 IP 地址这种三层的才能去做转发，限制某一个机器只能使用某些 IP 等。在这种被做了强限制的底层网络中，只能去选择 Overlay 的插件，常见的有 Flannel-vxlan, Calico-ipip, Weave 等等；</li>
+<li>物理机环境中底层网络的限制较少，比如说我们在同一个交换机下面直接做一个二层的通信。对于这种集群环境，我们可以选择 Underlay 或者路由模式的插件。Underlay 意味着我们可以直接在一个物理机上插多个网卡或者是在一些网卡上做硬件虚拟化；路由模式就是依赖于 Linux 的路由协议做一个打通。这样就避免了像 vxlan 的封包方式导致的性能降低。这种环境下我们可选的插件包括 clico-bgp, flannel-hostgw, sriov 等等；</li>
+<li>公有云环境也是虚拟化，因此底层限制也会较多。但每个公有云都会考虑适配容器，提升容器的性能，因此每家公有云可能都提供了一些 API 去配置一些额外的网卡或者路由这种能力。在公有云上，我们要尽量选择公有云厂商提供的 CNI 插件以达到兼容性和性能上的最优。比如 Aliyun 就提供了一个高性能的 Terway 插件。</li>
+</ul>
+<ol start="2">
+<li>功能需求<br>安全需求；</li>
+</ol>
+<ul>
+<li><p>K8s 支持 NetworkPolicy，就是说我们可以通过 NetworkPolicy 的一些规则去支持“Pod 之间是否可以访问”这类策略。但不是每个 CNI 插件都支持 NetworkPolicy 的声明，如果大家有这个需求，可以选择支持 NetworkPolicy 的一些插件，比如 Calico, Weave 等等。</p>
+</li>
+<li><p>是否需要集群外的资源与集群内的资源互联互通；<br>大家的应用最初都是在虚拟机或者物理机上，容器化之后，应用无法一下就完成迁移，因此就需要传统的虚拟机或者物理机能跟容器的 IP 地址互通。为了实现这种互通，就需要两者之间有一些打通的方式或者直接位于同一层。此时可以选择 Underlay 的网络，比如 sriov 这种就是 Pod 和以前的虚拟机或者物理机在同一层。我们也可以使用 calico-bgp，此时它们虽然不在同一网段，但可以通过它去跟原有的路由器做一些 BGP 路由的一个发布，这样也可以打通虚拟机与容器。</p>
+</li>
+<li><p>K8s 的服务发现与负载均衡的能力。<br>K8s 的服务发现与负载均衡就是我们前面所介绍的 K8s 的 Service，但并不是所有的 CNI 插件都能实现这两种能力。比如很多 Underlay 模式的插件，在 Pod 中的网卡是直接用的 Underlay 的硬件，或者通过硬件虚拟化插到容器中的，这个时候它的流量无法走到宿主机所在的命名空间，因此也无法应用 kube-proxy 在宿主机配置的规则。</p>
+</li>
+</ul>
+<p>这种情况下，插件就无法访问到 K8s 的服务发现。因此大家如果需要服务发现与负载均衡，在选择 Underlay 的插件时就需要注意它们是否支持这两种能力。</p>
+<p>经过功能需求的过滤之后，能选的插件就很少了。经过环境限制和功能需求的过滤之后，如果还剩下 3、4 种插件，可以再来考虑性能需求。</p>
+<ol start="3">
+<li>性能需求<br>我们可以从 Pod 的创建速度和 Pod 的网络性能来衡量不同插件的性能。</li>
+</ol>
+<ul>
+<li><p>Pod 的创建速度<br>当我们创建一组 Pod 时，比如业务高峰来了，需要紧急扩容，这时比如说我们扩容了 1000 个 Pod，就需要 CNI 插件创建并配置 1000 个网络资源。Overlay 和路由模式在这种情况下的创建速度是很快的，因为它是在机器里面又做了虚拟化，所以只需要调用内核接口就可以完成这些操作。但对于 Underlay 模式，由于需要创建一些底层的网络资源，所以整个 Pod 的创建速度相对会慢一些。因此对于经常需要紧急扩容或者创建大批量的 Pod 这些场景，我们应该尽量选择 Overlay 或者路由模式的网络插件。</p>
+</li>
+<li><p>Pod 的网络性能<br>主要表现在两个 Pod 之间的网络转发、网络带宽、PPS 延迟等这些性能指标上。Overlay 模式的性能较差，因为它在节点上又做了一层虚拟化，还需要去封包，封包又会带来一些包头的损失、CPU 的消耗等，如果大家对网络性能的要求比较高，比如说机器学习、大数据这些场景就不适合使用 Overlay 模式。这种情形下我们通常选择 Underlay 或者路由模式的 CNI 插件。</p>
+</li>
+</ul>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a href="https://network.51cto.com/art/201907/598970.htm">https://network.51cto.com/art/201907/598970.htm</a> </p>
+]]></content>
+      <categories>
+        <category>kubernetes</category>
+      </categories>
+      <tags>
+        <tag>network</tag>
+        <tag>kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一文让你shell从狗熊变英雄</title>
     <url>/2023/08/13/shell_from_zero_to_hero./</url>
     <content><![CDATA[<ul>
@@ -1762,36 +1996,6 @@
       <tags>
         <tag>tech</tag>
         <tag>shell</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python程序获取股票信息</title>
-    <url>/2022/07/04/stock-price/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
-<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
-<li>python3</li>
-<li>akshare</li>
-<li>GoogleSheet</li>
-</ul>
-<p>Reference </p>
-<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
-<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
-<li>code example</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
-</ul>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>stock</tag>
-        <tag>python</tag>
         <tag>Tech</tag>
       </tags>
   </entry>
@@ -2219,190 +2423,32 @@
       </tags>
   </entry>
   <entry>
-    <title>shell变量高级篇</title>
-    <url>/2021/08/24/shell-variable-advance/</url>
-    <content><![CDATA[<p> <a href="#shell%E5%8F%98%E9%87%8F%E7%9A%84%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8">shell变量的高级应用</a></p>
+    <title>python程序获取股票信息</title>
+    <url>/2022/07/04/stock-price/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
+<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
+<li>python3</li>
+<li>akshare</li>
+<li>GoogleSheet</li>
+</ul>
+<p>Reference </p>
+<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
+<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
+<li>code example</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li><a href="#%E5%8F%98%E9%87%8F%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2%E5%92%8C%E5%88%A0%E9%99%A4">变量内容替换和删除</a></li>
-<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86">字符串处理</a><ul>
-<li><a href="#%E8%AE%A1%E7%AE%97%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6">计算字符串长度</a></li>
-<li><a href="#%E8%8E%B7%E5%8F%96%E5%AD%90%E4%B8%B2%E5%9C%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BD%8D%E7%BD%AE">获取子串在字符串中索引的位置</a></li>
-<li><a href="#%E6%8F%90%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2">提取字符串</a></li>
+<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
 </ul>
-</li>
-<li><a href="#%E6%95%B0%E7%BB%84%E7%9A%84%E6%93%8D%E4%BD%9C">数组的操作</a><ul>
-<li><a href="#%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0">删除元素</a></li>
-<li><a href="#%E5%88%86%E7%89%87%E8%AE%BF%E9%97%AE">分片访问</a></li>
-<li><a href="#%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2">内容替换</a></li>
-</ul>
-</li>
-<li><a href="#%E6%95%B0%E7%BB%84%E9%81%8D%E5%8E%86">数组遍历</a><ul>
-<li><a href="#ps">PS</a></li>
-</ul>
-</li>
-</ul>
-<h1 id="shell变量的高级应用"><a href="#shell变量的高级应用" class="headerlink" title="shell变量的高级应用"></a>shell变量的高级应用</h1><h2 id="变量内容替换和删除"><a href="#变量内容替换和删除" class="headerlink" title="变量内容替换和删除"></a>变量内容替换和删除</h2><table>
-<thead>
-<tr>
-<th align="center">语法</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">${变量名#匹配规则}}</td>
-<td align="left">从变量开头进行规则匹配，将符合最短的数据删除</td>
-</tr>
-<tr>
-<td align="center">${变量名##匹配规则}}</td>
-<td align="left">从变量开头进行规则匹配，将符合最长的数据删除</td>
-</tr>
-<tr>
-<td align="center">${变量名%匹配规则}}</td>
-<td align="left">从变量尾部进行规则匹配，将符合最短的数据删除</td>
-</tr>
-<tr>
-<td align="center">${变量名%%匹配规则}}</td>
-<td align="left">从变量尾部进行规则匹配，将符合最长的数据删除</td>
-</tr>
-<tr>
-<td align="center">${变量名/旧字符串/新字符串}}</td>
-<td align="left">变量内容符合旧字符串，则第一个旧字符串会被新字符串取代</td>
-</tr>
-<tr>
-<td align="center">${变量名//旧字符串/新字符串}}</td>
-<td align="left">变量内容符合旧字符串，则全部的旧字符串会被新字符串取代</td>
-</tr>
-</tbody></table>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$variable_1</span></span><br><span class="line">I love you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1#*ov&#125;</span> //从头开始将最短数据删除</span><br><span class="line">e you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1##*ov&#125;</span> //从头开始将最长数据删除</span><br><span class="line">e me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%ov*&#125;</span> //从尾开始将最短数据删除</span><br><span class="line">I love you,<span class="keyword">do</span> you l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%%ov&#125;</span> //从尾开始将最长数据删除</span><br><span class="line">I l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line">/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH/bin/BIN&#125;</span> //替换一个</span><br><span class="line">/sBIN:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH//bin/BIN&#125;</span> //替换所有</span><br><span class="line">/sBIN:/BIN:/usr/sBIN:/usr/BIN</span><br></pre></td></tr></table></figure>
-
-<h2 id="字符串处理"><a href="#字符串处理" class="headerlink" title="字符串处理"></a>字符串处理</h2><h3 id="计算字符串长度"><a href="#计算字符串长度" class="headerlink" title="计算字符串长度"></a>计算字符串长度</h3><table>
-<thead>
-<tr>
-<th align="left"></th>
-<th align="left">语法</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">方法一</td>
-<td align="left"><code>$&#123;#string&#125;</code></td>
-<td align="left">NA</td>
-</tr>
-<tr>
-<td align="left">方法二</td>
-<td align="left"><code>expr length &quot;$string&quot;</code></td>
-<td align="left">string如有空格，必须加双引号</td>
-</tr>
-</tbody></table>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;#var1&#125;</span></span><br><span class="line">21</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr length <span class="string">&quot;<span class="variable">$var1</span>&quot;</span>`</span><br><span class="line">21</span><br></pre></td></tr></table></figure>
-
-<h3 id="获取子串在字符串中索引的位置"><a href="#获取子串在字符串中索引的位置" class="headerlink" title="获取子串在字符串中索引的位置"></a>获取子串在字符串中索引的位置</h3><table>
-<thead>
-<tr>
-<th align="left">语法</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>expr index $string $substring</code></td>
-<td align="left">查找子串中任一出现的字符，找到第一个出现字符的位置就返回</td>
-</tr>
-</tbody></table>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr index <span class="string">&quot;<span class="variable">$variable_1</span>&quot;</span> oe`</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
-<h3 id="提取字符串"><a href="#提取字符串" class="headerlink" title="提取字符串"></a>提取字符串</h3><table>
-<thead>
-<tr>
-<th align="left"></th>
-<th align="left">语法</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">方法一</td>
-<td align="left"><code>$&#123;string:position&#125;</code></td>
-<td align="left">从 string 中的 position 位置开始，索引下标从 0 开始</td>
-</tr>
-<tr>
-<td align="left">方法二</td>
-<td align="left"><code>$&#123;string:position:length&#125;</code></td>
-<td align="left">从 position 开始，匹配长度为 length</td>
-</tr>
-<tr>
-<td align="left">方法三</td>
-<td align="left"><code>$&#123;string: -position&#125;</code></td>
-<td align="left">从右边开始匹配，注意冒号后面的空格</td>
-</tr>
-<tr>
-<td align="left">方法四</td>
-<td align="left"><code>$&#123;string:(position&#125;</code></td>
-<td align="left">从左边开始匹配</td>
-</tr>
-<tr>
-<td align="left">方法五</td>
-<td align="left"><code>expr substr $string $position $length</code></td>
-<td align="left">从 position 开始，匹配长度为 length，索引下标从 1 开始</td>
-</tr>
-</tbody></table>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ var_str=<span class="string">&quot;k8s docker cloud aws&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: 3&#125;</span> //方法一</span><br><span class="line">docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:3:5&#125;</span> //方法二</span><br><span class="line">dock</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5&#125;</span>  //方法三，注意有空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5:3&#125;</span> //方法三 ，带长度</span><br><span class="line">d a</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:-5&#125;</span> //方法三，没有空格无效</span><br><span class="line">k8s docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:(-5)&#125;</span> //方法三，可以用括号代替空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr substr <span class="string">&quot;<span class="variable">$var_str</span>&quot;</span> 1 5` //方法五，从索引1开始计数</span><br><span class="line">k8s d</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="数组的操作"><a href="#数组的操作" class="headerlink" title="数组的操作"></a>数组的操作</h2><blockquote>
-<p>我们知道在强类型语言中定义变量的时候必须为这个变量定义类型，比如定义整形可以定义为 int 型，字符串 string 类型，日期类型 Date 等等，在使用之前必须定义类型，这是强类型编程语言的风格。Shell 编程中，由于 Shell 是弱类型语言，在使用变量前不需要为变量声明类型， 但其实 Shell 本身也是支持提前声明有类型变量的，只是说使用方式和一般的强类型编程语言有些不同， 使用 declare 和 typeset 命令来进行声明。</p>
-<ul>
-<li>declare 命令和 typeset 命令两者等价</li>
-<li>declare、typeset 命令都是用来定义变量类型的</li>
-</ul>
-<p>既然它们是等价的 那我们用 declare 进行演示</p>
-</blockquote>
-<p>declare 常用命令参数表</p>
-<table>
-<thead>
-<tr>
-<th align="center">参数</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">-i</td>
-<td align="left">将变量设为整数</td>
-</tr>
-<tr>
-<td align="center">-a</td>
-<td align="left">将变量定义为数组</td>
-</tr>
-<tr>
-<td align="center">-f</td>
-<td align="left">显示此脚本定义过的所有函数及内容</td>
-</tr>
-<tr>
-<td align="center">-F</td>
-<td align="left">仅显示此脚本定义过的函数名</td>
-</tr>
-<tr>
-<td align="center">-x</td>
-<td align="left">将变量声明为环境变量</td>
-</tr>
-</tbody></table>
-<p><code>declare -a array_name</code> 声明数组， 然后 <code>array_name=(value1 ... valuen)</code>， 这里不声明也可以</p>
-<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><ul>
-<li><code>unset my_arr[2]</code> 清楚元素 <code>unset my_arr</code> 清空整个数组</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$</span><br><span class="line">[shdevops@localhost ~]$ my_arr=(1 <span class="string">&quot;abc&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1 abc</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr[1]</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="分片访问"><a href="#分片访问" class="headerlink" title="分片访问"></a>分片访问</h3><ul>
-<li> ${array[@]:1:3} 数组下标从 1 到 3 的三个元素</li>
-<li><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;apple&quot;</span> <span class="string">&quot;juice&quot;</span> <span class="string">&quot;cat&quot;</span> <span class="string">&quot;dog&quot;</span> <span class="string">&quot;ox&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]:1:3&#125;</span></span><br><span class="line">juice cat dog</span><br></pre></td></tr></table></figure>
-<h3 id="内容替换"><a href="#内容替换" class="headerlink" title="内容替换"></a>内容替换</h3></li>
-<li> <code>$&#123;my_array[@]/an/AN&#125;</code> 将数组中所有元素内包含 an 的子串替换为 AN<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;an1&quot;</span> <span class="string">&quot;an2&quot;</span> <span class="string">&quot;an3&quot;</span> <span class="string">&quot;an4&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]/an/AN&#125;</span></span><br><span class="line">AN1 AN2 AN3 AN4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
-<h2 id="数组遍历"><a href="#数组遍历" class="headerlink" title="数组遍历"></a>数组遍历</h2></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">my_arr=(an1 an2 an3 an4)</span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$v</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span>;<span class="keyword">do</span> <span class="built_in">echo</span> <span class="variable">$v</span>;<span class="keyword">done</span></span><br><span class="line">an1</span><br><span class="line">an2</span><br><span class="line">an3</span><br><span class="line">an4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
-<h3 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">取消声明的变量：</span><br><span class="line"></span><br><span class="line">declare +r</span><br><span class="line">declare +i</span><br><span class="line">declare +a</span><br><span class="line">declare +x</span><br></pre></td></tr></table></figure>]]></content>
+]]></content>
       <categories>
-        <category>shell</category>
+        <category>python</category>
       </categories>
       <tags>
         <tag>tech</tag>
-        <tag>shell</tag>
+        <tag>python</tag>
+        <tag>stock</tag>
         <tag>Tech</tag>
       </tags>
   </entry>

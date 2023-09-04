@@ -6,7 +6,7 @@
   <link href="https://toskachin.github.io/atom.xml" rel="self"/>
   
   <link href="https://toskachin.github.io/"/>
-  <updated>2023-09-02T01:27:56.578Z</updated>
+  <updated>2023-09-04T13:43:08.236Z</updated>
   <id>https://toskachin.github.io/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kubectl 常用命令</title>
+    <link href="https://toskachin.github.io/2023/09/04/20230904_kubectl_commands/"/>
+    <id>https://toskachin.github.io/2023/09/04/20230904_kubectl_commands/</id>
+    <published>2023-09-03T16:00:00.000Z</published>
+    <updated>2023-09-04T13:43:08.236Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Kubectl-上下文和配置&quot;&gt;&lt;a href=&quot;#Kubectl-上下文和配置&quot; class=&quot;headerlink&quot; title=&quot;Kubectl 上下文和配置&quot;&gt;&lt;/a&gt;Kubectl 上下文和配置&lt;/h2&gt;&lt;p&gt;设置 kubectl 命令交互的</summary>
+        
+      
+    
+    
+    
+    <category term="tech" scheme="https://toskachin.github.io/categories/tech/"/>
+    
+    
+    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
+    
+    <category term="k8s" scheme="https://toskachin.github.io/tags/k8s/"/>
+    
+    <category term="container" scheme="https://toskachin.github.io/tags/container/"/>
+    
+    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
+    
+    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
+    
+  </entry>
   
   <entry>
     <title>Hexo Blog电脑快速迁移</title>
@@ -326,7 +359,7 @@
     <link href="https://toskachin.github.io/2022/09/20/Kubernetes_from_zero/"/>
     <id>https://toskachin.github.io/2022/09/20/Kubernetes_from_zero/</id>
     <published>2022-09-19T23:54:41.000Z</published>
-    <updated>2022-09-20T07:24:39.000Z</updated>
+    <updated>2023-09-04T13:28:46.910Z</updated>
     
     
       
@@ -404,9 +437,9 @@
     
     <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
     
-    <category term="stock" scheme="https://toskachin.github.io/tags/stock/"/>
-    
     <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
+    
+    <category term="stock" scheme="https://toskachin.github.io/tags/stock/"/>
     
     <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     
@@ -595,37 +628,6 @@
     <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
     
     <category term="terraform" scheme="https://toskachin.github.io/tags/terraform/"/>
-    
-    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>shell变量高级篇</title>
-    <link href="https://toskachin.github.io/2021/08/24/shell-variable-advance/"/>
-    <id>https://toskachin.github.io/2021/08/24/shell-variable-advance/</id>
-    <published>2021-08-24T01:07:34.000Z</published>
-    <updated>2022-07-03T11:25:11.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt; &lt;a href=&quot;#shell%E5%8F%98%E9%87%8F%E7%9A%84%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8&quot;&gt;shell变量的高级应用&lt;/a&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="shell" scheme="https://toskachin.github.io/categories/shell/"/>
-    
-    
-    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
-    
-    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
     
     <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     
