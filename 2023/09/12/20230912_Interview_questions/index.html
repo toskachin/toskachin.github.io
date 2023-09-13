@@ -28,7 +28,7 @@
 <meta property="og:description" content="Regular Questions What is Dell omreport&#x2F;omconfig comamnd*  What is HP iLO and LOM lights-out management(LOM): Lights-out management (LOM) is a form of out-of-band management. It enables system adminis">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-09-11T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-13T23:30:51.587Z">
+<meta property="article:modified_time" content="2023-09-13T23:40:16.490Z">
 <meta property="article:author" content="TOSKA">
 <meta property="article:tag" content="tech">
 <meta property="article:tag" content="interview">
@@ -295,7 +295,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2023-09-14 07:30:51" itemprop="dateModified" datetime="2023-09-14T07:30:51+08:00">2023-09-14</time>
+        <time title="修改时间：2023-09-14 07:40:16" itemprop="dateModified" datetime="2023-09-14T07:40:16+08:00">2023-09-14</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -399,22 +399,20 @@
 </li>
 <li><p>Describe the general file system hierarchy of a Linux system.</p>
 <ul>
-<li>/  - root folder</li>
-<li>/etc - configuration files provided by the package manager</li>
-<li>/bin - binaries files</li>
-<li>/sbin - system  binaries files (important binaries for the OS)</li>
-<li>/boot - Static files for boot processes ( boot loader)</li>
-<li>/dev - Device files</li>
-<li>/lib - Essential shared libraries and kernel modules</li>
-<li>/usr - Secundary hierarchy</li>
-<li>/mnt - Mounting point for temporary filesystem</li>
-<li>/media - Mounting point for removable media</li>
-<li>/opt - Add-on application software packages</li>
-<li>/srv - Data service provided by this system</li>
-<li>/tmp - Temporary files</li>
-<li>/var - Variable data</li>
-<li>/root - Root user folder</li>
-<li>/home - Home users folders</li>
+<li>/proc   - process information</li>
+<li>/var  -variable data, most notably log files</li>
+<li>/usr - user related programs</li>
+<li>/home  - home directories</li>
+<li>/etc - system configuration files</li>
+<li>opt  - optional or three party software</li>
+<li>/dev - device files</li>
+<li>/bin - Binaries and other executable programs.</li>
+<li>/sbin  -similar to /bin with the exception that these ready to run binaries are reserved for root users</li>
+<li>/srv  - Srv is a serve folder. It holds site specific data to be served by the system for protocols such as, ftp, rsync, www, cvs etc</li>
+<li>/lib - Lib contains system library binaries that are required to run the system</li>
+<li>/sys - This is kinda like /proc it is used for plug and play configuration</li>
+<li>/root - Root is the “home” directory for root.</li>
+<li>/mnt - This directory is provided so that the system administrator may temporarily mount a filesystem as needed</li>
 </ul>
 </li>
 </ul>
@@ -692,7 +690,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">6:30</span>
+    <span title="站点阅读时长">6:31</span>
   </span>
 </div>
 <div class="busuanzi-count">

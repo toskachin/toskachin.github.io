@@ -173,22 +173,20 @@
 </li>
 <li><p>Describe the general file system hierarchy of a Linux system.</p>
 <ul>
-<li>/  - root folder</li>
-<li>/etc - configuration files provided by the package manager</li>
-<li>/bin - binaries files</li>
-<li>/sbin - system  binaries files (important binaries for the OS)</li>
-<li>/boot - Static files for boot processes ( boot loader)</li>
-<li>/dev - Device files</li>
-<li>/lib - Essential shared libraries and kernel modules</li>
-<li>/usr - Secundary hierarchy</li>
-<li>/mnt - Mounting point for temporary filesystem</li>
-<li>/media - Mounting point for removable media</li>
-<li>/opt - Add-on application software packages</li>
-<li>/srv - Data service provided by this system</li>
-<li>/tmp - Temporary files</li>
-<li>/var - Variable data</li>
-<li>/root - Root user folder</li>
-<li>/home - Home users folders</li>
+<li>/proc   - process information</li>
+<li>/var  -variable data, most notably log files</li>
+<li>/usr - user related programs</li>
+<li>/home  - home directories</li>
+<li>/etc - system configuration files</li>
+<li>opt  - optional or three party software</li>
+<li>/dev - device files</li>
+<li>/bin - Binaries and other executable programs.</li>
+<li>/sbin  -similar to /bin with the exception that these ready to run binaries are reserved for root users</li>
+<li>/srv  - Srv is a serve folder. It holds site specific data to be served by the system for protocols such as, ftp, rsync, www, cvs etc</li>
+<li>/lib - Lib contains system library binaries that are required to run the system</li>
+<li>/sys - This is kinda like /proc it is used for plug and play configuration</li>
+<li>/root - Root is the “home” directory for root.</li>
+<li>/mnt - This directory is provided so that the system administrator may temporarily mount a filesystem as needed</li>
 </ul>
 </li>
 </ul>
@@ -417,6 +415,73 @@
       </tags>
   </entry>
   <entry>
+    <title>Interview FAQ 2022</title>
+    <url>/2022/09/26/Interview_FAQ/</url>
+    <content><![CDATA[<ul>
+<li><a href="#background">Background</a><ul>
+<li><a href="#linux-system">Linux system</a></li>
+<li><a href="#network">Network</a></li>
+<li><a href="#devops">Devops</a></li>
+<li><a href="#scripts">Scripts</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h1><p>Sharing interview tech question with you</p>
+<h2 id="Linux-system"><a href="#Linux-system" class="headerlink" title="Linux system"></a>Linux system</h2><p><strong>How to show ip address only on Centos</strong></p>
+<p><code>hostname -i</code></p>
+<p><strong>What is /dev save and when system will use it</strong></p>
+<p><strong>grep command</strong></p>
+<ul>
+<li>grep -l </li>
+<li>grep -f </li>
+<li>grep -v</li>
+<li>grep -e</li>
+</ul>
+<p><strong>what is under /proc</strong><br>Process information<br><img src="/2022/09/26/Interview_FAQ/linuxDir.jpeg" alt="image"></p>
+<p><strong>what is command cpio</strong></p>
+<blockquote>
+<p>cpio - copy files to and from archives</p>
+</blockquote>
+<ul>
+<li><p>将家目录下的所有文件都归档到tree.cpio中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 ~]# find ~ -depth | cpio -ov &gt; tree.cpio 或 [root@server2 ~]# find ~ -depth | cpio -ov -F tree.cpio</span><br></pre></td></tr></table></figure></li>
+<li><p>向归档文件中追加文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 tmp]# ls /root/new.txt | cpio -oA -F tree.cpio</span><br></pre></td></tr></table></figure></li>
+<li><p>提取文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 tmp]# cpio -idv -F tree.cpio /root/</span><br></pre></td></tr></table></figure></li>
+<li><p><em>what is jwt token</em>*<br>JSON Web Token (JWT) is a compact URL-safe means of representing claims to be transferred between two parties</p>
+</li>
+</ul>
+<p><strong>explain uptime output</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">10:17:36 up 73 days, 10:18,  4 users,  load average: 5.83, 6.47, 7.31</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">These numbers are the averages of the system load over a period of one, five, and 15 minutes. </span><br><span class="line"></span><br><span class="line">Applying that to the load average output (0.5, 1.5, 3.0) that we got above: </span><br><span class="line"></span><br><span class="line">* 0.5 means the minimum waiting time at the counter. Between 0.00 and 1.0, there is no need to worry. Your servers are safe!</span><br><span class="line">* 1.5 means the queue is filling up. If the average gets any higher, things are going to start slowing down.</span><br><span class="line">* 3.00 means there&#x27;s a considerably long queue waiting, and an extra resource/counter is required to clear up the queue faster. </span><br></pre></td></tr></table></figure>
+<h2 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h2><h2 id="Devops"><a href="#Devops" class="headerlink" title="Devops"></a>Devops</h2><p><strong>if statememt in terraform</strong></p>
+<p><code>condition ? true_value : false_value</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">resource &quot;azurerm_function_app&quot; &quot;b59func&quot; &#123;</span><br><span class="line">  # Deploy conditionally based on Feature Flag variable</span><br><span class="line">  count = local.deploy_b59func == true ? 1 : 0</span><br><span class="line"></span><br><span class="line">  # resource attributes here</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%&#123; if &lt;CONDITION&gt; &#125;&lt;TRUEVAL&gt;%&#123; endif &#125;</span><br><span class="line"></span><br><span class="line">%&#123; if &lt;CONDITION&gt; &#125;&lt;TRUEVAL&gt;%&#123; else &#125;&lt;FALSEVAL&gt;%&#123; endif &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>example </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">output &quot;for_directive_index_if_strip&quot; &#123;</span><br><span class="line">  value = &lt;&lt;EOF</span><br><span class="line">%&#123;~ for i, name in var.names ~&#125;</span><br><span class="line">$&#123;name&#125;%&#123; if i &lt; length(var.names) - 1 &#125;, %&#123; endif &#125;</span><br><span class="line">%&#123;~ endfor ~&#125;</span><br><span class="line">EOF</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform apply</span><br><span class="line"></span><br><span class="line">(...)</span><br><span class="line"></span><br><span class="line">Outputs:</span><br><span class="line"></span><br><span class="line">for_directive_index_if_strip = &quot;neo, trinity, morpheus&quot;</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>for loop statement in terraform</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%&#123; for &lt;ITEM&gt; in &lt;COLLECTION&gt; &#125;&lt;BODY&gt;%&#123; endfor &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>git merge and git rebase difference</strong></p>
+<p><strong>desc CI/CD tools</strong></p>
+<h2 id="Scripts"><a href="#Scripts" class="headerlink" title="Scripts"></a>Scripts</h2>]]></content>
+      <categories>
+        <category>ideas,interview</category>
+      </categories>
+      <tags>
+        <tag>ideas,interview,面试</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Interview notes March 2022</title>
     <url>/2022/03/10/Interview_notes_march_2022/</url>
     <content><![CDATA[<h2 id="Application-support"><a href="#Application-support" class="headerlink" title="Application support"></a>Application support</h2><h3 id="Macbook-support"><a href="#Macbook-support" class="headerlink" title="Macbook support"></a>Macbook support</h3><p>how to reset Macbook</p>
@@ -495,99 +560,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Interview FAQ 2022</title>
-    <url>/2022/09/26/Interview_FAQ/</url>
-    <content><![CDATA[<ul>
-<li><a href="#background">Background</a><ul>
-<li><a href="#linux-system">Linux system</a></li>
-<li><a href="#network">Network</a></li>
-<li><a href="#devops">Devops</a></li>
-<li><a href="#scripts">Scripts</a></li>
-</ul>
-</li>
-</ul>
-<h1 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h1><p>Sharing interview tech question with you</p>
-<h2 id="Linux-system"><a href="#Linux-system" class="headerlink" title="Linux system"></a>Linux system</h2><p><strong>How to show ip address only on Centos</strong></p>
-<p><code>hostname -i</code></p>
-<p><strong>What is /dev save and when system will use it</strong></p>
-<p><strong>grep command</strong></p>
-<ul>
-<li>grep -l </li>
-<li>grep -f </li>
-<li>grep -v</li>
-<li>grep -e</li>
-</ul>
-<p><strong>what is under /proc</strong><br>Process information<br><img src="/2022/09/26/Interview_FAQ/linuxDir.jpeg" alt="image"></p>
-<p><strong>what is command cpio</strong></p>
-<blockquote>
-<p>cpio - copy files to and from archives</p>
-</blockquote>
-<ul>
-<li><p>将家目录下的所有文件都归档到tree.cpio中</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 ~]# find ~ -depth | cpio -ov &gt; tree.cpio 或 [root@server2 ~]# find ~ -depth | cpio -ov -F tree.cpio</span><br></pre></td></tr></table></figure></li>
-<li><p>向归档文件中追加文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 tmp]# ls /root/new.txt | cpio -oA -F tree.cpio</span><br></pre></td></tr></table></figure></li>
-<li><p>提取文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 tmp]# cpio -idv -F tree.cpio /root/</span><br></pre></td></tr></table></figure></li>
-<li><p><em>what is jwt token</em>*<br>JSON Web Token (JWT) is a compact URL-safe means of representing claims to be transferred between two parties</p>
-</li>
-</ul>
-<p><strong>explain uptime output</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">10:17:36 up 73 days, 10:18,  4 users,  load average: 5.83, 6.47, 7.31</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">These numbers are the averages of the system load over a period of one, five, and 15 minutes. </span><br><span class="line"></span><br><span class="line">Applying that to the load average output (0.5, 1.5, 3.0) that we got above: </span><br><span class="line"></span><br><span class="line">* 0.5 means the minimum waiting time at the counter. Between 0.00 and 1.0, there is no need to worry. Your servers are safe!</span><br><span class="line">* 1.5 means the queue is filling up. If the average gets any higher, things are going to start slowing down.</span><br><span class="line">* 3.00 means there&#x27;s a considerably long queue waiting, and an extra resource/counter is required to clear up the queue faster. </span><br></pre></td></tr></table></figure>
-<h2 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h2><h2 id="Devops"><a href="#Devops" class="headerlink" title="Devops"></a>Devops</h2><p><strong>if statememt in terraform</strong></p>
-<p><code>condition ? true_value : false_value</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">resource &quot;azurerm_function_app&quot; &quot;b59func&quot; &#123;</span><br><span class="line">  # Deploy conditionally based on Feature Flag variable</span><br><span class="line">  count = local.deploy_b59func == true ? 1 : 0</span><br><span class="line"></span><br><span class="line">  # resource attributes here</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%&#123; if &lt;CONDITION&gt; &#125;&lt;TRUEVAL&gt;%&#123; endif &#125;</span><br><span class="line"></span><br><span class="line">%&#123; if &lt;CONDITION&gt; &#125;&lt;TRUEVAL&gt;%&#123; else &#125;&lt;FALSEVAL&gt;%&#123; endif &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<ul>
-<li>example </li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">output &quot;for_directive_index_if_strip&quot; &#123;</span><br><span class="line">  value = &lt;&lt;EOF</span><br><span class="line">%&#123;~ for i, name in var.names ~&#125;</span><br><span class="line">$&#123;name&#125;%&#123; if i &lt; length(var.names) - 1 &#125;, %&#123; endif &#125;</span><br><span class="line">%&#123;~ endfor ~&#125;</span><br><span class="line">EOF</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform apply</span><br><span class="line"></span><br><span class="line">(...)</span><br><span class="line"></span><br><span class="line">Outputs:</span><br><span class="line"></span><br><span class="line">for_directive_index_if_strip = &quot;neo, trinity, morpheus&quot;</span><br></pre></td></tr></table></figure>
-
-
-<p><strong>for loop statement in terraform</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%&#123; for &lt;ITEM&gt; in &lt;COLLECTION&gt; &#125;&lt;BODY&gt;%&#123; endfor &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>git merge and git rebase difference</strong></p>
-<p><strong>desc CI/CD tools</strong></p>
-<h2 id="Scripts"><a href="#Scripts" class="headerlink" title="Scripts"></a>Scripts</h2>]]></content>
-      <categories>
-        <category>ideas,interview</category>
-      </categories>
-      <tags>
-        <tag>ideas,interview,面试</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Nomad 和 Kubernetes 区别</title>
-    <url>/2023/05/26/Nomad_and_Kubernetes/</url>
-    <content><![CDATA[<h1 id="Nomad-vs-Kubernetes"><a href="#Nomad-vs-Kubernetes" class="headerlink" title="Nomad vs. Kubernetes"></a>Nomad vs. Kubernetes</h1><p>现今Containor技术比较流行的是Kubernetes, 后起之秀Nomad也风行起来，那么两者的区别是啥</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Kubernetes is an orchestration system for containers originally designed by Google, now governed by the Cloud Native Computing Foundation (CNCF) and developed by Google, Red Hat, and many others. Kubernetes and Nomad support similar core use cases for application deployment and management, but they differ in a few key ways. Kubernetes aims to provide all the features needed to run Linux container-based applications including cluster management, scheduling, service discovery, monitoring, secrets management and more. Nomad only aims to focus on cluster management and scheduling and is designed with the Unix philosophy of having a small scope while composing with tools like Consul for service discovery/service mesh and Vault for secret management.</span><br><span class="line"></span><br><span class="line">The following characteristics generally differentiate Nomad from Kubernetes:</span><br></pre></td></tr></table></figure>
-
-<h2 id="Simplicity"><a href="#Simplicity" class="headerlink" title="Simplicity"></a>Simplicity</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Kubernetes is designed as a collection of more than a half-dozen interoperating services which together provide the full functionality. Coordination and storage is provided by etcd at the core. The state is wrapped by API controllers which are consumed by other services that provide higher level APIs for features like scheduling. Kubernetes supports running in a highly available configuration but is operationally complex to setup.</span><br><span class="line"></span><br><span class="line">Nomad is architecturally much simpler. Nomad is a single binary, both for clients and servers, and requires no external services for coordination or storage. Nomad combines a lightweight resource manager and a sophisticated scheduler into a single system. By default, Nomad is distributed, highly available, and operationally simple.</span><br></pre></td></tr></table></figure>
-
-<h2 id="Flexible-Workload-Support"><a href="#Flexible-Workload-Support" class="headerlink" title="Flexible Workload Support"></a>Flexible Workload Support</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">While Kubernetes is specifically focused on Linux containers, Nomad is more general purpose. Nomad supports virtualized, containerized and standalone applications, including Docker, Java, IIS on Windows, Qemu, etc. Nomad is designed with extensible drivers and support will be extended to all common drivers.</span><br></pre></td></tr></table></figure>
-
-<h2 id="Consistent-Deployment"><a href="#Consistent-Deployment" class="headerlink" title="Consistent Deployment"></a>Consistent Deployment</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A full Kubernetes installation for a production environment is time consuming, operationally complex, and resource intensive. An increasing number of implementations are created by the Kubernetes community to mitigate these challenges, such as minikube, kubeadm, k3s, and more. These trimmed versions of Kubernetes offer easier adoption for development and testing, but lead to inconsistency in capabilities, configuration, and management when moving into production.</span><br><span class="line"></span><br><span class="line">In contrast to Kubernetes&#x27; fragmented distributions, Nomad as a single lightweight binary can be deployed in local dev, production, on-prem, at the edge, and in the cloud in a consistent manner, and provides the same operational ease-of-use across all environments.</span><br></pre></td></tr></table></figure>
-
-<h2 id="Scalability"><a href="#Scalability" class="headerlink" title="Scalability"></a>Scalability</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Kubernetes documentation states that they support clusters up to 5,000 nodes and 300,000 total containers. As the environment grows, the interoperating components with different constraints compound the operational complexity. Even operators at Google revealed the significant challenges of managing the system at scale. The lack of maturity in the Federation project and the additional overhead of managing a centralized management plane also make it a hard experience to deploy a distributed system that spans multiple clusters.</span><br><span class="line"></span><br><span class="line">Nomad has been proven to scale to cluster sizes that exceed 10,000 nodes in real-world production environments. It can be deployed across multiple availability zones, regions, and data centers with a single cluster or multiple clusters. Nomad is designed to natively handle multi-cluster deployments without the overhead of running clusters on clusters. This makes it easier to scale the application deployment across multiple datacenters, regions, and clouds with no additional complexity.</span><br><span class="line"></span><br><span class="line">Nomad has performed strenuous benchmark on scalability with 1 million container challenge in 2016 and 2 million container challenge in 2020. These tests are aimed to validate Nomad&#x27;s architectural design and ensure that Nomad performs under the most extreme requirements.</span><br></pre></td></tr></table></figure>
-
-<h2 id="Nomad-command-examples"><a href="#Nomad-command-examples" class="headerlink" title="Nomad command examples"></a>Nomad command examples</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nomad node status</span><br><span class="line"></span><br><span class="line">nomad job run pytechco-redis.nomad.hcl</span><br><span class="line"></span><br><span class="line">nomad job stop -purge pytechco-employee</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>tech</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>devops</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kubernetes 入门基础</title>
     <url>/2022/09/20/Kubernetes_from_zero/</url>
     <content><![CDATA[<h1 id="Kubernetes-入门基础"><a href="#Kubernetes-入门基础" class="headerlink" title="Kubernetes 入门基础"></a>Kubernetes 入门基础</h1><p><strong>Kubernetes Components Architecture</strong><br><img src="/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg" alt="image"></p>
@@ -640,6 +612,75 @@
         <tag>tech</tag>
         <tag>k8s</tag>
         <tag>container</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>个人职业生涯短记 personal career path</title>
+    <url>/2023/05/15/career_path/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><blockquote>
+<p>写在技术大牛陈皓离世之际，惊闻噩耗年仅47岁大牛陈皓离我们而去，死于心梗。<br>人的一生总有终点，我们能做的就是不断的总结自己的经验，提高自己，分享自己的知识和观点</p>
+</blockquote>
+<h1 id="13年IT职业生涯概览"><a href="#13年IT职业生涯概览" class="headerlink" title="13年IT职业生涯概览"></a>13年IT职业生涯概览</h1><ul>
+<li>第一份工作 IBM-UOB 上海数据中心项目<br>学习了解到一个数据中心从无到有的过程，各个供应商的协作，线路设备的上架，24*7运维环境的要求及监控</li>
+</ul>
+<hr>
+<ul>
+<li>CSM customer support 项目<br>真正从一个入门的IT engineer到独自负责一个客户现场，从helpdesk基础的工作到服务器和网络运维，从一个内向不会沟通的小伙到如何管理客户的需求和期望值</li>
+</ul>
+<hr>
+<ul>
+<li>ASOS customer 项目<br>这是一个真正系统学习到了一个项目交付运维流程，基于前人研究出的理论基础，利用ITIL知识体系来管理项目</li>
+</ul>
+<hr>
+<ul>
+<li>Marin IT<br>这个第一个开拓眼界的职位，在这个硅谷互联网公司接触到了各类技术大牛，技术上接触到Meraki基于云平台管理的网络厂商，给自己后来的技术转型带来决心</li>
+</ul>
+<hr>
+<ul>
+<li>SRE/DEVOPS<ul>
+<li>这个是一个实现起初梦想的职位，一个人管理上千台服务器，维护整个产品平台，如何实现高度自动化，让机器代替人工。</li>
+<li>各类运维自动化工具，各类监控工具</li>
+<li>云平台，容器化技术，更高效的使用物理资源</li>
+<li>根据产品需求开发高度持续集成持续交付工具</li>
+<li>一个高效的团队如何运转，不同团队之间如何协作</li>
+</ul>
+</li>
+</ul>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p><strong>技术之路永无止境</strong></p>
+<p><code>Never stop learning</code> - From Yushin!</p>
+]]></content>
+      <categories>
+        <category>engineering</category>
+      </categories>
+      <tags>
+        <tag>developer</tag>
+        <tag>IT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Nomad 和 Kubernetes 区别</title>
+    <url>/2023/05/26/Nomad_and_Kubernetes/</url>
+    <content><![CDATA[<h1 id="Nomad-vs-Kubernetes"><a href="#Nomad-vs-Kubernetes" class="headerlink" title="Nomad vs. Kubernetes"></a>Nomad vs. Kubernetes</h1><p>现今Containor技术比较流行的是Kubernetes, 后起之秀Nomad也风行起来，那么两者的区别是啥</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Kubernetes is an orchestration system for containers originally designed by Google, now governed by the Cloud Native Computing Foundation (CNCF) and developed by Google, Red Hat, and many others. Kubernetes and Nomad support similar core use cases for application deployment and management, but they differ in a few key ways. Kubernetes aims to provide all the features needed to run Linux container-based applications including cluster management, scheduling, service discovery, monitoring, secrets management and more. Nomad only aims to focus on cluster management and scheduling and is designed with the Unix philosophy of having a small scope while composing with tools like Consul for service discovery/service mesh and Vault for secret management.</span><br><span class="line"></span><br><span class="line">The following characteristics generally differentiate Nomad from Kubernetes:</span><br></pre></td></tr></table></figure>
+
+<h2 id="Simplicity"><a href="#Simplicity" class="headerlink" title="Simplicity"></a>Simplicity</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Kubernetes is designed as a collection of more than a half-dozen interoperating services which together provide the full functionality. Coordination and storage is provided by etcd at the core. The state is wrapped by API controllers which are consumed by other services that provide higher level APIs for features like scheduling. Kubernetes supports running in a highly available configuration but is operationally complex to setup.</span><br><span class="line"></span><br><span class="line">Nomad is architecturally much simpler. Nomad is a single binary, both for clients and servers, and requires no external services for coordination or storage. Nomad combines a lightweight resource manager and a sophisticated scheduler into a single system. By default, Nomad is distributed, highly available, and operationally simple.</span><br></pre></td></tr></table></figure>
+
+<h2 id="Flexible-Workload-Support"><a href="#Flexible-Workload-Support" class="headerlink" title="Flexible Workload Support"></a>Flexible Workload Support</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">While Kubernetes is specifically focused on Linux containers, Nomad is more general purpose. Nomad supports virtualized, containerized and standalone applications, including Docker, Java, IIS on Windows, Qemu, etc. Nomad is designed with extensible drivers and support will be extended to all common drivers.</span><br></pre></td></tr></table></figure>
+
+<h2 id="Consistent-Deployment"><a href="#Consistent-Deployment" class="headerlink" title="Consistent Deployment"></a>Consistent Deployment</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A full Kubernetes installation for a production environment is time consuming, operationally complex, and resource intensive. An increasing number of implementations are created by the Kubernetes community to mitigate these challenges, such as minikube, kubeadm, k3s, and more. These trimmed versions of Kubernetes offer easier adoption for development and testing, but lead to inconsistency in capabilities, configuration, and management when moving into production.</span><br><span class="line"></span><br><span class="line">In contrast to Kubernetes&#x27; fragmented distributions, Nomad as a single lightweight binary can be deployed in local dev, production, on-prem, at the edge, and in the cloud in a consistent manner, and provides the same operational ease-of-use across all environments.</span><br></pre></td></tr></table></figure>
+
+<h2 id="Scalability"><a href="#Scalability" class="headerlink" title="Scalability"></a>Scalability</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Kubernetes documentation states that they support clusters up to 5,000 nodes and 300,000 total containers. As the environment grows, the interoperating components with different constraints compound the operational complexity. Even operators at Google revealed the significant challenges of managing the system at scale. The lack of maturity in the Federation project and the additional overhead of managing a centralized management plane also make it a hard experience to deploy a distributed system that spans multiple clusters.</span><br><span class="line"></span><br><span class="line">Nomad has been proven to scale to cluster sizes that exceed 10,000 nodes in real-world production environments. It can be deployed across multiple availability zones, regions, and data centers with a single cluster or multiple clusters. Nomad is designed to natively handle multi-cluster deployments without the overhead of running clusters on clusters. This makes it easier to scale the application deployment across multiple datacenters, regions, and clouds with no additional complexity.</span><br><span class="line"></span><br><span class="line">Nomad has performed strenuous benchmark on scalability with 1 million container challenge in 2016 and 2 million container challenge in 2020. These tests are aimed to validate Nomad&#x27;s architectural design and ensure that Nomad performs under the most extreme requirements.</span><br></pre></td></tr></table></figure>
+
+<h2 id="Nomad-command-examples"><a href="#Nomad-command-examples" class="headerlink" title="Nomad command examples"></a>Nomad command examples</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nomad node status</span><br><span class="line"></span><br><span class="line">nomad job run pytechco-redis.nomad.hcl</span><br><span class="line"></span><br><span class="line">nomad job stop -purge pytechco-employee</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>tech</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>devops</tag>
         <tag>Tech</tag>
       </tags>
   </entry>
@@ -831,6 +872,86 @@
       </tags>
   </entry>
   <entry>
+    <title>Docker useful commands</title>
+    <url>/2022/09/21/docker_useful_commands/</url>
+    <content><![CDATA[<h2 id="docker-commands"><a href="#docker-commands" class="headerlink" title="docker commands"></a>docker commands</h2><hr>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker cp </span><br><span class="line">docker stop redis</span><br><span class="line">docker kill redis</span><br><span class="line">docker rm -l db #移除网络连接</span><br><span class="line">docker rm -v redis #删除容器挂载的磁盘</span><br><span class="line">docker logs redis #查看日志</span><br><span class="line">docker logs -f -t --tail=20 redis #查看容器日历最近20条</span><br><span class="line">docker top redis #查看容器进程</span><br><span class="line">docker images #查看本地镜像</span><br><span class="line">docker search mysql #查看mysql的镜像</span><br></pre></td></tr></table></figure>
+<h2 id="clean-docker-cache"><a href="#clean-docker-cache" class="headerlink" title="clean docker cache"></a>clean docker cache</h2><p><code>docker system prune</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker system prune后可以加额外的参数，如：</span><br><span class="line">docker system prune -a ： 一并清除所有未被使用的镜像和没有tag镜像。</span><br><span class="line">docker system prune -f ： 用以强制删除，不提示信息。</span><br></pre></td></tr></table></figure>
+
+<p><code>docker container prune</code></p>
+<p><code>docker network prun</code></p>
+<p><code>docker volume prune</code></p>
+<p><code>docker image prune --force --all</code></p>
+<h2 id="push-image-to-remote-server"><a href="#push-image-to-remote-server" class="headerlink" title="push image to remote server"></a>push image to remote server</h2><p><code>docker push  remote_server:5000/python-chromedriver:3.6</code></p>
+<h2 id="download-from-remote-server"><a href="#download-from-remote-server" class="headerlink" title="download from remote server"></a>download from remote server</h2><p><code>docker run labs-admin-lv-101.labs.marinsw.net:5000/ci-centos6-base date</code> </p>
+<h2 id="log-into-container"><a href="#log-into-container" class="headerlink" title="log into container"></a>log into container</h2><p><code>docker exec -it containerID /bin/bash</code></p>
+<h2 id="run-comtainer-from-remote-docker-registry-and-login"><a href="#run-comtainer-from-remote-docker-registry-and-login" class="headerlink" title="run comtainer from remote docker registry  and login"></a>run comtainer from remote docker registry  and login</h2><p><code>docker run -it remote_server:5000/ci-ubuntu- /bin/bash</code></p>
+<h2 id="rename-docker-image"><a href="#rename-docker-image" class="headerlink" title="rename docker image"></a>rename docker image</h2><p><code>docker image tag 7cebbf38959b  ci-ubuntu:latest</code></p>
+<h2 id="build-image-without-cache"><a href="#build-image-without-cache" class="headerlink" title="build image without cache"></a>build image without cache</h2><p><code>docker build --no-cache -f Dockerfile -t ci-base .</code></p>
+<h2 id="Build-docker-with-docker-file"><a href="#Build-docker-with-docker-file" class="headerlink" title="Build docker with docker file"></a>Build docker with docker file</h2><p><code>docker build -f Dockerfile -t image-name .</code></p>
+<h2 id="Log-into-images"><a href="#Log-into-images" class="headerlink" title="Log into images"></a>Log into images</h2><p><code>docker run -i -t image-name /bin/bash</code></p>
+<h2 id="list-images"><a href="#list-images" class="headerlink" title="list images"></a>list images</h2><p><code>docker images</code></p>
+<h2 id="rm-images"><a href="#rm-images" class="headerlink" title="rm images"></a>rm images</h2><p><code>docker image rm -f imagename</code></p>
+<h2 id="locally-docker-tag-local-image"><a href="#locally-docker-tag-local-image" class="headerlink" title="locally docker tag local image"></a>locally docker tag local image</h2><p><code>docker tag 98d6830c1011 remote_server:5000/python-chromedriver:3.6</code></p>
+<h2 id="save-image-to-file-and-load-locally"><a href="#save-image-to-file-and-load-locally" class="headerlink" title="save image to file and load locally"></a>save image to file and load locally</h2><ul>
+<li><p>docker save labs-admin-lv-101.labs.marinsw.net:5000/ci-ubuntu-mysqldb-mvn354 | gzip  &gt; docker_image_ci-ubuntu-mysqldb-mvn354.tar.gz</p>
+</li>
+<li><p>docker save calc &gt; calc.tar</p>
+</li>
+<li><p>docker load &lt; docker_image_ci-ubuntu-mysqldb-mvn354.tar.gz</p>
+</li>
+</ul>
+<h2 id="建立本地docker-registry"><a href="#建立本地docker-registry" class="headerlink" title="建立本地docker registry"></a>建立本地docker registry</h2><hr>
+<ul>
+<li>docker pull registry:2.6.2 #下载registry</li>
+<li>docker run –name registry -p 5000:5000 -v /data/registry:/var/lib/registry -d registry:2.6.2 #启动registry服务</li>
+<li>docker port registry #查看端口</li>
+<li>docker tag busybox:latest 192.168.10.102:5000/busybox:v0.1 #tag镜像</li>
+<li>docker push 192.168.10.102:5000/busybox:v0.1 #推送镜像</li>
+</ul>
+]]></content>
+      <categories>
+        <category>tech</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>k8s</tag>
+        <tag>container</tag>
+        <tag>python</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo_blog_setup</title>
+    <url>/2022/07/04/hexo-blog-setup/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>每次换电脑，或者在其他电脑上工作后发现无法更新这个Blog，需要记录下如何当初一步一步设置这个blog，以方便迁移，重新搭建</p>
+<h1 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h1><ul>
+<li>hexo </li>
+<li>hexo theme</li>
+<li>github</li>
+<li></li>
+</ul>
+<h2 id="Install-Steps"><a href="#Install-Steps" class="headerlink" title="Install Steps"></a>Install Steps</h2><h3 id="Install-hexo"><a href="#Install-hexo" class="headerlink" title="Install hexo"></a>Install hexo</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew install npm</span><br><span class="line"></span><br><span class="line">brew install hexo </span><br><span class="line"></span><br><span class="line">~ ❯ hexo -v                                                                              08:45:30</span><br><span class="line">hexo-cli: 4.3.0</span><br><span class="line">os: darwin 21.5.0 12.4</span><br><span class="line"></span><br><span class="line">node: 14.17.5</span><br><span class="line">v8: 8.4.371.23-node.76</span><br><span class="line">uv: 1.41.0</span><br><span class="line">zlib: 1.2.11</span><br><span class="line">brotli: 1.0.9</span><br><span class="line">ares: 1.17.2</span><br><span class="line">modules: 83</span><br><span class="line">nghttp2: 1.42.0</span><br><span class="line">napi: 8</span><br><span class="line">llhttp: 2.1.3</span><br><span class="line">openssl: 1.1.1k</span><br><span class="line">cldr: 39.0</span><br><span class="line">icu: 69.1</span><br><span class="line">tz: 2021a</span><br><span class="line">unicode: 13.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="Create-project"><a href="#Create-project" class="headerlink" title="Create project"></a>Create project</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">cd [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<h3 id="Set-blog-information"><a href="#Set-blog-information" class="headerlink" title="Set blog information"></a>Set blog information</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim _config.yml</span><br><span class="line"></span><br><span class="line">~~~~~~~~~~~~~~~~~~ _config.yml ~~~~~~~~~~~~~~~~~~</span><br><span class="line"># Site</span><br><span class="line">title: [githubaccount]&#x27;s note</span><br><span class="line">subtitle:</span><br><span class="line">description: [githubaccount]&#x27;s personal blog</span><br><span class="line">author: [githubaccount]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:[githubaccount]/[githubaccount].github.io.git</span><br><span class="line">  branch: master</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><h3 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next themes/next</span><br><span class="line"></span><br><span class="line">vi _config.yml</span><br><span class="line"></span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line">theme: next</span><br><span class="line"># https://github.com/theme-next/hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line">npm install hexo-enhancer --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install --save hexo-submit-urls-to-search-engine</span><br><span class="line">npm install hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Useful-hexo-commands"><a href="#Useful-hexo-commands" class="headerlink" title="Useful hexo commands"></a>Useful hexo commands</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo --config _config.yml</span><br><span class="line">hexo generate --watch</span><br><span class="line"></span><br><span class="line">hexo server</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>personal</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo Next(v8.7.0)如何边栏添加最近更新文章</title>
     <url>/2021/08/20/hexo-sidebar/</url>
     <content><![CDATA[<h2 id="创建自定义文件"><a href="#创建自定义文件" class="headerlink" title="创建自定义文件"></a>创建自定义文件</h2><p>在新建文件yoursite/source/_data/sidebar.njk,添加以下内容</p>
@@ -934,35 +1055,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo_blog_setup</title>
-    <url>/2022/07/04/hexo-blog-setup/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>每次换电脑，或者在其他电脑上工作后发现无法更新这个Blog，需要记录下如何当初一步一步设置这个blog，以方便迁移，重新搭建</p>
-<h1 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h1><ul>
-<li>hexo </li>
-<li>hexo theme</li>
-<li>github</li>
-<li></li>
-</ul>
-<h2 id="Install-Steps"><a href="#Install-Steps" class="headerlink" title="Install Steps"></a>Install Steps</h2><h3 id="Install-hexo"><a href="#Install-hexo" class="headerlink" title="Install hexo"></a>Install hexo</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew install npm</span><br><span class="line"></span><br><span class="line">brew install hexo </span><br><span class="line"></span><br><span class="line">~ ❯ hexo -v                                                                              08:45:30</span><br><span class="line">hexo-cli: 4.3.0</span><br><span class="line">os: darwin 21.5.0 12.4</span><br><span class="line"></span><br><span class="line">node: 14.17.5</span><br><span class="line">v8: 8.4.371.23-node.76</span><br><span class="line">uv: 1.41.0</span><br><span class="line">zlib: 1.2.11</span><br><span class="line">brotli: 1.0.9</span><br><span class="line">ares: 1.17.2</span><br><span class="line">modules: 83</span><br><span class="line">nghttp2: 1.42.0</span><br><span class="line">napi: 8</span><br><span class="line">llhttp: 2.1.3</span><br><span class="line">openssl: 1.1.1k</span><br><span class="line">cldr: 39.0</span><br><span class="line">icu: 69.1</span><br><span class="line">tz: 2021a</span><br><span class="line">unicode: 13.0</span><br></pre></td></tr></table></figure>
-
-<h3 id="Create-project"><a href="#Create-project" class="headerlink" title="Create project"></a>Create project</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">cd [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
-
-<h3 id="Set-blog-information"><a href="#Set-blog-information" class="headerlink" title="Set blog information"></a>Set blog information</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim _config.yml</span><br><span class="line"></span><br><span class="line">~~~~~~~~~~~~~~~~~~ _config.yml ~~~~~~~~~~~~~~~~~~</span><br><span class="line"># Site</span><br><span class="line">title: [githubaccount]&#x27;s note</span><br><span class="line">subtitle:</span><br><span class="line">description: [githubaccount]&#x27;s personal blog</span><br><span class="line">author: [githubaccount]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:[githubaccount]/[githubaccount].github.io.git</span><br><span class="line">  branch: master</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><h3 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next themes/next</span><br><span class="line"></span><br><span class="line">vi _config.yml</span><br><span class="line"></span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line">theme: next</span><br><span class="line"># https://github.com/theme-next/hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line">npm install hexo-enhancer --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install --save hexo-submit-urls-to-search-engine</span><br><span class="line">npm install hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="Useful-hexo-commands"><a href="#Useful-hexo-commands" class="headerlink" title="Useful hexo commands"></a>Useful hexo commands</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo --config _config.yml</span><br><span class="line">hexo generate --watch</span><br><span class="line"></span><br><span class="line">hexo server</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>personal</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux下regex匹配高级用法</title>
     <url>/2021/10/16/linux-regex-advance/</url>
     <content><![CDATA[<ul>
@@ -1058,49 +1150,6 @@
         <tag>regex</tag>
         <tag>python</tag>
         <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>个人职业生涯短记 personal career path</title>
-    <url>/2023/05/15/career_path/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><blockquote>
-<p>写在技术大牛陈皓离世之际，惊闻噩耗年仅47岁大牛陈皓离我们而去，死于心梗。<br>人的一生总有终点，我们能做的就是不断的总结自己的经验，提高自己，分享自己的知识和观点</p>
-</blockquote>
-<h1 id="13年IT职业生涯概览"><a href="#13年IT职业生涯概览" class="headerlink" title="13年IT职业生涯概览"></a>13年IT职业生涯概览</h1><ul>
-<li>第一份工作 IBM-UOB 上海数据中心项目<br>学习了解到一个数据中心从无到有的过程，各个供应商的协作，线路设备的上架，24*7运维环境的要求及监控</li>
-</ul>
-<hr>
-<ul>
-<li>CSM customer support 项目<br>真正从一个入门的IT engineer到独自负责一个客户现场，从helpdesk基础的工作到服务器和网络运维，从一个内向不会沟通的小伙到如何管理客户的需求和期望值</li>
-</ul>
-<hr>
-<ul>
-<li>ASOS customer 项目<br>这是一个真正系统学习到了一个项目交付运维流程，基于前人研究出的理论基础，利用ITIL知识体系来管理项目</li>
-</ul>
-<hr>
-<ul>
-<li>Marin IT<br>这个第一个开拓眼界的职位，在这个硅谷互联网公司接触到了各类技术大牛，技术上接触到Meraki基于云平台管理的网络厂商，给自己后来的技术转型带来决心</li>
-</ul>
-<hr>
-<ul>
-<li>SRE/DEVOPS<ul>
-<li>这个是一个实现起初梦想的职位，一个人管理上千台服务器，维护整个产品平台，如何实现高度自动化，让机器代替人工。</li>
-<li>各类运维自动化工具，各类监控工具</li>
-<li>云平台，容器化技术，更高效的使用物理资源</li>
-<li>根据产品需求开发高度持续集成持续交付工具</li>
-<li>一个高效的团队如何运转，不同团队之间如何协作</li>
-</ul>
-</li>
-</ul>
-<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p><strong>技术之路永无止境</strong></p>
-<p><code>Never stop learning</code> - From Yushin!</p>
-]]></content>
-      <categories>
-        <category>engineering</category>
-      </categories>
-      <tags>
-        <tag>developer</tag>
-        <tag>IT</tag>
       </tags>
   </entry>
   <entry>
@@ -1380,42 +1429,23 @@
       </tags>
   </entry>
   <entry>
-    <title>国民对于疫情后经济复苏信心的丢失，路在何方</title>
-    <url>/2023/05/17/memo_2023may/</url>
-    <content><![CDATA[<h2 id="新闻要点"><a href="#新闻要点" class="headerlink" title="新闻要点"></a>新闻要点</h2><ul>
-<li>国内各种经济数据下滑，楼市价格加速下跌</li>
-<li>年轻人失业率创新高<br><img src="/memo_2023may/china_data_may.png" alt="image"><br>国内一季度各类数据如期下滑，尽管官方给出各种掩饰也无法抹去其背后真正原因国民对于经济复苏的信心的丢失<br>楼市房价的加速下跌，包括一二线城市，提前还贷，银行贷款放不出去，央行继续印钞，承接的还是国企各类城投，资金无法流向市场<blockquote>
-<p>北京方面，北京4月份二手房网签13928套，环比下降了40.5%。上海二手房成交量4月份不到1.8万套，相比于3月份的2.4万套环比下降了26%，比2月份的1.9万套还要低。</p>
-</blockquote>
-</li>
-</ul>
-<blockquote>
-<p>4月份，城镇失业数据达到了年度最低的5.2，并且已经接近了疫前数据。但是与此同时，16-24岁青年失业率首次突破20%。</p>
-</blockquote>
-<h2 id="究其背后原因"><a href="#究其背后原因" class="headerlink" title="究其背后原因"></a>究其背后原因</h2><ul>
-<li><p>国内风气的歪曲，都想赚快钱，无人愿意去干实业支撑国家运转，踏踏实实的工作，谁都想撞到风口捞一把，管理机构不对于风气的正确引导，恐怕难以改变现状，案例：</p>
-<ul>
-<li>挖呀挖呀黄老师突然网红，一周收入百万十年收入，辞职下海。</li>
-<li>格力董密孟羽童，一个自以为格力内定接班人被开除，吐槽董秘都是干的杂活，兴趣在直播。</li>
-</ul>
-</li>
-<li><p>环境太优渥，年轻人自命不凡，没有经历过社会的洗礼，“00后整顿职场”的新闻经常看到，任性离职，受不得气</p>
-<ul>
-<li>孟羽童案例<ul>
-<li>从她个人简历来看家庭优渥，从小在国际学校读书一路保守，没有经历过国内高考的洗礼，不知道何为现实</li>
-<li>吐槽格力董秘就是一个打杂的活，当年同龄的女霸总们在干什么？董明珠离开单亲的孩子，寸步不离跟着经销商催账；张兰跑去国外打黑工，跟男人一起抗海鲜。<br><img src="/memo_2023may/mengyutong.png" alt="image"></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+    <title>Linux system admin notes</title>
+    <url>/2022/04/04/linux_systemadmin/</url>
+    <content><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="linunx-环境变量"><a href="#linunx-环境变量" class="headerlink" title="linunx 环境变量"></a>linunx 环境变量</h2><h2 id="linunx-文件权限"><a href="#linunx-文件权限" class="headerlink" title="linunx 文件权限"></a>linunx 文件权限</h2><p><code>umask</code>  default 022</p>
+<h3 id="shell-基础"><a href="#shell-基础" class="headerlink" title="shell 基础"></a>shell 基础</h3><h4 id="结构化命令"><a href="#结构化命令" class="headerlink" title="结构化命令"></a>结构化命令</h4><p>if</p>
+<p>for<br>while<br>until<br>break<br>continue</p>
+<h4 id="shell用户输入"><a href="#shell用户输入" class="headerlink" title="shell用户输入"></a>shell用户输入</h4><h3 id="控制shell脚本"><a href="#控制shell脚本" class="headerlink" title="控制shell脚本"></a>控制shell脚本</h3><h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function name &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">name () &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="退出状态"><a href="#退出状态" class="headerlink" title="退出状态"></a>退出状态</h4><p><code>$?</code></p>
 ]]></content>
       <categories>
-        <category>memo</category>
+        <category>shell,linux</category>
       </categories>
       <tags>
-        <tag>memo</tag>
-        <tag>感想</tag>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>linux</tag>
+        <tag>Tech</tag>
       </tags>
   </entry>
   <entry>
@@ -1600,6 +1630,45 @@
       </tags>
   </entry>
   <entry>
+    <title>国民对于疫情后经济复苏信心的丢失，路在何方</title>
+    <url>/2023/05/17/memo_2023may/</url>
+    <content><![CDATA[<h2 id="新闻要点"><a href="#新闻要点" class="headerlink" title="新闻要点"></a>新闻要点</h2><ul>
+<li>国内各种经济数据下滑，楼市价格加速下跌</li>
+<li>年轻人失业率创新高<br><img src="/memo_2023may/china_data_may.png" alt="image"><br>国内一季度各类数据如期下滑，尽管官方给出各种掩饰也无法抹去其背后真正原因国民对于经济复苏的信心的丢失<br>楼市房价的加速下跌，包括一二线城市，提前还贷，银行贷款放不出去，央行继续印钞，承接的还是国企各类城投，资金无法流向市场<blockquote>
+<p>北京方面，北京4月份二手房网签13928套，环比下降了40.5%。上海二手房成交量4月份不到1.8万套，相比于3月份的2.4万套环比下降了26%，比2月份的1.9万套还要低。</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>4月份，城镇失业数据达到了年度最低的5.2，并且已经接近了疫前数据。但是与此同时，16-24岁青年失业率首次突破20%。</p>
+</blockquote>
+<h2 id="究其背后原因"><a href="#究其背后原因" class="headerlink" title="究其背后原因"></a>究其背后原因</h2><ul>
+<li><p>国内风气的歪曲，都想赚快钱，无人愿意去干实业支撑国家运转，踏踏实实的工作，谁都想撞到风口捞一把，管理机构不对于风气的正确引导，恐怕难以改变现状，案例：</p>
+<ul>
+<li>挖呀挖呀黄老师突然网红，一周收入百万十年收入，辞职下海。</li>
+<li>格力董密孟羽童，一个自以为格力内定接班人被开除，吐槽董秘都是干的杂活，兴趣在直播。</li>
+</ul>
+</li>
+<li><p>环境太优渥，年轻人自命不凡，没有经历过社会的洗礼，“00后整顿职场”的新闻经常看到，任性离职，受不得气</p>
+<ul>
+<li>孟羽童案例<ul>
+<li>从她个人简历来看家庭优渥，从小在国际学校读书一路保守，没有经历过国内高考的洗礼，不知道何为现实</li>
+<li>吐槽格力董秘就是一个打杂的活，当年同龄的女霸总们在干什么？董明珠离开单亲的孩子，寸步不离跟着经销商催账；张兰跑去国外打黑工，跟男人一起抗海鲜。<br><img src="/memo_2023may/mengyutong.png" alt="image"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>memo</category>
+      </categories>
+      <tags>
+        <tag>memo</tag>
+        <tag>感想</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一文了解正则表达式</title>
     <url>/2022/05/10/regexr/</url>
     <content><![CDATA[<h1 id="一-正则表达式简介"><a href="#一-正则表达式简介" class="headerlink" title="一.正则表达式简介"></a>一.正则表达式简介</h1><ol>
@@ -1730,342 +1799,6 @@
       </categories>
       <tags>
         <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>shell变量高级篇</title>
-    <url>/2021/08/24/shell-variable-advance/</url>
-    <content><![CDATA[<p> <a href="#shell%E5%8F%98%E9%87%8F%E7%9A%84%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8">shell变量的高级应用</a></p>
-<ul>
-<li><a href="#%E5%8F%98%E9%87%8F%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2%E5%92%8C%E5%88%A0%E9%99%A4">变量内容替换和删除</a></li>
-<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86">字符串处理</a><ul>
-<li><a href="#%E8%AE%A1%E7%AE%97%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6">计算字符串长度</a></li>
-<li><a href="#%E8%8E%B7%E5%8F%96%E5%AD%90%E4%B8%B2%E5%9C%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BD%8D%E7%BD%AE">获取子串在字符串中索引的位置</a></li>
-<li><a href="#%E6%8F%90%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2">提取字符串</a></li>
-</ul>
-</li>
-<li><a href="#%E6%95%B0%E7%BB%84%E7%9A%84%E6%93%8D%E4%BD%9C">数组的操作</a><ul>
-<li><a href="#%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0">删除元素</a></li>
-<li><a href="#%E5%88%86%E7%89%87%E8%AE%BF%E9%97%AE">分片访问</a></li>
-<li><a href="#%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2">内容替换</a></li>
-</ul>
-</li>
-<li><a href="#%E6%95%B0%E7%BB%84%E9%81%8D%E5%8E%86">数组遍历</a><ul>
-<li><a href="#ps">PS</a></li>
-</ul>
-</li>
-</ul>
-<h1 id="shell变量的高级应用"><a href="#shell变量的高级应用" class="headerlink" title="shell变量的高级应用"></a>shell变量的高级应用</h1><h2 id="变量内容替换和删除"><a href="#变量内容替换和删除" class="headerlink" title="变量内容替换和删除"></a>变量内容替换和删除</h2><table>
-<thead>
-<tr>
-<th align="center">语法</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">${变量名#匹配规则}}</td>
-<td align="left">从变量开头进行规则匹配，将符合最短的数据删除</td>
-</tr>
-<tr>
-<td align="center">${变量名##匹配规则}}</td>
-<td align="left">从变量开头进行规则匹配，将符合最长的数据删除</td>
-</tr>
-<tr>
-<td align="center">${变量名%匹配规则}}</td>
-<td align="left">从变量尾部进行规则匹配，将符合最短的数据删除</td>
-</tr>
-<tr>
-<td align="center">${变量名%%匹配规则}}</td>
-<td align="left">从变量尾部进行规则匹配，将符合最长的数据删除</td>
-</tr>
-<tr>
-<td align="center">${变量名/旧字符串/新字符串}}</td>
-<td align="left">变量内容符合旧字符串，则第一个旧字符串会被新字符串取代</td>
-</tr>
-<tr>
-<td align="center">${变量名//旧字符串/新字符串}}</td>
-<td align="left">变量内容符合旧字符串，则全部的旧字符串会被新字符串取代</td>
-</tr>
-</tbody></table>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$variable_1</span></span><br><span class="line">I love you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1#*ov&#125;</span> //从头开始将最短数据删除</span><br><span class="line">e you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1##*ov&#125;</span> //从头开始将最长数据删除</span><br><span class="line">e me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%ov*&#125;</span> //从尾开始将最短数据删除</span><br><span class="line">I love you,<span class="keyword">do</span> you l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%%ov&#125;</span> //从尾开始将最长数据删除</span><br><span class="line">I l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line">/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH/bin/BIN&#125;</span> //替换一个</span><br><span class="line">/sBIN:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH//bin/BIN&#125;</span> //替换所有</span><br><span class="line">/sBIN:/BIN:/usr/sBIN:/usr/BIN</span><br></pre></td></tr></table></figure>
-
-<h2 id="字符串处理"><a href="#字符串处理" class="headerlink" title="字符串处理"></a>字符串处理</h2><h3 id="计算字符串长度"><a href="#计算字符串长度" class="headerlink" title="计算字符串长度"></a>计算字符串长度</h3><table>
-<thead>
-<tr>
-<th align="left"></th>
-<th align="left">语法</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">方法一</td>
-<td align="left"><code>$&#123;#string&#125;</code></td>
-<td align="left">NA</td>
-</tr>
-<tr>
-<td align="left">方法二</td>
-<td align="left"><code>expr length &quot;$string&quot;</code></td>
-<td align="left">string如有空格，必须加双引号</td>
-</tr>
-</tbody></table>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;#var1&#125;</span></span><br><span class="line">21</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr length <span class="string">&quot;<span class="variable">$var1</span>&quot;</span>`</span><br><span class="line">21</span><br></pre></td></tr></table></figure>
-
-<h3 id="获取子串在字符串中索引的位置"><a href="#获取子串在字符串中索引的位置" class="headerlink" title="获取子串在字符串中索引的位置"></a>获取子串在字符串中索引的位置</h3><table>
-<thead>
-<tr>
-<th align="left">语法</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>expr index $string $substring</code></td>
-<td align="left">查找子串中任一出现的字符，找到第一个出现字符的位置就返回</td>
-</tr>
-</tbody></table>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr index <span class="string">&quot;<span class="variable">$variable_1</span>&quot;</span> oe`</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
-<h3 id="提取字符串"><a href="#提取字符串" class="headerlink" title="提取字符串"></a>提取字符串</h3><table>
-<thead>
-<tr>
-<th align="left"></th>
-<th align="left">语法</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">方法一</td>
-<td align="left"><code>$&#123;string:position&#125;</code></td>
-<td align="left">从 string 中的 position 位置开始，索引下标从 0 开始</td>
-</tr>
-<tr>
-<td align="left">方法二</td>
-<td align="left"><code>$&#123;string:position:length&#125;</code></td>
-<td align="left">从 position 开始，匹配长度为 length</td>
-</tr>
-<tr>
-<td align="left">方法三</td>
-<td align="left"><code>$&#123;string: -position&#125;</code></td>
-<td align="left">从右边开始匹配，注意冒号后面的空格</td>
-</tr>
-<tr>
-<td align="left">方法四</td>
-<td align="left"><code>$&#123;string:(position&#125;</code></td>
-<td align="left">从左边开始匹配</td>
-</tr>
-<tr>
-<td align="left">方法五</td>
-<td align="left"><code>expr substr $string $position $length</code></td>
-<td align="left">从 position 开始，匹配长度为 length，索引下标从 1 开始</td>
-</tr>
-</tbody></table>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ var_str=<span class="string">&quot;k8s docker cloud aws&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: 3&#125;</span> //方法一</span><br><span class="line">docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:3:5&#125;</span> //方法二</span><br><span class="line">dock</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5&#125;</span>  //方法三，注意有空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5:3&#125;</span> //方法三 ，带长度</span><br><span class="line">d a</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:-5&#125;</span> //方法三，没有空格无效</span><br><span class="line">k8s docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:(-5)&#125;</span> //方法三，可以用括号代替空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr substr <span class="string">&quot;<span class="variable">$var_str</span>&quot;</span> 1 5` //方法五，从索引1开始计数</span><br><span class="line">k8s d</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="数组的操作"><a href="#数组的操作" class="headerlink" title="数组的操作"></a>数组的操作</h2><blockquote>
-<p>我们知道在强类型语言中定义变量的时候必须为这个变量定义类型，比如定义整形可以定义为 int 型，字符串 string 类型，日期类型 Date 等等，在使用之前必须定义类型，这是强类型编程语言的风格。Shell 编程中，由于 Shell 是弱类型语言，在使用变量前不需要为变量声明类型， 但其实 Shell 本身也是支持提前声明有类型变量的，只是说使用方式和一般的强类型编程语言有些不同， 使用 declare 和 typeset 命令来进行声明。</p>
-<ul>
-<li>declare 命令和 typeset 命令两者等价</li>
-<li>declare、typeset 命令都是用来定义变量类型的</li>
-</ul>
-<p>既然它们是等价的 那我们用 declare 进行演示</p>
-</blockquote>
-<p>declare 常用命令参数表</p>
-<table>
-<thead>
-<tr>
-<th align="center">参数</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">-i</td>
-<td align="left">将变量设为整数</td>
-</tr>
-<tr>
-<td align="center">-a</td>
-<td align="left">将变量定义为数组</td>
-</tr>
-<tr>
-<td align="center">-f</td>
-<td align="left">显示此脚本定义过的所有函数及内容</td>
-</tr>
-<tr>
-<td align="center">-F</td>
-<td align="left">仅显示此脚本定义过的函数名</td>
-</tr>
-<tr>
-<td align="center">-x</td>
-<td align="left">将变量声明为环境变量</td>
-</tr>
-</tbody></table>
-<p><code>declare -a array_name</code> 声明数组， 然后 <code>array_name=(value1 ... valuen)</code>， 这里不声明也可以</p>
-<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><ul>
-<li><code>unset my_arr[2]</code> 清楚元素 <code>unset my_arr</code> 清空整个数组</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$</span><br><span class="line">[shdevops@localhost ~]$ my_arr=(1 <span class="string">&quot;abc&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1 abc</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr[1]</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="分片访问"><a href="#分片访问" class="headerlink" title="分片访问"></a>分片访问</h3><ul>
-<li> ${array[@]:1:3} 数组下标从 1 到 3 的三个元素</li>
-<li><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;apple&quot;</span> <span class="string">&quot;juice&quot;</span> <span class="string">&quot;cat&quot;</span> <span class="string">&quot;dog&quot;</span> <span class="string">&quot;ox&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]:1:3&#125;</span></span><br><span class="line">juice cat dog</span><br></pre></td></tr></table></figure>
-<h3 id="内容替换"><a href="#内容替换" class="headerlink" title="内容替换"></a>内容替换</h3></li>
-<li> <code>$&#123;my_array[@]/an/AN&#125;</code> 将数组中所有元素内包含 an 的子串替换为 AN<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;an1&quot;</span> <span class="string">&quot;an2&quot;</span> <span class="string">&quot;an3&quot;</span> <span class="string">&quot;an4&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]/an/AN&#125;</span></span><br><span class="line">AN1 AN2 AN3 AN4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
-<h2 id="数组遍历"><a href="#数组遍历" class="headerlink" title="数组遍历"></a>数组遍历</h2></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">my_arr=(an1 an2 an3 an4)</span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$v</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span>;<span class="keyword">do</span> <span class="built_in">echo</span> <span class="variable">$v</span>;<span class="keyword">done</span></span><br><span class="line">an1</span><br><span class="line">an2</span><br><span class="line">an3</span><br><span class="line">an4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
-<h3 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">取消声明的变量：</span><br><span class="line"></span><br><span class="line">declare +r</span><br><span class="line">declare +i</span><br><span class="line">declare +a</span><br><span class="line">declare +x</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>shell</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>shell</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Docker useful commands</title>
-    <url>/2022/09/21/docker_useful_commands/</url>
-    <content><![CDATA[<h2 id="docker-commands"><a href="#docker-commands" class="headerlink" title="docker commands"></a>docker commands</h2><hr>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker cp </span><br><span class="line">docker stop redis</span><br><span class="line">docker kill redis</span><br><span class="line">docker rm -l db #移除网络连接</span><br><span class="line">docker rm -v redis #删除容器挂载的磁盘</span><br><span class="line">docker logs redis #查看日志</span><br><span class="line">docker logs -f -t --tail=20 redis #查看容器日历最近20条</span><br><span class="line">docker top redis #查看容器进程</span><br><span class="line">docker images #查看本地镜像</span><br><span class="line">docker search mysql #查看mysql的镜像</span><br></pre></td></tr></table></figure>
-<h2 id="clean-docker-cache"><a href="#clean-docker-cache" class="headerlink" title="clean docker cache"></a>clean docker cache</h2><p><code>docker system prune</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker system prune后可以加额外的参数，如：</span><br><span class="line">docker system prune -a ： 一并清除所有未被使用的镜像和没有tag镜像。</span><br><span class="line">docker system prune -f ： 用以强制删除，不提示信息。</span><br></pre></td></tr></table></figure>
-
-<p><code>docker container prune</code></p>
-<p><code>docker network prun</code></p>
-<p><code>docker volume prune</code></p>
-<p><code>docker image prune --force --all</code></p>
-<h2 id="push-image-to-remote-server"><a href="#push-image-to-remote-server" class="headerlink" title="push image to remote server"></a>push image to remote server</h2><p><code>docker push  remote_server:5000/python-chromedriver:3.6</code></p>
-<h2 id="download-from-remote-server"><a href="#download-from-remote-server" class="headerlink" title="download from remote server"></a>download from remote server</h2><p><code>docker run labs-admin-lv-101.labs.marinsw.net:5000/ci-centos6-base date</code> </p>
-<h2 id="log-into-container"><a href="#log-into-container" class="headerlink" title="log into container"></a>log into container</h2><p><code>docker exec -it containerID /bin/bash</code></p>
-<h2 id="run-comtainer-from-remote-docker-registry-and-login"><a href="#run-comtainer-from-remote-docker-registry-and-login" class="headerlink" title="run comtainer from remote docker registry  and login"></a>run comtainer from remote docker registry  and login</h2><p><code>docker run -it remote_server:5000/ci-ubuntu- /bin/bash</code></p>
-<h2 id="rename-docker-image"><a href="#rename-docker-image" class="headerlink" title="rename docker image"></a>rename docker image</h2><p><code>docker image tag 7cebbf38959b  ci-ubuntu:latest</code></p>
-<h2 id="build-image-without-cache"><a href="#build-image-without-cache" class="headerlink" title="build image without cache"></a>build image without cache</h2><p><code>docker build --no-cache -f Dockerfile -t ci-base .</code></p>
-<h2 id="Build-docker-with-docker-file"><a href="#Build-docker-with-docker-file" class="headerlink" title="Build docker with docker file"></a>Build docker with docker file</h2><p><code>docker build -f Dockerfile -t image-name .</code></p>
-<h2 id="Log-into-images"><a href="#Log-into-images" class="headerlink" title="Log into images"></a>Log into images</h2><p><code>docker run -i -t image-name /bin/bash</code></p>
-<h2 id="list-images"><a href="#list-images" class="headerlink" title="list images"></a>list images</h2><p><code>docker images</code></p>
-<h2 id="rm-images"><a href="#rm-images" class="headerlink" title="rm images"></a>rm images</h2><p><code>docker image rm -f imagename</code></p>
-<h2 id="locally-docker-tag-local-image"><a href="#locally-docker-tag-local-image" class="headerlink" title="locally docker tag local image"></a>locally docker tag local image</h2><p><code>docker tag 98d6830c1011 remote_server:5000/python-chromedriver:3.6</code></p>
-<h2 id="save-image-to-file-and-load-locally"><a href="#save-image-to-file-and-load-locally" class="headerlink" title="save image to file and load locally"></a>save image to file and load locally</h2><ul>
-<li><p>docker save labs-admin-lv-101.labs.marinsw.net:5000/ci-ubuntu-mysqldb-mvn354 | gzip  &gt; docker_image_ci-ubuntu-mysqldb-mvn354.tar.gz</p>
-</li>
-<li><p>docker save calc &gt; calc.tar</p>
-</li>
-<li><p>docker load &lt; docker_image_ci-ubuntu-mysqldb-mvn354.tar.gz</p>
-</li>
-</ul>
-<h2 id="建立本地docker-registry"><a href="#建立本地docker-registry" class="headerlink" title="建立本地docker registry"></a>建立本地docker registry</h2><hr>
-<ul>
-<li>docker pull registry:2.6.2 #下载registry</li>
-<li>docker run –name registry -p 5000:5000 -v /data/registry:/var/lib/registry -d registry:2.6.2 #启动registry服务</li>
-<li>docker port registry #查看端口</li>
-<li>docker tag busybox:latest 192.168.10.102:5000/busybox:v0.1 #tag镜像</li>
-<li>docker push 192.168.10.102:5000/busybox:v0.1 #推送镜像</li>
-</ul>
-]]></content>
-      <categories>
-        <category>tech</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>k8s</tag>
-        <tag>container</tag>
-        <tag>python</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一文让你shell从狗熊变英雄</title>
-    <url>/2023/08/13/shell_from_zero_to_hero./</url>
-    <content><![CDATA[<ul>
-<li><a href="#shell-from-zero-to-hero">Shell From Zero To Hero</a><ul>
-<li><a href="#simply-level-questions">Simply Level Questions</a><ul>
-<li><a href="#%E6%8F%8F%E8%BF%B0linux%E7%B3%BB%E7%BB%9F%E4%BB%8E%E5%BC%80%E6%9C%BA%E5%88%B0%E7%99%BB%E9%99%86%E7%95%8C%E9%9D%A2%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B">描述Linux系统从开机到登陆界面的启动过程</a></li>
-<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E8%BD%AF%E9%93%BE%E6%8E%A5%E5%92%8C%E7%A1%AC%E9%93%BE%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB">描述Linux下软链接和硬链接的区别</a></li>
-</ul>
-</li>
-<li><a href="#middle-level-questions">Middle Level Questions</a><ul>
-<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4%E7%9A%84%E5%8E%9F%E7%90%86">描述Linux下文件删除的原理</a></li>
-<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fgrep%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式grep高级参数的使用</a></li>
-<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fsed%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式sed高级参数的使用</a></li>
-<li><a href="#awk">AWK</a></li>
-</ul>
-</li>
-<li><a href="#hard-level-questions">Hard Level Questions</a></li>
-</ul>
-</li>
-</ul>
-<h1 id="Shell-From-Zero-To-Hero"><a href="#Shell-From-Zero-To-Hero" class="headerlink" title="Shell From Zero To Hero"></a>Shell From Zero To Hero</h1><h2 id="Simply-Level-Questions"><a href="#Simply-Level-Questions" class="headerlink" title="Simply Level Questions"></a>Simply Level Questions</h2><h3 id="描述Linux系统从开机到登陆界面的启动过程"><a href="#描述Linux系统从开机到登陆界面的启动过程" class="headerlink" title="描述Linux系统从开机到登陆界面的启动过程"></a>描述Linux系统从开机到登陆界面的启动过程</h3><ul>
-<li><p>开机BIOS自检，加载硬盘。</p>
-</li>
-<li><p>读取MBR,MBR引导。</p>
-</li>
-<li><p>grub引导菜单(Boot Loader)。</p>
-</li>
-<li><p>加载内核kernel。</p>
-</li>
-<li><p>启动init进程，依据inittab文件设定运行级别</p>
-</li>
-<li><p>init进程，执行rc.sysinit文件。</p>
-</li>
-<li><p>启动内核模块，执行不同级别的脚本程序。</p>
-</li>
-<li><p>执行/etc/rc.d/rc.local</p>
-</li>
-<li><p>启动mingetty，进入系统登陆界面。</p>
-</li>
-</ul>
-<h3 id="描述Linux下软链接和硬链接的区别"><a href="#描述Linux下软链接和硬链接的区别" class="headerlink" title="描述Linux下软链接和硬链接的区别"></a>描述Linux下软链接和硬链接的区别</h3><p>在Linux系统中，链接分为两种，一种是硬链接（Hard link），另一种称为符号链接或软链接（Symbolic Link）。</p>
-<ul>
-<li><p>默认不带参数的情况下，ln创建的是硬链接，带-s参数的ln命令创建的是软链接。</p>
-</li>
-<li><p>硬链接文件与源文件的inode节点号相同，而软链接文件的inode节点号，与源文件不同，</p>
-</li>
-<li><p>ln命令不能对目录创建硬链接，但可以创建软链接。对目录的软链接会经常使用到。</p>
-</li>
-<li><p>删除软链接文件，对源文件和硬链接文件无任何影响。</p>
-</li>
-<li><p>删除文件的硬链接文件，对源文件及软链接文件无任何影响。</p>
-</li>
-<li><p>删除链接文件的源文件，对硬链接文件无影响，会导致其软链接失效（红底白字闪烁状）。</p>
-</li>
-<li><p>同时删除源文件及其硬链接文件，整个文件才会被真正的删除。</p>
-</li>
-<li><p>很多硬件设备的快照功能，使用的就是类似硬链接的原理。</p>
-</li>
-<li><p>软链接可以跨文件系统，硬链接不可以跨文件系统。</p>
-</li>
-</ul>
-<h2 id="Middle-Level-Questions"><a href="#Middle-Level-Questions" class="headerlink" title="Middle Level Questions"></a>Middle Level Questions</h2><h3 id="描述Linux下文件删除的原理"><a href="#描述Linux下文件删除的原理" class="headerlink" title="描述Linux下文件删除的原理"></a>描述Linux下文件删除的原理</h3><p>Linux系统是通过link的数量来控制文件删除的，只有当一个文件不存在任何link的时候，这个文件才会被删除。一般来说每个文件两个link计数器来控制i_count和i_nlink。当一个文件被一个程序占用的时候i_count就加1。当文件的硬链接多一个的时候i_nlink也加1。删除一个文件，就是让这个文件，没有进程占用，同时i_link数量为0。</p>
-<h3 id="请简述基础正则表达式grep高级参数的使用"><a href="#请简述基础正则表达式grep高级参数的使用" class="headerlink" title="请简述基础正则表达式grep高级参数的使用"></a>请简述基础正则表达式grep高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">常用参数：</span><br><span class="line"></span><br><span class="line">-v排除匹配内容，</span><br><span class="line"></span><br><span class="line">-e支持扩展的正则表达式，</span><br><span class="line"></span><br><span class="line">-i忽略大小写，</span><br><span class="line"></span><br><span class="line">-o输出匹配的内容（只是一块，不是行），</span><br><span class="line"></span><br><span class="line">--color=auto 匹配内容显示颜色，</span><br><span class="line"></span><br><span class="line">-n 在行首显示行号。</span><br><span class="line"></span><br><span class="line">特殊字符注意事项：</span><br><span class="line"></span><br><span class="line">^(尖括号)word ：表示搜索以word开头的内容。</span><br><span class="line"></span><br><span class="line">word$ 表示搜索以word结尾的内容。</span><br><span class="line"></span><br><span class="line">^$    表示的是空行，不是空格。</span><br><span class="line"></span><br><span class="line">.     代表且只能代表任意一个字符。非正则表达式其他功能（当前目录，加载文件）</span><br><span class="line"></span><br><span class="line">/     转义字符，让有着特殊身份意义的字符，脱掉马甲，还原原型。例如.只表示原始小数点意义。</span><br><span class="line"></span><br><span class="line">*    表示重复0个或多个前面的一个字符。不代表所有。</span><br><span class="line"></span><br><span class="line">.*   表示匹配所有的字符。^.*表示以任意字符开头。</span><br><span class="line"></span><br><span class="line">[任意字符如abc] 匹配字符集内任意一个字符[a-z]。 [^abc] ^在中括号里面是非的意思，不包含之意。意思就是不包含a或b或c的行。</span><br><span class="line"></span><br><span class="line">&#123;n，m&#125; 表示重复n到m次前一个字符。｛n｝至少n次，多了不限。｛n｝N次，｛，m｝至多m次，少了不限。</span><br><span class="line"></span><br><span class="line">注：使用grep或sed要对｛｝转义。即｛｝.egrep就不需要转义了。</span><br></pre></td></tr></table></figure>
-
-<h3 id="请简述基础正则表达式sed高级参数的使用"><a href="#请简述基础正则表达式sed高级参数的使用" class="headerlink" title="请简述基础正则表达式sed高级参数的使用"></a>请简述基础正则表达式sed高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">解答：</span><br><span class="line"></span><br><span class="line">-n取消默认输出</span><br><span class="line"></span><br><span class="line">-p 打印</span><br><span class="line"></span><br><span class="line">-d删除</span><br><span class="line"></span><br><span class="line">-e允许多项编辑</span><br><span class="line"></span><br><span class="line">sed取行，要特别注意sed -n &#x27;s###g&#x27; filename 的使用，sed的( )的功能可以记住正则表达式的一部分，其中，为第一个记住的模式即第一个小括号中的匹配内容，第二记住的模式，即第二个小括号中的匹配内容，sed最多可以记住9个。</span><br><span class="line"></span><br><span class="line">实际字符的选取最好要唯一，正则表达式是贪婪的，总是尽可能的匹配更远的符合匹配的内容。另外注意字符串中的空格。</span><br></pre></td></tr></table></figure>
-
-<h3 id="AWK"><a href="#AWK" class="headerlink" title="AWK"></a>AWK</h3><h2 id="Hard-Level-Questions"><a href="#Hard-Level-Questions" class="headerlink" title="Hard Level Questions"></a>Hard Level Questions</h2>]]></content>
-      <categories>
-        <category>shell</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>shell</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux system admin notes</title>
-    <url>/2022/04/04/linux_systemadmin/</url>
-    <content><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="linunx-环境变量"><a href="#linunx-环境变量" class="headerlink" title="linunx 环境变量"></a>linunx 环境变量</h2><h2 id="linunx-文件权限"><a href="#linunx-文件权限" class="headerlink" title="linunx 文件权限"></a>linunx 文件权限</h2><p><code>umask</code>  default 022</p>
-<h3 id="shell-基础"><a href="#shell-基础" class="headerlink" title="shell 基础"></a>shell 基础</h3><h4 id="结构化命令"><a href="#结构化命令" class="headerlink" title="结构化命令"></a>结构化命令</h4><p>if</p>
-<p>for<br>while<br>until<br>break<br>continue</p>
-<h4 id="shell用户输入"><a href="#shell用户输入" class="headerlink" title="shell用户输入"></a>shell用户输入</h4><h3 id="控制shell脚本"><a href="#控制shell脚本" class="headerlink" title="控制shell脚本"></a>控制shell脚本</h3><h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function name &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">name () &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="退出状态"><a href="#退出状态" class="headerlink" title="退出状态"></a>退出状态</h4><p><code>$?</code></p>
-]]></content>
-      <categories>
-        <category>shell,linux</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>shell</tag>
-        <tag>linux</tag>
-        <tag>Tech</tag>
       </tags>
   </entry>
   <entry>
@@ -2487,6 +2220,301 @@
       </tags>
   </entry>
   <entry>
+    <title>shell变量高级篇</title>
+    <url>/2021/08/24/shell-variable-advance/</url>
+    <content><![CDATA[<p> <a href="#shell%E5%8F%98%E9%87%8F%E7%9A%84%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8">shell变量的高级应用</a></p>
+<ul>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2%E5%92%8C%E5%88%A0%E9%99%A4">变量内容替换和删除</a></li>
+<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86">字符串处理</a><ul>
+<li><a href="#%E8%AE%A1%E7%AE%97%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6">计算字符串长度</a></li>
+<li><a href="#%E8%8E%B7%E5%8F%96%E5%AD%90%E4%B8%B2%E5%9C%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BD%8D%E7%BD%AE">获取子串在字符串中索引的位置</a></li>
+<li><a href="#%E6%8F%90%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2">提取字符串</a></li>
+</ul>
+</li>
+<li><a href="#%E6%95%B0%E7%BB%84%E7%9A%84%E6%93%8D%E4%BD%9C">数组的操作</a><ul>
+<li><a href="#%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0">删除元素</a></li>
+<li><a href="#%E5%88%86%E7%89%87%E8%AE%BF%E9%97%AE">分片访问</a></li>
+<li><a href="#%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2">内容替换</a></li>
+</ul>
+</li>
+<li><a href="#%E6%95%B0%E7%BB%84%E9%81%8D%E5%8E%86">数组遍历</a><ul>
+<li><a href="#ps">PS</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="shell变量的高级应用"><a href="#shell变量的高级应用" class="headerlink" title="shell变量的高级应用"></a>shell变量的高级应用</h1><h2 id="变量内容替换和删除"><a href="#变量内容替换和删除" class="headerlink" title="变量内容替换和删除"></a>变量内容替换和删除</h2><table>
+<thead>
+<tr>
+<th align="center">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">${变量名#匹配规则}}</td>
+<td align="left">从变量开头进行规则匹配，将符合最短的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名##匹配规则}}</td>
+<td align="left">从变量开头进行规则匹配，将符合最长的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名%匹配规则}}</td>
+<td align="left">从变量尾部进行规则匹配，将符合最短的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名%%匹配规则}}</td>
+<td align="left">从变量尾部进行规则匹配，将符合最长的数据删除</td>
+</tr>
+<tr>
+<td align="center">${变量名/旧字符串/新字符串}}</td>
+<td align="left">变量内容符合旧字符串，则第一个旧字符串会被新字符串取代</td>
+</tr>
+<tr>
+<td align="center">${变量名//旧字符串/新字符串}}</td>
+<td align="left">变量内容符合旧字符串，则全部的旧字符串会被新字符串取代</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$variable_1</span></span><br><span class="line">I love you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1#*ov&#125;</span> //从头开始将最短数据删除</span><br><span class="line">e you,<span class="keyword">do</span> you love me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1##*ov&#125;</span> //从头开始将最长数据删除</span><br><span class="line">e me?</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%ov*&#125;</span> //从尾开始将最短数据删除</span><br><span class="line">I love you,<span class="keyword">do</span> you l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;variable_1%%ov&#125;</span> //从尾开始将最长数据删除</span><br><span class="line">I l</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line">/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH/bin/BIN&#125;</span> //替换一个</span><br><span class="line">/sBIN:/bin:/usr/sbin:/usr/bin</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH//bin/BIN&#125;</span> //替换所有</span><br><span class="line">/sBIN:/BIN:/usr/sBIN:/usr/BIN</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串处理"><a href="#字符串处理" class="headerlink" title="字符串处理"></a>字符串处理</h2><h3 id="计算字符串长度"><a href="#计算字符串长度" class="headerlink" title="计算字符串长度"></a>计算字符串长度</h3><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">方法一</td>
+<td align="left"><code>$&#123;#string&#125;</code></td>
+<td align="left">NA</td>
+</tr>
+<tr>
+<td align="left">方法二</td>
+<td align="left"><code>expr length &quot;$string&quot;</code></td>
+<td align="left">string如有空格，必须加双引号</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;#var1&#125;</span></span><br><span class="line">21</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr length <span class="string">&quot;<span class="variable">$var1</span>&quot;</span>`</span><br><span class="line">21</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取子串在字符串中索引的位置"><a href="#获取子串在字符串中索引的位置" class="headerlink" title="获取子串在字符串中索引的位置"></a>获取子串在字符串中索引的位置</h3><table>
+<thead>
+<tr>
+<th align="left">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>expr index $string $substring</code></td>
+<td align="left">查找子串中任一出现的字符，找到第一个出现字符的位置就返回</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ variable_1=<span class="string">&quot;I love you,do you love me?&quot;</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr index <span class="string">&quot;<span class="variable">$variable_1</span>&quot;</span> oe`</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+<h3 id="提取字符串"><a href="#提取字符串" class="headerlink" title="提取字符串"></a>提取字符串</h3><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">语法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">方法一</td>
+<td align="left"><code>$&#123;string:position&#125;</code></td>
+<td align="left">从 string 中的 position 位置开始，索引下标从 0 开始</td>
+</tr>
+<tr>
+<td align="left">方法二</td>
+<td align="left"><code>$&#123;string:position:length&#125;</code></td>
+<td align="left">从 position 开始，匹配长度为 length</td>
+</tr>
+<tr>
+<td align="left">方法三</td>
+<td align="left"><code>$&#123;string: -position&#125;</code></td>
+<td align="left">从右边开始匹配，注意冒号后面的空格</td>
+</tr>
+<tr>
+<td align="left">方法四</td>
+<td align="left"><code>$&#123;string:(position&#125;</code></td>
+<td align="left">从左边开始匹配</td>
+</tr>
+<tr>
+<td align="left">方法五</td>
+<td align="left"><code>expr substr $string $position $length</code></td>
+<td align="left">从 position 开始，匹配长度为 length，索引下标从 1 开始</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ var_str=<span class="string">&quot;k8s docker cloud aws&quot;</span></span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: 3&#125;</span> //方法一</span><br><span class="line">docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:3:5&#125;</span> //方法二</span><br><span class="line">dock</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5&#125;</span>  //方法三，注意有空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str: -5:3&#125;</span> //方法三 ，带长度</span><br><span class="line">d a</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:-5&#125;</span> //方法三，没有空格无效</span><br><span class="line">k8s docker cloud aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;var_str:(-5)&#125;</span> //方法三，可以用括号代替空格</span><br><span class="line">d aws</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> `expr substr <span class="string">&quot;<span class="variable">$var_str</span>&quot;</span> 1 5` //方法五，从索引1开始计数</span><br><span class="line">k8s d</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="数组的操作"><a href="#数组的操作" class="headerlink" title="数组的操作"></a>数组的操作</h2><blockquote>
+<p>我们知道在强类型语言中定义变量的时候必须为这个变量定义类型，比如定义整形可以定义为 int 型，字符串 string 类型，日期类型 Date 等等，在使用之前必须定义类型，这是强类型编程语言的风格。Shell 编程中，由于 Shell 是弱类型语言，在使用变量前不需要为变量声明类型， 但其实 Shell 本身也是支持提前声明有类型变量的，只是说使用方式和一般的强类型编程语言有些不同， 使用 declare 和 typeset 命令来进行声明。</p>
+<ul>
+<li>declare 命令和 typeset 命令两者等价</li>
+<li>declare、typeset 命令都是用来定义变量类型的</li>
+</ul>
+<p>既然它们是等价的 那我们用 declare 进行演示</p>
+</blockquote>
+<p>declare 常用命令参数表</p>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-i</td>
+<td align="left">将变量设为整数</td>
+</tr>
+<tr>
+<td align="center">-a</td>
+<td align="left">将变量定义为数组</td>
+</tr>
+<tr>
+<td align="center">-f</td>
+<td align="left">显示此脚本定义过的所有函数及内容</td>
+</tr>
+<tr>
+<td align="center">-F</td>
+<td align="left">仅显示此脚本定义过的函数名</td>
+</tr>
+<tr>
+<td align="center">-x</td>
+<td align="left">将变量声明为环境变量</td>
+</tr>
+</tbody></table>
+<p><code>declare -a array_name</code> 声明数组， 然后 <code>array_name=(value1 ... valuen)</code>， 这里不声明也可以</p>
+<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><ul>
+<li><code>unset my_arr[2]</code> 清楚元素 <code>unset my_arr</code> 清空整个数组</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$</span><br><span class="line">[shdevops@localhost ~]$ my_arr=(1 <span class="string">&quot;abc&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1 abc</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr[1]</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br><span class="line">1</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">unset</span> my_arr</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[*]&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="分片访问"><a href="#分片访问" class="headerlink" title="分片访问"></a>分片访问</h3><ul>
+<li> ${array[@]:1:3} 数组下标从 1 到 3 的三个元素</li>
+<li><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;apple&quot;</span> <span class="string">&quot;juice&quot;</span> <span class="string">&quot;cat&quot;</span> <span class="string">&quot;dog&quot;</span> <span class="string">&quot;ox&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]:1:3&#125;</span></span><br><span class="line">juice cat dog</span><br></pre></td></tr></table></figure>
+<h3 id="内容替换"><a href="#内容替换" class="headerlink" title="内容替换"></a>内容替换</h3></li>
+<li> <code>$&#123;my_array[@]/an/AN&#125;</code> 将数组中所有元素内包含 an 的子串替换为 AN<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[shdevops@localhost ~]$ my_arr=(<span class="string">&quot;an1&quot;</span> <span class="string">&quot;an2&quot;</span> <span class="string">&quot;an3&quot;</span> <span class="string">&quot;an4&quot;</span>)</span><br><span class="line">[shdevops@localhost ~]$ <span class="built_in">echo</span> <span class="variable">$&#123;my_arr[@]/an/AN&#125;</span></span><br><span class="line">AN1 AN2 AN3 AN4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
+<h2 id="数组遍历"><a href="#数组遍历" class="headerlink" title="数组遍历"></a>数组遍历</h2></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">my_arr=(an1 an2 an3 an4)</span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$v</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">[shdevops@localhost ~]$ <span class="keyword">for</span> v <span class="keyword">in</span> <span class="variable">$&#123;my_arr[@]&#125;</span>;<span class="keyword">do</span> <span class="built_in">echo</span> <span class="variable">$v</span>;<span class="keyword">done</span></span><br><span class="line">an1</span><br><span class="line">an2</span><br><span class="line">an3</span><br><span class="line">an4</span><br><span class="line">[shdevops@localhost ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">取消声明的变量：</span><br><span class="line"></span><br><span class="line">declare +r</span><br><span class="line">declare +i</span><br><span class="line">declare +a</span><br><span class="line">declare +x</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>shell</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>一文让你shell从狗熊变英雄</title>
+    <url>/2023/08/13/shell_from_zero_to_hero./</url>
+    <content><![CDATA[<ul>
+<li><a href="#shell-from-zero-to-hero">Shell From Zero To Hero</a><ul>
+<li><a href="#simply-level-questions">Simply Level Questions</a><ul>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E7%B3%BB%E7%BB%9F%E4%BB%8E%E5%BC%80%E6%9C%BA%E5%88%B0%E7%99%BB%E9%99%86%E7%95%8C%E9%9D%A2%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B">描述Linux系统从开机到登陆界面的启动过程</a></li>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E8%BD%AF%E9%93%BE%E6%8E%A5%E5%92%8C%E7%A1%AC%E9%93%BE%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB">描述Linux下软链接和硬链接的区别</a></li>
+</ul>
+</li>
+<li><a href="#middle-level-questions">Middle Level Questions</a><ul>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4%E7%9A%84%E5%8E%9F%E7%90%86">描述Linux下文件删除的原理</a></li>
+<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fgrep%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式grep高级参数的使用</a></li>
+<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fsed%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式sed高级参数的使用</a></li>
+<li><a href="#awk">AWK</a></li>
+</ul>
+</li>
+<li><a href="#hard-level-questions">Hard Level Questions</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="Shell-From-Zero-To-Hero"><a href="#Shell-From-Zero-To-Hero" class="headerlink" title="Shell From Zero To Hero"></a>Shell From Zero To Hero</h1><h2 id="Simply-Level-Questions"><a href="#Simply-Level-Questions" class="headerlink" title="Simply Level Questions"></a>Simply Level Questions</h2><h3 id="描述Linux系统从开机到登陆界面的启动过程"><a href="#描述Linux系统从开机到登陆界面的启动过程" class="headerlink" title="描述Linux系统从开机到登陆界面的启动过程"></a>描述Linux系统从开机到登陆界面的启动过程</h3><ul>
+<li><p>开机BIOS自检，加载硬盘。</p>
+</li>
+<li><p>读取MBR,MBR引导。</p>
+</li>
+<li><p>grub引导菜单(Boot Loader)。</p>
+</li>
+<li><p>加载内核kernel。</p>
+</li>
+<li><p>启动init进程，依据inittab文件设定运行级别</p>
+</li>
+<li><p>init进程，执行rc.sysinit文件。</p>
+</li>
+<li><p>启动内核模块，执行不同级别的脚本程序。</p>
+</li>
+<li><p>执行/etc/rc.d/rc.local</p>
+</li>
+<li><p>启动mingetty，进入系统登陆界面。</p>
+</li>
+</ul>
+<h3 id="描述Linux下软链接和硬链接的区别"><a href="#描述Linux下软链接和硬链接的区别" class="headerlink" title="描述Linux下软链接和硬链接的区别"></a>描述Linux下软链接和硬链接的区别</h3><p>在Linux系统中，链接分为两种，一种是硬链接（Hard link），另一种称为符号链接或软链接（Symbolic Link）。</p>
+<ul>
+<li><p>默认不带参数的情况下，ln创建的是硬链接，带-s参数的ln命令创建的是软链接。</p>
+</li>
+<li><p>硬链接文件与源文件的inode节点号相同，而软链接文件的inode节点号，与源文件不同，</p>
+</li>
+<li><p>ln命令不能对目录创建硬链接，但可以创建软链接。对目录的软链接会经常使用到。</p>
+</li>
+<li><p>删除软链接文件，对源文件和硬链接文件无任何影响。</p>
+</li>
+<li><p>删除文件的硬链接文件，对源文件及软链接文件无任何影响。</p>
+</li>
+<li><p>删除链接文件的源文件，对硬链接文件无影响，会导致其软链接失效（红底白字闪烁状）。</p>
+</li>
+<li><p>同时删除源文件及其硬链接文件，整个文件才会被真正的删除。</p>
+</li>
+<li><p>很多硬件设备的快照功能，使用的就是类似硬链接的原理。</p>
+</li>
+<li><p>软链接可以跨文件系统，硬链接不可以跨文件系统。</p>
+</li>
+</ul>
+<h2 id="Middle-Level-Questions"><a href="#Middle-Level-Questions" class="headerlink" title="Middle Level Questions"></a>Middle Level Questions</h2><h3 id="描述Linux下文件删除的原理"><a href="#描述Linux下文件删除的原理" class="headerlink" title="描述Linux下文件删除的原理"></a>描述Linux下文件删除的原理</h3><p>Linux系统是通过link的数量来控制文件删除的，只有当一个文件不存在任何link的时候，这个文件才会被删除。一般来说每个文件两个link计数器来控制i_count和i_nlink。当一个文件被一个程序占用的时候i_count就加1。当文件的硬链接多一个的时候i_nlink也加1。删除一个文件，就是让这个文件，没有进程占用，同时i_link数量为0。</p>
+<h3 id="请简述基础正则表达式grep高级参数的使用"><a href="#请简述基础正则表达式grep高级参数的使用" class="headerlink" title="请简述基础正则表达式grep高级参数的使用"></a>请简述基础正则表达式grep高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">常用参数：</span><br><span class="line"></span><br><span class="line">-v排除匹配内容，</span><br><span class="line"></span><br><span class="line">-e支持扩展的正则表达式，</span><br><span class="line"></span><br><span class="line">-i忽略大小写，</span><br><span class="line"></span><br><span class="line">-o输出匹配的内容（只是一块，不是行），</span><br><span class="line"></span><br><span class="line">--color=auto 匹配内容显示颜色，</span><br><span class="line"></span><br><span class="line">-n 在行首显示行号。</span><br><span class="line"></span><br><span class="line">特殊字符注意事项：</span><br><span class="line"></span><br><span class="line">^(尖括号)word ：表示搜索以word开头的内容。</span><br><span class="line"></span><br><span class="line">word$ 表示搜索以word结尾的内容。</span><br><span class="line"></span><br><span class="line">^$    表示的是空行，不是空格。</span><br><span class="line"></span><br><span class="line">.     代表且只能代表任意一个字符。非正则表达式其他功能（当前目录，加载文件）</span><br><span class="line"></span><br><span class="line">/     转义字符，让有着特殊身份意义的字符，脱掉马甲，还原原型。例如.只表示原始小数点意义。</span><br><span class="line"></span><br><span class="line">*    表示重复0个或多个前面的一个字符。不代表所有。</span><br><span class="line"></span><br><span class="line">.*   表示匹配所有的字符。^.*表示以任意字符开头。</span><br><span class="line"></span><br><span class="line">[任意字符如abc] 匹配字符集内任意一个字符[a-z]。 [^abc] ^在中括号里面是非的意思，不包含之意。意思就是不包含a或b或c的行。</span><br><span class="line"></span><br><span class="line">&#123;n，m&#125; 表示重复n到m次前一个字符。｛n｝至少n次，多了不限。｛n｝N次，｛，m｝至多m次，少了不限。</span><br><span class="line"></span><br><span class="line">注：使用grep或sed要对｛｝转义。即｛｝.egrep就不需要转义了。</span><br></pre></td></tr></table></figure>
+
+<h3 id="请简述基础正则表达式sed高级参数的使用"><a href="#请简述基础正则表达式sed高级参数的使用" class="headerlink" title="请简述基础正则表达式sed高级参数的使用"></a>请简述基础正则表达式sed高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">解答：</span><br><span class="line"></span><br><span class="line">-n取消默认输出</span><br><span class="line"></span><br><span class="line">-p 打印</span><br><span class="line"></span><br><span class="line">-d删除</span><br><span class="line"></span><br><span class="line">-e允许多项编辑</span><br><span class="line"></span><br><span class="line">sed取行，要特别注意sed -n &#x27;s###g&#x27; filename 的使用，sed的( )的功能可以记住正则表达式的一部分，其中，为第一个记住的模式即第一个小括号中的匹配内容，第二记住的模式，即第二个小括号中的匹配内容，sed最多可以记住9个。</span><br><span class="line"></span><br><span class="line">实际字符的选取最好要唯一，正则表达式是贪婪的，总是尽可能的匹配更远的符合匹配的内容。另外注意字符串中的空格。</span><br></pre></td></tr></table></figure>
+
+<h3 id="AWK"><a href="#AWK" class="headerlink" title="AWK"></a>AWK</h3><h2 id="Hard-Level-Questions"><a href="#Hard-Level-Questions" class="headerlink" title="Hard Level Questions"></a>Hard Level Questions</h2>]]></content>
+      <categories>
+        <category>shell</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python程序获取股票信息</title>
+    <url>/2022/07/04/stock-price/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
+<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
+<li>python3</li>
+<li>akshare</li>
+<li>GoogleSheet</li>
+</ul>
+<p>Reference </p>
+<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
+<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
+<li>code example</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
+</ul>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>python</tag>
+        <tag>stock</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一文熟悉云配置神器terraform</title>
     <url>/2021/08/26/terraform-notes/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><hr>
@@ -2725,36 +2753,6 @@
         <tag>tech</tag>
         <tag>shell</tag>
         <tag>terraform</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python程序获取股票信息</title>
-    <url>/2022/07/04/stock-price/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
-<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
-<li>python3</li>
-<li>akshare</li>
-<li>GoogleSheet</li>
-</ul>
-<p>Reference </p>
-<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
-<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
-<li>code example</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
-</ul>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>python</tag>
-        <tag>stock</tag>
         <tag>Tech</tag>
       </tags>
   </entry>
