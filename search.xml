@@ -68,6 +68,49 @@
       </tags>
   </entry>
   <entry>
+    <title>Kubectl 常用命令</title>
+    <url>/2023/09/04/20230904_kubectl_commands/</url>
+    <content><![CDATA[<h2 id="Kubectl-上下文和配置"><a href="#Kubectl-上下文和配置" class="headerlink" title="Kubectl 上下文和配置"></a>Kubectl 上下文和配置</h2><p>设置 kubectl 命令交互的 kubernetes 集群并修改配置信息。参阅 使用 kubeconfig 文件进行跨集群验证 获取关于配置文件的详细信息。 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 显示合并后的 kubeconfig 配置</span><br><span class="line">$ kubectl config view </span><br><span class="line"># 同时使用多个 kubeconfig 文件并查看合并后的配置</span><br><span class="line">$ KUBECONFIG=~/.kube/config:~/.kube/kubconfig2 kubectl config view</span><br><span class="line"># 获取 e2e 用户的密码</span><br><span class="line">$ kubectl config view -o jsonpath=&#x27;&#123;.users[?(@.name == &quot;e2e&quot;)].user.password&#125;&#x27;</span><br><span class="line"># 显示当前的上下文</span><br><span class="line">$ kubectl config current-context    </span><br><span class="line"># 设置默认上下文为 my-cluster-name</span><br><span class="line">$ kubectl config use-context my-cluster-name  </span><br><span class="line"># 向 kubeconf 中增加支持基本认证的新集群</span><br><span class="line">$ kubectl config set-credentials kubeuser/foo.kubernetes.com --username=kubeuser --password=kubepassword</span><br><span class="line"># 使用指定的用户名和 namespace 设置上下文</span><br><span class="line">$ kubectl config set-context gce --user=cluster-admin --namespace=foo \</span><br><span class="line">  &amp;&amp; kubectl config use-context gce</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h2><p>Kubernetes 的清单文件可以使用 json 或 yaml 格式定义。可以以 .yaml、.yml、或者 .json 为扩展名。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 创建资源</span><br><span class="line">$ kubectl create -f ./my-manifest.yaml     </span><br><span class="line"># 使用多个文件创建资源</span><br><span class="line">$ kubectl create -f ./my1.yaml -f ./my2.yaml   </span><br><span class="line"># 使用目录下的所有清单文件来创建资源</span><br><span class="line">$ kubectl create -f ./dir    </span><br><span class="line"># 使用 url 来创建资源</span><br><span class="line">$ kubectl create -f https://git.io/vPieo  </span><br><span class="line"># 启动一个 nginx 实例</span><br><span class="line">$ kubectl run nginx --image=nginx  </span><br><span class="line"> # 获取 pod 和 svc 的文档</span><br><span class="line">$ kubectl explain pods,svc                      </span><br><span class="line"># 从 stdin 输入中创建多个 YAML 对象</span><br><span class="line">$ cat &lt;&lt;EOF | kubectl create -f -</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: busybox-sleep</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: busybox</span><br><span class="line">    image: busybox</span><br><span class="line">    args:</span><br><span class="line">    - sleep</span><br><span class="line">    - &quot;1000000&quot;</span><br><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: busybox-sleep-less</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: busybox</span><br><span class="line">    image: busybox</span><br><span class="line">    args:</span><br><span class="line">    - sleep</span><br><span class="line">    - &quot;1000&quot;</span><br><span class="line">EOF</span><br><span class="line"># 创建包含几个 key 的 Secret</span><br><span class="line">$ cat &lt;&lt;EOF | kubectl create -f -</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Secret</span><br><span class="line">metadata:</span><br><span class="line">  name: mysecret</span><br><span class="line">type: Opaque</span><br><span class="line">data:</span><br><span class="line">  password: $(echo &quot;s33msi4&quot; | base64)</span><br><span class="line">  username: $(echo &quot;jane&quot; | base64)</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<h2 id="显示和查找资源"><a href="#显示和查找资源" class="headerlink" title="显示和查找资源"></a>显示和查找资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># Get commands with basic output</span><br><span class="line"># 列出所有 namespace 中的所有 service</span><br><span class="line">$ kubectl get services            </span><br><span class="line"></span><br><span class="line"># 列出所有 namespace 中的所有 pod</span><br><span class="line">$ kubectl get pods --all-namespaces  </span><br><span class="line"></span><br><span class="line"># 列出所有 pod 并显示详细信息</span><br><span class="line">$ kubectl get pods -o wide      </span><br><span class="line"></span><br><span class="line"># 列出指定 deployment</span><br><span class="line">$ kubectl get deployment my-dep      </span><br><span class="line"></span><br><span class="line"># 列出该 namespace 中的所有 pod 包括未初始化的</span><br><span class="line">$ kubectl get pods --include-uninitialized      </span><br><span class="line"></span><br><span class="line"># 使用详细输出来描述命令</span><br><span class="line">$ kubectl describe nodes my-node</span><br><span class="line">$ kubectl describe pods my-pod</span><br><span class="line"></span><br><span class="line"># List Services Sorted by Name</span><br><span class="line">$ kubectl get services --sort-by=.metadata.name </span><br><span class="line"></span><br><span class="line"># 根据重启次数排序列出 pod</span><br><span class="line">$ kubectl get pods --sort-by=&#x27;.status.containerStatuses[0].restartCount&#x27;</span><br><span class="line"></span><br><span class="line"># 获取所有具有 app=cassandra 的 pod 中的 version 标签</span><br><span class="line">$ kubectl get pods --selector=app=cassandra rc -o \</span><br><span class="line">  jsonpath=&#x27;&#123;.items[*].metadata.labels.version&#125;&#x27;</span><br><span class="line"></span><br><span class="line"># 获取所有节点的 ExternalIP</span><br><span class="line">$ kubectl get nodes -o jsonpath=&#x27;&#123;.items[*].status.addresses[?(@.type==&quot;ExternalIP&quot;)].address&#125;&#x27;</span><br><span class="line"></span><br><span class="line"># 列出属于某个 PC 的 Pod 的名字</span><br><span class="line"># “jq”命令用于转换复杂的 jsonpath，参考 https://stedolan.github.io/jq/</span><br><span class="line">$ sel=$&#123;$(kubectl get rc my-rc --output=json | jq -j &#x27;.spec.selector | to_entries | .[] | &quot;\(.key)=\(.value),&quot;&#x27;)%?&#125;</span><br><span class="line">$ echo $(kubectl get pods --selector=$sel --output=jsonpath=&#123;.items..metadata.name&#125;)</span><br><span class="line"></span><br><span class="line"># 查看哪些节点已就绪</span><br><span class="line">$ JSONPATH=&#x27;&#123;range .items[*]&#125;&#123;@.metadata.name&#125;:&#123;range @.status.conditions[*]&#125;&#123;@.type&#125;=&#123;@.status&#125;;&#123;end&#125;&#123;end&#125;&#x27; \</span><br><span class="line"> &amp;&amp; kubectl get nodes -o jsonpath=&quot;$JSONPATH&quot; | grep &quot;Ready=True&quot;</span><br><span class="line"></span><br><span class="line"># 列出当前 Pod 中使用的 Secret</span><br><span class="line">$ kubectl get pods -o json | jq &#x27;.items[].spec.containers[].env[]?.valueFrom.secretKeyRef.name&#x27; | grep -v null | sort | uniq</span><br></pre></td></tr></table></figure>
+
+<h2 id="更新资源"><a href="#更新资源" class="headerlink" title="更新资源"></a>更新资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">$ kubectl rolling-update frontend-v1 -f frontend-v2.json           # 滚动更新 pod frontend-v1</span><br><span class="line">$ kubectl rolling-update frontend-v1 frontend-v2 --image=image:v2  # 更新资源名称并更新镜像</span><br><span class="line">$ kubectl rolling-update frontend --image=image:v2                 # 更新 frontend pod 中的镜像</span><br><span class="line">$ kubectl rolling-update frontend-v1 frontend-v2 --rollback        # 退出已存在的进行中的滚动更新</span><br><span class="line">$ cat pod.json | kubectl replace -f -                              # 基于 stdin 输入的 JSON 替换 pod</span><br><span class="line"># 强制替换，删除后重新创建资源。会导致服务中断。</span><br><span class="line">$ kubectl replace --force -f ./pod.json</span><br><span class="line"># 为 nginx RC 创建服务，启用本地 80 端口连接到容器上的 8000 端口</span><br><span class="line">$ kubectl expose rc nginx --port=80 --target-port=8000</span><br><span class="line"># 更新单容器 pod 的镜像版本（tag）到 v4</span><br><span class="line">$ kubectl get pod mypod -o yaml | sed &#x27;s/\(image: myimage\):.*$/\1:v4/&#x27; | kubectl replace -f -</span><br><span class="line"># 添加标签</span><br><span class="line">$ kubectl label pods my-pod new-label=awesome        </span><br><span class="line"> # 添加注解</span><br><span class="line">$ kubectl annotate pods my-pod icon-url=http://goo.gl/XXBTWq   </span><br><span class="line"># 自动扩展 deployment “foo”</span><br><span class="line">$ kubectl autoscale deployment foo --min=2 --max=10</span><br></pre></td></tr></table></figure>
+
+<h2 id="修补资源"><a href="#修补资源" class="headerlink" title="修补资源"></a>修补资源</h2><p>使用策略合并补丁并修补资源。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 部分更新节点</span><br><span class="line">kubectl patch node k8s-node-1 -p &#x27;&#123;&quot;spec&quot;:&#123;&quot;unschedulable&quot;:true&#125;&#125;&#x27; </span><br><span class="line"># 更新容器镜像；spec.containers[*].name 是必须的，因为这是合并的关键字</span><br><span class="line">$ kubectl patch pod valid-pod -p &#x27;&#123;&quot;spec&quot;:&#123;&quot;containers&quot;:[&#123;&quot;name&quot;:&quot;kubernetes-serve-hostname&quot;,&quot;image&quot;:&quot;new image&quot;&#125;]&#125;&#125;&#x27;</span><br><span class="line"># 使用具有位置数组的 json 补丁更新容器镜像</span><br><span class="line">$ kubectl patch pod valid-pod --type=&#x27;json&#x27; -p=&#x27;[&#123;&quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/spec/containers/0/image&quot;, &quot;value&quot;:&quot;new image&quot;&#125;]&#x27;</span><br><span class="line"># 使用具有位置数组的 json 补丁禁用 deployment 的 livenessProbe</span><br><span class="line">$ kubectl patch deployment valid-deployment  --type json   -p=&#x27;[&#123;&quot;op&quot;: &quot;remove&quot;, &quot;path&quot;: &quot;/spec/template/spec/containers/0/livenessProbe&quot;&#125;]&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="编辑资源"><a href="#编辑资源" class="headerlink" title="编辑资源"></a>编辑资源</h2><p>在编辑器中编辑任何 API 资源。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 编辑名为 docker-registry 的 service</span><br><span class="line">$ kubectl edit svc/docker-registry           </span><br><span class="line"># 使用其它编辑器</span><br><span class="line">$ KUBE_EDITOR=&quot;nano&quot; kubectl edit svc/docker-registry</span><br></pre></td></tr></table></figure>
+
+<h2 id="Scale-资源"><a href="#Scale-资源" class="headerlink" title="Scale 资源"></a>Scale 资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># Scale a replicaset named &#x27;foo&#x27; to 3</span><br><span class="line">$ kubectl scale --replicas=3 rs/foo       </span><br><span class="line"># Scale a resource specified in &quot;foo.yaml&quot; to 3</span><br><span class="line">$ kubectl scale --replicas=3 -f foo.yaml     </span><br><span class="line"># If the deployment named mysql&#x27;s current size is 2, scale mysql to 3</span><br><span class="line">$ kubectl scale --current-replicas=2 --replicas=3 deployment/mysql  </span><br><span class="line"># Scale multiple replication controllers</span><br><span class="line">$ kubectl scale --replicas=5 rc/foo rc/bar rc/baz</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除资源"><a href="#删除资源" class="headerlink" title="删除资源"></a>删除资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 删除 pod.json 文件中定义的类型和名称的 pod</span><br><span class="line">$ kubectl delete -f ./pod.json        </span><br><span class="line"># 删除名为“baz”的 pod 和名为“foo”的 service</span><br><span class="line">$ kubectl delete pod,service baz foo      </span><br><span class="line"># 删除具有 name=myLabel 标签的 pod 和 serivce</span><br><span class="line">$ kubectl delete pods,services -l name=myLabel       </span><br><span class="line"># 删除具有 name=myLabel 标签的 pod 和 service，包括尚未初始化的</span><br><span class="line">$ kubectl delete pods,services -l name=myLabel --include-uninitialized   </span><br><span class="line"># 删除 my-ns namespace 下的所有 pod 和 serivce包</span><br><span class="line">$ kubectl -n my-ns delete po,svc --all</span><br></pre></td></tr></table></figure>
+
+<h2 id="与运行中的-Pod-交互"><a href="#与运行中的-Pod-交互" class="headerlink" title="与运行中的 Pod 交互"></a>与运行中的 Pod 交互</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># dump 输出 pod 的日志（stdout）</span><br><span class="line">$ kubectl logs my-pod  </span><br><span class="line"> # dump 输出 pod 中容器的日志（stdout，pod 中有多个容器的情况下使用）</span><br><span class="line">$ kubectl logs my-pod -c my-container      </span><br><span class="line"># 流式输出 pod 的日志（stdout）</span><br><span class="line">$ kubectl logs -f my-pod             </span><br><span class="line"># 流式输出 pod 中容器的日志（stdout，pod 中有多个容器的情况下使用）</span><br><span class="line">$ kubectl logs -f my-pod -c my-container</span><br><span class="line"># 交互式 shell 的方式运行 pod</span><br><span class="line">$ kubectl run -i --tty busybox --image=busybox -- sh  </span><br><span class="line"> # 连接到运行中的容器</span><br><span class="line">$ kubectl attach my-pod -i    </span><br><span class="line"># 转发 pod 中的 6000 端口到本地的 5000 端口</span><br><span class="line">$ kubectl port-forward my-pod 5000:6000   </span><br><span class="line">  # 在已存在的容器中执行命令（只有一个容器的情况下）</span><br><span class="line">$ kubectl exec my-pod -- ls /          </span><br><span class="line"># 在已存在的容器中执行命令（pod 中有多个容器的情况下）</span><br><span class="line">$ kubectl exec my-pod -c my-container -- ls /    </span><br><span class="line"># 显示指定 pod 和容器的指标度量</span><br><span class="line">$ kubectl top pod POD_NAME --containers</span><br></pre></td></tr></table></figure>
+
+<h2 id="与节点和集群交互"><a href="#与节点和集群交互" class="headerlink" title="与节点和集群交互"></a>与节点和集群交互</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 标记 my-node 不可调度</span><br><span class="line">$ kubectl cordon my-node       </span><br><span class="line"># 清空 my-node 以待维护</span><br><span class="line">$ kubectl drain my-node    </span><br><span class="line"># 标记 my-node 可调度</span><br><span class="line">$ kubectl uncordon my-node             </span><br><span class="line"> # 显示 my-node 的指标度量</span><br><span class="line">$ kubectl top node my-node    </span><br><span class="line">$ kubectl cluster-info          </span><br><span class="line"> # 将当前集群状态输出到 stdout</span><br><span class="line">$ kubectl cluster-info dump                                                               </span><br><span class="line"> # 将当前集群状态输出到 /path/to/cluster-state</span><br><span class="line">$ kubectl cluster-info dump --output-directory=/path/to/cluster-state  </span><br><span class="line"># 如果该键和影响的污点（taint）已存在，则使用指定的值替换</span><br><span class="line">$ kubectl taint nodes foo dedicated=special-user:NoSchedule</span><br></pre></td></tr></table></figure>
+
+<h2 id="set-命令"><a href="#set-命令" class="headerlink" title="set 命令"></a>set 命令</h2><p>配置应用的一些特定资源，也可以修改应用已有的资源<br>使用 kubectl set –help查看，它的子命令，env，image，resources，selector，serviceaccount，subject。</p>
+<p>语法：resources (-f FILENAME | TYPE NAME) ([—limits=LIMITS &amp; —requests=REQUESTS]</p>
+<h2 id="kubectl-set-resources-命令"><a href="#kubectl-set-resources-命令" class="headerlink" title="kubectl set resources 命令"></a>kubectl set resources 命令</h2><p>这个命令用于设置资源的一些范围限制。<br>资源对象中的Pod可以指定计算资源需求（CPU-单位m、内存-单位Mi），即使用的最小资源请求（Requests），限制（Limits）的最大资源需求，Pod将保证使用在设置的资源数量范围。<br>对于每个Pod资源，如果指定了Limits（限制）值，并省略了Requests（请求），则Requests默认为Limits的值。</p>
+<p><code>可用资源对象包括(支持大小写)：replicationcontroller、deployment、daemonset、job、replicaset。</code></p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 将deployment的nginx容器cpu限制为“200m”，将内存设置为“512Mi”</span><br><span class="line">$ kubectl set resources deployment nginx -c=nginx --limits=cpu=200m,memory=512Mi</span><br><span class="line"># 设置所有nginx容器中 Requests和Limits</span><br><span class="line">$ kubectl set resources deployment nginx --limits=cpu=200m,memory=512Mi --requests=cpu=100m,memory=256Mi</span><br><span class="line"># 删除nginx中容器的计算资源值</span><br><span class="line">$ kubectl set resources deployment nginx --limits=cpu=0,memory=0 --requests=cpu=0,memory=0</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>tech</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>k8s</tag>
+        <tag>container</tag>
+        <tag>shell</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Devops/System admin面试常见问题</title>
     <url>/2023/09/12/20230912_Interview_questions/</url>
     <content><![CDATA[<h2 id="Regular-Questions"><a href="#Regular-Questions" class="headerlink" title="Regular Questions"></a>Regular Questions</h2><ul>
@@ -247,6 +290,18 @@
 <li><code>su</code> switch user without run login shell</li>
 </ul>
 </li>
+<li><p>Linux shell profile login orders</p>
+<ul>
+<li>user login with shell <ul>
+<li>账号和密码——&gt;/etc/profile（全局文件G1）——&gt;/etc/profile.d/（全局脚本目录F1）——&gt; ~/.bash_profile（用户文件U1）——&gt; ~/.bashrc（用户文件U2）——&gt;/etc/bashrc（全局文件G2）</li>
+</ul>
+</li>
+<li>no password and ssh login <ul>
+<li>SSH 连接——&gt;  ~/.bashrc（用户文件U2）——&gt;/etc/bashrc（全局文件G2）</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 ]]></content>
       <categories>
@@ -255,49 +310,6 @@
       <tags>
         <tag>tech</tag>
         <tag>interview</tag>
-        <tag>shell</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kubectl 常用命令</title>
-    <url>/2023/09/04/20230904_kubectl_commands/</url>
-    <content><![CDATA[<h2 id="Kubectl-上下文和配置"><a href="#Kubectl-上下文和配置" class="headerlink" title="Kubectl 上下文和配置"></a>Kubectl 上下文和配置</h2><p>设置 kubectl 命令交互的 kubernetes 集群并修改配置信息。参阅 使用 kubeconfig 文件进行跨集群验证 获取关于配置文件的详细信息。 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 显示合并后的 kubeconfig 配置</span><br><span class="line">$ kubectl config view </span><br><span class="line"># 同时使用多个 kubeconfig 文件并查看合并后的配置</span><br><span class="line">$ KUBECONFIG=~/.kube/config:~/.kube/kubconfig2 kubectl config view</span><br><span class="line"># 获取 e2e 用户的密码</span><br><span class="line">$ kubectl config view -o jsonpath=&#x27;&#123;.users[?(@.name == &quot;e2e&quot;)].user.password&#125;&#x27;</span><br><span class="line"># 显示当前的上下文</span><br><span class="line">$ kubectl config current-context    </span><br><span class="line"># 设置默认上下文为 my-cluster-name</span><br><span class="line">$ kubectl config use-context my-cluster-name  </span><br><span class="line"># 向 kubeconf 中增加支持基本认证的新集群</span><br><span class="line">$ kubectl config set-credentials kubeuser/foo.kubernetes.com --username=kubeuser --password=kubepassword</span><br><span class="line"># 使用指定的用户名和 namespace 设置上下文</span><br><span class="line">$ kubectl config set-context gce --user=cluster-admin --namespace=foo \</span><br><span class="line">  &amp;&amp; kubectl config use-context gce</span><br></pre></td></tr></table></figure>
-
-<h2 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h2><p>Kubernetes 的清单文件可以使用 json 或 yaml 格式定义。可以以 .yaml、.yml、或者 .json 为扩展名。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 创建资源</span><br><span class="line">$ kubectl create -f ./my-manifest.yaml     </span><br><span class="line"># 使用多个文件创建资源</span><br><span class="line">$ kubectl create -f ./my1.yaml -f ./my2.yaml   </span><br><span class="line"># 使用目录下的所有清单文件来创建资源</span><br><span class="line">$ kubectl create -f ./dir    </span><br><span class="line"># 使用 url 来创建资源</span><br><span class="line">$ kubectl create -f https://git.io/vPieo  </span><br><span class="line"># 启动一个 nginx 实例</span><br><span class="line">$ kubectl run nginx --image=nginx  </span><br><span class="line"> # 获取 pod 和 svc 的文档</span><br><span class="line">$ kubectl explain pods,svc                      </span><br><span class="line"># 从 stdin 输入中创建多个 YAML 对象</span><br><span class="line">$ cat &lt;&lt;EOF | kubectl create -f -</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: busybox-sleep</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: busybox</span><br><span class="line">    image: busybox</span><br><span class="line">    args:</span><br><span class="line">    - sleep</span><br><span class="line">    - &quot;1000000&quot;</span><br><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: busybox-sleep-less</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: busybox</span><br><span class="line">    image: busybox</span><br><span class="line">    args:</span><br><span class="line">    - sleep</span><br><span class="line">    - &quot;1000&quot;</span><br><span class="line">EOF</span><br><span class="line"># 创建包含几个 key 的 Secret</span><br><span class="line">$ cat &lt;&lt;EOF | kubectl create -f -</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Secret</span><br><span class="line">metadata:</span><br><span class="line">  name: mysecret</span><br><span class="line">type: Opaque</span><br><span class="line">data:</span><br><span class="line">  password: $(echo &quot;s33msi4&quot; | base64)</span><br><span class="line">  username: $(echo &quot;jane&quot; | base64)</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-<h2 id="显示和查找资源"><a href="#显示和查找资源" class="headerlink" title="显示和查找资源"></a>显示和查找资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># Get commands with basic output</span><br><span class="line"># 列出所有 namespace 中的所有 service</span><br><span class="line">$ kubectl get services            </span><br><span class="line"></span><br><span class="line"># 列出所有 namespace 中的所有 pod</span><br><span class="line">$ kubectl get pods --all-namespaces  </span><br><span class="line"></span><br><span class="line"># 列出所有 pod 并显示详细信息</span><br><span class="line">$ kubectl get pods -o wide      </span><br><span class="line"></span><br><span class="line"># 列出指定 deployment</span><br><span class="line">$ kubectl get deployment my-dep      </span><br><span class="line"></span><br><span class="line"># 列出该 namespace 中的所有 pod 包括未初始化的</span><br><span class="line">$ kubectl get pods --include-uninitialized      </span><br><span class="line"></span><br><span class="line"># 使用详细输出来描述命令</span><br><span class="line">$ kubectl describe nodes my-node</span><br><span class="line">$ kubectl describe pods my-pod</span><br><span class="line"></span><br><span class="line"># List Services Sorted by Name</span><br><span class="line">$ kubectl get services --sort-by=.metadata.name </span><br><span class="line"></span><br><span class="line"># 根据重启次数排序列出 pod</span><br><span class="line">$ kubectl get pods --sort-by=&#x27;.status.containerStatuses[0].restartCount&#x27;</span><br><span class="line"></span><br><span class="line"># 获取所有具有 app=cassandra 的 pod 中的 version 标签</span><br><span class="line">$ kubectl get pods --selector=app=cassandra rc -o \</span><br><span class="line">  jsonpath=&#x27;&#123;.items[*].metadata.labels.version&#125;&#x27;</span><br><span class="line"></span><br><span class="line"># 获取所有节点的 ExternalIP</span><br><span class="line">$ kubectl get nodes -o jsonpath=&#x27;&#123;.items[*].status.addresses[?(@.type==&quot;ExternalIP&quot;)].address&#125;&#x27;</span><br><span class="line"></span><br><span class="line"># 列出属于某个 PC 的 Pod 的名字</span><br><span class="line"># “jq”命令用于转换复杂的 jsonpath，参考 https://stedolan.github.io/jq/</span><br><span class="line">$ sel=$&#123;$(kubectl get rc my-rc --output=json | jq -j &#x27;.spec.selector | to_entries | .[] | &quot;\(.key)=\(.value),&quot;&#x27;)%?&#125;</span><br><span class="line">$ echo $(kubectl get pods --selector=$sel --output=jsonpath=&#123;.items..metadata.name&#125;)</span><br><span class="line"></span><br><span class="line"># 查看哪些节点已就绪</span><br><span class="line">$ JSONPATH=&#x27;&#123;range .items[*]&#125;&#123;@.metadata.name&#125;:&#123;range @.status.conditions[*]&#125;&#123;@.type&#125;=&#123;@.status&#125;;&#123;end&#125;&#123;end&#125;&#x27; \</span><br><span class="line"> &amp;&amp; kubectl get nodes -o jsonpath=&quot;$JSONPATH&quot; | grep &quot;Ready=True&quot;</span><br><span class="line"></span><br><span class="line"># 列出当前 Pod 中使用的 Secret</span><br><span class="line">$ kubectl get pods -o json | jq &#x27;.items[].spec.containers[].env[]?.valueFrom.secretKeyRef.name&#x27; | grep -v null | sort | uniq</span><br></pre></td></tr></table></figure>
-
-<h2 id="更新资源"><a href="#更新资源" class="headerlink" title="更新资源"></a>更新资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">$ kubectl rolling-update frontend-v1 -f frontend-v2.json           # 滚动更新 pod frontend-v1</span><br><span class="line">$ kubectl rolling-update frontend-v1 frontend-v2 --image=image:v2  # 更新资源名称并更新镜像</span><br><span class="line">$ kubectl rolling-update frontend --image=image:v2                 # 更新 frontend pod 中的镜像</span><br><span class="line">$ kubectl rolling-update frontend-v1 frontend-v2 --rollback        # 退出已存在的进行中的滚动更新</span><br><span class="line">$ cat pod.json | kubectl replace -f -                              # 基于 stdin 输入的 JSON 替换 pod</span><br><span class="line"># 强制替换，删除后重新创建资源。会导致服务中断。</span><br><span class="line">$ kubectl replace --force -f ./pod.json</span><br><span class="line"># 为 nginx RC 创建服务，启用本地 80 端口连接到容器上的 8000 端口</span><br><span class="line">$ kubectl expose rc nginx --port=80 --target-port=8000</span><br><span class="line"># 更新单容器 pod 的镜像版本（tag）到 v4</span><br><span class="line">$ kubectl get pod mypod -o yaml | sed &#x27;s/\(image: myimage\):.*$/\1:v4/&#x27; | kubectl replace -f -</span><br><span class="line"># 添加标签</span><br><span class="line">$ kubectl label pods my-pod new-label=awesome        </span><br><span class="line"> # 添加注解</span><br><span class="line">$ kubectl annotate pods my-pod icon-url=http://goo.gl/XXBTWq   </span><br><span class="line"># 自动扩展 deployment “foo”</span><br><span class="line">$ kubectl autoscale deployment foo --min=2 --max=10</span><br></pre></td></tr></table></figure>
-
-<h2 id="修补资源"><a href="#修补资源" class="headerlink" title="修补资源"></a>修补资源</h2><p>使用策略合并补丁并修补资源。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 部分更新节点</span><br><span class="line">kubectl patch node k8s-node-1 -p &#x27;&#123;&quot;spec&quot;:&#123;&quot;unschedulable&quot;:true&#125;&#125;&#x27; </span><br><span class="line"># 更新容器镜像；spec.containers[*].name 是必须的，因为这是合并的关键字</span><br><span class="line">$ kubectl patch pod valid-pod -p &#x27;&#123;&quot;spec&quot;:&#123;&quot;containers&quot;:[&#123;&quot;name&quot;:&quot;kubernetes-serve-hostname&quot;,&quot;image&quot;:&quot;new image&quot;&#125;]&#125;&#125;&#x27;</span><br><span class="line"># 使用具有位置数组的 json 补丁更新容器镜像</span><br><span class="line">$ kubectl patch pod valid-pod --type=&#x27;json&#x27; -p=&#x27;[&#123;&quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/spec/containers/0/image&quot;, &quot;value&quot;:&quot;new image&quot;&#125;]&#x27;</span><br><span class="line"># 使用具有位置数组的 json 补丁禁用 deployment 的 livenessProbe</span><br><span class="line">$ kubectl patch deployment valid-deployment  --type json   -p=&#x27;[&#123;&quot;op&quot;: &quot;remove&quot;, &quot;path&quot;: &quot;/spec/template/spec/containers/0/livenessProbe&quot;&#125;]&#x27;</span><br></pre></td></tr></table></figure>
-
-<h2 id="编辑资源"><a href="#编辑资源" class="headerlink" title="编辑资源"></a>编辑资源</h2><p>在编辑器中编辑任何 API 资源。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 编辑名为 docker-registry 的 service</span><br><span class="line">$ kubectl edit svc/docker-registry           </span><br><span class="line"># 使用其它编辑器</span><br><span class="line">$ KUBE_EDITOR=&quot;nano&quot; kubectl edit svc/docker-registry</span><br></pre></td></tr></table></figure>
-
-<h2 id="Scale-资源"><a href="#Scale-资源" class="headerlink" title="Scale 资源"></a>Scale 资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># Scale a replicaset named &#x27;foo&#x27; to 3</span><br><span class="line">$ kubectl scale --replicas=3 rs/foo       </span><br><span class="line"># Scale a resource specified in &quot;foo.yaml&quot; to 3</span><br><span class="line">$ kubectl scale --replicas=3 -f foo.yaml     </span><br><span class="line"># If the deployment named mysql&#x27;s current size is 2, scale mysql to 3</span><br><span class="line">$ kubectl scale --current-replicas=2 --replicas=3 deployment/mysql  </span><br><span class="line"># Scale multiple replication controllers</span><br><span class="line">$ kubectl scale --replicas=5 rc/foo rc/bar rc/baz</span><br></pre></td></tr></table></figure>
-
-<h2 id="删除资源"><a href="#删除资源" class="headerlink" title="删除资源"></a>删除资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 删除 pod.json 文件中定义的类型和名称的 pod</span><br><span class="line">$ kubectl delete -f ./pod.json        </span><br><span class="line"># 删除名为“baz”的 pod 和名为“foo”的 service</span><br><span class="line">$ kubectl delete pod,service baz foo      </span><br><span class="line"># 删除具有 name=myLabel 标签的 pod 和 serivce</span><br><span class="line">$ kubectl delete pods,services -l name=myLabel       </span><br><span class="line"># 删除具有 name=myLabel 标签的 pod 和 service，包括尚未初始化的</span><br><span class="line">$ kubectl delete pods,services -l name=myLabel --include-uninitialized   </span><br><span class="line"># 删除 my-ns namespace 下的所有 pod 和 serivce包</span><br><span class="line">$ kubectl -n my-ns delete po,svc --all</span><br></pre></td></tr></table></figure>
-
-<h2 id="与运行中的-Pod-交互"><a href="#与运行中的-Pod-交互" class="headerlink" title="与运行中的 Pod 交互"></a>与运行中的 Pod 交互</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># dump 输出 pod 的日志（stdout）</span><br><span class="line">$ kubectl logs my-pod  </span><br><span class="line"> # dump 输出 pod 中容器的日志（stdout，pod 中有多个容器的情况下使用）</span><br><span class="line">$ kubectl logs my-pod -c my-container      </span><br><span class="line"># 流式输出 pod 的日志（stdout）</span><br><span class="line">$ kubectl logs -f my-pod             </span><br><span class="line"># 流式输出 pod 中容器的日志（stdout，pod 中有多个容器的情况下使用）</span><br><span class="line">$ kubectl logs -f my-pod -c my-container</span><br><span class="line"># 交互式 shell 的方式运行 pod</span><br><span class="line">$ kubectl run -i --tty busybox --image=busybox -- sh  </span><br><span class="line"> # 连接到运行中的容器</span><br><span class="line">$ kubectl attach my-pod -i    </span><br><span class="line"># 转发 pod 中的 6000 端口到本地的 5000 端口</span><br><span class="line">$ kubectl port-forward my-pod 5000:6000   </span><br><span class="line">  # 在已存在的容器中执行命令（只有一个容器的情况下）</span><br><span class="line">$ kubectl exec my-pod -- ls /          </span><br><span class="line"># 在已存在的容器中执行命令（pod 中有多个容器的情况下）</span><br><span class="line">$ kubectl exec my-pod -c my-container -- ls /    </span><br><span class="line"># 显示指定 pod 和容器的指标度量</span><br><span class="line">$ kubectl top pod POD_NAME --containers</span><br></pre></td></tr></table></figure>
-
-<h2 id="与节点和集群交互"><a href="#与节点和集群交互" class="headerlink" title="与节点和集群交互"></a>与节点和集群交互</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 标记 my-node 不可调度</span><br><span class="line">$ kubectl cordon my-node       </span><br><span class="line"># 清空 my-node 以待维护</span><br><span class="line">$ kubectl drain my-node    </span><br><span class="line"># 标记 my-node 可调度</span><br><span class="line">$ kubectl uncordon my-node             </span><br><span class="line"> # 显示 my-node 的指标度量</span><br><span class="line">$ kubectl top node my-node    </span><br><span class="line">$ kubectl cluster-info          </span><br><span class="line"> # 将当前集群状态输出到 stdout</span><br><span class="line">$ kubectl cluster-info dump                                                               </span><br><span class="line"> # 将当前集群状态输出到 /path/to/cluster-state</span><br><span class="line">$ kubectl cluster-info dump --output-directory=/path/to/cluster-state  </span><br><span class="line"># 如果该键和影响的污点（taint）已存在，则使用指定的值替换</span><br><span class="line">$ kubectl taint nodes foo dedicated=special-user:NoSchedule</span><br></pre></td></tr></table></figure>
-
-<h2 id="set-命令"><a href="#set-命令" class="headerlink" title="set 命令"></a>set 命令</h2><p>配置应用的一些特定资源，也可以修改应用已有的资源<br>使用 kubectl set –help查看，它的子命令，env，image，resources，selector，serviceaccount，subject。</p>
-<p>语法：resources (-f FILENAME | TYPE NAME) ([—limits=LIMITS &amp; —requests=REQUESTS]</p>
-<h2 id="kubectl-set-resources-命令"><a href="#kubectl-set-resources-命令" class="headerlink" title="kubectl set resources 命令"></a>kubectl set resources 命令</h2><p>这个命令用于设置资源的一些范围限制。<br>资源对象中的Pod可以指定计算资源需求（CPU-单位m、内存-单位Mi），即使用的最小资源请求（Requests），限制（Limits）的最大资源需求，Pod将保证使用在设置的资源数量范围。<br>对于每个Pod资源，如果指定了Limits（限制）值，并省略了Requests（请求），则Requests默认为Limits的值。</p>
-<p><code>可用资源对象包括(支持大小写)：replicationcontroller、deployment、daemonset、job、replicaset。</code></p>
-<p>例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 将deployment的nginx容器cpu限制为“200m”，将内存设置为“512Mi”</span><br><span class="line">$ kubectl set resources deployment nginx -c=nginx --limits=cpu=200m,memory=512Mi</span><br><span class="line"># 设置所有nginx容器中 Requests和Limits</span><br><span class="line">$ kubectl set resources deployment nginx --limits=cpu=200m,memory=512Mi --requests=cpu=100m,memory=256Mi</span><br><span class="line"># 删除nginx中容器的计算资源值</span><br><span class="line">$ kubectl set resources deployment nginx --limits=cpu=0,memory=0 --requests=cpu=0,memory=0</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>tech</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>k8s</tag>
-        <tag>container</tag>
         <tag>shell</tag>
         <tag>Tech</tag>
       </tags>
@@ -1376,6 +1388,139 @@
       </tags>
   </entry>
   <entry>
+    <title>一文了解正则表达式</title>
+    <url>/2022/05/10/regexr/</url>
+    <content><![CDATA[<h1 id="一-正则表达式简介"><a href="#一-正则表达式简介" class="headerlink" title="一.正则表达式简介"></a>一.正则表达式简介</h1><ol>
+<li><p>什么是正则表达式<br>正则表达式（Regluar Expressions）又称规则表达式，这个概念最初是由Unix中的工具软件（如sed 和 grep）普及开的。正则表达式在代码中常简写为REs，regexes或regexp（regex patterns）。它本质上是一个小巧的、高度专用的编程语言。 许多程序设计语言都支持通过正则表达式进行字符串操作。例如，在Perl中就内建了一个功能强大的正则表达式引擎。</p>
+</li>
+<li><p>正则表达式能做什么<br>正则表达式的主要应用对象是文本，使用正则表达式可以指定想要匹配的字符串规则，然后通过这个规则来匹配、查找、替换或切割那些符合指定规则的文本。总体来讲，正则表达式可以对指定的文本实现以下功能：</p>
+</li>
+</ol>
+<ul>
+<li>匹配验证： 判断给定的字符串是否符合正则表达式所指定的过滤规则，从而可以判断某个字符串的内容是否符合特定的规则（如email地址、手机号码等）；当正则表达式用于匹配验证时，通常需要在正则表达式字符串的首部和尾部加上^和$，以匹配整个待验证的字符串。</li>
+<li>查找与替换： 判断给定字符串中是否包含满足正则表达式所指定的匹配规则的子串，如查找一段文本中的所包含的IP地址。另外，还可以对查找到的子串进行内容替换。<br>字符串分割与子串截取： 基于子串查找功能还可以以符合正则表达式所指定的匹配规则的字符串作为分隔符对给定的字符串进行分割。</li>
+</ul>
+<h1 id="二-正则表达式中的字符"><a href="#二-正则表达式中的字符" class="headerlink" title="二.正则表达式中的字符"></a>二.正则表达式中的字符</h1><p>正则表达式的主要应用对象是文本，其最基础的功能是文本匹配，而文本是由一个个的字符组成，因此正则表达式实际上是对字符的匹配。正则表达式中的字符分为 普通字符 和 元字符，而正则表达式就是这些普通字符和特殊元字符组合成的表示一个特定匹配规则的表达式。</p>
+<ol>
+<li>普通字符<br>实际上，大多数字符都将简单地匹配它们的自身值，它们被称为普通字符，如数字（0-9），字母（a-z, A-Z）等。例如，正则表达式hello123将匹配字符串’hello123’，因为该这则表达式中都是普通字符，不包含特殊元字符。当然，我们可以通过指定正则表达式的匹配模式为 忽略字母大小写模式，这么正则表达式hello123将能够匹配’Hello123’, ‘HellO123’, ‘HELLO123’等字符串。</li>
+</ol>
+<blockquote>
+<p>提示： 其实我们并不需要去记忆哪些字符是普通字符，我们只需要知道哪些字符是特殊元字符就可以了，除了特殊元字符之外的所有字符都是普通字符。</p>
+</blockquote>
+<ol start="2">
+<li>元字符<br>上面提到，正则表达式除了进行字符自身之的匹配外，还可以基于指定的规则进行模糊匹配。这就意味着它需要一些特殊字符来表示这些模糊的匹配规则，因此这些特殊字符默认情况下并不能匹配到它们自身的字面值，而是表示某些特殊的功能。这些特殊元字符包括：., [, ], (, ), *, +, ?, ^, $, , |。这些特殊字符的使用，会在下面进行详细讲解。正则表达式的重点和难点也就在于对正则表达式引擎的工作原理以及对这些特殊元字符掌握和灵活运用。</li>
+</ol>
+<blockquote>
+<p>提示： 那么如果想匹配这些特殊元字符本身的字面值怎么办呢？我们可以通过其中一个特殊字符对其它特殊字符进行转义，从而达到可以匹配这些特殊字符自身字面值的目的。</p>
+</blockquote>
+<h1 id="三-元字符详解"><a href="#三-元字符详解" class="headerlink" title="三.元字符详解"></a>三.元字符详解</h1><p>现在我们来详细说明一下正则表达式中的特殊元字符到底能完成哪些复杂的匹配功能。<br>1.单个字符匹配</p>
+<p><img src="/2022/05/10/regexr/regex1.png" alt="image"></p>
+<blockquote>
+<p>说明： 所有的特殊字符在[ ]内都将失去其原有的特殊含义:</p>
+<ul>
+<li>有些特殊字符在[ ]中被赋予新的特殊含义，如 ‘^’出现在[ ]中的开始位置表示取反，它出现在[]中的其他位置表示其本身（变成了一个普通字符）；</li>
+<li>有些特殊字符则变为普通字符，如 ‘.’, ‘*’, ‘+’, ‘?’, ‘$’</li>
+<li>有的普通字符变为特殊字符，如 ‘-‘ 在[ ]中的位置不是第一个字符则表示一个数字或字母区间，如果在[ ]中的位置是第一个字符则表示其本身（一个普通字符）</li>
+<li>在[ ]中，如果要使用’-‘, ‘^’ 或’]’，可在在它们前面加上反斜杠，或把’-‘, ‘]’放在第一个字符的 位置，把’^’放在非第一个字符的位置</li>
+</ul>
+</blockquote>
+<ol>
+<li>预定义字符集</li>
+</ol>
+<p>我们可以在反斜杠后面跟上一个指定的字母来表示预定义的字符集合</p>
+<p><img src="/2022/05/10/regexr/regex2.png" alt="image"></p>
+<ol start="3">
+<li>字符次数匹配–量词<br>在正则表达式中，我们还可以指定匹配某个字符出现次数</li>
+</ol>
+<p><img src="/2022/05/10/regexr/regex3.png" alt="image"></p>
+<blockquote>
+<p>说明： {m,n}中的m和n可以省略其中一个，{,n}相当于{0,n}，{m,}相当于{m,整数最大值}。</p>
+</blockquote>
+<p>我们可以得出以下结论：</p>
+<ul>
+<li>{0,1}或{,1} 等价于 ?</li>
+<li>{1,} 等价于 +</li>
+<li>{0,} 等价于 *</li>
+</ul>
+<p>我们优先选择使用 ?, + 和 *，因为他们书写简单，也可以使整个正则表达式变得简洁。</p>
+<blockquote>
+<p>说明： ? 这个字符在正则表达中与 ?, +, *, {m,n}连用时还有一个额外的功能，就是将匹配模式由贪婪模式（尽可能的增加匹配次数） 变成 非贪婪模式（尽可能减少匹配次数）， 这个会在下面的内容中进行详细说明。</p>
+</blockquote>
+<ol start="4">
+<li><p>边界匹配<br>正则表达式中还可以对边界位置进行匹配，如一个字符串的开头或结尾，一个单词的开头或结尾。<br><img src="/2022/05/10/regexr/regexr4.png" alt="image"></p>
+</li>
+<li><p>逻辑与分组<br>语法 | 说明 | 表达式实例 | 可匹配到的字符串实例<br><img src="/2022/05/10/regexr/regexr5.png" alt="image"></p>
+</li>
+</ol>
+<ol start="6">
+<li>特殊构造</li>
+</ol>
+<p><img src="/2022/05/10/regexr/regexr6.png" alt="image"></p>
+<blockquote>
+<p>说明： 上面所说的“不消耗字符串内容”是指只是进行匹配，但是不移动原始字符串的匹配位置，这样就可以完成多次匹配。下面有个匹配密码的正则表达式实例，就是用这个特性巧妙完成的。</p>
+</blockquote>
+<h1 id="四-常用正则表达式实例"><a href="#四-常用正则表达式实例" class="headerlink" title="四.常用正则表达式实例"></a>四.常用正则表达式实例</h1><p>通常写一个合适的正则表达式是比较耗费时间的，因此我们可以保留一些常用的正则表达式以备不时之需。但是需要说明的是，没有任何一个人敢说自己写的正则表达式是百分之百严谨的，而且也没有百分之百相同的匹配需求，因此这里只是列举我自己写的几个常用的正则表达式，欢迎大家留言讨论。</p>
+<blockquote>
+<p>说明： 下面只是一些简单的匹配规则，实际情况中需要我们根据具体情况再这些正则表达式的首部和尾部加上相应的边界符，如：^, $, \A, \Z, \b, \B等</p>
+</blockquote>
+<p><strong>匹配一个网络地址（URL)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[a-zA-Z]+://[\S]+</span><br></pre></td></tr></table></figure>
+<p>需要说明的是，网络地址不一定是一个网页地址（http或https链接），还可能是ftp地址等。如果我们要匹配特定协议的网络地址，如http或http链接可以这样写:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(https?://)?[\S]+</span><br></pre></td></tr></table></figure>
+<p><strong>匹配一个IP地址</strong><br>最简单的写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(\d+[.])&#123;3&#125;\d+</span><br></pre></td></tr></table></figure>
+<p>严谨一点的写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(((?:[1-9]\d?)|(?:1\d&#123;2&#125;)|(?:2[0-4]\d)|(?:25[0-5]))[.])&#123;3&#125;((?:[1-9]\d?)|(?:1\d&#123;2&#125;)|(?:2[0-4]\d)|(?:25[0-5]))</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">((([1-9]\d?)|(1\d&#123;2&#125;)|(2[0-4]\d)|(25[0-5]))[.])&#123;3&#125;(([1-9]\d?)|(1\d&#123;2&#125;)|(2[0-4]\d)|(25[0-5]))</span><br></pre></td></tr></table></figure>
+<p><strong>匹配一个邮箱地址</strong><br>最简单的写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\S+@\S+\.\S+</span><br></pre></td></tr></table></figure>
+<p>严谨一点的写法（保证只出现一个@符）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[^\s@]+@[^\s@]+\.[^\s@]+</span><br></pre></td></tr></table></figure>
+<p><strong>匹配密码是否合法</strong><br>要求比较简单的情况，比如只要求为非空字符且限定密码长度为6-18位</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">^\S[6-18]$</span><br></pre></td></tr></table></figure>
+<p>要求比较复杂的情况，比如必须同时包含含数字、大小字母、小写字母和标点符号，这就需要用到前面所说的正则表达式的特殊构造了(?=…), (?!=…)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(?=^.&#123;6,8&#125;$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)</span><br></pre></td></tr></table></figure>
+<p>如果要求必须同时包含且只能包含数字、大小字母、小写字母和标点符号，可以这样写：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(?=^[\d\Wa-zA-Z]&#123;6,8&#125;$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)</span><br></pre></td></tr></table></figure>
+<p><strong>匹配大陆身份证号码（15位或18位)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\d&#123;15&#125;|(\d&#123;18&#125;|(\d&#123;17&#125;[Xx]))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>小贴士： 当今的身份证号码有15位和18位之分。1985年我国实行居民身份证制度，当时签发的身份证号码是15位的，1999年签发的身份证由于年份的扩展（由两位变为四位）和末尾加了效验码，就成了18位。这两种身份证号码将在相当长的一段时期内共存。两种身份证号码的含义如下：</p>
+</blockquote>
+<p><strong>匹配日期（年-月-日)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(\d&#123;2&#125;|\d&#123;4&#125;)-((0?[1-9])|(1[0-2]))-((0?[1-9])|([12][0-9])|(3[01]))</span><br></pre></td></tr></table></figure>
+<p>24小时制时间（小时:分钟:秒）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(((0?|1)[0-9])|(2[0-3])):([0-5][0-9]):([0-5][0-9])</span><br></pre></td></tr></table></figure>
+<p>其他常用正则表达式<br><img src="/2022/05/10/regexr/regerx7.png" alt="image"><br><strong>再次说明，实际情况中需要我们根据具体情况再这些正则表达式的首部和尾部加上相应的边界符，如：^, $, \A, \Z, \b, \B等</strong></p>
+<h1 id="五-正则表达式的匹配过程"><a href="#五-正则表达式的匹配过程" class="headerlink" title="五.正则表达式的匹配过程"></a>五.正则表达式的匹配过程</h1><p>基于量词（如?, +, *, {m,n}, {m,}）的字符重复次数匹配是正则表达式优于普通字符串处理方法的一个重要方面，也是正则表达式的一个重要组成部分。量词对正则表达式的匹配过程具有非常重大的影响，因此在介绍正则表达式的匹配过程时，必不可少的要提到量词的两个重要分类：</p>
+<ul>
+<li>匹配优先量词 我们上面介绍的量词就是匹配优先量词包括：?, +, *, {m,n}，但是不包括{m}</li>
+<li>忽略优先量词 在匹配优先量词后面加上一个问号就变成了忽略优先量词，包括：??, +?, *?, {m,n}?<br>如果大家对这两个词不熟悉的话，那么大家一定听说过这两个词：</li>
+<li>贪婪模式（或非惰性匹配） 顾名思义，就是在整个表达式匹配成功的前提下，尽可能多的去匹配量词所修饰的字符</li>
+<li>非贪婪模式（或惰性匹配） 在整个表达式匹配成功的前提下，尽可能少的去匹配量词所修饰的字符<br>它们之间的关系是：</li>
+<li>匹配优先量词修饰的子表达式使用的是就是贪婪模式（非惰性匹配）;</li>
+<li>忽略优先量词修饰的子表达式使用的就是模式就是非贪婪模式（惰性匹配）;<br>下面我们通过一个实例来分析 贪婪模式 和 非贪婪模式 下的正则匹配过程：</li>
+<li>要匹配的字符串：’abcbd’</li>
+<li>贪婪模式正则表达式：a[bcd]*b</li>
+<li>非贪婪模式正则表达式：a[bcd]*?b</li>
+</ul>
+<h2 id="1-贪婪模式匹配过程分析"><a href="#1-贪婪模式匹配过程分析" class="headerlink" title="1. 贪婪模式匹配过程分析"></a>1. 贪婪模式匹配过程分析</h2><p><img src="/2022/05/10/regexr/regexr8.png" alt="image"></p>
+<h2 id="2-非贪婪模式匹配过程分析"><a href="#2-非贪婪模式匹配过程分析" class="headerlink" title="2. 非贪婪模式匹配过程分析"></a>2. 非贪婪模式匹配过程分析</h2><p><img src="/2022/05/10/regexr/regerx9.png" alt="image"></p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>贪婪模式与非贪婪模式影响的是被量词修饰的子表达式的匹配行为，贪婪模式在整个表达式匹配成功的前提下，尽可能多的匹配；非贪婪模式在整个表达式匹配成功的前提下，尽可能少的匹配。另外，非贪婪模式只被部分NFA引擎所支持。从匹配效率上来看，能达到相同匹配结果时，贪婪模式的匹配效率通常会比较高，因为它回溯过程会比较少。</p>
+<h2 id="4-补充示例"><a href="#4-补充示例" class="headerlink" title="4. 补充示例"></a>4. 补充示例</h2><p>匹配过程示例<br><img src="/2022/05/10/regexr/regerx10.png" alt="image"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* 首先由“&lt;”取得控制权，由位置0位开始尝试匹配，匹配字符“a”，匹配失败，第一轮匹配结束。第二轮匹配从位置1开始尝试匹配，同样匹配失败。第三轮从位置3开始尝试匹配，匹配字符“&lt;”，匹配成功，控制权交给“d”。</span><br><span class="line"></span><br><span class="line">* “d”尝试匹配字符“d”，匹配成功，控制权交给“i”。重复以上过程，直到由“&gt;”匹配到字符“&gt;”，控制权交给“.*”。</span><br><span class="line"></span><br><span class="line">* “.*”属于贪婪模式，将从B处后的字符“t”开始，一直匹配到E处，也就是字符串结束位置，将控制权交给“&lt;”。</span><br><span class="line"></span><br><span class="line">* “&lt;”从字符串结束位置尝试匹配，匹配失败，向前查找可供回溯的状态，把控制权交给“.”，由“.”让出一个字符“c”，把控制权再交给“&lt;”，尝试匹配，匹配失败，向前查找可供回溯的状态。一直重复以上过程，直到“.*”让出已匹配的字符“&lt;”，实际上也就是到让出了已匹配的子串“&lt;/div&gt;cc&quot;为止，“&lt;”才匹配字符“&lt;”成功，控制权交给“/”。 </span><br><span class="line"></span><br><span class="line">* 接下来由“/”、“d”、“i”、“v”分别匹配对应的字符成功，此时整个正则表达式匹配完毕。</span><br></pre></td></tr></table></figure>
+
+<h1 id="六-参考资料"><a href="#六-参考资料" class="headerlink" title="六.参考资料"></a>六.参考资料</h1><p><img src="/2022/05/10/regexr/regerx11.png" alt="image"></p>
+]]></content>
+      <categories>
+        <category>shell</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一文让你从入门到精通shell</title>
     <url>/2021/08/19/shell-notes/</url>
     <content><![CDATA[<ul>
@@ -1982,246 +2127,6 @@
       </tags>
   </entry>
   <entry>
-    <title>一文了解正则表达式</title>
-    <url>/2022/05/10/regexr/</url>
-    <content><![CDATA[<h1 id="一-正则表达式简介"><a href="#一-正则表达式简介" class="headerlink" title="一.正则表达式简介"></a>一.正则表达式简介</h1><ol>
-<li><p>什么是正则表达式<br>正则表达式（Regluar Expressions）又称规则表达式，这个概念最初是由Unix中的工具软件（如sed 和 grep）普及开的。正则表达式在代码中常简写为REs，regexes或regexp（regex patterns）。它本质上是一个小巧的、高度专用的编程语言。 许多程序设计语言都支持通过正则表达式进行字符串操作。例如，在Perl中就内建了一个功能强大的正则表达式引擎。</p>
-</li>
-<li><p>正则表达式能做什么<br>正则表达式的主要应用对象是文本，使用正则表达式可以指定想要匹配的字符串规则，然后通过这个规则来匹配、查找、替换或切割那些符合指定规则的文本。总体来讲，正则表达式可以对指定的文本实现以下功能：</p>
-</li>
-</ol>
-<ul>
-<li>匹配验证： 判断给定的字符串是否符合正则表达式所指定的过滤规则，从而可以判断某个字符串的内容是否符合特定的规则（如email地址、手机号码等）；当正则表达式用于匹配验证时，通常需要在正则表达式字符串的首部和尾部加上^和$，以匹配整个待验证的字符串。</li>
-<li>查找与替换： 判断给定字符串中是否包含满足正则表达式所指定的匹配规则的子串，如查找一段文本中的所包含的IP地址。另外，还可以对查找到的子串进行内容替换。<br>字符串分割与子串截取： 基于子串查找功能还可以以符合正则表达式所指定的匹配规则的字符串作为分隔符对给定的字符串进行分割。</li>
-</ul>
-<h1 id="二-正则表达式中的字符"><a href="#二-正则表达式中的字符" class="headerlink" title="二.正则表达式中的字符"></a>二.正则表达式中的字符</h1><p>正则表达式的主要应用对象是文本，其最基础的功能是文本匹配，而文本是由一个个的字符组成，因此正则表达式实际上是对字符的匹配。正则表达式中的字符分为 普通字符 和 元字符，而正则表达式就是这些普通字符和特殊元字符组合成的表示一个特定匹配规则的表达式。</p>
-<ol>
-<li>普通字符<br>实际上，大多数字符都将简单地匹配它们的自身值，它们被称为普通字符，如数字（0-9），字母（a-z, A-Z）等。例如，正则表达式hello123将匹配字符串’hello123’，因为该这则表达式中都是普通字符，不包含特殊元字符。当然，我们可以通过指定正则表达式的匹配模式为 忽略字母大小写模式，这么正则表达式hello123将能够匹配’Hello123’, ‘HellO123’, ‘HELLO123’等字符串。</li>
-</ol>
-<blockquote>
-<p>提示： 其实我们并不需要去记忆哪些字符是普通字符，我们只需要知道哪些字符是特殊元字符就可以了，除了特殊元字符之外的所有字符都是普通字符。</p>
-</blockquote>
-<ol start="2">
-<li>元字符<br>上面提到，正则表达式除了进行字符自身之的匹配外，还可以基于指定的规则进行模糊匹配。这就意味着它需要一些特殊字符来表示这些模糊的匹配规则，因此这些特殊字符默认情况下并不能匹配到它们自身的字面值，而是表示某些特殊的功能。这些特殊元字符包括：., [, ], (, ), *, +, ?, ^, $, , |。这些特殊字符的使用，会在下面进行详细讲解。正则表达式的重点和难点也就在于对正则表达式引擎的工作原理以及对这些特殊元字符掌握和灵活运用。</li>
-</ol>
-<blockquote>
-<p>提示： 那么如果想匹配这些特殊元字符本身的字面值怎么办呢？我们可以通过其中一个特殊字符对其它特殊字符进行转义，从而达到可以匹配这些特殊字符自身字面值的目的。</p>
-</blockquote>
-<h1 id="三-元字符详解"><a href="#三-元字符详解" class="headerlink" title="三.元字符详解"></a>三.元字符详解</h1><p>现在我们来详细说明一下正则表达式中的特殊元字符到底能完成哪些复杂的匹配功能。<br>1.单个字符匹配</p>
-<p><img src="/2022/05/10/regexr/regex1.png" alt="image"></p>
-<blockquote>
-<p>说明： 所有的特殊字符在[ ]内都将失去其原有的特殊含义:</p>
-<ul>
-<li>有些特殊字符在[ ]中被赋予新的特殊含义，如 ‘^’出现在[ ]中的开始位置表示取反，它出现在[]中的其他位置表示其本身（变成了一个普通字符）；</li>
-<li>有些特殊字符则变为普通字符，如 ‘.’, ‘*’, ‘+’, ‘?’, ‘$’</li>
-<li>有的普通字符变为特殊字符，如 ‘-‘ 在[ ]中的位置不是第一个字符则表示一个数字或字母区间，如果在[ ]中的位置是第一个字符则表示其本身（一个普通字符）</li>
-<li>在[ ]中，如果要使用’-‘, ‘^’ 或’]’，可在在它们前面加上反斜杠，或把’-‘, ‘]’放在第一个字符的 位置，把’^’放在非第一个字符的位置</li>
-</ul>
-</blockquote>
-<ol>
-<li>预定义字符集</li>
-</ol>
-<p>我们可以在反斜杠后面跟上一个指定的字母来表示预定义的字符集合</p>
-<p><img src="/2022/05/10/regexr/regex2.png" alt="image"></p>
-<ol start="3">
-<li>字符次数匹配–量词<br>在正则表达式中，我们还可以指定匹配某个字符出现次数</li>
-</ol>
-<p><img src="/2022/05/10/regexr/regex3.png" alt="image"></p>
-<blockquote>
-<p>说明： {m,n}中的m和n可以省略其中一个，{,n}相当于{0,n}，{m,}相当于{m,整数最大值}。</p>
-</blockquote>
-<p>我们可以得出以下结论：</p>
-<ul>
-<li>{0,1}或{,1} 等价于 ?</li>
-<li>{1,} 等价于 +</li>
-<li>{0,} 等价于 *</li>
-</ul>
-<p>我们优先选择使用 ?, + 和 *，因为他们书写简单，也可以使整个正则表达式变得简洁。</p>
-<blockquote>
-<p>说明： ? 这个字符在正则表达中与 ?, +, *, {m,n}连用时还有一个额外的功能，就是将匹配模式由贪婪模式（尽可能的增加匹配次数） 变成 非贪婪模式（尽可能减少匹配次数）， 这个会在下面的内容中进行详细说明。</p>
-</blockquote>
-<ol start="4">
-<li><p>边界匹配<br>正则表达式中还可以对边界位置进行匹配，如一个字符串的开头或结尾，一个单词的开头或结尾。<br><img src="/2022/05/10/regexr/regexr4.png" alt="image"></p>
-</li>
-<li><p>逻辑与分组<br>语法 | 说明 | 表达式实例 | 可匹配到的字符串实例<br><img src="/2022/05/10/regexr/regexr5.png" alt="image"></p>
-</li>
-</ol>
-<ol start="6">
-<li>特殊构造</li>
-</ol>
-<p><img src="/2022/05/10/regexr/regexr6.png" alt="image"></p>
-<blockquote>
-<p>说明： 上面所说的“不消耗字符串内容”是指只是进行匹配，但是不移动原始字符串的匹配位置，这样就可以完成多次匹配。下面有个匹配密码的正则表达式实例，就是用这个特性巧妙完成的。</p>
-</blockquote>
-<h1 id="四-常用正则表达式实例"><a href="#四-常用正则表达式实例" class="headerlink" title="四.常用正则表达式实例"></a>四.常用正则表达式实例</h1><p>通常写一个合适的正则表达式是比较耗费时间的，因此我们可以保留一些常用的正则表达式以备不时之需。但是需要说明的是，没有任何一个人敢说自己写的正则表达式是百分之百严谨的，而且也没有百分之百相同的匹配需求，因此这里只是列举我自己写的几个常用的正则表达式，欢迎大家留言讨论。</p>
-<blockquote>
-<p>说明： 下面只是一些简单的匹配规则，实际情况中需要我们根据具体情况再这些正则表达式的首部和尾部加上相应的边界符，如：^, $, \A, \Z, \b, \B等</p>
-</blockquote>
-<p><strong>匹配一个网络地址（URL)</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[a-zA-Z]+://[\S]+</span><br></pre></td></tr></table></figure>
-<p>需要说明的是，网络地址不一定是一个网页地址（http或https链接），还可能是ftp地址等。如果我们要匹配特定协议的网络地址，如http或http链接可以这样写:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(https?://)?[\S]+</span><br></pre></td></tr></table></figure>
-<p><strong>匹配一个IP地址</strong><br>最简单的写法：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(\d+[.])&#123;3&#125;\d+</span><br></pre></td></tr></table></figure>
-<p>严谨一点的写法：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(((?:[1-9]\d?)|(?:1\d&#123;2&#125;)|(?:2[0-4]\d)|(?:25[0-5]))[.])&#123;3&#125;((?:[1-9]\d?)|(?:1\d&#123;2&#125;)|(?:2[0-4]\d)|(?:25[0-5]))</span><br></pre></td></tr></table></figure>
-<p>或</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">((([1-9]\d?)|(1\d&#123;2&#125;)|(2[0-4]\d)|(25[0-5]))[.])&#123;3&#125;(([1-9]\d?)|(1\d&#123;2&#125;)|(2[0-4]\d)|(25[0-5]))</span><br></pre></td></tr></table></figure>
-<p><strong>匹配一个邮箱地址</strong><br>最简单的写法：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\S+@\S+\.\S+</span><br></pre></td></tr></table></figure>
-<p>严谨一点的写法（保证只出现一个@符）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[^\s@]+@[^\s@]+\.[^\s@]+</span><br></pre></td></tr></table></figure>
-<p><strong>匹配密码是否合法</strong><br>要求比较简单的情况，比如只要求为非空字符且限定密码长度为6-18位</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">^\S[6-18]$</span><br></pre></td></tr></table></figure>
-<p>要求比较复杂的情况，比如必须同时包含含数字、大小字母、小写字母和标点符号，这就需要用到前面所说的正则表达式的特殊构造了(?=…), (?!=…)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(?=^.&#123;6,8&#125;$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)</span><br></pre></td></tr></table></figure>
-<p>如果要求必须同时包含且只能包含数字、大小字母、小写字母和标点符号，可以这样写：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(?=^[\d\Wa-zA-Z]&#123;6,8&#125;$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)</span><br></pre></td></tr></table></figure>
-<p><strong>匹配大陆身份证号码（15位或18位)</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\d&#123;15&#125;|(\d&#123;18&#125;|(\d&#123;17&#125;[Xx]))</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>小贴士： 当今的身份证号码有15位和18位之分。1985年我国实行居民身份证制度，当时签发的身份证号码是15位的，1999年签发的身份证由于年份的扩展（由两位变为四位）和末尾加了效验码，就成了18位。这两种身份证号码将在相当长的一段时期内共存。两种身份证号码的含义如下：</p>
-</blockquote>
-<p><strong>匹配日期（年-月-日)</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(\d&#123;2&#125;|\d&#123;4&#125;)-((0?[1-9])|(1[0-2]))-((0?[1-9])|([12][0-9])|(3[01]))</span><br></pre></td></tr></table></figure>
-<p>24小时制时间（小时:分钟:秒）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(((0?|1)[0-9])|(2[0-3])):([0-5][0-9]):([0-5][0-9])</span><br></pre></td></tr></table></figure>
-<p>其他常用正则表达式<br><img src="/2022/05/10/regexr/regerx7.png" alt="image"><br><strong>再次说明，实际情况中需要我们根据具体情况再这些正则表达式的首部和尾部加上相应的边界符，如：^, $, \A, \Z, \b, \B等</strong></p>
-<h1 id="五-正则表达式的匹配过程"><a href="#五-正则表达式的匹配过程" class="headerlink" title="五.正则表达式的匹配过程"></a>五.正则表达式的匹配过程</h1><p>基于量词（如?, +, *, {m,n}, {m,}）的字符重复次数匹配是正则表达式优于普通字符串处理方法的一个重要方面，也是正则表达式的一个重要组成部分。量词对正则表达式的匹配过程具有非常重大的影响，因此在介绍正则表达式的匹配过程时，必不可少的要提到量词的两个重要分类：</p>
-<ul>
-<li>匹配优先量词 我们上面介绍的量词就是匹配优先量词包括：?, +, *, {m,n}，但是不包括{m}</li>
-<li>忽略优先量词 在匹配优先量词后面加上一个问号就变成了忽略优先量词，包括：??, +?, *?, {m,n}?<br>如果大家对这两个词不熟悉的话，那么大家一定听说过这两个词：</li>
-<li>贪婪模式（或非惰性匹配） 顾名思义，就是在整个表达式匹配成功的前提下，尽可能多的去匹配量词所修饰的字符</li>
-<li>非贪婪模式（或惰性匹配） 在整个表达式匹配成功的前提下，尽可能少的去匹配量词所修饰的字符<br>它们之间的关系是：</li>
-<li>匹配优先量词修饰的子表达式使用的是就是贪婪模式（非惰性匹配）;</li>
-<li>忽略优先量词修饰的子表达式使用的就是模式就是非贪婪模式（惰性匹配）;<br>下面我们通过一个实例来分析 贪婪模式 和 非贪婪模式 下的正则匹配过程：</li>
-<li>要匹配的字符串：’abcbd’</li>
-<li>贪婪模式正则表达式：a[bcd]*b</li>
-<li>非贪婪模式正则表达式：a[bcd]*?b</li>
-</ul>
-<h2 id="1-贪婪模式匹配过程分析"><a href="#1-贪婪模式匹配过程分析" class="headerlink" title="1. 贪婪模式匹配过程分析"></a>1. 贪婪模式匹配过程分析</h2><p><img src="/2022/05/10/regexr/regexr8.png" alt="image"></p>
-<h2 id="2-非贪婪模式匹配过程分析"><a href="#2-非贪婪模式匹配过程分析" class="headerlink" title="2. 非贪婪模式匹配过程分析"></a>2. 非贪婪模式匹配过程分析</h2><p><img src="/2022/05/10/regexr/regerx9.png" alt="image"></p>
-<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>贪婪模式与非贪婪模式影响的是被量词修饰的子表达式的匹配行为，贪婪模式在整个表达式匹配成功的前提下，尽可能多的匹配；非贪婪模式在整个表达式匹配成功的前提下，尽可能少的匹配。另外，非贪婪模式只被部分NFA引擎所支持。从匹配效率上来看，能达到相同匹配结果时，贪婪模式的匹配效率通常会比较高，因为它回溯过程会比较少。</p>
-<h2 id="4-补充示例"><a href="#4-补充示例" class="headerlink" title="4. 补充示例"></a>4. 补充示例</h2><p>匹配过程示例<br><img src="/2022/05/10/regexr/regerx10.png" alt="image"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* 首先由“&lt;”取得控制权，由位置0位开始尝试匹配，匹配字符“a”，匹配失败，第一轮匹配结束。第二轮匹配从位置1开始尝试匹配，同样匹配失败。第三轮从位置3开始尝试匹配，匹配字符“&lt;”，匹配成功，控制权交给“d”。</span><br><span class="line"></span><br><span class="line">* “d”尝试匹配字符“d”，匹配成功，控制权交给“i”。重复以上过程，直到由“&gt;”匹配到字符“&gt;”，控制权交给“.*”。</span><br><span class="line"></span><br><span class="line">* “.*”属于贪婪模式，将从B处后的字符“t”开始，一直匹配到E处，也就是字符串结束位置，将控制权交给“&lt;”。</span><br><span class="line"></span><br><span class="line">* “&lt;”从字符串结束位置尝试匹配，匹配失败，向前查找可供回溯的状态，把控制权交给“.”，由“.”让出一个字符“c”，把控制权再交给“&lt;”，尝试匹配，匹配失败，向前查找可供回溯的状态。一直重复以上过程，直到“.*”让出已匹配的字符“&lt;”，实际上也就是到让出了已匹配的子串“&lt;/div&gt;cc&quot;为止，“&lt;”才匹配字符“&lt;”成功，控制权交给“/”。 </span><br><span class="line"></span><br><span class="line">* 接下来由“/”、“d”、“i”、“v”分别匹配对应的字符成功，此时整个正则表达式匹配完毕。</span><br></pre></td></tr></table></figure>
-
-<h1 id="六-参考资料"><a href="#六-参考资料" class="headerlink" title="六.参考资料"></a>六.参考资料</h1><p><img src="/2022/05/10/regexr/regerx11.png" alt="image"></p>
-]]></content>
-      <categories>
-        <category>shell</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一文让你shell从狗熊变英雄</title>
-    <url>/2023/08/13/shell_from_zero_to_hero./</url>
-    <content><![CDATA[<ul>
-<li><a href="#shell-from-zero-to-hero">Shell From Zero To Hero</a><ul>
-<li><a href="#simply-level-questions">Simply Level Questions</a><ul>
-<li><a href="#%E6%8F%8F%E8%BF%B0linux%E7%B3%BB%E7%BB%9F%E4%BB%8E%E5%BC%80%E6%9C%BA%E5%88%B0%E7%99%BB%E9%99%86%E7%95%8C%E9%9D%A2%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B">描述Linux系统从开机到登陆界面的启动过程</a></li>
-<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E8%BD%AF%E9%93%BE%E6%8E%A5%E5%92%8C%E7%A1%AC%E9%93%BE%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB">描述Linux下软链接和硬链接的区别</a></li>
-</ul>
-</li>
-<li><a href="#middle-level-questions">Middle Level Questions</a><ul>
-<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4%E7%9A%84%E5%8E%9F%E7%90%86">描述Linux下文件删除的原理</a></li>
-<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fgrep%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式grep高级参数的使用</a></li>
-<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fsed%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式sed高级参数的使用</a></li>
-<li><a href="#awk">AWK</a></li>
-</ul>
-</li>
-<li><a href="#hard-level-questions">Hard Level Questions</a></li>
-</ul>
-</li>
-</ul>
-<h1 id="Shell-From-Zero-To-Hero"><a href="#Shell-From-Zero-To-Hero" class="headerlink" title="Shell From Zero To Hero"></a>Shell From Zero To Hero</h1><h2 id="Simply-Level-Questions"><a href="#Simply-Level-Questions" class="headerlink" title="Simply Level Questions"></a>Simply Level Questions</h2><h3 id="描述Linux系统从开机到登陆界面的启动过程"><a href="#描述Linux系统从开机到登陆界面的启动过程" class="headerlink" title="描述Linux系统从开机到登陆界面的启动过程"></a>描述Linux系统从开机到登陆界面的启动过程</h3><ul>
-<li><p>开机BIOS自检，加载硬盘。</p>
-</li>
-<li><p>读取MBR,MBR引导。</p>
-</li>
-<li><p>grub引导菜单(Boot Loader)。</p>
-</li>
-<li><p>加载内核kernel。</p>
-</li>
-<li><p>启动init进程，依据inittab文件设定运行级别</p>
-</li>
-<li><p>init进程，执行rc.sysinit文件。</p>
-</li>
-<li><p>启动内核模块，执行不同级别的脚本程序。</p>
-</li>
-<li><p>执行/etc/rc.d/rc.local</p>
-</li>
-<li><p>启动mingetty，进入系统登陆界面。</p>
-</li>
-</ul>
-<h3 id="描述Linux下软链接和硬链接的区别"><a href="#描述Linux下软链接和硬链接的区别" class="headerlink" title="描述Linux下软链接和硬链接的区别"></a>描述Linux下软链接和硬链接的区别</h3><p>在Linux系统中，链接分为两种，一种是硬链接（Hard link），另一种称为符号链接或软链接（Symbolic Link）。</p>
-<ul>
-<li><p>默认不带参数的情况下，ln创建的是硬链接，带-s参数的ln命令创建的是软链接。</p>
-</li>
-<li><p>硬链接文件与源文件的inode节点号相同，而软链接文件的inode节点号，与源文件不同，</p>
-</li>
-<li><p>ln命令不能对目录创建硬链接，但可以创建软链接。对目录的软链接会经常使用到。</p>
-</li>
-<li><p>删除软链接文件，对源文件和硬链接文件无任何影响。</p>
-</li>
-<li><p>删除文件的硬链接文件，对源文件及软链接文件无任何影响。</p>
-</li>
-<li><p>删除链接文件的源文件，对硬链接文件无影响，会导致其软链接失效（红底白字闪烁状）。</p>
-</li>
-<li><p>同时删除源文件及其硬链接文件，整个文件才会被真正的删除。</p>
-</li>
-<li><p>很多硬件设备的快照功能，使用的就是类似硬链接的原理。</p>
-</li>
-<li><p>软链接可以跨文件系统，硬链接不可以跨文件系统。</p>
-</li>
-</ul>
-<h2 id="Middle-Level-Questions"><a href="#Middle-Level-Questions" class="headerlink" title="Middle Level Questions"></a>Middle Level Questions</h2><h3 id="描述Linux下文件删除的原理"><a href="#描述Linux下文件删除的原理" class="headerlink" title="描述Linux下文件删除的原理"></a>描述Linux下文件删除的原理</h3><p>Linux系统是通过link的数量来控制文件删除的，只有当一个文件不存在任何link的时候，这个文件才会被删除。一般来说每个文件两个link计数器来控制i_count和i_nlink。当一个文件被一个程序占用的时候i_count就加1。当文件的硬链接多一个的时候i_nlink也加1。删除一个文件，就是让这个文件，没有进程占用，同时i_link数量为0。</p>
-<h3 id="请简述基础正则表达式grep高级参数的使用"><a href="#请简述基础正则表达式grep高级参数的使用" class="headerlink" title="请简述基础正则表达式grep高级参数的使用"></a>请简述基础正则表达式grep高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">常用参数：</span><br><span class="line"></span><br><span class="line">-v排除匹配内容，</span><br><span class="line"></span><br><span class="line">-e支持扩展的正则表达式，</span><br><span class="line"></span><br><span class="line">-i忽略大小写，</span><br><span class="line"></span><br><span class="line">-o输出匹配的内容（只是一块，不是行），</span><br><span class="line"></span><br><span class="line">--color=auto 匹配内容显示颜色，</span><br><span class="line"></span><br><span class="line">-n 在行首显示行号。</span><br><span class="line"></span><br><span class="line">特殊字符注意事项：</span><br><span class="line"></span><br><span class="line">^(尖括号)word ：表示搜索以word开头的内容。</span><br><span class="line"></span><br><span class="line">word$ 表示搜索以word结尾的内容。</span><br><span class="line"></span><br><span class="line">^$    表示的是空行，不是空格。</span><br><span class="line"></span><br><span class="line">.     代表且只能代表任意一个字符。非正则表达式其他功能（当前目录，加载文件）</span><br><span class="line"></span><br><span class="line">/     转义字符，让有着特殊身份意义的字符，脱掉马甲，还原原型。例如.只表示原始小数点意义。</span><br><span class="line"></span><br><span class="line">*    表示重复0个或多个前面的一个字符。不代表所有。</span><br><span class="line"></span><br><span class="line">.*   表示匹配所有的字符。^.*表示以任意字符开头。</span><br><span class="line"></span><br><span class="line">[任意字符如abc] 匹配字符集内任意一个字符[a-z]。 [^abc] ^在中括号里面是非的意思，不包含之意。意思就是不包含a或b或c的行。</span><br><span class="line"></span><br><span class="line">&#123;n，m&#125; 表示重复n到m次前一个字符。｛n｝至少n次，多了不限。｛n｝N次，｛，m｝至多m次，少了不限。</span><br><span class="line"></span><br><span class="line">注：使用grep或sed要对｛｝转义。即｛｝.egrep就不需要转义了。</span><br></pre></td></tr></table></figure>
-
-<h3 id="请简述基础正则表达式sed高级参数的使用"><a href="#请简述基础正则表达式sed高级参数的使用" class="headerlink" title="请简述基础正则表达式sed高级参数的使用"></a>请简述基础正则表达式sed高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">解答：</span><br><span class="line"></span><br><span class="line">-n取消默认输出</span><br><span class="line"></span><br><span class="line">-p 打印</span><br><span class="line"></span><br><span class="line">-d删除</span><br><span class="line"></span><br><span class="line">-e允许多项编辑</span><br><span class="line"></span><br><span class="line">sed取行，要特别注意sed -n &#x27;s###g&#x27; filename 的使用，sed的( )的功能可以记住正则表达式的一部分，其中，为第一个记住的模式即第一个小括号中的匹配内容，第二记住的模式，即第二个小括号中的匹配内容，sed最多可以记住9个。</span><br><span class="line"></span><br><span class="line">实际字符的选取最好要唯一，正则表达式是贪婪的，总是尽可能的匹配更远的符合匹配的内容。另外注意字符串中的空格。</span><br></pre></td></tr></table></figure>
-
-<h3 id="AWK"><a href="#AWK" class="headerlink" title="AWK"></a>AWK</h3><h2 id="Hard-Level-Questions"><a href="#Hard-Level-Questions" class="headerlink" title="Hard Level Questions"></a>Hard Level Questions</h2>]]></content>
-      <categories>
-        <category>shell</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>shell</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python程序获取股票信息</title>
-    <url>/2022/07/04/stock-price/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
-<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
-<li>python3</li>
-<li>akshare</li>
-<li>GoogleSheet</li>
-</ul>
-<p>Reference </p>
-<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
-<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
-<li>code example</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
-</ul>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>stock</tag>
-        <tag>python</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>一文让你python从入门到放弃</title>
     <url>/2021/08/20/python-notes/</url>
     <content><![CDATA[<ul>
@@ -2400,6 +2305,113 @@
         <tag>python</tag>
         <tag>Tech</tag>
         <tag>Life</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python程序获取股票信息</title>
+    <url>/2022/07/04/stock-price/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
+<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
+<li>python3</li>
+<li>akshare</li>
+<li>GoogleSheet</li>
+</ul>
+<p>Reference </p>
+<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
+<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
+<li>code example</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
+</ul>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>python</tag>
+        <tag>stock</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>一文让你shell从狗熊变英雄</title>
+    <url>/2023/08/13/shell_from_zero_to_hero./</url>
+    <content><![CDATA[<ul>
+<li><a href="#shell-from-zero-to-hero">Shell From Zero To Hero</a><ul>
+<li><a href="#simply-level-questions">Simply Level Questions</a><ul>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E7%B3%BB%E7%BB%9F%E4%BB%8E%E5%BC%80%E6%9C%BA%E5%88%B0%E7%99%BB%E9%99%86%E7%95%8C%E9%9D%A2%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B">描述Linux系统从开机到登陆界面的启动过程</a></li>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E8%BD%AF%E9%93%BE%E6%8E%A5%E5%92%8C%E7%A1%AC%E9%93%BE%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB">描述Linux下软链接和硬链接的区别</a></li>
+</ul>
+</li>
+<li><a href="#middle-level-questions">Middle Level Questions</a><ul>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4%E7%9A%84%E5%8E%9F%E7%90%86">描述Linux下文件删除的原理</a></li>
+<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fgrep%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式grep高级参数的使用</a></li>
+<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fsed%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式sed高级参数的使用</a></li>
+<li><a href="#awk">AWK</a></li>
+</ul>
+</li>
+<li><a href="#hard-level-questions">Hard Level Questions</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="Shell-From-Zero-To-Hero"><a href="#Shell-From-Zero-To-Hero" class="headerlink" title="Shell From Zero To Hero"></a>Shell From Zero To Hero</h1><h2 id="Simply-Level-Questions"><a href="#Simply-Level-Questions" class="headerlink" title="Simply Level Questions"></a>Simply Level Questions</h2><h3 id="描述Linux系统从开机到登陆界面的启动过程"><a href="#描述Linux系统从开机到登陆界面的启动过程" class="headerlink" title="描述Linux系统从开机到登陆界面的启动过程"></a>描述Linux系统从开机到登陆界面的启动过程</h3><ul>
+<li><p>开机BIOS自检，加载硬盘。</p>
+</li>
+<li><p>读取MBR,MBR引导。</p>
+</li>
+<li><p>grub引导菜单(Boot Loader)。</p>
+</li>
+<li><p>加载内核kernel。</p>
+</li>
+<li><p>启动init进程，依据inittab文件设定运行级别</p>
+</li>
+<li><p>init进程，执行rc.sysinit文件。</p>
+</li>
+<li><p>启动内核模块，执行不同级别的脚本程序。</p>
+</li>
+<li><p>执行/etc/rc.d/rc.local</p>
+</li>
+<li><p>启动mingetty，进入系统登陆界面。</p>
+</li>
+</ul>
+<h3 id="描述Linux下软链接和硬链接的区别"><a href="#描述Linux下软链接和硬链接的区别" class="headerlink" title="描述Linux下软链接和硬链接的区别"></a>描述Linux下软链接和硬链接的区别</h3><p>在Linux系统中，链接分为两种，一种是硬链接（Hard link），另一种称为符号链接或软链接（Symbolic Link）。</p>
+<ul>
+<li><p>默认不带参数的情况下，ln创建的是硬链接，带-s参数的ln命令创建的是软链接。</p>
+</li>
+<li><p>硬链接文件与源文件的inode节点号相同，而软链接文件的inode节点号，与源文件不同，</p>
+</li>
+<li><p>ln命令不能对目录创建硬链接，但可以创建软链接。对目录的软链接会经常使用到。</p>
+</li>
+<li><p>删除软链接文件，对源文件和硬链接文件无任何影响。</p>
+</li>
+<li><p>删除文件的硬链接文件，对源文件及软链接文件无任何影响。</p>
+</li>
+<li><p>删除链接文件的源文件，对硬链接文件无影响，会导致其软链接失效（红底白字闪烁状）。</p>
+</li>
+<li><p>同时删除源文件及其硬链接文件，整个文件才会被真正的删除。</p>
+</li>
+<li><p>很多硬件设备的快照功能，使用的就是类似硬链接的原理。</p>
+</li>
+<li><p>软链接可以跨文件系统，硬链接不可以跨文件系统。</p>
+</li>
+</ul>
+<h2 id="Middle-Level-Questions"><a href="#Middle-Level-Questions" class="headerlink" title="Middle Level Questions"></a>Middle Level Questions</h2><h3 id="描述Linux下文件删除的原理"><a href="#描述Linux下文件删除的原理" class="headerlink" title="描述Linux下文件删除的原理"></a>描述Linux下文件删除的原理</h3><p>Linux系统是通过link的数量来控制文件删除的，只有当一个文件不存在任何link的时候，这个文件才会被删除。一般来说每个文件两个link计数器来控制i_count和i_nlink。当一个文件被一个程序占用的时候i_count就加1。当文件的硬链接多一个的时候i_nlink也加1。删除一个文件，就是让这个文件，没有进程占用，同时i_link数量为0。</p>
+<h3 id="请简述基础正则表达式grep高级参数的使用"><a href="#请简述基础正则表达式grep高级参数的使用" class="headerlink" title="请简述基础正则表达式grep高级参数的使用"></a>请简述基础正则表达式grep高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">常用参数：</span><br><span class="line"></span><br><span class="line">-v排除匹配内容，</span><br><span class="line"></span><br><span class="line">-e支持扩展的正则表达式，</span><br><span class="line"></span><br><span class="line">-i忽略大小写，</span><br><span class="line"></span><br><span class="line">-o输出匹配的内容（只是一块，不是行），</span><br><span class="line"></span><br><span class="line">--color=auto 匹配内容显示颜色，</span><br><span class="line"></span><br><span class="line">-n 在行首显示行号。</span><br><span class="line"></span><br><span class="line">特殊字符注意事项：</span><br><span class="line"></span><br><span class="line">^(尖括号)word ：表示搜索以word开头的内容。</span><br><span class="line"></span><br><span class="line">word$ 表示搜索以word结尾的内容。</span><br><span class="line"></span><br><span class="line">^$    表示的是空行，不是空格。</span><br><span class="line"></span><br><span class="line">.     代表且只能代表任意一个字符。非正则表达式其他功能（当前目录，加载文件）</span><br><span class="line"></span><br><span class="line">/     转义字符，让有着特殊身份意义的字符，脱掉马甲，还原原型。例如.只表示原始小数点意义。</span><br><span class="line"></span><br><span class="line">*    表示重复0个或多个前面的一个字符。不代表所有。</span><br><span class="line"></span><br><span class="line">.*   表示匹配所有的字符。^.*表示以任意字符开头。</span><br><span class="line"></span><br><span class="line">[任意字符如abc] 匹配字符集内任意一个字符[a-z]。 [^abc] ^在中括号里面是非的意思，不包含之意。意思就是不包含a或b或c的行。</span><br><span class="line"></span><br><span class="line">&#123;n，m&#125; 表示重复n到m次前一个字符。｛n｝至少n次，多了不限。｛n｝N次，｛，m｝至多m次，少了不限。</span><br><span class="line"></span><br><span class="line">注：使用grep或sed要对｛｝转义。即｛｝.egrep就不需要转义了。</span><br></pre></td></tr></table></figure>
+
+<h3 id="请简述基础正则表达式sed高级参数的使用"><a href="#请简述基础正则表达式sed高级参数的使用" class="headerlink" title="请简述基础正则表达式sed高级参数的使用"></a>请简述基础正则表达式sed高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">解答：</span><br><span class="line"></span><br><span class="line">-n取消默认输出</span><br><span class="line"></span><br><span class="line">-p 打印</span><br><span class="line"></span><br><span class="line">-d删除</span><br><span class="line"></span><br><span class="line">-e允许多项编辑</span><br><span class="line"></span><br><span class="line">sed取行，要特别注意sed -n &#x27;s###g&#x27; filename 的使用，sed的( )的功能可以记住正则表达式的一部分，其中，为第一个记住的模式即第一个小括号中的匹配内容，第二记住的模式，即第二个小括号中的匹配内容，sed最多可以记住9个。</span><br><span class="line"></span><br><span class="line">实际字符的选取最好要唯一，正则表达式是贪婪的，总是尽可能的匹配更远的符合匹配的内容。另外注意字符串中的空格。</span><br></pre></td></tr></table></figure>
+
+<h3 id="AWK"><a href="#AWK" class="headerlink" title="AWK"></a>AWK</h3><h2 id="Hard-Level-Questions"><a href="#Hard-Level-Questions" class="headerlink" title="Hard Level Questions"></a>Hard Level Questions</h2>]]></content>
+      <categories>
+        <category>shell</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>Tech</tag>
       </tags>
   </entry>
   <entry>
