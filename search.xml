@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Bash中处理临时文件的正确方法-trap/mktemp</title>
+    <url>/2023/08/08/202308_trap_for_tmpscripts/</url>
+    <content><![CDATA[<h1 id="临时文件生成最佳实践"><a href="#临时文件生成最佳实践" class="headerlink" title="临时文件生成最佳实践"></a>临时文件生成最佳实践</h1><p>创建前检查文件是否已经存在。<br>确保临时文件已成功创建。<br>临时文件必须有权限的限制。<br>临时文件要使用不可预测的文件名。<br>脚本退出时，要删除临时文件（使用trap命令）。</p>
+<h2 id="mktemp-命令的用法"><a href="#mktemp-命令的用法" class="headerlink" title="mktemp 命令的用法"></a>mktemp 命令的用法</h2><p>mktemp命令就是为安全创建临时文件而设计的。虽然在创建临时文件之前，它不会检查临时文件是否存在，但是它支持唯一文件名和清除机制，因此可以减轻安全攻击的风险。</p>
+<p>直接运行mktemp命令，就能生成一个临时文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[centos@ip-172-31-29-167 ~]$ trap</span><br><span class="line">trap -- &#x27;&#x27; SIGTSTP</span><br><span class="line">trap -- &#x27;&#x27; SIGTTIN</span><br><span class="line">trap -- &#x27;&#x27; SIGTTOU</span><br><span class="line">[centos@ip-172-31-29-167 ~]$ ls -l</span><br><span class="line">total 0</span><br><span class="line">[centos@ip-172-31-29-167 ~]$ ls -l /tmp/tmp.gpngJKqhxB</span><br><span class="line">-rw-------. 1 centos centos 0 Aug  8 13:44 /tmp/tmp.gpngJKqhxB</span><br></pre></td></tr></table></figure>
+
+<p>为了保证脚本退出时临时文件被删除，可以使用trap命令指定退出时的清除操作</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">trap &#x27;rm -f &quot;$TMPFILE&quot;&#x27; EXIT</span><br><span class="line"></span><br><span class="line">TMPFILE=$(mktemp) || exit 1</span><br><span class="line">echo &quot;Our temp file is $TMPFILE&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="mktemp-命令参数"><a href="#mktemp-命令参数" class="headerlink" title="mktemp 命令参数"></a>mktemp 命令参数</h2><p><code>-d参数可以创建一个临时目录。</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[centos@ip-172-31-29-167 ~]$ mktemp -d</span><br><span class="line">/tmp/tmp.JMOmb1dbXS</span><br></pre></td></tr></table></figure>
+
+<p><code>-p参数可以指定临时文件所在的目录。默认是使用$TMPDIR环境变量指定的目录，如果这个变量没设置，那么使用/tmp目录</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@ip-172-31-29-167 centos]# mktemp -p /home/</span><br><span class="line">/home/tmp.exqlVMkNSc</span><br></pre></td></tr></table></figure>
+
+<h2 id="trap-命令的用法"><a href="#trap-命令的用法" class="headerlink" title="trap 命令的用法"></a>trap 命令的用法</h2><p>trap命令用来在 Bash 脚本中响应系统信号。<br>最常见的系统信号就是 SIGINT（中断），即按 Ctrl + C 所产生的信号。trap命令的-l参数，可以列出所有的系统信号。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@ip-172-31-29-167 centos]# trap -l</span><br><span class="line"> 1) SIGHUP	 2) SIGINT	 3) SIGQUIT	 4) SIGILL	 5) SIGTRAP</span><br><span class="line"> 6) SIGABRT	 7) SIGBUS	 8) SIGFPE	 9) SIGKILL	10) SIGUSR1</span><br><span class="line">11) SIGSEGV	12) SIGUSR2	13) SIGPIPE	14) SIGALRM	15) SIGTERM</span><br><span class="line">16) SIGSTKFLT	17) SIGCHLD	18) SIGCONT	19) SIGSTOP	20) SIGTSTP</span><br><span class="line">21) SIGTTIN	22) SIGTTOU	23) SIGURG	24) SIGXCPU	25) SIGXFSZ</span><br><span class="line">26) SIGVTALRM	27) SIGPROF	28) SIGWINCH	29) SIGIO	30) SIGPWR</span><br><span class="line">31) SIGSYS	34) SIGRTMIN	35) SIGRTMIN+1	36) SIGRTMIN+2	37) SIGRTMIN+3</span><br><span class="line">38) SIGRTMIN+4	39) SIGRTMIN+5	40) SIGRTMIN+6	41) SIGRTMIN+7	42) SIGRTMIN+8</span><br><span class="line">43) SIGRTMIN+9	44) SIGRTMIN+10	45) SIGRTMIN+11	46) SIGRTMIN+12	47) SIGRTMIN+13</span><br><span class="line">48) SIGRTMIN+14	49) SIGRTMIN+15	50) SIGRTMAX-14	51) SIGRTMAX-13	52) SIGRTMAX-12</span><br><span class="line">53) SIGRTMAX-11	54) SIGRTMAX-10	55) SIGRTMAX-9	56) SIGRTMAX-8	57) SIGRTMAX-7</span><br><span class="line">58) SIGRTMAX-6	59) SIGRTMAX-5	60) SIGRTMAX-4	61) SIGRTMAX-3	62) SIGRTMAX-2</span><br><span class="line">63) SIGRTMAX-1	64) SIGRTMAX</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ trap [动作] [信号]</span><br></pre></td></tr></table></figure>
+<p>上面代码中，”动作”是一个 Bash 命令，”信号”常用的有以下几个。<br>常见信号</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">HUP：编号1，脚本与所在的终端脱离联系。</span><br><span class="line">INT：编号2，用户按下 Ctrl + C，意图让脚本中止运行。</span><br><span class="line">QUIT：编号3，用户按下 Ctrl + 斜杠，意图退出脚本。</span><br><span class="line">KILL：编号9，该信号用于杀死进程。</span><br><span class="line">TERM：编号15，这是kill命令发出的默认信号。</span><br><span class="line">EXIT：编号0，这不是系统信号，而是 Bash 脚本特有的信号，不管什么情况，只要退出脚本就会产生。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ trap &#x27;rm -f &quot;$TMPFILE&quot;&#x27; EXIT</span><br><span class="line">#命令中，脚本遇到EXIT信号时，就会执行rm -f &quot;$TMPFILE&quot;。</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">trap &#x27;rm -f &quot;$TMPFILE&quot;&#x27; EXIT</span><br><span class="line"></span><br><span class="line">TMPFILE=$(mktemp) || exit 1</span><br><span class="line">ls /etc &gt; $TMPFILE</span><br><span class="line">if grep -qi &quot;kernel&quot; $TMPFILE; then</span><br><span class="line">  echo &#x27;find&#x27;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，不管是脚本正常执行结束，还是用户按 Ctrl + C 终止，都会产生EXIT信号，从而触发删除临时文件<br>注意，trap命令必须放在脚本的开头。否则，它上方的任何命令导致脚本退出，都不会被它捕获。</p>
+]]></content>
+      <categories>
+        <category>shell</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>bash</tag>
+        <tag>shell</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo Blog电脑快速迁移</title>
     <url>/2023/09/02/20230902_hexo_migration/</url>
     <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>如何快速的将一个Hexo Blog移动到另外一台电脑</p>
@@ -288,26 +328,79 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ps -eo pid,lstart,etime | grep 61819</span><br><span class="line"></span><br><span class="line">ps -eo pid,comm,cmd,start,etime | grep -i X</span><br></pre></td></tr></table></figure>
 
 <ul>
+<li>How do you find shared library dependencies?</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ldd /fullpath/command</span><br><span class="line">readelf -d /fullpath/command</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>What features of the Linux kernel enable Docker to work?</p>
+<ul>
+<li>CGroups</li>
+<li>Namespaces</li>
+</ul>
+</li>
+<li><p>How to dry run ansible playbook and puppet agent commands</p>
+<ul>
+<li><code> ansible-playbook playbook.yml --check</code></li>
+<li><code>puppet agent --noop</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="Linux-Hardware-questions"><a href="#Linux-Hardware-questions" class="headerlink" title="Linux Hardware questions"></a>Linux Hardware questions</h2><ul>
+<li><p>How to install OMSA(OpenManage Server Administartor)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># wget -q -O - http://linux.dell.com/repo/hardware/latest/bootstrap.cgi | bash     下载repo源</span><br><span class="line"># yum install -y net-snmp net-snmp-devel net-snmp-utils wget perl OpenIPMI</span><br><span class="line"># yum  -y install srvadmin-all     安装路径：/opt/dell/srvadmin/</span><br><span class="line"># /opt/dell/srvadmin/sbin/srvadmin-services.sh start     启动OMSA</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>What is Dell RACADM<br>Remote Access Controller Admin (RACADM) utility is a command-line tool that enables remote or local management of Dell Servers using the iDRAC</p>
+</li>
+<li><p>List system information </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &quot; -------------------------------------------------------------------&quot;              &gt; /etc/motd</span><br><span class="line">echo &quot;    /etc/motd&quot;                                                                    &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; -------------------------------------------------------------------&quot;             &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; HOST          : `hostname`&quot;                                                      &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; OS            : `head -1 /etc/redhat-release`&quot;                                   &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; KERNEL        : `uname -r`&quot;                                                      &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; CPU           : `cat /proc/cpuinfo | grep &#x27;^model name&#x27; | sort -u | cut -f2 -d&#x27;:&#x27; | sed &#x27;s/^ //&#x27;`&quot; &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; CPU COUNT     : `egrep -c &#x27;^processor&#x27; /proc/cpuinfo`&quot;                           &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; RAM           :  $(( $(cat /proc/meminfo |grep MemTotal |awk &#x27;&#123;print $2&#125;&#x27; ) / (( 1024 * 1000 )) )) GB&quot;                                                      &gt;&gt; /etc/motd</span><br><span class="line"></span><br><span class="line">echo &quot; &quot;                                                                                &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; Manufacturer  : dmidecode -s system-manufacturer`&quot;                               &gt;&gt; /etc/motd                         &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; Serial Number : dmidecode -s system-serial-number&quot;                               &gt;&gt; /etc/motd                         &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; Model         : dmidecode -s system-product-name&quot;                                &gt;&gt; /etc/motd                        &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; BIOS Version  : dmidecoe -s bios-version&quot; 										&gt;&gt; /etc/motd</span><br><span class="line"></span><br><span class="line">_LOMINFO=&quot;`timeout --signal=SIGKILL 10 ipmitool lan print ||  echo &#x27;IP Address     : FAIL&#x27; `&quot;</span><br><span class="line">_LOMIP=&quot;`echo \&quot;$_LOMINFO\&quot; | grep &#x27;IP Address   &#x27;| awk -F&#x27;:&#x27; &#x27;&#123;print $2&#125;&#x27;| tr -d &#x27; &#x27;`&quot;</span><br><span class="line">_LOMFQDN=&quot;$(host -t any -l xxxxxxxx | grep -i $&#123;_SNUM&#125; | awk &#x27;&#123;print $1&#125;&#x27;)&quot;</span><br><span class="line"></span><br><span class="line">cat /etc/motd</span><br></pre></td></tr></table></figure></li>
+<li><p>How to build foreman and work with puppet</p>
+<ul>
+<li>install DHCP server</li>
+<li>install DNS server</li>
+<li>install vtftp</li>
+<li>install forman</li>
+<li>configure hammer</li>
+<li>configure PXEboot</li>
+<li>configure puppet classes</li>
+</ul>
+</li>
+<li><p>How to check and improve I/O issue</p>
+<ul>
+<li><code>iowait</code> <code>iotop</code> </li>
+<li> ensure you have free physical memory so the OS can cache disk blocks in memory</li>
+<li>keep your filesystem disk usage below 80% to avoid excessive fragmentation</li>
+<li>tune your filesystem</li>
+<li>use a battery backed array controller</li>
+<li>choose good buffer sizes when performing io operations</li>
+</ul>
+</li>
+<li><p>how to check physical disk driver</p>
+<ul>
+<li><code>lshw</code> <code>lspci</code></li>
+</ul>
+</li>
+<li><p>Usage of omreport of dell</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">omreport chassis # 显示所有主要组件的常规状态 </span><br><span class="line">omreport chassis memory # 显示内存信息</span><br><span class="line">omreport chassis temps # 显示系统主要组件的温度</span><br><span class="line">omreport storage adisk controller=0 # 查看磁盘陈列中的硬盘状态</span><br><span class="line">omreport storage pdisk controller=0 # 查看物理磁盘信息</span><br><span class="line">omreport storage vdisk controller=0 # 查看虚拟硬盘的状态</span><br><span class="line">omreport storage controller # 查看控制器(即RAID卡)的属性</span><br><span class="line">omreport storage enclosure controller=0 # 查看enclosure的属性</span><br><span class="line">omreport storage battery # 查看电池属性</span><br><span class="line"></span><br><span class="line">omreport chassis info -fmt ssv 分割数据打印出来</span><br></pre></td></tr></table></figure></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@localhost wcy]# omreport chassis info</span><br><span class="line">Chassis Information</span><br><span class="line"></span><br><span class="line">Index                                      : 0</span><br><span class="line">Chassis Name                               : Main System Chassis</span><br><span class="line">Host Name                                  : localhost.localdomain</span><br><span class="line">iDRAC7 Version                             : 1.40.40 (Build 17)</span><br><span class="line">Lifecycle Controller 2 Version             : 1.1.5.165</span><br><span class="line">Chassis Model                              : PowerEdge R420</span><br><span class="line">Chassis Lock                               : Present</span><br><span class="line">Chassis Service Tag                        : 6X8QZY1</span><br><span class="line">Express Service Code                       : 15070774393</span><br><span class="line">Chassis Asset Tag                          : Unknown</span><br><span class="line">Flash chassis identify LED state           : Off</span><br><span class="line">Flash chassis identify LED timeout value   : 300</span><br></pre></td></tr></table></figure>
+<h3 id="Other-hardware-command"><a href="#Other-hardware-command" class="headerlink" title="Other hardware command"></a>Other hardware command</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//内存</span><br><span class="line"># free -m</span><br><span class="line"># cat /proc/meminfo</span><br><span class="line"># dmidecode -t memory</span><br><span class="line">//CPU</span><br><span class="line"># lscpu</span><br><span class="line"># cat /proc/cpuinfo</span><br><span class="line"># dmidecode -t processor</span><br><span class="line"># dmidecode | grep &quot;CPU&quot; //获取CPU信息</span><br><span class="line">//硬盘</span><br><span class="line"># df -lhP</span><br><span class="line"># lsblk</span><br><span class="line"># fdisk -l</span><br><span class="line"># dmesg|grep sd //查看开机信息里面的磁盘info</span><br><span class="line"># hdparm -I /dev/sda //查看磁盘硬件信息、开启的功能等,信息特别详细 【hdparm需要yum安装】</span><br><span class="line"># smartctl -H /dev/sda //查看硬盘健康状态</span><br><span class="line"># smartctl --all /dev/sda //【smartctl需要yum安装才能用】</span><br><span class="line"># smartctl -h //还有很多有用的参数</span><br><span class="line">//网卡</span><br><span class="line"># lspci|grep -i eth</span><br><span class="line"># ifconfig -a</span><br><span class="line"># ip link show</span><br><span class="line"># ethtool eth0 //显示网卡eth0的详细参数和指标</span><br><span class="line">//系统信息</span><br><span class="line"># dmidecode -t system</span><br><span class="line"># dmidecode | grep&quot;Product&quot;</span><br><span class="line"># dmidecode | grep&quot;Manufacturer&quot; //获取厂商</span><br><span class="line"># dmidecode | grep -B 4 &quot;SerialNumber&quot; | more //获取序号信息</span><br><span class="line"># dmidecode | grep &quot;Date&quot; //获取生产日期</span><br><span class="line">//dmesg和dmidecode还有很多信息，涵盖了全部硬件信息。</span><br><span class="line">//主板</span><br><span class="line"># lspci</span><br><span class="line">//BIOS</span><br><span class="line"># dmidecode -t bios</span><br><span class="line"># dmidecode -q //列出所有有用的信息</span><br><span class="line">//RAID信息</span><br><span class="line"># lspci|grep RAID //列出RAID卡的信息</span><br><span class="line"># megacli64 //需要额外安装</span><br></pre></td></tr></table></figure>
+
+<ul>
 <li><p>How to list server hardware information</p>
 <ul>
-<li><code>dmidecode</code><ul>
+<li><code>dmidecode</code></li>
 <li><code>demidecode -s system-manufacturer</code></li>
 <li><code>demidecode -s system-serial-number</code>“</li>
 <li><code>demidecode -s system-product-name</code>“</li>
 <li><code>demidecode -s bios-version</code>“</li>
 </ul>
 </li>
-</ul>
-</li>
-<li><p>How do you find shared library dependencies?</p>
-</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ldd /fullpath/command</span><br><span class="line">readelf -d /fullpath/command</span><br></pre></td></tr></table></figure>
-
+<li><p>How to add one disk without reboot</p>
 <ul>
-<li>What features of the Linux kernel enable Docker to work?<ul>
-<li>CGroups</li>
-<li>Namespaces</li>
+<li>pvcreate /dev/sdc</li>
+<li>vgextend vg1 /dev/sdc</li>
+<li>lvextend -r -l +100%FREE /dev/mapper/vg1-root</li>
+<li><code>lsblk</code> <code>fdisk -l</code></li>
 </ul>
 </li>
 </ul>
@@ -320,73 +413,7 @@
         <tag>interview</tag>
         <tag>shell</tag>
         <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Interview FAQ 2022</title>
-    <url>/2022/09/26/Interview_FAQ/</url>
-    <content><![CDATA[<ul>
-<li><a href="#background">Background</a><ul>
-<li><a href="#linux-system">Linux system</a></li>
-<li><a href="#network">Network</a></li>
-<li><a href="#devops">Devops</a></li>
-<li><a href="#scripts">Scripts</a></li>
-</ul>
-</li>
-</ul>
-<h1 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h1><p>Sharing interview tech question with you</p>
-<h2 id="Linux-system"><a href="#Linux-system" class="headerlink" title="Linux system"></a>Linux system</h2><p><strong>How to show ip address only on Centos</strong></p>
-<p><code>hostname -i</code></p>
-<p><strong>What is /dev save and when system will use it</strong></p>
-<p><strong>grep command</strong></p>
-<ul>
-<li>grep -l </li>
-<li>grep -f </li>
-<li>grep -v</li>
-<li>grep -e</li>
-</ul>
-<p><strong>what is under /proc</strong><br>Process information<br><img src="/2022/09/26/Interview_FAQ/linuxDir.jpeg" alt="image"></p>
-<p><strong>what is command cpio</strong></p>
-<blockquote>
-<p>cpio - copy files to and from archives</p>
-</blockquote>
-<ul>
-<li><p>将家目录下的所有文件都归档到tree.cpio中</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 ~]# find ~ -depth | cpio -ov &gt; tree.cpio 或 [root@server2 ~]# find ~ -depth | cpio -ov -F tree.cpio</span><br></pre></td></tr></table></figure></li>
-<li><p>向归档文件中追加文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 tmp]# ls /root/new.txt | cpio -oA -F tree.cpio</span><br></pre></td></tr></table></figure></li>
-<li><p>提取文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 tmp]# cpio -idv -F tree.cpio /root/</span><br></pre></td></tr></table></figure></li>
-<li><p><em>what is jwt token</em>*<br>JSON Web Token (JWT) is a compact URL-safe means of representing claims to be transferred between two parties</p>
-</li>
-</ul>
-<p><strong>explain uptime output</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">10:17:36 up 73 days, 10:18,  4 users,  load average: 5.83, 6.47, 7.31</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">These numbers are the averages of the system load over a period of one, five, and 15 minutes. </span><br><span class="line"></span><br><span class="line">Applying that to the load average output (0.5, 1.5, 3.0) that we got above: </span><br><span class="line"></span><br><span class="line">* 0.5 means the minimum waiting time at the counter. Between 0.00 and 1.0, there is no need to worry. Your servers are safe!</span><br><span class="line">* 1.5 means the queue is filling up. If the average gets any higher, things are going to start slowing down.</span><br><span class="line">* 3.00 means there&#x27;s a considerably long queue waiting, and an extra resource/counter is required to clear up the queue faster. </span><br></pre></td></tr></table></figure>
-<h2 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h2><h2 id="Devops"><a href="#Devops" class="headerlink" title="Devops"></a>Devops</h2><p><strong>if statememt in terraform</strong></p>
-<p><code>condition ? true_value : false_value</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">resource &quot;azurerm_function_app&quot; &quot;b59func&quot; &#123;</span><br><span class="line">  # Deploy conditionally based on Feature Flag variable</span><br><span class="line">  count = local.deploy_b59func == true ? 1 : 0</span><br><span class="line"></span><br><span class="line">  # resource attributes here</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%&#123; if &lt;CONDITION&gt; &#125;&lt;TRUEVAL&gt;%&#123; endif &#125;</span><br><span class="line"></span><br><span class="line">%&#123; if &lt;CONDITION&gt; &#125;&lt;TRUEVAL&gt;%&#123; else &#125;&lt;FALSEVAL&gt;%&#123; endif &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<ul>
-<li>example </li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">output &quot;for_directive_index_if_strip&quot; &#123;</span><br><span class="line">  value = &lt;&lt;EOF</span><br><span class="line">%&#123;~ for i, name in var.names ~&#125;</span><br><span class="line">$&#123;name&#125;%&#123; if i &lt; length(var.names) - 1 &#125;, %&#123; endif &#125;</span><br><span class="line">%&#123;~ endfor ~&#125;</span><br><span class="line">EOF</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform apply</span><br><span class="line"></span><br><span class="line">(...)</span><br><span class="line"></span><br><span class="line">Outputs:</span><br><span class="line"></span><br><span class="line">for_directive_index_if_strip = &quot;neo, trinity, morpheus&quot;</span><br></pre></td></tr></table></figure>
-
-
-<p><strong>for loop statement in terraform</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%&#123; for &lt;ITEM&gt; in &lt;COLLECTION&gt; &#125;&lt;BODY&gt;%&#123; endfor &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>git merge and git rebase difference</strong></p>
-<p><strong>desc CI/CD tools</strong></p>
-<h2 id="Scripts"><a href="#Scripts" class="headerlink" title="Scripts"></a>Scripts</h2>]]></content>
-      <categories>
-        <category>ideas,interview</category>
-      </categories>
-      <tags>
-        <tag>ideas,interview,面试</tag>
-        <tag>Tech</tag>
+        <tag>Life</tag>
       </tags>
   </entry>
   <entry>
@@ -468,42 +495,69 @@
       </tags>
   </entry>
   <entry>
-    <title>Bash中处理临时文件的正确方法-trap/mktemp</title>
-    <url>/2023/08/08/202308_trap_for_tmpscripts/</url>
-    <content><![CDATA[<h1 id="临时文件生成最佳实践"><a href="#临时文件生成最佳实践" class="headerlink" title="临时文件生成最佳实践"></a>临时文件生成最佳实践</h1><p>创建前检查文件是否已经存在。<br>确保临时文件已成功创建。<br>临时文件必须有权限的限制。<br>临时文件要使用不可预测的文件名。<br>脚本退出时，要删除临时文件（使用trap命令）。</p>
-<h2 id="mktemp-命令的用法"><a href="#mktemp-命令的用法" class="headerlink" title="mktemp 命令的用法"></a>mktemp 命令的用法</h2><p>mktemp命令就是为安全创建临时文件而设计的。虽然在创建临时文件之前，它不会检查临时文件是否存在，但是它支持唯一文件名和清除机制，因此可以减轻安全攻击的风险。</p>
-<p>直接运行mktemp命令，就能生成一个临时文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[centos@ip-172-31-29-167 ~]$ trap</span><br><span class="line">trap -- &#x27;&#x27; SIGTSTP</span><br><span class="line">trap -- &#x27;&#x27; SIGTTIN</span><br><span class="line">trap -- &#x27;&#x27; SIGTTOU</span><br><span class="line">[centos@ip-172-31-29-167 ~]$ ls -l</span><br><span class="line">total 0</span><br><span class="line">[centos@ip-172-31-29-167 ~]$ ls -l /tmp/tmp.gpngJKqhxB</span><br><span class="line">-rw-------. 1 centos centos 0 Aug  8 13:44 /tmp/tmp.gpngJKqhxB</span><br></pre></td></tr></table></figure>
+    <title>Interview FAQ 2022</title>
+    <url>/2022/09/26/Interview_FAQ/</url>
+    <content><![CDATA[<ul>
+<li><a href="#background">Background</a><ul>
+<li><a href="#linux-system">Linux system</a></li>
+<li><a href="#network">Network</a></li>
+<li><a href="#devops">Devops</a></li>
+<li><a href="#scripts">Scripts</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h1><p>Sharing interview tech question with you</p>
+<h2 id="Linux-system"><a href="#Linux-system" class="headerlink" title="Linux system"></a>Linux system</h2><p><strong>How to show ip address only on Centos</strong></p>
+<p><code>hostname -i</code></p>
+<p><strong>What is /dev save and when system will use it</strong></p>
+<p><strong>grep command</strong></p>
+<ul>
+<li>grep -l </li>
+<li>grep -f </li>
+<li>grep -v</li>
+<li>grep -e</li>
+</ul>
+<p><strong>what is under /proc</strong><br>Process information<br><img src="/2022/09/26/Interview_FAQ/linuxDir.jpeg" alt="image"></p>
+<p><strong>what is command cpio</strong></p>
+<blockquote>
+<p>cpio - copy files to and from archives</p>
+</blockquote>
+<ul>
+<li><p>将家目录下的所有文件都归档到tree.cpio中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 ~]# find ~ -depth | cpio -ov &gt; tree.cpio 或 [root@server2 ~]# find ~ -depth | cpio -ov -F tree.cpio</span><br></pre></td></tr></table></figure></li>
+<li><p>向归档文件中追加文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 tmp]# ls /root/new.txt | cpio -oA -F tree.cpio</span><br></pre></td></tr></table></figure></li>
+<li><p>提取文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@server2 tmp]# cpio -idv -F tree.cpio /root/</span><br></pre></td></tr></table></figure></li>
+<li><p><em>what is jwt token</em>*<br>JSON Web Token (JWT) is a compact URL-safe means of representing claims to be transferred between two parties</p>
+</li>
+</ul>
+<p><strong>explain uptime output</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">10:17:36 up 73 days, 10:18,  4 users,  load average: 5.83, 6.47, 7.31</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">These numbers are the averages of the system load over a period of one, five, and 15 minutes. </span><br><span class="line"></span><br><span class="line">Applying that to the load average output (0.5, 1.5, 3.0) that we got above: </span><br><span class="line"></span><br><span class="line">* 0.5 means the minimum waiting time at the counter. Between 0.00 and 1.0, there is no need to worry. Your servers are safe!</span><br><span class="line">* 1.5 means the queue is filling up. If the average gets any higher, things are going to start slowing down.</span><br><span class="line">* 3.00 means there&#x27;s a considerably long queue waiting, and an extra resource/counter is required to clear up the queue faster. </span><br></pre></td></tr></table></figure>
+<h2 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h2><h2 id="Devops"><a href="#Devops" class="headerlink" title="Devops"></a>Devops</h2><p><strong>if statememt in terraform</strong></p>
+<p><code>condition ? true_value : false_value</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">resource &quot;azurerm_function_app&quot; &quot;b59func&quot; &#123;</span><br><span class="line">  # Deploy conditionally based on Feature Flag variable</span><br><span class="line">  count = local.deploy_b59func == true ? 1 : 0</span><br><span class="line"></span><br><span class="line">  # resource attributes here</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>为了保证脚本退出时临时文件被删除，可以使用trap命令指定退出时的清除操作</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">trap &#x27;rm -f &quot;$TMPFILE&quot;&#x27; EXIT</span><br><span class="line"></span><br><span class="line">TMPFILE=$(mktemp) || exit 1</span><br><span class="line">echo &quot;Our temp file is $TMPFILE&quot;</span><br></pre></td></tr></table></figure>
-<h2 id="mktemp-命令参数"><a href="#mktemp-命令参数" class="headerlink" title="mktemp 命令参数"></a>mktemp 命令参数</h2><p><code>-d参数可以创建一个临时目录。</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[centos@ip-172-31-29-167 ~]$ mktemp -d</span><br><span class="line">/tmp/tmp.JMOmb1dbXS</span><br></pre></td></tr></table></figure>
-
-<p><code>-p参数可以指定临时文件所在的目录。默认是使用$TMPDIR环境变量指定的目录，如果这个变量没设置，那么使用/tmp目录</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@ip-172-31-29-167 centos]# mktemp -p /home/</span><br><span class="line">/home/tmp.exqlVMkNSc</span><br></pre></td></tr></table></figure>
-
-<h2 id="trap-命令的用法"><a href="#trap-命令的用法" class="headerlink" title="trap 命令的用法"></a>trap 命令的用法</h2><p>trap命令用来在 Bash 脚本中响应系统信号。<br>最常见的系统信号就是 SIGINT（中断），即按 Ctrl + C 所产生的信号。trap命令的-l参数，可以列出所有的系统信号。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@ip-172-31-29-167 centos]# trap -l</span><br><span class="line"> 1) SIGHUP	 2) SIGINT	 3) SIGQUIT	 4) SIGILL	 5) SIGTRAP</span><br><span class="line"> 6) SIGABRT	 7) SIGBUS	 8) SIGFPE	 9) SIGKILL	10) SIGUSR1</span><br><span class="line">11) SIGSEGV	12) SIGUSR2	13) SIGPIPE	14) SIGALRM	15) SIGTERM</span><br><span class="line">16) SIGSTKFLT	17) SIGCHLD	18) SIGCONT	19) SIGSTOP	20) SIGTSTP</span><br><span class="line">21) SIGTTIN	22) SIGTTOU	23) SIGURG	24) SIGXCPU	25) SIGXFSZ</span><br><span class="line">26) SIGVTALRM	27) SIGPROF	28) SIGWINCH	29) SIGIO	30) SIGPWR</span><br><span class="line">31) SIGSYS	34) SIGRTMIN	35) SIGRTMIN+1	36) SIGRTMIN+2	37) SIGRTMIN+3</span><br><span class="line">38) SIGRTMIN+4	39) SIGRTMIN+5	40) SIGRTMIN+6	41) SIGRTMIN+7	42) SIGRTMIN+8</span><br><span class="line">43) SIGRTMIN+9	44) SIGRTMIN+10	45) SIGRTMIN+11	46) SIGRTMIN+12	47) SIGRTMIN+13</span><br><span class="line">48) SIGRTMIN+14	49) SIGRTMIN+15	50) SIGRTMAX-14	51) SIGRTMAX-13	52) SIGRTMAX-12</span><br><span class="line">53) SIGRTMAX-11	54) SIGRTMAX-10	55) SIGRTMAX-9	56) SIGRTMAX-8	57) SIGRTMAX-7</span><br><span class="line">58) SIGRTMAX-6	59) SIGRTMAX-5	60) SIGRTMAX-4	61) SIGRTMAX-3	62) SIGRTMAX-2</span><br><span class="line">63) SIGRTMAX-1	64) SIGRTMAX</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ trap [动作] [信号]</span><br></pre></td></tr></table></figure>
-<p>上面代码中，”动作”是一个 Bash 命令，”信号”常用的有以下几个。<br>常见信号</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">HUP：编号1，脚本与所在的终端脱离联系。</span><br><span class="line">INT：编号2，用户按下 Ctrl + C，意图让脚本中止运行。</span><br><span class="line">QUIT：编号3，用户按下 Ctrl + 斜杠，意图退出脚本。</span><br><span class="line">KILL：编号9，该信号用于杀死进程。</span><br><span class="line">TERM：编号15，这是kill命令发出的默认信号。</span><br><span class="line">EXIT：编号0，这不是系统信号，而是 Bash 脚本特有的信号，不管什么情况，只要退出脚本就会产生。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ trap &#x27;rm -f &quot;$TMPFILE&quot;&#x27; EXIT</span><br><span class="line">#命令中，脚本遇到EXIT信号时，就会执行rm -f &quot;$TMPFILE&quot;。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%&#123; if &lt;CONDITION&gt; &#125;&lt;TRUEVAL&gt;%&#123; endif &#125;</span><br><span class="line"></span><br><span class="line">%&#123; if &lt;CONDITION&gt; &#125;&lt;TRUEVAL&gt;%&#123; else &#125;&lt;FALSEVAL&gt;%&#123; endif &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>example </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">output &quot;for_directive_index_if_strip&quot; &#123;</span><br><span class="line">  value = &lt;&lt;EOF</span><br><span class="line">%&#123;~ for i, name in var.names ~&#125;</span><br><span class="line">$&#123;name&#125;%&#123; if i &lt; length(var.names) - 1 &#125;, %&#123; endif &#125;</span><br><span class="line">%&#123;~ endfor ~&#125;</span><br><span class="line">EOF</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform apply</span><br><span class="line"></span><br><span class="line">(...)</span><br><span class="line"></span><br><span class="line">Outputs:</span><br><span class="line"></span><br><span class="line">for_directive_index_if_strip = &quot;neo, trinity, morpheus&quot;</span><br></pre></td></tr></table></figure>
 
 
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">trap &#x27;rm -f &quot;$TMPFILE&quot;&#x27; EXIT</span><br><span class="line"></span><br><span class="line">TMPFILE=$(mktemp) || exit 1</span><br><span class="line">ls /etc &gt; $TMPFILE</span><br><span class="line">if grep -qi &quot;kernel&quot; $TMPFILE; then</span><br><span class="line">  echo &#x27;find&#x27;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p><strong>for loop statement in terraform</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%&#123; for &lt;ITEM&gt; in &lt;COLLECTION&gt; &#125;&lt;BODY&gt;%&#123; endfor &#125;</span><br></pre></td></tr></table></figure>
 
-<p>上面代码中，不管是脚本正常执行结束，还是用户按 Ctrl + C 终止，都会产生EXIT信号，从而触发删除临时文件<br>注意，trap命令必须放在脚本的开头。否则，它上方的任何命令导致脚本退出，都不会被它捕获。</p>
-]]></content>
+<p><strong>git merge and git rebase difference</strong></p>
+<p><strong>desc CI/CD tools</strong></p>
+<h2 id="Scripts"><a href="#Scripts" class="headerlink" title="Scripts"></a>Scripts</h2>]]></content>
       <categories>
-        <category>shell</category>
+        <category>ideas,interview</category>
       </categories>
       <tags>
-        <tag>tech</tag>
-        <tag>bash</tag>
-        <tag>shell</tag>
+        <tag>ideas,interview,面试</tag>
         <tag>Tech</tag>
       </tags>
   </entry>
@@ -534,46 +588,59 @@
       </tags>
   </entry>
   <entry>
-    <title>个人职业生涯短记 personal career path</title>
-    <url>/2023/05/15/career_path/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><blockquote>
-<p>写在技术大牛陈皓离世之际，惊闻噩耗年仅47岁大牛陈皓离我们而去，死于心梗。<br>人的一生总有终点，我们能做的就是不断的总结自己的经验，提高自己，分享自己的知识和观点</p>
-</blockquote>
-<h1 id="13年IT职业生涯概览"><a href="#13年IT职业生涯概览" class="headerlink" title="13年IT职业生涯概览"></a>13年IT职业生涯概览</h1><ul>
-<li>第一份工作 IBM-UOB 上海数据中心项目<br>学习了解到一个数据中心从无到有的过程，各个供应商的协作，线路设备的上架，24*7运维环境的要求及监控</li>
+    <title>Kubernetes 入门基础</title>
+    <url>/2022/09/20/Kubernetes_from_zero/</url>
+    <content><![CDATA[<h1 id="Kubernetes-入门基础"><a href="#Kubernetes-入门基础" class="headerlink" title="Kubernetes 入门基础"></a>Kubernetes 入门基础</h1><p><strong>Kubernetes Components Architecture</strong><br><img src="/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg" alt="image"></p>
+<h2 id="Kubernetes-核心组件"><a href="#Kubernetes-核心组件" class="headerlink" title="Kubernetes 核心组件"></a>Kubernetes 核心组件</h2><p>Kubernetes 主要由以下几个核心组件组成:</p>
+<ul>
+<li>etcd 保存了整个集群的状态；</li>
+<li>API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制；</li>
+<li>Controller Manager 负责维护集群的状态，比如故障检测、自动扩展、滚动更新等；</li>
+<li>Scheduler 负责资源的调度，按照预定的调度策略将 Pod 调度到相应的机器上；</li>
+<li>Kubelet 负责维护容器的生命周期，同时也负责 Volume（CVI）和网络（CNI）的管理；</li>
+<li>Container Runtime 负责镜像管理以及 Pod 和容器的真正运行（CRI）；</li>
+<li>Kube-proxy 负责为 Service 提供 cluster 内部的服务发现和负载均衡；</li>
+</ul>
+<h2 id="Kubernetes相关基础概念"><a href="#Kubernetes相关基础概念" class="headerlink" title="Kubernetes相关基础概念"></a>Kubernetes相关基础概念</h2><ul>
+<li>master：k8s集群的管理节点，负责管理集群，提供集群的资源数据访问入口。拥有Etcd存储服务（可选），运行Api Server进程，Controller Manager服务进程及Scheduler服务进程。</li>
+<li>node（worker）：Node（worker）是Kubernetes集群架构中运行Pod的服务节点，是Kubernetes集群操作的单元，用来承载被分配Pod的运行，是Pod运行的宿主机。运行docker eninge服务，守护进程kunelet及负载均衡器kube-proxy。</li>
+<li>pod：运行于Node节点上，若干相关容器的组合。Pod内包含的容器运行在同一宿主机上，使用相同的网络命名空间、IP地址和端口，能够通过localhost进行通信。Pod是Kurbernetes进行创建、调度和管理的最小单位，它提供了比容器更高层次的抽象，使得部署和管理更加灵活。一个Pod可以包含一个容器或者多个相关容器。</li>
+<li>label：Kubernetes中的Label实质是一系列的Key/Value键值对，其中key与value可自定义。Label可以附加到各种资源对象上，如Node、Pod、Service、RC等。一个资源对象可以定义任意数量的Label，同一个Label也可以被添加到任意数量的资源对象上去。Kubernetes通过Label Selector（标签选择器）查询和筛选资源对象。</li>
+<li>Replication Controller：Replication Controller用来管理Pod的副本，保证集群中存在指定数量的Pod副本。集群中副本的数量大于指定数量，则会停止指定数量之外的多余容器数量。反之，则会启动少于指定数量个数的容器，保证数量不变。Replication Controller是实现弹性伸缩、动态扩容和滚动升级的核心。</li>
+<li>Deployment：Deployment在内部使用了RS来实现目的，Deployment相当于RC的一次升级，其最大的特色为可以随时获知当前Pod的部署进度。</li>
+<li>HPA（Horizontal Pod Autoscaler）：Pod的横向自动扩容，也是Kubernetes的一种资源，通过追踪分析RC控制的所有Pod目标的负载变化情况，来确定是否需要针对性的调整Pod副本数量。</li>
+<li>Service：Service定义了Pod的逻辑集合和访问该集合的策略，是真实服务的抽象。Service提供了一个统一的服务访问入口以及服务代理和发现机制，关联多个相同Label的Pod，用户不需要了解后台Pod是如何运行。</li>
+<li>Volume：Volume是Pod中能够被多个容器访问的共享目录，Kubernetes中的Volume是定义在Pod上，可以被一个或多个Pod中的容器挂载到某个目录下。</li>
+<li>Namespace：Namespace用于实现多租户的资源隔离，可将集群内部的资源对象分配到不同的Namespace中，形成逻辑上的不同项目、小组或用户组，便于不同的Namespace在共享使用整个集群的资源的同时还能被分别管理。</li>
+</ul>
+<h2 id="K8s-常用命令"><a href="#K8s-常用命令" class="headerlink" title="K8s 常用命令"></a>K8s 常用命令</h2><h3 id="kubectl"><a href="#kubectl" class="headerlink" title="kubectl"></a>kubectl</h3><hr>
+<p>kubectl 是 Kubernetes 的命令行工具（CLI），是 Kubernetes 用户和管理员必备的管理工具。<br>kubectl 提供了大量的子命令，方便管理 Kubernetes 集群中的各种功能。这里不再罗列各种子命令的格式，而是介绍下如何查询命令的帮助</p>
+<ul>
+<li>kubectl -h 查看子命令列表</li>
+<li>kubectl options 查看全局选项</li>
+<li>kubectl <command> –help 查看子命令的帮助</li>
+<li>kubectl [command] [PARAMS] -o=<format> 设置输出格式（如 json、yaml、jsonpath 等）</li>
+<li>kubectl explain [RESOURCE] 查看资源的定义</li>
 </ul>
 <hr>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>使用 kubectl 的第一步是配置 Kubernetes 集群以及认证方式，包括</p>
 <ul>
-<li>CSM customer support 项目<br>真正从一个入门的IT engineer到独自负责一个客户现场，从helpdesk基础的工作到服务器和网络运维，从一个内向不会沟通的小伙到如何管理客户的需求和期望值</li>
+<li>cluster 信息：Kubernetes server 地址</li>
+<li>用户信息：用户名、密码或密钥</li>
+<li>Context：cluster、用户信息以及 Namespace 的组合</li>
 </ul>
-<hr>
-<ul>
-<li>ASOS customer 项目<br>这是一个真正系统学习到了一个项目交付运维流程，基于前人研究出的理论基础，利用ITIL知识体系来管理项目</li>
-</ul>
-<hr>
-<ul>
-<li>Marin IT<br>这个第一个开拓眼界的职位，在这个硅谷互联网公司接触到了各类技术大牛，技术上接触到Meraki基于云平台管理的网络厂商，给自己后来的技术转型带来决心</li>
-</ul>
-<hr>
-<ul>
-<li>SRE/DEVOPS<ul>
-<li>这个是一个实现起初梦想的职位，一个人管理上千台服务器，维护整个产品平台，如何实现高度自动化，让机器代替人工。</li>
-<li>各类运维自动化工具，各类监控工具</li>
-<li>云平台，容器化技术，更高效的使用物理资源</li>
-<li>根据产品需求开发高度持续集成持续交付工具</li>
-<li>一个高效的团队如何运转，不同团队之间如何协作</li>
-</ul>
-</li>
-</ul>
-<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p><strong>技术之路永无止境</strong></p>
-<p><code>Never stop learning</code> - From Yushin!</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl config set-credentials myself --username=admin --password=secret</span><br><span class="line">kubectl config set-cluster local-server --server=http://localhost:8080</span><br><span class="line">kubectl config set-context default-context --cluster=local-server --user=myself --namespace=default</span><br><span class="line">kubectl config use-context default-context</span><br><span class="line">kubectl config view</span><br></pre></td></tr></table></figure>
+
+
 ]]></content>
       <categories>
-        <category>engineering</category>
+        <category>tech</category>
       </categories>
       <tags>
-        <tag>developer</tag>
-        <tag>IT</tag>
+        <tag>tech</tag>
+        <tag>k8s</tag>
+        <tag>container</tag>
+        <tag>Tech</tag>
       </tags>
   </entry>
   <entry>
@@ -597,83 +664,170 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo_blog_setup</title>
-    <url>/2022/07/04/hexo-blog-setup/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>每次换电脑，或者在其他电脑上工作后发现无法更新这个Blog，需要记录下如何当初一步一步设置这个blog，以方便迁移，重新搭建</p>
-<h1 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h1><ul>
-<li>hexo </li>
-<li>hexo theme</li>
-<li>github</li>
-<li></li>
+    <title>Developer&#39;s MacOS setup from Zero</title>
+    <url>/2023/05/11/developer_macos_setup/</url>
+    <content><![CDATA[<ul>
+<li><a href="#third-part-applications-links">Third part applications links</a></li>
+<li><a href="#macos-setup">MacOS Setup</a><ul>
+<li><a href="#sceenshots-save-folder">sceenshots save folder</a></li>
+<li><a href="#ssh-keys">SSH Keys</a></li>
 </ul>
-<h2 id="Install-Steps"><a href="#Install-Steps" class="headerlink" title="Install Steps"></a>Install Steps</h2><h3 id="Install-hexo"><a href="#Install-hexo" class="headerlink" title="Install hexo"></a>Install hexo</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew install npm</span><br><span class="line"></span><br><span class="line">brew install hexo </span><br><span class="line"></span><br><span class="line">~ ❯ hexo -v                                                                              08:45:30</span><br><span class="line">hexo-cli: 4.3.0</span><br><span class="line">os: darwin 21.5.0 12.4</span><br><span class="line"></span><br><span class="line">node: 14.17.5</span><br><span class="line">v8: 8.4.371.23-node.76</span><br><span class="line">uv: 1.41.0</span><br><span class="line">zlib: 1.2.11</span><br><span class="line">brotli: 1.0.9</span><br><span class="line">ares: 1.17.2</span><br><span class="line">modules: 83</span><br><span class="line">nghttp2: 1.42.0</span><br><span class="line">napi: 8</span><br><span class="line">llhttp: 2.1.3</span><br><span class="line">openssl: 1.1.1k</span><br><span class="line">cldr: 39.0</span><br><span class="line">icu: 69.1</span><br><span class="line">tz: 2021a</span><br><span class="line">unicode: 13.0</span><br></pre></td></tr></table></figure>
-
-<h3 id="Create-project"><a href="#Create-project" class="headerlink" title="Create project"></a>Create project</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">cd [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
-
-<h3 id="Set-blog-information"><a href="#Set-blog-information" class="headerlink" title="Set blog information"></a>Set blog information</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim _config.yml</span><br><span class="line"></span><br><span class="line">~~~~~~~~~~~~~~~~~~ _config.yml ~~~~~~~~~~~~~~~~~~</span><br><span class="line"># Site</span><br><span class="line">title: [githubaccount]&#x27;s note</span><br><span class="line">subtitle:</span><br><span class="line">description: [githubaccount]&#x27;s personal blog</span><br><span class="line">author: [githubaccount]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:[githubaccount]/[githubaccount].github.io.git</span><br><span class="line">  branch: master</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><h3 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next themes/next</span><br><span class="line"></span><br><span class="line">vi _config.yml</span><br><span class="line"></span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line">theme: next</span><br><span class="line"># https://github.com/theme-next/hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line">npm install hexo-enhancer --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install --save hexo-submit-urls-to-search-engine</span><br><span class="line">npm install hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="Useful-hexo-commands"><a href="#Useful-hexo-commands" class="headerlink" title="Useful hexo commands"></a>Useful hexo commands</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo --config _config.yml</span><br><span class="line">hexo generate --watch</span><br><span class="line"></span><br><span class="line">hexo server</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>personal</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Docker useful commands</title>
-    <url>/2022/09/21/docker_useful_commands/</url>
-    <content><![CDATA[<h2 id="docker-commands"><a href="#docker-commands" class="headerlink" title="docker commands"></a>docker commands</h2><hr>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker cp </span><br><span class="line">docker stop redis</span><br><span class="line">docker kill redis</span><br><span class="line">docker rm -l db #移除网络连接</span><br><span class="line">docker rm -v redis #删除容器挂载的磁盘</span><br><span class="line">docker logs redis #查看日志</span><br><span class="line">docker logs -f -t --tail=20 redis #查看容器日历最近20条</span><br><span class="line">docker top redis #查看容器进程</span><br><span class="line">docker images #查看本地镜像</span><br><span class="line">docker search mysql #查看mysql的镜像</span><br></pre></td></tr></table></figure>
-<h2 id="clean-docker-cache"><a href="#clean-docker-cache" class="headerlink" title="clean docker cache"></a>clean docker cache</h2><p><code>docker system prune</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker system prune后可以加额外的参数，如：</span><br><span class="line">docker system prune -a ： 一并清除所有未被使用的镜像和没有tag镜像。</span><br><span class="line">docker system prune -f ： 用以强制删除，不提示信息。</span><br></pre></td></tr></table></figure>
-
-<p><code>docker container prune</code></p>
-<p><code>docker network prun</code></p>
-<p><code>docker volume prune</code></p>
-<p><code>docker image prune --force --all</code></p>
-<h2 id="push-image-to-remote-server"><a href="#push-image-to-remote-server" class="headerlink" title="push image to remote server"></a>push image to remote server</h2><p><code>docker push  remote_server:5000/python-chromedriver:3.6</code></p>
-<h2 id="download-from-remote-server"><a href="#download-from-remote-server" class="headerlink" title="download from remote server"></a>download from remote server</h2><p><code>docker run labs-admin-lv-101.labs.marinsw.net:5000/ci-centos6-base date</code> </p>
-<h2 id="log-into-container"><a href="#log-into-container" class="headerlink" title="log into container"></a>log into container</h2><p><code>docker exec -it containerID /bin/bash</code></p>
-<h2 id="run-comtainer-from-remote-docker-registry-and-login"><a href="#run-comtainer-from-remote-docker-registry-and-login" class="headerlink" title="run comtainer from remote docker registry  and login"></a>run comtainer from remote docker registry  and login</h2><p><code>docker run -it remote_server:5000/ci-ubuntu- /bin/bash</code></p>
-<h2 id="rename-docker-image"><a href="#rename-docker-image" class="headerlink" title="rename docker image"></a>rename docker image</h2><p><code>docker image tag 7cebbf38959b  ci-ubuntu:latest</code></p>
-<h2 id="build-image-without-cache"><a href="#build-image-without-cache" class="headerlink" title="build image without cache"></a>build image without cache</h2><p><code>docker build --no-cache -f Dockerfile -t ci-base .</code></p>
-<h2 id="Build-docker-with-docker-file"><a href="#Build-docker-with-docker-file" class="headerlink" title="Build docker with docker file"></a>Build docker with docker file</h2><p><code>docker build -f Dockerfile -t image-name .</code></p>
-<h2 id="Log-into-images"><a href="#Log-into-images" class="headerlink" title="Log into images"></a>Log into images</h2><p><code>docker run -i -t image-name /bin/bash</code></p>
-<h2 id="list-images"><a href="#list-images" class="headerlink" title="list images"></a>list images</h2><p><code>docker images</code></p>
-<h2 id="rm-images"><a href="#rm-images" class="headerlink" title="rm images"></a>rm images</h2><p><code>docker image rm -f imagename</code></p>
-<h2 id="locally-docker-tag-local-image"><a href="#locally-docker-tag-local-image" class="headerlink" title="locally docker tag local image"></a>locally docker tag local image</h2><p><code>docker tag 98d6830c1011 remote_server:5000/python-chromedriver:3.6</code></p>
-<h2 id="save-image-to-file-and-load-locally"><a href="#save-image-to-file-and-load-locally" class="headerlink" title="save image to file and load locally"></a>save image to file and load locally</h2><ul>
-<li><p>docker save labs-admin-lv-101.labs.marinsw.net:5000/ci-ubuntu-mysqldb-mvn354 | gzip  &gt; docker_image_ci-ubuntu-mysqldb-mvn354.tar.gz</p>
 </li>
-<li><p>docker save calc &gt; calc.tar</p>
-</li>
-<li><p>docker load &lt; docker_image_ci-ubuntu-mysqldb-mvn354.tar.gz</p>
+<li><a href="#applications-configuration">Applications Configuration</a><ul>
+<li><a href="#iterm2-setup">iTerm2 setup</a><ul>
+<li><a href="#installation-">Installation </a></li>
+<li><a href="#customization-">Customization </a><ul>
+<li><a href="#colors-and-font-settings-">Colors and Font Settings </a></li>
+</ul>
 </li>
 </ul>
-<h2 id="建立本地docker-registry"><a href="#建立本地docker-registry" class="headerlink" title="建立本地docker registry"></a>建立本地docker registry</h2><hr>
+</li>
+<li><a href="#zsh-setup">Zsh setup</a><ul>
+<li><a href="#install-zsh">Install zsh</a></li>
+<li><a href="#step2-install-plugins-and--theme">Step2 Install plugins and  theme</a></li>
+<li><a href="#install-theme">Install Theme</a></li>
+<li><a href="#re-load-configuration">Re-load configuration</a></li>
+</ul>
+</li>
+<li><a href="#homebrew-setup">Homebrew setup</a></li>
+<li><a href="#git-setup">Git setup</a><ul>
+<li><a href="#git-and-github-">Git and GitHub </a></li>
+<li><a href="#ssh-config-for-github-">SSH Config for GitHub </a><ul>
+<li><a href="#check-for-existing-ssh-keys-">Check for existing SSH keys </a></li>
+<li><a href="#generate-a-new-ssh-key-">Generate a new SSH key </a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sublime-setup">Sublime setup</a><ul>
+<li><a href="#sublime-text-">Sublime Text </a><ul>
+<li><a href="#installation--1">Installation </a></li>
+<li><a href="#use-cli-to-open-file-">Use CLI to open file </a></li>
+</ul>
+</li>
+<li><a href="#subl-plugins">Subl plugins</a></li>
+<li><a href="#keyboard-shortcuts">Keyboard Shortcuts</a></li>
+<li><a href="#sidebarenhancements">SideBarEnhancements</a></li>
+<li><a href="#sublimelinter">SublimeLinter</a></li>
+<li><a href="#gitgutter">GitGutter</a></li>
+<li><a href="#markdown-preview">Markdown Preview</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Third-part-applications-links"><a href="#Third-part-applications-links" class="headerlink" title="Third part applications links"></a>Third part applications links</h1><ul>
+<li>Custom terminal tool: iTerm2 <a href="https://iterm2.com/">https://iterm2.com</a></li>
+<li>Smart your terminal: zsh: <a href="https://ohmyz.sh/">https://ohmyz.sh/</a></li>
+<li>Yum on MacOS: Homebrew <a href="https://brew.sh/">https://brew.sh</a></li>
+<li>Notebook or IDE: sublime <a href="https://www.sublimetext.com/">https://www.sublimetext.com</a></li>
+<li>IDE Visual Studio: <a href="https://code.visualstudio.com/">https://code.visualstudio.com</a></li>
+<li>Git : <a href="https://github.com/git-guides/install-git">https://github.com/git-guides/install-git</a></li>
+</ul>
+<h1 id="MacOS-Setup"><a href="#MacOS-Setup" class="headerlink" title="MacOS Setup"></a>MacOS Setup</h1><h3 id="sceenshots-save-folder"><a href="#sceenshots-save-folder" class="headerlink" title="sceenshots save folder"></a>sceenshots save folder</h3><ul>
+<li>manually create screenshots folder </li>
+<li>defaults write com.apple.screencapture location xxxx(screenshots folder path)</li>
+</ul>
+<h3 id="SSH-Keys"><a href="#SSH-Keys" class="headerlink" title="SSH Keys"></a>SSH Keys</h3><p>many of you have setup ssh keys to ssh remote to servers, if you don’t want to change settings, you can simply copy ssh folders</p>
 <ul>
-<li>docker pull registry:2.6.2 #下载registry</li>
-<li>docker run –name registry -p 5000:5000 -v /data/registry:/var/lib/registry -d registry:2.6.2 #启动registry服务</li>
-<li>docker port registry #查看端口</li>
-<li>docker tag busybox:latest 192.168.10.102:5000/busybox:v0.1 #tag镜像</li>
-<li>docker push 192.168.10.102:5000/busybox:v0.1 #推送镜像</li>
+<li>copy from older Macbook ~/.ssh/* </li>
+</ul>
+<h1 id="Applications-Configuration"><a href="#Applications-Configuration" class="headerlink" title="Applications Configuration"></a>Applications Configuration</h1><h2 id="iTerm2-setup"><a href="#iTerm2-setup" class="headerlink" title="iTerm2 setup"></a>iTerm2 setup</h2><p><a href="http://www.iterm2.com/">iTerm2</a> is an open source replacement for Apple’s Terminal. It’s highly customizable and comes with a lot of useful features.</p>
+<h3 id="Installation"><a href="#Installation" class="headerlink" title="Installation "></a>Installation <a id="installation"></a></h3><p>Use <a href="http://sourabhbajaj.com/mac-setup/Homebrew/">Homebrew</a> to download and install:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew cask install iterm2</span><br></pre></td></tr></table></figure>
+<p>or download via <a href="https://iterm2.com/">https://iterm2.com</a></p>
+<h3 id="Customization"><a href="#Customization" class="headerlink" title="Customization "></a>Customization <a id="customization"></a></h3><h4 id="Colors-and-Font-Settings"><a href="#Colors-and-Font-Settings" class="headerlink" title="Colors and Font Settings "></a>Colors and Font Settings <a id="colors-and-font-settings"></a></h4><p>Here are some suggested settings you can change or set, <strong>they are all optional</strong>.</p>
+<ul>
+<li>Set hot-key to open and close the terminal to <code>command + option + i</code></li>
+<li>Go to profiles -&gt; Default -&gt; Terminal -&gt; Check silence bell to disable the terminal session from making any sound</li>
+<li>Download <a href="https://github.com/mbadolato/iTerm2-Color-Schemes/tree/master/schemes">one of iTerm2 color schemes</a> and then set these to your default profile colors</li>
+<li>Change the cursor text and cursor color to yellow make it more visible</li>
+<li>Change the font to 14pt Source Code Pro Lite. Source Code Pro can be downloaded using <a href="https://sourabhbajaj.com/mac-setup/Homebrew/">Homebrew</a> <code>brew tap caskroom/fonts &amp;&amp; brew cask install font-source-code-pro</code></li>
+<li>If you’re using BASH instead of ZSH you can add <code>export CLICOLOR=1</code> line to your <code>~/.bash_profile</code>file for nice coloring of listings</li>
+</ul>
+<h2 id="Zsh-setup"><a href="#Zsh-setup" class="headerlink" title="Zsh setup"></a>Zsh setup</h2><h3 id="Install-zsh"><a href="#Install-zsh" class="headerlink" title="Install zsh"></a>Install zsh</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sh -c &quot;$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Step2-Install-plugins-and-theme"><a href="#Step2-Install-plugins-and-theme" class="headerlink" title="Step2 Install plugins and  theme"></a>Step2 Install plugins and  theme</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim ~/.zshrc</span><br><span class="line"></span><br><span class="line">plugins=(git zsh-autosuggestions zsh-syntax-highlighting)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Install-Theme"><a href="#Install-Theme" class="headerlink" title="Install Theme"></a>Install Theme</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#Set ZSH_THEME=powerlevel10k/powerlevel10k in your ~/.zshrc.</span><br><span class="line"></span><br><span class="line">ZSH_THEME=&quot;powerlevel10k/powerlevel10k&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Re-load-configuration"><a href="#Re-load-configuration" class="headerlink" title="Re-load configuration"></a>Re-load configuration</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<h2 id="Homebrew-setup"><a href="#Homebrew-setup" class="headerlink" title="Homebrew setup"></a>Homebrew setup</h2><blockquote>
+<p>/bin/bash -c “$(curl -fsSL <a href="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;">https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;</a></p>
+</blockquote>
+<h2 id="Git-setup"><a href="#Git-setup" class="headerlink" title="Git setup"></a>Git setup</h2><h3 id="Git-and-GitHub"><a href="#Git-and-GitHub" class="headerlink" title="Git and GitHub "></a>Git and GitHub <a id="git-and-github"></a></h3><p>What’s a developer without <a href="http://git-scm.com/">Git</a>? To install, run:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ brew install git</span><br></pre></td></tr></table></figure>
+
+<p>When done, to test that it installed properly you can run:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git --version</span><br></pre></td></tr></table></figure>
+
+<p>And <code>which git</code> should output <code>/usr/local/bin/git</code>.</p>
+<p>Next, we’ll define your Git user (should be the same name and email you use for <a href="https://github.com/">GitHub</a>):</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name &quot;Your Name Here&quot;</span><br><span class="line">$ git config --global user.email &quot;your_email@youremail.com&quot;</span><br></pre></td></tr></table></figure>
+
+<p>They will get added to your <code>.gitconfig</code> file.</p>
+<p>To push code to your GitHub repositories, we’re going to use the recommended HTTPS method (versus SSH). To prevent <code>git</code> from asking for your username and password every time you push a commit you can cache your credentials by running the following command, as described in the <a href="https://help.github.com/articles/caching-your-github-password-in-git/">instructions</a>.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git config --global credential.helper osxkeychain</span><br></pre></td></tr></table></figure>
+
+<h3 id="SSH-Config-for-GitHub"><a href="#SSH-Config-for-GitHub" class="headerlink" title="SSH Config for GitHub "></a>SSH Config for GitHub <a id="ssh-config-for-github"></a></h3><p>The instructions below are referenced from <a href="https://help.github.com/articles/generating-ssh-keys">the official documentation</a>.</p>
+<h4 id="Check-for-existing-SSH-keys"><a href="#Check-for-existing-SSH-keys" class="headerlink" title="Check for existing SSH keys "></a>Check for existing SSH keys <a id="check-for-existing-ssh-keys"></a></h4><p>First, we need to check for existing SSH keys on your computer. We do this by running:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ls -al ~/.ssh</span><br><span class="line"># Lists the files in your .ssh directory, if they exist</span><br></pre></td></tr></table></figure>
+
+<p>Check the directory listing to see if you have files named either <code>id_rsa.pub</code> or <code>id_dsa.pub</code>. If you don’t have either of those files then read on, otherwise skip the next section.</p>
+<h4 id="Generate-a-new-SSH-key"><a href="#Generate-a-new-SSH-key" class="headerlink" title="Generate a new SSH key "></a>Generate a new SSH key <a id="generate-a-new-ssh-key"></a></h4><p>If you don’t have an SSH key you need to generate one. To do that you need to run the commands below, and make sure to substitute the placeholder with your email. The default settings are preferred, so when you’re asked to “enter a file in which to save the key,”” just press Enter to continue.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C &quot;your_email@example.com&quot;</span><br><span class="line"># Creates a new ssh key, using the provided email as a label</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sublime-setup"><a href="#Sublime-setup" class="headerlink" title="Sublime setup"></a>Sublime setup</h2><h3 id="Sublime-Text"><a href="#Sublime-Text" class="headerlink" title="Sublime Text "></a>Sublime Text <a id="sublime-text"></a></h3><p><a href="http://www.sublimetext.com/">Sublime Text</a> is a widely used editor that describes it self as <em>a sophisticated text editor for code, markup and prose</em>.</p>
+<h4 id="Installation-1"><a href="#Installation-1" class="headerlink" title="Installation "></a>Installation <a id="installation"></a></h4><p><a href="http://www.sublimetext.com/">Download</a> the <strong>.dmg</strong> file and drag-and-drop it to the <strong>Applications</strong> folder.</p>
+<h4 id="Use-CLI-to-open-file"><a href="#Use-CLI-to-open-file" class="headerlink" title="Use CLI to open file "></a>Use CLI to open file <a id="use-cli-to-open-file"></a></h4><p>Let’s create a shortcut so we can launch Sublime Text from the command-line</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl</span><br></pre></td></tr></table></figure>
+
+<p>Now you can open a file with <code>$ subl myfile.py</code> or start a new project in the current directory with <code>$ subl .</code>.</p>
+<h3 id="Subl-plugins"><a href="#Subl-plugins" class="headerlink" title="Subl plugins"></a>Subl plugins</h3><p>****</p>
+<h3 id="Keyboard-Shortcuts"><a href="#Keyboard-Shortcuts" class="headerlink" title="Keyboard Shortcuts"></a>Keyboard Shortcuts</h3><ul>
+<li><strong>Goto Anything</strong> Cmd+P is used for quickly finding and opening files. Just type in a part of a path and filename within a project and you can easily open that file. This is great for quickly opening files in large Django projects.</li>
+<li><strong>Goto Line Number</strong> Ctrl+G takes you to a specific line number in an active file.</li>
+<li><strong>command + shift + p</strong>  to open install package -&gt; search packages </li>
+</ul>
+<h3 id="SideBarEnhancements"><a href="#SideBarEnhancements" class="headerlink" title="SideBarEnhancements"></a>SideBarEnhancements</h3><p><a href="https://sublime.wbond.net/packages/SideBarEnhancements">SideBarEnhancements</a> extends the number of menu options in the sidebar, speeding up your overall workflow. Options such as <strong>New File</strong> and <strong>Duplicate</strong> are essential and should be part of ST3 out of the box. The <strong>Delete</strong> option alone makes it worth downloading. This feature simply sends files to the Trash, which may seem trivial, but if you delete a file without it, then it’s very difficult to recover unless you’re using a version control system</p>
+<p><img src="/../.gitbook/assets/image.png"></p>
+<p><a href="https://sublime.wbond.net/packages/Anaconda">Anaconda</a> is the ultimate Python package. It adds a number of IDE-like features to ST3 including the following:</p>
+<ul>
+<li><strong>Autocompletion</strong> works by default, but there are a number of configuration <a href="https://github.com/DamnWidget/anaconda#anaconda-autocompletion">options</a>.</li>
+<li><strong>Code</strong> <a href="http://en.wikipedia.org/wiki/Lint_%28software%29"><strong>linting</strong></a> uses either PyLint or PyFlakes with PEP 8. I personally use a different linting package, as I will explain shortly, so I disable linting altogether within the user-defined Anaconda settings file, <strong>Anaconda.sublime-settings</strong>, via the file menu: <strong>Sublime &gt; Preferences &gt; Package Settings &gt; Anaconda &gt; Settings - User</strong>: <code>&#123;&quot;anaconda_linting&quot;: false&#125;</code></li>
+<li><strong>McCabe code complexity checker</strong> runs the <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">McCabe complexity checker</a> tool within a specific file. If you’re not familiar with what complexity is, be sure to visit the link above.</li>
+<li><strong>Goto Definitions</strong> finds and displays the definition of any variable, function, or class throughout your entire project.</li>
+<li><strong>Find Usage</strong> quickly searches where a variable, function, or class has been used in a specific file.</li>
+<li><strong>Show Documentation</strong> shows the docstring for functions or classes (if defined, of course).</li>
+</ul>
+<h3 id="SublimeLinter"><a href="#SublimeLinter" class="headerlink" title="SublimeLinter"></a>SublimeLinter</h3><p><a href="https://sublime.wbond.net/packages/SublimeLinter">SublimeLinter</a> is a framework for ST3 linters. The package itself does not include any actual linters; those must be installed separately via Package Control using the <strong>SublimeLinter-[linter_name]</strong> naming syntax. You can view official linters <a href="https://github.com/SublimeLinter">here</a>. There are also a number of third party linters, which can be viewed in Package Control. Check out the installation instructions <a href="http://sublimelinter.readthedocs.org/en/latest/installation.html">here</a>.</p>
+<h3 id="GitGutter"><a href="#GitGutter" class="headerlink" title="GitGutter"></a>GitGutter</h3><p><a href="https://sublime.wbond.net/packages/GitGutter">GitGutter</a> shows little icons in ST3’s gutter area that indicate whether a line has been inserted, modified, or deleted since the last commit.</p>
+<h3 id="Markdown-Preview"><a href="#Markdown-Preview" class="headerlink" title="Markdown Preview"></a>Markdown Preview</h3><p><a href="https://sublime.wbond.net/packages/Markdown%20Preview">Markdown Preview</a> is used for previewing and building markdown files.</p>
+<p>To use, open the Package Manager and type <code>Markdown Preview</code> to show the available commands:</p>
+<ul>
+<li>Markdown Preview: Python Markdown: Preview in Browser</li>
+<li>Markdown Preview: Python Markdown: Export HTML in Sublime Text</li>
+<li>Markdown Preview: Python Markdown: Copy to Clipboard</li>
+<li>Markdown Preview: GitHub Flavored Markdown: Preview in Browser</li>
+<li>Markdown Preview: GitHub Flavored Markdown: Export HTML in Sublime Text</li>
+<li>Markdown Preview: GitHub Flavored Markdown: Copy to Clipboard</li>
+<li>Markdown Preview: Open Markdown Cheat Sheet</li>
 </ul>
 ]]></content>
       <categories>
-        <category>tech</category>
+        <category>macos,tools</category>
       </categories>
       <tags>
-        <tag>tech</tag>
-        <tag>k8s</tag>
-        <tag>container</tag>
+        <tag>macos</tag>
+        <tag>developer_tool</tag>
         <tag>python</tag>
-        <tag>Tech</tag>
       </tags>
   </entry>
   <entry>
@@ -780,6 +934,35 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo_blog_setup</title>
+    <url>/2022/07/04/hexo-blog-setup/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>每次换电脑，或者在其他电脑上工作后发现无法更新这个Blog，需要记录下如何当初一步一步设置这个blog，以方便迁移，重新搭建</p>
+<h1 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h1><ul>
+<li>hexo </li>
+<li>hexo theme</li>
+<li>github</li>
+<li></li>
+</ul>
+<h2 id="Install-Steps"><a href="#Install-Steps" class="headerlink" title="Install Steps"></a>Install Steps</h2><h3 id="Install-hexo"><a href="#Install-hexo" class="headerlink" title="Install hexo"></a>Install hexo</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew install npm</span><br><span class="line"></span><br><span class="line">brew install hexo </span><br><span class="line"></span><br><span class="line">~ ❯ hexo -v                                                                              08:45:30</span><br><span class="line">hexo-cli: 4.3.0</span><br><span class="line">os: darwin 21.5.0 12.4</span><br><span class="line"></span><br><span class="line">node: 14.17.5</span><br><span class="line">v8: 8.4.371.23-node.76</span><br><span class="line">uv: 1.41.0</span><br><span class="line">zlib: 1.2.11</span><br><span class="line">brotli: 1.0.9</span><br><span class="line">ares: 1.17.2</span><br><span class="line">modules: 83</span><br><span class="line">nghttp2: 1.42.0</span><br><span class="line">napi: 8</span><br><span class="line">llhttp: 2.1.3</span><br><span class="line">openssl: 1.1.1k</span><br><span class="line">cldr: 39.0</span><br><span class="line">icu: 69.1</span><br><span class="line">tz: 2021a</span><br><span class="line">unicode: 13.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="Create-project"><a href="#Create-project" class="headerlink" title="Create project"></a>Create project</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">cd [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<h3 id="Set-blog-information"><a href="#Set-blog-information" class="headerlink" title="Set blog information"></a>Set blog information</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim _config.yml</span><br><span class="line"></span><br><span class="line">~~~~~~~~~~~~~~~~~~ _config.yml ~~~~~~~~~~~~~~~~~~</span><br><span class="line"># Site</span><br><span class="line">title: [githubaccount]&#x27;s note</span><br><span class="line">subtitle:</span><br><span class="line">description: [githubaccount]&#x27;s personal blog</span><br><span class="line">author: [githubaccount]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:[githubaccount]/[githubaccount].github.io.git</span><br><span class="line">  branch: master</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><h3 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next themes/next</span><br><span class="line"></span><br><span class="line">vi _config.yml</span><br><span class="line"></span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line">theme: next</span><br><span class="line"># https://github.com/theme-next/hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line">npm install hexo-enhancer --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install --save hexo-submit-urls-to-search-engine</span><br><span class="line">npm install hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Useful-hexo-commands"><a href="#Useful-hexo-commands" class="headerlink" title="Useful hexo commands"></a>Useful hexo commands</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo --config _config.yml</span><br><span class="line">hexo generate --watch</span><br><span class="line"></span><br><span class="line">hexo server</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>personal</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux下regex匹配高级用法</title>
     <url>/2021/10/16/linux-regex-advance/</url>
     <content><![CDATA[<ul>
@@ -878,23 +1061,46 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux system admin notes</title>
-    <url>/2022/04/04/linux_systemadmin/</url>
-    <content><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="linunx-环境变量"><a href="#linunx-环境变量" class="headerlink" title="linunx 环境变量"></a>linunx 环境变量</h2><h2 id="linunx-文件权限"><a href="#linunx-文件权限" class="headerlink" title="linunx 文件权限"></a>linunx 文件权限</h2><p><code>umask</code>  default 022</p>
-<h3 id="shell-基础"><a href="#shell-基础" class="headerlink" title="shell 基础"></a>shell 基础</h3><h4 id="结构化命令"><a href="#结构化命令" class="headerlink" title="结构化命令"></a>结构化命令</h4><p>if</p>
-<p>for<br>while<br>until<br>break<br>continue</p>
-<h4 id="shell用户输入"><a href="#shell用户输入" class="headerlink" title="shell用户输入"></a>shell用户输入</h4><h3 id="控制shell脚本"><a href="#控制shell脚本" class="headerlink" title="控制shell脚本"></a>控制shell脚本</h3><h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function name &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">name () &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="退出状态"><a href="#退出状态" class="headerlink" title="退出状态"></a>退出状态</h4><p><code>$?</code></p>
+    <title>个人职业生涯短记 personal career path</title>
+    <url>/2023/05/15/career_path/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><blockquote>
+<p>写在技术大牛陈皓离世之际，惊闻噩耗年仅47岁大牛陈皓离我们而去，死于心梗。<br>人的一生总有终点，我们能做的就是不断的总结自己的经验，提高自己，分享自己的知识和观点</p>
+</blockquote>
+<h1 id="13年IT职业生涯概览"><a href="#13年IT职业生涯概览" class="headerlink" title="13年IT职业生涯概览"></a>13年IT职业生涯概览</h1><ul>
+<li>第一份工作 IBM-UOB 上海数据中心项目<br>学习了解到一个数据中心从无到有的过程，各个供应商的协作，线路设备的上架，24*7运维环境的要求及监控</li>
+</ul>
+<hr>
+<ul>
+<li>CSM customer support 项目<br>真正从一个入门的IT engineer到独自负责一个客户现场，从helpdesk基础的工作到服务器和网络运维，从一个内向不会沟通的小伙到如何管理客户的需求和期望值</li>
+</ul>
+<hr>
+<ul>
+<li>ASOS customer 项目<br>这是一个真正系统学习到了一个项目交付运维流程，基于前人研究出的理论基础，利用ITIL知识体系来管理项目</li>
+</ul>
+<hr>
+<ul>
+<li>Marin IT<br>这个第一个开拓眼界的职位，在这个硅谷互联网公司接触到了各类技术大牛，技术上接触到Meraki基于云平台管理的网络厂商，给自己后来的技术转型带来决心</li>
+</ul>
+<hr>
+<ul>
+<li>SRE/DEVOPS<ul>
+<li>这个是一个实现起初梦想的职位，一个人管理上千台服务器，维护整个产品平台，如何实现高度自动化，让机器代替人工。</li>
+<li>各类运维自动化工具，各类监控工具</li>
+<li>云平台，容器化技术，更高效的使用物理资源</li>
+<li>根据产品需求开发高度持续集成持续交付工具</li>
+<li>一个高效的团队如何运转，不同团队之间如何协作</li>
+</ul>
+</li>
+</ul>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p><strong>技术之路永无止境</strong></p>
+<p><code>Never stop learning</code> - From Yushin!</p>
 ]]></content>
       <categories>
-        <category>shell,linux</category>
+        <category>engineering</category>
       </categories>
       <tags>
-        <tag>tech</tag>
-        <tag>shell</tag>
-        <tag>linux</tag>
-        <tag>Tech</tag>
+        <tag>developer</tag>
+        <tag>IT</tag>
       </tags>
   </entry>
   <entry>
@@ -1715,6 +1921,154 @@
       </tags>
   </entry>
   <entry>
+    <title>Docker useful commands</title>
+    <url>/2022/09/21/docker_useful_commands/</url>
+    <content><![CDATA[<h2 id="docker-commands"><a href="#docker-commands" class="headerlink" title="docker commands"></a>docker commands</h2><hr>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker cp </span><br><span class="line">docker stop redis</span><br><span class="line">docker kill redis</span><br><span class="line">docker rm -l db #移除网络连接</span><br><span class="line">docker rm -v redis #删除容器挂载的磁盘</span><br><span class="line">docker logs redis #查看日志</span><br><span class="line">docker logs -f -t --tail=20 redis #查看容器日历最近20条</span><br><span class="line">docker top redis #查看容器进程</span><br><span class="line">docker images #查看本地镜像</span><br><span class="line">docker search mysql #查看mysql的镜像</span><br></pre></td></tr></table></figure>
+<h2 id="clean-docker-cache"><a href="#clean-docker-cache" class="headerlink" title="clean docker cache"></a>clean docker cache</h2><p><code>docker system prune</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker system prune后可以加额外的参数，如：</span><br><span class="line">docker system prune -a ： 一并清除所有未被使用的镜像和没有tag镜像。</span><br><span class="line">docker system prune -f ： 用以强制删除，不提示信息。</span><br></pre></td></tr></table></figure>
+
+<p><code>docker container prune</code></p>
+<p><code>docker network prun</code></p>
+<p><code>docker volume prune</code></p>
+<p><code>docker image prune --force --all</code></p>
+<h2 id="push-image-to-remote-server"><a href="#push-image-to-remote-server" class="headerlink" title="push image to remote server"></a>push image to remote server</h2><p><code>docker push  remote_server:5000/python-chromedriver:3.6</code></p>
+<h2 id="download-from-remote-server"><a href="#download-from-remote-server" class="headerlink" title="download from remote server"></a>download from remote server</h2><p><code>docker run labs-admin-lv-101.labs.marinsw.net:5000/ci-centos6-base date</code> </p>
+<h2 id="log-into-container"><a href="#log-into-container" class="headerlink" title="log into container"></a>log into container</h2><p><code>docker exec -it containerID /bin/bash</code></p>
+<h2 id="run-comtainer-from-remote-docker-registry-and-login"><a href="#run-comtainer-from-remote-docker-registry-and-login" class="headerlink" title="run comtainer from remote docker registry  and login"></a>run comtainer from remote docker registry  and login</h2><p><code>docker run -it remote_server:5000/ci-ubuntu- /bin/bash</code></p>
+<h2 id="rename-docker-image"><a href="#rename-docker-image" class="headerlink" title="rename docker image"></a>rename docker image</h2><p><code>docker image tag 7cebbf38959b  ci-ubuntu:latest</code></p>
+<h2 id="build-image-without-cache"><a href="#build-image-without-cache" class="headerlink" title="build image without cache"></a>build image without cache</h2><p><code>docker build --no-cache -f Dockerfile -t ci-base .</code></p>
+<h2 id="Build-docker-with-docker-file"><a href="#Build-docker-with-docker-file" class="headerlink" title="Build docker with docker file"></a>Build docker with docker file</h2><p><code>docker build -f Dockerfile -t image-name .</code></p>
+<h2 id="Log-into-images"><a href="#Log-into-images" class="headerlink" title="Log into images"></a>Log into images</h2><p><code>docker run -i -t image-name /bin/bash</code></p>
+<h2 id="list-images"><a href="#list-images" class="headerlink" title="list images"></a>list images</h2><p><code>docker images</code></p>
+<h2 id="rm-images"><a href="#rm-images" class="headerlink" title="rm images"></a>rm images</h2><p><code>docker image rm -f imagename</code></p>
+<h2 id="locally-docker-tag-local-image"><a href="#locally-docker-tag-local-image" class="headerlink" title="locally docker tag local image"></a>locally docker tag local image</h2><p><code>docker tag 98d6830c1011 remote_server:5000/python-chromedriver:3.6</code></p>
+<h2 id="save-image-to-file-and-load-locally"><a href="#save-image-to-file-and-load-locally" class="headerlink" title="save image to file and load locally"></a>save image to file and load locally</h2><ul>
+<li><p>docker save labs-admin-lv-101.labs.marinsw.net:5000/ci-ubuntu-mysqldb-mvn354 | gzip  &gt; docker_image_ci-ubuntu-mysqldb-mvn354.tar.gz</p>
+</li>
+<li><p>docker save calc &gt; calc.tar</p>
+</li>
+<li><p>docker load &lt; docker_image_ci-ubuntu-mysqldb-mvn354.tar.gz</p>
+</li>
+</ul>
+<h2 id="建立本地docker-registry"><a href="#建立本地docker-registry" class="headerlink" title="建立本地docker registry"></a>建立本地docker registry</h2><hr>
+<ul>
+<li>docker pull registry:2.6.2 #下载registry</li>
+<li>docker run –name registry -p 5000:5000 -v /data/registry:/var/lib/registry -d registry:2.6.2 #启动registry服务</li>
+<li>docker port registry #查看端口</li>
+<li>docker tag busybox:latest 192.168.10.102:5000/busybox:v0.1 #tag镜像</li>
+<li>docker push 192.168.10.102:5000/busybox:v0.1 #推送镜像</li>
+</ul>
+]]></content>
+      <categories>
+        <category>tech</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>k8s</tag>
+        <tag>container</tag>
+        <tag>python</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>一文让你shell从狗熊变英雄</title>
+    <url>/2023/08/13/shell_from_zero_to_hero./</url>
+    <content><![CDATA[<ul>
+<li><a href="#shell-from-zero-to-hero">Shell From Zero To Hero</a><ul>
+<li><a href="#simply-level-questions">Simply Level Questions</a><ul>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E7%B3%BB%E7%BB%9F%E4%BB%8E%E5%BC%80%E6%9C%BA%E5%88%B0%E7%99%BB%E9%99%86%E7%95%8C%E9%9D%A2%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B">描述Linux系统从开机到登陆界面的启动过程</a></li>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E8%BD%AF%E9%93%BE%E6%8E%A5%E5%92%8C%E7%A1%AC%E9%93%BE%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB">描述Linux下软链接和硬链接的区别</a></li>
+</ul>
+</li>
+<li><a href="#middle-level-questions">Middle Level Questions</a><ul>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4%E7%9A%84%E5%8E%9F%E7%90%86">描述Linux下文件删除的原理</a></li>
+<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fgrep%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式grep高级参数的使用</a></li>
+<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fsed%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式sed高级参数的使用</a></li>
+<li><a href="#awk">AWK</a></li>
+</ul>
+</li>
+<li><a href="#hard-level-questions">Hard Level Questions</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="Shell-From-Zero-To-Hero"><a href="#Shell-From-Zero-To-Hero" class="headerlink" title="Shell From Zero To Hero"></a>Shell From Zero To Hero</h1><h2 id="Simply-Level-Questions"><a href="#Simply-Level-Questions" class="headerlink" title="Simply Level Questions"></a>Simply Level Questions</h2><h3 id="描述Linux系统从开机到登陆界面的启动过程"><a href="#描述Linux系统从开机到登陆界面的启动过程" class="headerlink" title="描述Linux系统从开机到登陆界面的启动过程"></a>描述Linux系统从开机到登陆界面的启动过程</h3><ul>
+<li><p>开机BIOS自检，加载硬盘。</p>
+</li>
+<li><p>读取MBR,MBR引导。</p>
+</li>
+<li><p>grub引导菜单(Boot Loader)。</p>
+</li>
+<li><p>加载内核kernel。</p>
+</li>
+<li><p>启动init进程，依据inittab文件设定运行级别</p>
+</li>
+<li><p>init进程，执行rc.sysinit文件。</p>
+</li>
+<li><p>启动内核模块，执行不同级别的脚本程序。</p>
+</li>
+<li><p>执行/etc/rc.d/rc.local</p>
+</li>
+<li><p>启动mingetty，进入系统登陆界面。</p>
+</li>
+</ul>
+<h3 id="描述Linux下软链接和硬链接的区别"><a href="#描述Linux下软链接和硬链接的区别" class="headerlink" title="描述Linux下软链接和硬链接的区别"></a>描述Linux下软链接和硬链接的区别</h3><p>在Linux系统中，链接分为两种，一种是硬链接（Hard link），另一种称为符号链接或软链接（Symbolic Link）。</p>
+<ul>
+<li><p>默认不带参数的情况下，ln创建的是硬链接，带-s参数的ln命令创建的是软链接。</p>
+</li>
+<li><p>硬链接文件与源文件的inode节点号相同，而软链接文件的inode节点号，与源文件不同，</p>
+</li>
+<li><p>ln命令不能对目录创建硬链接，但可以创建软链接。对目录的软链接会经常使用到。</p>
+</li>
+<li><p>删除软链接文件，对源文件和硬链接文件无任何影响。</p>
+</li>
+<li><p>删除文件的硬链接文件，对源文件及软链接文件无任何影响。</p>
+</li>
+<li><p>删除链接文件的源文件，对硬链接文件无影响，会导致其软链接失效（红底白字闪烁状）。</p>
+</li>
+<li><p>同时删除源文件及其硬链接文件，整个文件才会被真正的删除。</p>
+</li>
+<li><p>很多硬件设备的快照功能，使用的就是类似硬链接的原理。</p>
+</li>
+<li><p>软链接可以跨文件系统，硬链接不可以跨文件系统。</p>
+</li>
+</ul>
+<h2 id="Middle-Level-Questions"><a href="#Middle-Level-Questions" class="headerlink" title="Middle Level Questions"></a>Middle Level Questions</h2><h3 id="描述Linux下文件删除的原理"><a href="#描述Linux下文件删除的原理" class="headerlink" title="描述Linux下文件删除的原理"></a>描述Linux下文件删除的原理</h3><p>Linux系统是通过link的数量来控制文件删除的，只有当一个文件不存在任何link的时候，这个文件才会被删除。一般来说每个文件两个link计数器来控制i_count和i_nlink。当一个文件被一个程序占用的时候i_count就加1。当文件的硬链接多一个的时候i_nlink也加1。删除一个文件，就是让这个文件，没有进程占用，同时i_link数量为0。</p>
+<h3 id="请简述基础正则表达式grep高级参数的使用"><a href="#请简述基础正则表达式grep高级参数的使用" class="headerlink" title="请简述基础正则表达式grep高级参数的使用"></a>请简述基础正则表达式grep高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">常用参数：</span><br><span class="line"></span><br><span class="line">-v排除匹配内容，</span><br><span class="line"></span><br><span class="line">-e支持扩展的正则表达式，</span><br><span class="line"></span><br><span class="line">-i忽略大小写，</span><br><span class="line"></span><br><span class="line">-o输出匹配的内容（只是一块，不是行），</span><br><span class="line"></span><br><span class="line">--color=auto 匹配内容显示颜色，</span><br><span class="line"></span><br><span class="line">-n 在行首显示行号。</span><br><span class="line"></span><br><span class="line">特殊字符注意事项：</span><br><span class="line"></span><br><span class="line">^(尖括号)word ：表示搜索以word开头的内容。</span><br><span class="line"></span><br><span class="line">word$ 表示搜索以word结尾的内容。</span><br><span class="line"></span><br><span class="line">^$    表示的是空行，不是空格。</span><br><span class="line"></span><br><span class="line">.     代表且只能代表任意一个字符。非正则表达式其他功能（当前目录，加载文件）</span><br><span class="line"></span><br><span class="line">/     转义字符，让有着特殊身份意义的字符，脱掉马甲，还原原型。例如.只表示原始小数点意义。</span><br><span class="line"></span><br><span class="line">*    表示重复0个或多个前面的一个字符。不代表所有。</span><br><span class="line"></span><br><span class="line">.*   表示匹配所有的字符。^.*表示以任意字符开头。</span><br><span class="line"></span><br><span class="line">[任意字符如abc] 匹配字符集内任意一个字符[a-z]。 [^abc] ^在中括号里面是非的意思，不包含之意。意思就是不包含a或b或c的行。</span><br><span class="line"></span><br><span class="line">&#123;n，m&#125; 表示重复n到m次前一个字符。｛n｝至少n次，多了不限。｛n｝N次，｛，m｝至多m次，少了不限。</span><br><span class="line"></span><br><span class="line">注：使用grep或sed要对｛｝转义。即｛｝.egrep就不需要转义了。</span><br></pre></td></tr></table></figure>
+
+<h3 id="请简述基础正则表达式sed高级参数的使用"><a href="#请简述基础正则表达式sed高级参数的使用" class="headerlink" title="请简述基础正则表达式sed高级参数的使用"></a>请简述基础正则表达式sed高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">解答：</span><br><span class="line"></span><br><span class="line">-n取消默认输出</span><br><span class="line"></span><br><span class="line">-p 打印</span><br><span class="line"></span><br><span class="line">-d删除</span><br><span class="line"></span><br><span class="line">-e允许多项编辑</span><br><span class="line"></span><br><span class="line">sed取行，要特别注意sed -n &#x27;s###g&#x27; filename 的使用，sed的( )的功能可以记住正则表达式的一部分，其中，为第一个记住的模式即第一个小括号中的匹配内容，第二记住的模式，即第二个小括号中的匹配内容，sed最多可以记住9个。</span><br><span class="line"></span><br><span class="line">实际字符的选取最好要唯一，正则表达式是贪婪的，总是尽可能的匹配更远的符合匹配的内容。另外注意字符串中的空格。</span><br></pre></td></tr></table></figure>
+
+<h3 id="AWK"><a href="#AWK" class="headerlink" title="AWK"></a>AWK</h3><h2 id="Hard-Level-Questions"><a href="#Hard-Level-Questions" class="headerlink" title="Hard Level Questions"></a>Hard Level Questions</h2>]]></content>
+      <categories>
+        <category>shell</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux system admin notes</title>
+    <url>/2022/04/04/linux_systemadmin/</url>
+    <content><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="linunx-环境变量"><a href="#linunx-环境变量" class="headerlink" title="linunx 环境变量"></a>linunx 环境变量</h2><h2 id="linunx-文件权限"><a href="#linunx-文件权限" class="headerlink" title="linunx 文件权限"></a>linunx 文件权限</h2><p><code>umask</code>  default 022</p>
+<h3 id="shell-基础"><a href="#shell-基础" class="headerlink" title="shell 基础"></a>shell 基础</h3><h4 id="结构化命令"><a href="#结构化命令" class="headerlink" title="结构化命令"></a>结构化命令</h4><p>if</p>
+<p>for<br>while<br>until<br>break<br>continue</p>
+<h4 id="shell用户输入"><a href="#shell用户输入" class="headerlink" title="shell用户输入"></a>shell用户输入</h4><h3 id="控制shell脚本"><a href="#控制shell脚本" class="headerlink" title="控制shell脚本"></a>控制shell脚本</h3><h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function name &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">name () &#123;</span><br><span class="line">	commands</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="退出状态"><a href="#退出状态" class="headerlink" title="退出状态"></a>退出状态</h4><p><code>$?</code></p>
+]]></content>
+      <categories>
+        <category>shell,linux</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>linux</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一文让你从入门到精通shell</title>
     <url>/2021/08/19/shell-notes/</url>
     <content><![CDATA[<ul>
@@ -2133,113 +2487,6 @@
       </tags>
   </entry>
   <entry>
-    <title>python程序获取股票信息</title>
-    <url>/2022/07/04/stock-price/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
-<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
-<li>python3</li>
-<li>akshare</li>
-<li>GoogleSheet</li>
-</ul>
-<p>Reference </p>
-<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
-<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
-<li>code example</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
-</ul>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>python</tag>
-        <tag>stock</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一文让你shell从狗熊变英雄</title>
-    <url>/2023/08/13/shell_from_zero_to_hero./</url>
-    <content><![CDATA[<ul>
-<li><a href="#shell-from-zero-to-hero">Shell From Zero To Hero</a><ul>
-<li><a href="#simply-level-questions">Simply Level Questions</a><ul>
-<li><a href="#%E6%8F%8F%E8%BF%B0linux%E7%B3%BB%E7%BB%9F%E4%BB%8E%E5%BC%80%E6%9C%BA%E5%88%B0%E7%99%BB%E9%99%86%E7%95%8C%E9%9D%A2%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B">描述Linux系统从开机到登陆界面的启动过程</a></li>
-<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E8%BD%AF%E9%93%BE%E6%8E%A5%E5%92%8C%E7%A1%AC%E9%93%BE%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB">描述Linux下软链接和硬链接的区别</a></li>
-</ul>
-</li>
-<li><a href="#middle-level-questions">Middle Level Questions</a><ul>
-<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4%E7%9A%84%E5%8E%9F%E7%90%86">描述Linux下文件删除的原理</a></li>
-<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fgrep%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式grep高级参数的使用</a></li>
-<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fsed%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式sed高级参数的使用</a></li>
-<li><a href="#awk">AWK</a></li>
-</ul>
-</li>
-<li><a href="#hard-level-questions">Hard Level Questions</a></li>
-</ul>
-</li>
-</ul>
-<h1 id="Shell-From-Zero-To-Hero"><a href="#Shell-From-Zero-To-Hero" class="headerlink" title="Shell From Zero To Hero"></a>Shell From Zero To Hero</h1><h2 id="Simply-Level-Questions"><a href="#Simply-Level-Questions" class="headerlink" title="Simply Level Questions"></a>Simply Level Questions</h2><h3 id="描述Linux系统从开机到登陆界面的启动过程"><a href="#描述Linux系统从开机到登陆界面的启动过程" class="headerlink" title="描述Linux系统从开机到登陆界面的启动过程"></a>描述Linux系统从开机到登陆界面的启动过程</h3><ul>
-<li><p>开机BIOS自检，加载硬盘。</p>
-</li>
-<li><p>读取MBR,MBR引导。</p>
-</li>
-<li><p>grub引导菜单(Boot Loader)。</p>
-</li>
-<li><p>加载内核kernel。</p>
-</li>
-<li><p>启动init进程，依据inittab文件设定运行级别</p>
-</li>
-<li><p>init进程，执行rc.sysinit文件。</p>
-</li>
-<li><p>启动内核模块，执行不同级别的脚本程序。</p>
-</li>
-<li><p>执行/etc/rc.d/rc.local</p>
-</li>
-<li><p>启动mingetty，进入系统登陆界面。</p>
-</li>
-</ul>
-<h3 id="描述Linux下软链接和硬链接的区别"><a href="#描述Linux下软链接和硬链接的区别" class="headerlink" title="描述Linux下软链接和硬链接的区别"></a>描述Linux下软链接和硬链接的区别</h3><p>在Linux系统中，链接分为两种，一种是硬链接（Hard link），另一种称为符号链接或软链接（Symbolic Link）。</p>
-<ul>
-<li><p>默认不带参数的情况下，ln创建的是硬链接，带-s参数的ln命令创建的是软链接。</p>
-</li>
-<li><p>硬链接文件与源文件的inode节点号相同，而软链接文件的inode节点号，与源文件不同，</p>
-</li>
-<li><p>ln命令不能对目录创建硬链接，但可以创建软链接。对目录的软链接会经常使用到。</p>
-</li>
-<li><p>删除软链接文件，对源文件和硬链接文件无任何影响。</p>
-</li>
-<li><p>删除文件的硬链接文件，对源文件及软链接文件无任何影响。</p>
-</li>
-<li><p>删除链接文件的源文件，对硬链接文件无影响，会导致其软链接失效（红底白字闪烁状）。</p>
-</li>
-<li><p>同时删除源文件及其硬链接文件，整个文件才会被真正的删除。</p>
-</li>
-<li><p>很多硬件设备的快照功能，使用的就是类似硬链接的原理。</p>
-</li>
-<li><p>软链接可以跨文件系统，硬链接不可以跨文件系统。</p>
-</li>
-</ul>
-<h2 id="Middle-Level-Questions"><a href="#Middle-Level-Questions" class="headerlink" title="Middle Level Questions"></a>Middle Level Questions</h2><h3 id="描述Linux下文件删除的原理"><a href="#描述Linux下文件删除的原理" class="headerlink" title="描述Linux下文件删除的原理"></a>描述Linux下文件删除的原理</h3><p>Linux系统是通过link的数量来控制文件删除的，只有当一个文件不存在任何link的时候，这个文件才会被删除。一般来说每个文件两个link计数器来控制i_count和i_nlink。当一个文件被一个程序占用的时候i_count就加1。当文件的硬链接多一个的时候i_nlink也加1。删除一个文件，就是让这个文件，没有进程占用，同时i_link数量为0。</p>
-<h3 id="请简述基础正则表达式grep高级参数的使用"><a href="#请简述基础正则表达式grep高级参数的使用" class="headerlink" title="请简述基础正则表达式grep高级参数的使用"></a>请简述基础正则表达式grep高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">常用参数：</span><br><span class="line"></span><br><span class="line">-v排除匹配内容，</span><br><span class="line"></span><br><span class="line">-e支持扩展的正则表达式，</span><br><span class="line"></span><br><span class="line">-i忽略大小写，</span><br><span class="line"></span><br><span class="line">-o输出匹配的内容（只是一块，不是行），</span><br><span class="line"></span><br><span class="line">--color=auto 匹配内容显示颜色，</span><br><span class="line"></span><br><span class="line">-n 在行首显示行号。</span><br><span class="line"></span><br><span class="line">特殊字符注意事项：</span><br><span class="line"></span><br><span class="line">^(尖括号)word ：表示搜索以word开头的内容。</span><br><span class="line"></span><br><span class="line">word$ 表示搜索以word结尾的内容。</span><br><span class="line"></span><br><span class="line">^$    表示的是空行，不是空格。</span><br><span class="line"></span><br><span class="line">.     代表且只能代表任意一个字符。非正则表达式其他功能（当前目录，加载文件）</span><br><span class="line"></span><br><span class="line">/     转义字符，让有着特殊身份意义的字符，脱掉马甲，还原原型。例如.只表示原始小数点意义。</span><br><span class="line"></span><br><span class="line">*    表示重复0个或多个前面的一个字符。不代表所有。</span><br><span class="line"></span><br><span class="line">.*   表示匹配所有的字符。^.*表示以任意字符开头。</span><br><span class="line"></span><br><span class="line">[任意字符如abc] 匹配字符集内任意一个字符[a-z]。 [^abc] ^在中括号里面是非的意思，不包含之意。意思就是不包含a或b或c的行。</span><br><span class="line"></span><br><span class="line">&#123;n，m&#125; 表示重复n到m次前一个字符。｛n｝至少n次，多了不限。｛n｝N次，｛，m｝至多m次，少了不限。</span><br><span class="line"></span><br><span class="line">注：使用grep或sed要对｛｝转义。即｛｝.egrep就不需要转义了。</span><br></pre></td></tr></table></figure>
-
-<h3 id="请简述基础正则表达式sed高级参数的使用"><a href="#请简述基础正则表达式sed高级参数的使用" class="headerlink" title="请简述基础正则表达式sed高级参数的使用"></a>请简述基础正则表达式sed高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">解答：</span><br><span class="line"></span><br><span class="line">-n取消默认输出</span><br><span class="line"></span><br><span class="line">-p 打印</span><br><span class="line"></span><br><span class="line">-d删除</span><br><span class="line"></span><br><span class="line">-e允许多项编辑</span><br><span class="line"></span><br><span class="line">sed取行，要特别注意sed -n &#x27;s###g&#x27; filename 的使用，sed的( )的功能可以记住正则表达式的一部分，其中，为第一个记住的模式即第一个小括号中的匹配内容，第二记住的模式，即第二个小括号中的匹配内容，sed最多可以记住9个。</span><br><span class="line"></span><br><span class="line">实际字符的选取最好要唯一，正则表达式是贪婪的，总是尽可能的匹配更远的符合匹配的内容。另外注意字符串中的空格。</span><br></pre></td></tr></table></figure>
-
-<h3 id="AWK"><a href="#AWK" class="headerlink" title="AWK"></a>AWK</h3><h2 id="Hard-Level-Questions"><a href="#Hard-Level-Questions" class="headerlink" title="Hard Level Questions"></a>Hard Level Questions</h2>]]></content>
-      <categories>
-        <category>shell</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>shell</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>一文熟悉云配置神器terraform</title>
     <url>/2021/08/26/terraform-notes/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><hr>
@@ -2482,225 +2729,32 @@
       </tags>
   </entry>
   <entry>
-    <title>Developer&#39;s MacOS setup from Zero</title>
-    <url>/2023/05/11/developer_macos_setup/</url>
-    <content><![CDATA[<ul>
-<li><a href="#third-part-applications-links">Third part applications links</a></li>
-<li><a href="#macos-setup">MacOS Setup</a><ul>
-<li><a href="#sceenshots-save-folder">sceenshots save folder</a></li>
-<li><a href="#ssh-keys">SSH Keys</a></li>
+    <title>python程序获取股票信息</title>
+    <url>/2022/07/04/stock-price/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
+<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
+<li>python3</li>
+<li>akshare</li>
+<li>GoogleSheet</li>
 </ul>
-</li>
-<li><a href="#applications-configuration">Applications Configuration</a><ul>
-<li><a href="#iterm2-setup">iTerm2 setup</a><ul>
-<li><a href="#installation-">Installation </a></li>
-<li><a href="#customization-">Customization </a><ul>
-<li><a href="#colors-and-font-settings-">Colors and Font Settings </a></li>
+<p>Reference </p>
+<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
+<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
+<li>code example</li>
 </ul>
-</li>
-</ul>
-</li>
-<li><a href="#zsh-setup">Zsh setup</a><ul>
-<li><a href="#install-zsh">Install zsh</a></li>
-<li><a href="#step2-install-plugins-and--theme">Step2 Install plugins and  theme</a></li>
-<li><a href="#install-theme">Install Theme</a></li>
-<li><a href="#re-load-configuration">Re-load configuration</a></li>
-</ul>
-</li>
-<li><a href="#homebrew-setup">Homebrew setup</a></li>
-<li><a href="#git-setup">Git setup</a><ul>
-<li><a href="#git-and-github-">Git and GitHub </a></li>
-<li><a href="#ssh-config-for-github-">SSH Config for GitHub </a><ul>
-<li><a href="#check-for-existing-ssh-keys-">Check for existing SSH keys </a></li>
-<li><a href="#generate-a-new-ssh-key-">Generate a new SSH key </a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#sublime-setup">Sublime setup</a><ul>
-<li><a href="#sublime-text-">Sublime Text </a><ul>
-<li><a href="#installation--1">Installation </a></li>
-<li><a href="#use-cli-to-open-file-">Use CLI to open file </a></li>
-</ul>
-</li>
-<li><a href="#subl-plugins">Subl plugins</a></li>
-<li><a href="#keyboard-shortcuts">Keyboard Shortcuts</a></li>
-<li><a href="#sidebarenhancements">SideBarEnhancements</a></li>
-<li><a href="#sublimelinter">SublimeLinter</a></li>
-<li><a href="#gitgutter">GitGutter</a></li>
-<li><a href="#markdown-preview">Markdown Preview</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="Third-part-applications-links"><a href="#Third-part-applications-links" class="headerlink" title="Third part applications links"></a>Third part applications links</h1><ul>
-<li>Custom terminal tool: iTerm2 <a href="https://iterm2.com/">https://iterm2.com</a></li>
-<li>Smart your terminal: zsh: <a href="https://ohmyz.sh/">https://ohmyz.sh/</a></li>
-<li>Yum on MacOS: Homebrew <a href="https://brew.sh/">https://brew.sh</a></li>
-<li>Notebook or IDE: sublime <a href="https://www.sublimetext.com/">https://www.sublimetext.com</a></li>
-<li>IDE Visual Studio: <a href="https://code.visualstudio.com/">https://code.visualstudio.com</a></li>
-<li>Git : <a href="https://github.com/git-guides/install-git">https://github.com/git-guides/install-git</a></li>
-</ul>
-<h1 id="MacOS-Setup"><a href="#MacOS-Setup" class="headerlink" title="MacOS Setup"></a>MacOS Setup</h1><h3 id="sceenshots-save-folder"><a href="#sceenshots-save-folder" class="headerlink" title="sceenshots save folder"></a>sceenshots save folder</h3><ul>
-<li>manually create screenshots folder </li>
-<li>defaults write com.apple.screencapture location xxxx(screenshots folder path)</li>
-</ul>
-<h3 id="SSH-Keys"><a href="#SSH-Keys" class="headerlink" title="SSH Keys"></a>SSH Keys</h3><p>many of you have setup ssh keys to ssh remote to servers, if you don’t want to change settings, you can simply copy ssh folders</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>copy from older Macbook ~/.ssh/* </li>
-</ul>
-<h1 id="Applications-Configuration"><a href="#Applications-Configuration" class="headerlink" title="Applications Configuration"></a>Applications Configuration</h1><h2 id="iTerm2-setup"><a href="#iTerm2-setup" class="headerlink" title="iTerm2 setup"></a>iTerm2 setup</h2><p><a href="http://www.iterm2.com/">iTerm2</a> is an open source replacement for Apple’s Terminal. It’s highly customizable and comes with a lot of useful features.</p>
-<h3 id="Installation"><a href="#Installation" class="headerlink" title="Installation "></a>Installation <a id="installation"></a></h3><p>Use <a href="http://sourabhbajaj.com/mac-setup/Homebrew/">Homebrew</a> to download and install:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew cask install iterm2</span><br></pre></td></tr></table></figure>
-<p>or download via <a href="https://iterm2.com/">https://iterm2.com</a></p>
-<h3 id="Customization"><a href="#Customization" class="headerlink" title="Customization "></a>Customization <a id="customization"></a></h3><h4 id="Colors-and-Font-Settings"><a href="#Colors-and-Font-Settings" class="headerlink" title="Colors and Font Settings "></a>Colors and Font Settings <a id="colors-and-font-settings"></a></h4><p>Here are some suggested settings you can change or set, <strong>they are all optional</strong>.</p>
-<ul>
-<li>Set hot-key to open and close the terminal to <code>command + option + i</code></li>
-<li>Go to profiles -&gt; Default -&gt; Terminal -&gt; Check silence bell to disable the terminal session from making any sound</li>
-<li>Download <a href="https://github.com/mbadolato/iTerm2-Color-Schemes/tree/master/schemes">one of iTerm2 color schemes</a> and then set these to your default profile colors</li>
-<li>Change the cursor text and cursor color to yellow make it more visible</li>
-<li>Change the font to 14pt Source Code Pro Lite. Source Code Pro can be downloaded using <a href="https://sourabhbajaj.com/mac-setup/Homebrew/">Homebrew</a> <code>brew tap caskroom/fonts &amp;&amp; brew cask install font-source-code-pro</code></li>
-<li>If you’re using BASH instead of ZSH you can add <code>export CLICOLOR=1</code> line to your <code>~/.bash_profile</code>file for nice coloring of listings</li>
-</ul>
-<h2 id="Zsh-setup"><a href="#Zsh-setup" class="headerlink" title="Zsh setup"></a>Zsh setup</h2><h3 id="Install-zsh"><a href="#Install-zsh" class="headerlink" title="Install zsh"></a>Install zsh</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sh -c &quot;$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Step2-Install-plugins-and-theme"><a href="#Step2-Install-plugins-and-theme" class="headerlink" title="Step2 Install plugins and  theme"></a>Step2 Install plugins and  theme</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim ~/.zshrc</span><br><span class="line"></span><br><span class="line">plugins=(git zsh-autosuggestions zsh-syntax-highlighting)</span><br></pre></td></tr></table></figure>
-
-<h3 id="Install-Theme"><a href="#Install-Theme" class="headerlink" title="Install Theme"></a>Install Theme</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#Set ZSH_THEME=powerlevel10k/powerlevel10k in your ~/.zshrc.</span><br><span class="line"></span><br><span class="line">ZSH_THEME=&quot;powerlevel10k/powerlevel10k&quot;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Re-load-configuration"><a href="#Re-load-configuration" class="headerlink" title="Re-load configuration"></a>Re-load configuration</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure>
-
-<h2 id="Homebrew-setup"><a href="#Homebrew-setup" class="headerlink" title="Homebrew setup"></a>Homebrew setup</h2><blockquote>
-<p>/bin/bash -c “$(curl -fsSL <a href="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;">https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;</a></p>
-</blockquote>
-<h2 id="Git-setup"><a href="#Git-setup" class="headerlink" title="Git setup"></a>Git setup</h2><h3 id="Git-and-GitHub"><a href="#Git-and-GitHub" class="headerlink" title="Git and GitHub "></a>Git and GitHub <a id="git-and-github"></a></h3><p>What’s a developer without <a href="http://git-scm.com/">Git</a>? To install, run:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ brew install git</span><br></pre></td></tr></table></figure>
-
-<p>When done, to test that it installed properly you can run:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git --version</span><br></pre></td></tr></table></figure>
-
-<p>And <code>which git</code> should output <code>/usr/local/bin/git</code>.</p>
-<p>Next, we’ll define your Git user (should be the same name and email you use for <a href="https://github.com/">GitHub</a>):</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name &quot;Your Name Here&quot;</span><br><span class="line">$ git config --global user.email &quot;your_email@youremail.com&quot;</span><br></pre></td></tr></table></figure>
-
-<p>They will get added to your <code>.gitconfig</code> file.</p>
-<p>To push code to your GitHub repositories, we’re going to use the recommended HTTPS method (versus SSH). To prevent <code>git</code> from asking for your username and password every time you push a commit you can cache your credentials by running the following command, as described in the <a href="https://help.github.com/articles/caching-your-github-password-in-git/">instructions</a>.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git config --global credential.helper osxkeychain</span><br></pre></td></tr></table></figure>
-
-<h3 id="SSH-Config-for-GitHub"><a href="#SSH-Config-for-GitHub" class="headerlink" title="SSH Config for GitHub "></a>SSH Config for GitHub <a id="ssh-config-for-github"></a></h3><p>The instructions below are referenced from <a href="https://help.github.com/articles/generating-ssh-keys">the official documentation</a>.</p>
-<h4 id="Check-for-existing-SSH-keys"><a href="#Check-for-existing-SSH-keys" class="headerlink" title="Check for existing SSH keys "></a>Check for existing SSH keys <a id="check-for-existing-ssh-keys"></a></h4><p>First, we need to check for existing SSH keys on your computer. We do this by running:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ls -al ~/.ssh</span><br><span class="line"># Lists the files in your .ssh directory, if they exist</span><br></pre></td></tr></table></figure>
-
-<p>Check the directory listing to see if you have files named either <code>id_rsa.pub</code> or <code>id_dsa.pub</code>. If you don’t have either of those files then read on, otherwise skip the next section.</p>
-<h4 id="Generate-a-new-SSH-key"><a href="#Generate-a-new-SSH-key" class="headerlink" title="Generate a new SSH key "></a>Generate a new SSH key <a id="generate-a-new-ssh-key"></a></h4><p>If you don’t have an SSH key you need to generate one. To do that you need to run the commands below, and make sure to substitute the placeholder with your email. The default settings are preferred, so when you’re asked to “enter a file in which to save the key,”” just press Enter to continue.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C &quot;your_email@example.com&quot;</span><br><span class="line"># Creates a new ssh key, using the provided email as a label</span><br></pre></td></tr></table></figure>
-
-<h2 id="Sublime-setup"><a href="#Sublime-setup" class="headerlink" title="Sublime setup"></a>Sublime setup</h2><h3 id="Sublime-Text"><a href="#Sublime-Text" class="headerlink" title="Sublime Text "></a>Sublime Text <a id="sublime-text"></a></h3><p><a href="http://www.sublimetext.com/">Sublime Text</a> is a widely used editor that describes it self as <em>a sophisticated text editor for code, markup and prose</em>.</p>
-<h4 id="Installation-1"><a href="#Installation-1" class="headerlink" title="Installation "></a>Installation <a id="installation"></a></h4><p><a href="http://www.sublimetext.com/">Download</a> the <strong>.dmg</strong> file and drag-and-drop it to the <strong>Applications</strong> folder.</p>
-<h4 id="Use-CLI-to-open-file"><a href="#Use-CLI-to-open-file" class="headerlink" title="Use CLI to open file "></a>Use CLI to open file <a id="use-cli-to-open-file"></a></h4><p>Let’s create a shortcut so we can launch Sublime Text from the command-line</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl</span><br></pre></td></tr></table></figure>
-
-<p>Now you can open a file with <code>$ subl myfile.py</code> or start a new project in the current directory with <code>$ subl .</code>.</p>
-<h3 id="Subl-plugins"><a href="#Subl-plugins" class="headerlink" title="Subl plugins"></a>Subl plugins</h3><p>****</p>
-<h3 id="Keyboard-Shortcuts"><a href="#Keyboard-Shortcuts" class="headerlink" title="Keyboard Shortcuts"></a>Keyboard Shortcuts</h3><ul>
-<li><strong>Goto Anything</strong> Cmd+P is used for quickly finding and opening files. Just type in a part of a path and filename within a project and you can easily open that file. This is great for quickly opening files in large Django projects.</li>
-<li><strong>Goto Line Number</strong> Ctrl+G takes you to a specific line number in an active file.</li>
-<li><strong>command + shift + p</strong>  to open install package -&gt; search packages </li>
-</ul>
-<h3 id="SideBarEnhancements"><a href="#SideBarEnhancements" class="headerlink" title="SideBarEnhancements"></a>SideBarEnhancements</h3><p><a href="https://sublime.wbond.net/packages/SideBarEnhancements">SideBarEnhancements</a> extends the number of menu options in the sidebar, speeding up your overall workflow. Options such as <strong>New File</strong> and <strong>Duplicate</strong> are essential and should be part of ST3 out of the box. The <strong>Delete</strong> option alone makes it worth downloading. This feature simply sends files to the Trash, which may seem trivial, but if you delete a file without it, then it’s very difficult to recover unless you’re using a version control system</p>
-<p><img src="/../.gitbook/assets/image.png"></p>
-<p><a href="https://sublime.wbond.net/packages/Anaconda">Anaconda</a> is the ultimate Python package. It adds a number of IDE-like features to ST3 including the following:</p>
-<ul>
-<li><strong>Autocompletion</strong> works by default, but there are a number of configuration <a href="https://github.com/DamnWidget/anaconda#anaconda-autocompletion">options</a>.</li>
-<li><strong>Code</strong> <a href="http://en.wikipedia.org/wiki/Lint_%28software%29"><strong>linting</strong></a> uses either PyLint or PyFlakes with PEP 8. I personally use a different linting package, as I will explain shortly, so I disable linting altogether within the user-defined Anaconda settings file, <strong>Anaconda.sublime-settings</strong>, via the file menu: <strong>Sublime &gt; Preferences &gt; Package Settings &gt; Anaconda &gt; Settings - User</strong>: <code>&#123;&quot;anaconda_linting&quot;: false&#125;</code></li>
-<li><strong>McCabe code complexity checker</strong> runs the <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">McCabe complexity checker</a> tool within a specific file. If you’re not familiar with what complexity is, be sure to visit the link above.</li>
-<li><strong>Goto Definitions</strong> finds and displays the definition of any variable, function, or class throughout your entire project.</li>
-<li><strong>Find Usage</strong> quickly searches where a variable, function, or class has been used in a specific file.</li>
-<li><strong>Show Documentation</strong> shows the docstring for functions or classes (if defined, of course).</li>
-</ul>
-<h3 id="SublimeLinter"><a href="#SublimeLinter" class="headerlink" title="SublimeLinter"></a>SublimeLinter</h3><p><a href="https://sublime.wbond.net/packages/SublimeLinter">SublimeLinter</a> is a framework for ST3 linters. The package itself does not include any actual linters; those must be installed separately via Package Control using the <strong>SublimeLinter-[linter_name]</strong> naming syntax. You can view official linters <a href="https://github.com/SublimeLinter">here</a>. There are also a number of third party linters, which can be viewed in Package Control. Check out the installation instructions <a href="http://sublimelinter.readthedocs.org/en/latest/installation.html">here</a>.</p>
-<h3 id="GitGutter"><a href="#GitGutter" class="headerlink" title="GitGutter"></a>GitGutter</h3><p><a href="https://sublime.wbond.net/packages/GitGutter">GitGutter</a> shows little icons in ST3’s gutter area that indicate whether a line has been inserted, modified, or deleted since the last commit.</p>
-<h3 id="Markdown-Preview"><a href="#Markdown-Preview" class="headerlink" title="Markdown Preview"></a>Markdown Preview</h3><p><a href="https://sublime.wbond.net/packages/Markdown%20Preview">Markdown Preview</a> is used for previewing and building markdown files.</p>
-<p>To use, open the Package Manager and type <code>Markdown Preview</code> to show the available commands:</p>
-<ul>
-<li>Markdown Preview: Python Markdown: Preview in Browser</li>
-<li>Markdown Preview: Python Markdown: Export HTML in Sublime Text</li>
-<li>Markdown Preview: Python Markdown: Copy to Clipboard</li>
-<li>Markdown Preview: GitHub Flavored Markdown: Preview in Browser</li>
-<li>Markdown Preview: GitHub Flavored Markdown: Export HTML in Sublime Text</li>
-<li>Markdown Preview: GitHub Flavored Markdown: Copy to Clipboard</li>
-<li>Markdown Preview: Open Markdown Cheat Sheet</li>
+<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
 </ul>
 ]]></content>
       <categories>
-        <category>macos,tools</category>
-      </categories>
-      <tags>
-        <tag>macos</tag>
-        <tag>python</tag>
-        <tag>developer_tool</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kubernetes 入门基础</title>
-    <url>/2022/09/20/Kubernetes_from_zero/</url>
-    <content><![CDATA[<h1 id="Kubernetes-入门基础"><a href="#Kubernetes-入门基础" class="headerlink" title="Kubernetes 入门基础"></a>Kubernetes 入门基础</h1><p><strong>Kubernetes Components Architecture</strong><br><img src="/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg" alt="image"></p>
-<h2 id="Kubernetes-核心组件"><a href="#Kubernetes-核心组件" class="headerlink" title="Kubernetes 核心组件"></a>Kubernetes 核心组件</h2><p>Kubernetes 主要由以下几个核心组件组成:</p>
-<ul>
-<li>etcd 保存了整个集群的状态；</li>
-<li>API Server 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制；</li>
-<li>Controller Manager 负责维护集群的状态，比如故障检测、自动扩展、滚动更新等；</li>
-<li>Scheduler 负责资源的调度，按照预定的调度策略将 Pod 调度到相应的机器上；</li>
-<li>Kubelet 负责维护容器的生命周期，同时也负责 Volume（CVI）和网络（CNI）的管理；</li>
-<li>Container Runtime 负责镜像管理以及 Pod 和容器的真正运行（CRI）；</li>
-<li>Kube-proxy 负责为 Service 提供 cluster 内部的服务发现和负载均衡；</li>
-</ul>
-<h2 id="Kubernetes相关基础概念"><a href="#Kubernetes相关基础概念" class="headerlink" title="Kubernetes相关基础概念"></a>Kubernetes相关基础概念</h2><ul>
-<li>master：k8s集群的管理节点，负责管理集群，提供集群的资源数据访问入口。拥有Etcd存储服务（可选），运行Api Server进程，Controller Manager服务进程及Scheduler服务进程。</li>
-<li>node（worker）：Node（worker）是Kubernetes集群架构中运行Pod的服务节点，是Kubernetes集群操作的单元，用来承载被分配Pod的运行，是Pod运行的宿主机。运行docker eninge服务，守护进程kunelet及负载均衡器kube-proxy。</li>
-<li>pod：运行于Node节点上，若干相关容器的组合。Pod内包含的容器运行在同一宿主机上，使用相同的网络命名空间、IP地址和端口，能够通过localhost进行通信。Pod是Kurbernetes进行创建、调度和管理的最小单位，它提供了比容器更高层次的抽象，使得部署和管理更加灵活。一个Pod可以包含一个容器或者多个相关容器。</li>
-<li>label：Kubernetes中的Label实质是一系列的Key/Value键值对，其中key与value可自定义。Label可以附加到各种资源对象上，如Node、Pod、Service、RC等。一个资源对象可以定义任意数量的Label，同一个Label也可以被添加到任意数量的资源对象上去。Kubernetes通过Label Selector（标签选择器）查询和筛选资源对象。</li>
-<li>Replication Controller：Replication Controller用来管理Pod的副本，保证集群中存在指定数量的Pod副本。集群中副本的数量大于指定数量，则会停止指定数量之外的多余容器数量。反之，则会启动少于指定数量个数的容器，保证数量不变。Replication Controller是实现弹性伸缩、动态扩容和滚动升级的核心。</li>
-<li>Deployment：Deployment在内部使用了RS来实现目的，Deployment相当于RC的一次升级，其最大的特色为可以随时获知当前Pod的部署进度。</li>
-<li>HPA（Horizontal Pod Autoscaler）：Pod的横向自动扩容，也是Kubernetes的一种资源，通过追踪分析RC控制的所有Pod目标的负载变化情况，来确定是否需要针对性的调整Pod副本数量。</li>
-<li>Service：Service定义了Pod的逻辑集合和访问该集合的策略，是真实服务的抽象。Service提供了一个统一的服务访问入口以及服务代理和发现机制，关联多个相同Label的Pod，用户不需要了解后台Pod是如何运行。</li>
-<li>Volume：Volume是Pod中能够被多个容器访问的共享目录，Kubernetes中的Volume是定义在Pod上，可以被一个或多个Pod中的容器挂载到某个目录下。</li>
-<li>Namespace：Namespace用于实现多租户的资源隔离，可将集群内部的资源对象分配到不同的Namespace中，形成逻辑上的不同项目、小组或用户组，便于不同的Namespace在共享使用整个集群的资源的同时还能被分别管理。</li>
-</ul>
-<h2 id="K8s-常用命令"><a href="#K8s-常用命令" class="headerlink" title="K8s 常用命令"></a>K8s 常用命令</h2><h3 id="kubectl"><a href="#kubectl" class="headerlink" title="kubectl"></a>kubectl</h3><hr>
-<p>kubectl 是 Kubernetes 的命令行工具（CLI），是 Kubernetes 用户和管理员必备的管理工具。<br>kubectl 提供了大量的子命令，方便管理 Kubernetes 集群中的各种功能。这里不再罗列各种子命令的格式，而是介绍下如何查询命令的帮助</p>
-<ul>
-<li>kubectl -h 查看子命令列表</li>
-<li>kubectl options 查看全局选项</li>
-<li>kubectl <command> –help 查看子命令的帮助</li>
-<li>kubectl [command] [PARAMS] -o=<format> 设置输出格式（如 json、yaml、jsonpath 等）</li>
-<li>kubectl explain [RESOURCE] 查看资源的定义</li>
-</ul>
-<hr>
-<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>使用 kubectl 的第一步是配置 Kubernetes 集群以及认证方式，包括</p>
-<ul>
-<li>cluster 信息：Kubernetes server 地址</li>
-<li>用户信息：用户名、密码或密钥</li>
-<li>Context：cluster、用户信息以及 Namespace 的组合</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl config set-credentials myself --username=admin --password=secret</span><br><span class="line">kubectl config set-cluster local-server --server=http://localhost:8080</span><br><span class="line">kubectl config set-context default-context --cluster=local-server --user=myself --namespace=default</span><br><span class="line">kubectl config use-context default-context</span><br><span class="line">kubectl config view</span><br></pre></td></tr></table></figure>
-
-
-]]></content>
-      <categories>
-        <category>tech</category>
+        <category>python</category>
       </categories>
       <tags>
         <tag>tech</tag>
-        <tag>k8s</tag>
-        <tag>container</tag>
+        <tag>python</tag>
+        <tag>stock</tag>
         <tag>Tech</tag>
       </tags>
   </entry>

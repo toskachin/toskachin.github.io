@@ -28,12 +28,13 @@
 <meta property="og:description" content="Regular Questions What is Dell omreport&#x2F;omconfig comamnd*  What is HP iLO and LOM lights-out management(LOM): Lights-out management (LOM) is a form of out-of-band management. It enables system adminis">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-09-11T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-13T13:57:03.748Z">
+<meta property="article:modified_time" content="2023-09-13T23:30:51.587Z">
 <meta property="article:author" content="TOSKA">
 <meta property="article:tag" content="tech">
 <meta property="article:tag" content="interview">
 <meta property="article:tag" content="shell">
 <meta property="article:tag" content="Tech">
+<meta property="article:tag" content="Life">
 <meta name="twitter:card" content="summary">
 
 
@@ -151,7 +152,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Regular-Questions"><span class="nav-number">1.</span> <span class="nav-text">Regular Questions</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Regular-Questions"><span class="nav-number">1.</span> <span class="nav-text">Regular Questions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-Hardware-questions"><span class="nav-number">2.</span> <span class="nav-text">Linux Hardware questions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Other-hardware-command"><span class="nav-number">2.1.</span> <span class="nav-text">Other hardware command</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -294,7 +295,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2023-09-13 21:57:03" itemprop="dateModified" datetime="2023-09-13T21:57:03+08:00">2023-09-13</time>
+        <time title="修改时间：2023-09-14 07:30:51" itemprop="dateModified" datetime="2023-09-14T07:30:51+08:00">2023-09-14</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -320,14 +321,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>8.3k</span>
+      <span>13k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>14 分钟</span>
+      <span>21 分钟</span>
     </span>
 </div>
 
@@ -553,26 +554,79 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ps -eo pid,lstart,etime | grep 61819</span><br><span class="line"></span><br><span class="line">ps -eo pid,comm,cmd,start,etime | grep -i X</span><br></pre></td></tr></table></figure>
 
 <ul>
+<li>How do you find shared library dependencies?</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ldd /fullpath/command</span><br><span class="line">readelf -d /fullpath/command</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>What features of the Linux kernel enable Docker to work?</p>
+<ul>
+<li>CGroups</li>
+<li>Namespaces</li>
+</ul>
+</li>
+<li><p>How to dry run ansible playbook and puppet agent commands</p>
+<ul>
+<li><code> ansible-playbook playbook.yml --check</code></li>
+<li><code>puppet agent --noop</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="Linux-Hardware-questions"><a href="#Linux-Hardware-questions" class="headerlink" title="Linux Hardware questions"></a>Linux Hardware questions</h2><ul>
+<li><p>How to install OMSA(OpenManage Server Administartor)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># wget -q -O - http://linux.dell.com/repo/hardware/latest/bootstrap.cgi | bash     下载repo源</span><br><span class="line"># yum install -y net-snmp net-snmp-devel net-snmp-utils wget perl OpenIPMI</span><br><span class="line"># yum  -y install srvadmin-all     安装路径：/opt/dell/srvadmin/</span><br><span class="line"># /opt/dell/srvadmin/sbin/srvadmin-services.sh start     启动OMSA</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>What is Dell RACADM<br>Remote Access Controller Admin (RACADM) utility is a command-line tool that enables remote or local management of Dell Servers using the iDRAC</p>
+</li>
+<li><p>List system information </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">echo &quot; -------------------------------------------------------------------&quot;              &gt; /etc/motd</span><br><span class="line">echo &quot;    /etc/motd&quot;                                                                    &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; -------------------------------------------------------------------&quot;             &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; HOST          : `hostname`&quot;                                                      &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; OS            : `head -1 /etc/redhat-release`&quot;                                   &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; KERNEL        : `uname -r`&quot;                                                      &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; CPU           : `cat /proc/cpuinfo | grep &#x27;^model name&#x27; | sort -u | cut -f2 -d&#x27;:&#x27; | sed &#x27;s/^ //&#x27;`&quot; &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; CPU COUNT     : `egrep -c &#x27;^processor&#x27; /proc/cpuinfo`&quot;                           &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; RAM           :  $(( $(cat /proc/meminfo |grep MemTotal |awk &#x27;&#123;print $2&#125;&#x27; ) / (( 1024 * 1000 )) )) GB&quot;                                                      &gt;&gt; /etc/motd</span><br><span class="line"></span><br><span class="line">echo &quot; &quot;                                                                                &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; Manufacturer  : dmidecode -s system-manufacturer`&quot;                               &gt;&gt; /etc/motd                         &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; Serial Number : dmidecode -s system-serial-number&quot;                               &gt;&gt; /etc/motd                         &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; Model         : dmidecode -s system-product-name&quot;                                &gt;&gt; /etc/motd                        &gt;&gt; /etc/motd</span><br><span class="line">echo &quot; BIOS Version  : dmidecoe -s bios-version&quot; 										&gt;&gt; /etc/motd</span><br><span class="line"></span><br><span class="line">_LOMINFO=&quot;`timeout --signal=SIGKILL 10 ipmitool lan print ||  echo &#x27;IP Address     : FAIL&#x27; `&quot;</span><br><span class="line">_LOMIP=&quot;`echo \&quot;$_LOMINFO\&quot; | grep &#x27;IP Address   &#x27;| awk -F&#x27;:&#x27; &#x27;&#123;print $2&#125;&#x27;| tr -d &#x27; &#x27;`&quot;</span><br><span class="line">_LOMFQDN=&quot;$(host -t any -l xxxxxxxx | grep -i $&#123;_SNUM&#125; | awk &#x27;&#123;print $1&#125;&#x27;)&quot;</span><br><span class="line"></span><br><span class="line">cat /etc/motd</span><br></pre></td></tr></table></figure></li>
+<li><p>How to build foreman and work with puppet</p>
+<ul>
+<li>install DHCP server</li>
+<li>install DNS server</li>
+<li>install vtftp</li>
+<li>install forman</li>
+<li>configure hammer</li>
+<li>configure PXEboot</li>
+<li>configure puppet classes</li>
+</ul>
+</li>
+<li><p>How to check and improve I/O issue</p>
+<ul>
+<li><code>iowait</code> <code>iotop</code> </li>
+<li> ensure you have free physical memory so the OS can cache disk blocks in memory</li>
+<li>keep your filesystem disk usage below 80% to avoid excessive fragmentation</li>
+<li>tune your filesystem</li>
+<li>use a battery backed array controller</li>
+<li>choose good buffer sizes when performing io operations</li>
+</ul>
+</li>
+<li><p>how to check physical disk driver</p>
+<ul>
+<li><code>lshw</code> <code>lspci</code></li>
+</ul>
+</li>
+<li><p>Usage of omreport of dell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">omreport chassis # 显示所有主要组件的常规状态 </span><br><span class="line">omreport chassis memory # 显示内存信息</span><br><span class="line">omreport chassis temps # 显示系统主要组件的温度</span><br><span class="line">omreport storage adisk controller=0 # 查看磁盘陈列中的硬盘状态</span><br><span class="line">omreport storage pdisk controller=0 # 查看物理磁盘信息</span><br><span class="line">omreport storage vdisk controller=0 # 查看虚拟硬盘的状态</span><br><span class="line">omreport storage controller # 查看控制器(即RAID卡)的属性</span><br><span class="line">omreport storage enclosure controller=0 # 查看enclosure的属性</span><br><span class="line">omreport storage battery # 查看电池属性</span><br><span class="line"></span><br><span class="line">omreport chassis info -fmt ssv 分割数据打印出来</span><br></pre></td></tr></table></figure></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost wcy]# omreport chassis info</span><br><span class="line">Chassis Information</span><br><span class="line"></span><br><span class="line">Index                                      : 0</span><br><span class="line">Chassis Name                               : Main System Chassis</span><br><span class="line">Host Name                                  : localhost.localdomain</span><br><span class="line">iDRAC7 Version                             : 1.40.40 (Build 17)</span><br><span class="line">Lifecycle Controller 2 Version             : 1.1.5.165</span><br><span class="line">Chassis Model                              : PowerEdge R420</span><br><span class="line">Chassis Lock                               : Present</span><br><span class="line">Chassis Service Tag                        : 6X8QZY1</span><br><span class="line">Express Service Code                       : 15070774393</span><br><span class="line">Chassis Asset Tag                          : Unknown</span><br><span class="line">Flash chassis identify LED state           : Off</span><br><span class="line">Flash chassis identify LED timeout value   : 300</span><br></pre></td></tr></table></figure>
+<h3 id="Other-hardware-command"><a href="#Other-hardware-command" class="headerlink" title="Other hardware command"></a>Other hardware command</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">//内存</span><br><span class="line"># free -m</span><br><span class="line"># cat /proc/meminfo</span><br><span class="line"># dmidecode -t memory</span><br><span class="line">//CPU</span><br><span class="line"># lscpu</span><br><span class="line"># cat /proc/cpuinfo</span><br><span class="line"># dmidecode -t processor</span><br><span class="line"># dmidecode | grep &quot;CPU&quot; //获取CPU信息</span><br><span class="line">//硬盘</span><br><span class="line"># df -lhP</span><br><span class="line"># lsblk</span><br><span class="line"># fdisk -l</span><br><span class="line"># dmesg|grep sd //查看开机信息里面的磁盘info</span><br><span class="line"># hdparm -I /dev/sda //查看磁盘硬件信息、开启的功能等,信息特别详细 【hdparm需要yum安装】</span><br><span class="line"># smartctl -H /dev/sda //查看硬盘健康状态</span><br><span class="line"># smartctl --all /dev/sda //【smartctl需要yum安装才能用】</span><br><span class="line"># smartctl -h //还有很多有用的参数</span><br><span class="line">//网卡</span><br><span class="line"># lspci|grep -i eth</span><br><span class="line"># ifconfig -a</span><br><span class="line"># ip link show</span><br><span class="line"># ethtool eth0 //显示网卡eth0的详细参数和指标</span><br><span class="line">//系统信息</span><br><span class="line"># dmidecode -t system</span><br><span class="line"># dmidecode | grep&quot;Product&quot;</span><br><span class="line"># dmidecode | grep&quot;Manufacturer&quot; //获取厂商</span><br><span class="line"># dmidecode | grep -B 4 &quot;SerialNumber&quot; | more //获取序号信息</span><br><span class="line"># dmidecode | grep &quot;Date&quot; //获取生产日期</span><br><span class="line">//dmesg和dmidecode还有很多信息，涵盖了全部硬件信息。</span><br><span class="line">//主板</span><br><span class="line"># lspci</span><br><span class="line">//BIOS</span><br><span class="line"># dmidecode -t bios</span><br><span class="line"># dmidecode -q //列出所有有用的信息</span><br><span class="line">//RAID信息</span><br><span class="line"># lspci|grep RAID //列出RAID卡的信息</span><br><span class="line"># megacli64 //需要额外安装</span><br></pre></td></tr></table></figure>
+
+<ul>
 <li><p>How to list server hardware information</p>
 <ul>
-<li><code>dmidecode</code><ul>
+<li><code>dmidecode</code></li>
 <li><code>demidecode -s system-manufacturer</code></li>
 <li><code>demidecode -s system-serial-number</code>“</li>
 <li><code>demidecode -s system-product-name</code>“</li>
 <li><code>demidecode -s bios-version</code>“</li>
 </ul>
 </li>
-</ul>
-</li>
-<li><p>How do you find shared library dependencies?</p>
-</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ldd /fullpath/command</span><br><span class="line">readelf -d /fullpath/command</span><br></pre></td></tr></table></figure>
-
+<li><p>How to add one disk without reboot</p>
 <ul>
-<li>What features of the Linux kernel enable Docker to work?<ul>
-<li>CGroups</li>
-<li>Namespaces</li>
+<li>pvcreate /dev/sdc</li>
+<li>vgextend vg1 /dev/sdc</li>
+<li>lvextend -r -l +100%FREE /dev/mapper/vg1-root</li>
+<li><code>lsblk</code> <code>fdisk -l</code></li>
 </ul>
 </li>
 </ul>
@@ -589,6 +643,7 @@
               <a href="/tags/interview/" rel="tag"># interview</a>
               <a href="/tags/shell/" rel="tag"># shell</a>
               <a href="/tags/Tech/" rel="tag"># Tech</a>
+              <a href="/tags/Life/" rel="tag"># Life</a>
           </div>
 
         
@@ -631,13 +686,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">230k</span>
+    <span title="站点总字数">234k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">6:23</span>
+    <span title="站点阅读时长">6:30</span>
   </span>
 </div>
 <div class="busuanzi-count">
