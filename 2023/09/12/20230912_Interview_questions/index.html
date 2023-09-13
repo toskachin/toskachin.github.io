@@ -20,31 +20,31 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"toskachin.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="临时文件生成最佳实践创建前检查文件是否已经存在。确保临时文件已成功创建。临时文件必须有权限的限制。临时文件要使用不可预测的文件名。脚本退出时，要删除临时文件（使用trap命令）。 mktemp 命令的用法mktemp命令就是为安全创建临时文件而设计的。虽然在创建临时文件之前，它不会检查临时文件是否存在，但是它支持唯一文件名和清除机制，因此可以减轻安全攻击的风险。 直接运行mktemp命令，就能生成">
+<meta name="description" content="Regular Questions What are HTTP status codes?   HTTP status codes are predefined status of the task at the server 1xx - represents informational responses 2xx - represents succesful responses 3xx - re">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Bash中处理临时文件的正确方法-trap&#x2F;mktemp">
-<meta property="og:url" content="https://toskachin.github.io/2023/08/08/202308_trap_for_tmpscripts/index.html">
+<meta property="og:title" content="Devops&#x2F;System admin面试常见问题">
+<meta property="og:url" content="https://toskachin.github.io/2023/09/12/20230912_Interview_questions/index.html">
 <meta property="og:site_name" content="RJ&#39;s Blog">
-<meta property="og:description" content="临时文件生成最佳实践创建前检查文件是否已经存在。确保临时文件已成功创建。临时文件必须有权限的限制。临时文件要使用不可预测的文件名。脚本退出时，要删除临时文件（使用trap命令）。 mktemp 命令的用法mktemp命令就是为安全创建临时文件而设计的。虽然在创建临时文件之前，它不会检查临时文件是否存在，但是它支持唯一文件名和清除机制，因此可以减轻安全攻击的风险。 直接运行mktemp命令，就能生成">
+<meta property="og:description" content="Regular Questions What are HTTP status codes?   HTTP status codes are predefined status of the task at the server 1xx - represents informational responses 2xx - represents succesful responses 3xx - re">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-08-08T01:00:00.000Z">
-<meta property="article:modified_time" content="2023-08-08T13:58:14.000Z">
+<meta property="article:published_time" content="2023-09-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-09-13T00:36:57.678Z">
 <meta property="article:author" content="TOSKA">
 <meta property="article:tag" content="tech">
-<meta property="article:tag" content="bash">
+<meta property="article:tag" content="interview">
 <meta property="article:tag" content="shell">
 <meta property="article:tag" content="Tech">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://toskachin.github.io/2023/08/08/202308_trap_for_tmpscripts/">
+<link rel="canonical" href="https://toskachin.github.io/2023/09/12/20230912_Interview_questions/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://toskachin.github.io/2023/08/08/202308_trap_for_tmpscripts/","path":"2023/08/08/202308_trap_for_tmpscripts/","title":"Bash中处理临时文件的正确方法-trap/mktemp"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://toskachin.github.io/2023/09/12/20230912_Interview_questions/","path":"2023/09/12/20230912_Interview_questions/","title":"Devops/System admin面试常见问题"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Bash中处理临时文件的正确方法-trap/mktemp | RJ's Blog</title>
+<title>Devops/System admin面试常见问题 | RJ's Blog</title>
   
 
 
@@ -151,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%B4%E6%97%B6%E6%96%87%E4%BB%B6%E7%94%9F%E6%88%90%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">1.</span> <span class="nav-text">临时文件生成最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mktemp-%E5%91%BD%E4%BB%A4%E7%9A%84%E7%94%A8%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">mktemp 命令的用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mktemp-%E5%91%BD%E4%BB%A4%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">mktemp 命令参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#trap-%E5%91%BD%E4%BB%A4%E7%9A%84%E7%94%A8%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">trap 命令的用法</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Regular-Questions"><span class="nav-number">1.</span> <span class="nav-text">Regular Questions</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -263,7 +263,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2023/08/08/202308_trap_for_tmpscripts/">
+    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2023/09/12/20230912_Interview_questions/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -276,7 +276,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Bash中处理临时文件的正确方法-trap/mktemp
+          Devops/System admin面试常见问题
         </h1>
 
         <div class="post-meta-container">
@@ -286,17 +286,23 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-08-08 09:00:00 / 修改时间：21:58:14" itemprop="dateCreated datePublished" datetime="2023-08-08T09:00:00+08:00">2023-08-08</time>
+      <time title="创建时间：2023-09-12 00:00:00" itemprop="dateCreated datePublished" datetime="2023-09-12T00:00:00+08:00">2023-09-12</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2023-09-13 08:36:57" itemprop="dateModified" datetime="2023-09-13T08:36:57+08:00">2023-09-13</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/shell/" itemprop="url" rel="index"><span itemprop="name">shell</span></a>
+          <a href="/categories/interview/" itemprop="url" rel="index"><span itemprop="name">interview</span></a>
         </span>
     </span>
 
@@ -314,14 +320,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.3k</span>
+      <span>6.9k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
+      <span>11 分钟</span>
     </span>
 </div>
 
@@ -332,32 +338,184 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="临时文件生成最佳实践"><a href="#临时文件生成最佳实践" class="headerlink" title="临时文件生成最佳实践"></a>临时文件生成最佳实践</h1><p>创建前检查文件是否已经存在。<br>确保临时文件已成功创建。<br>临时文件必须有权限的限制。<br>临时文件要使用不可预测的文件名。<br>脚本退出时，要删除临时文件（使用trap命令）。</p>
-<h2 id="mktemp-命令的用法"><a href="#mktemp-命令的用法" class="headerlink" title="mktemp 命令的用法"></a>mktemp 命令的用法</h2><p>mktemp命令就是为安全创建临时文件而设计的。虽然在创建临时文件之前，它不会检查临时文件是否存在，但是它支持唯一文件名和清除机制，因此可以减轻安全攻击的风险。</p>
-<p>直接运行mktemp命令，就能生成一个临时文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[centos@ip-172-31-29-167 ~]$ trap</span><br><span class="line">trap -- &#x27;&#x27; SIGTSTP</span><br><span class="line">trap -- &#x27;&#x27; SIGTTIN</span><br><span class="line">trap -- &#x27;&#x27; SIGTTOU</span><br><span class="line">[centos@ip-172-31-29-167 ~]$ ls -l</span><br><span class="line">total 0</span><br><span class="line">[centos@ip-172-31-29-167 ~]$ ls -l /tmp/tmp.gpngJKqhxB</span><br><span class="line">-rw-------. 1 centos centos 0 Aug  8 13:44 /tmp/tmp.gpngJKqhxB</span><br></pre></td></tr></table></figure>
-
-<p>为了保证脚本退出时临时文件被删除，可以使用trap命令指定退出时的清除操作</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">trap &#x27;rm -f &quot;$TMPFILE&quot;&#x27; EXIT</span><br><span class="line"></span><br><span class="line">TMPFILE=$(mktemp) || exit 1</span><br><span class="line">echo &quot;Our temp file is $TMPFILE&quot;</span><br></pre></td></tr></table></figure>
-<h2 id="mktemp-命令参数"><a href="#mktemp-命令参数" class="headerlink" title="mktemp 命令参数"></a>mktemp 命令参数</h2><p><code>-d参数可以创建一个临时目录。</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[centos@ip-172-31-29-167 ~]$ mktemp -d</span><br><span class="line">/tmp/tmp.JMOmb1dbXS</span><br></pre></td></tr></table></figure>
-
-<p><code>-p参数可以指定临时文件所在的目录。默认是使用$TMPDIR环境变量指定的目录，如果这个变量没设置，那么使用/tmp目录</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-172-31-29-167 centos]# mktemp -p /home/</span><br><span class="line">/home/tmp.exqlVMkNSc</span><br></pre></td></tr></table></figure>
-
-<h2 id="trap-命令的用法"><a href="#trap-命令的用法" class="headerlink" title="trap 命令的用法"></a>trap 命令的用法</h2><p>trap命令用来在 Bash 脚本中响应系统信号。<br>最常见的系统信号就是 SIGINT（中断），即按 Ctrl + C 所产生的信号。trap命令的-l参数，可以列出所有的系统信号。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-172-31-29-167 centos]# trap -l</span><br><span class="line"> 1) SIGHUP	 2) SIGINT	 3) SIGQUIT	 4) SIGILL	 5) SIGTRAP</span><br><span class="line"> 6) SIGABRT	 7) SIGBUS	 8) SIGFPE	 9) SIGKILL	10) SIGUSR1</span><br><span class="line">11) SIGSEGV	12) SIGUSR2	13) SIGPIPE	14) SIGALRM	15) SIGTERM</span><br><span class="line">16) SIGSTKFLT	17) SIGCHLD	18) SIGCONT	19) SIGSTOP	20) SIGTSTP</span><br><span class="line">21) SIGTTIN	22) SIGTTOU	23) SIGURG	24) SIGXCPU	25) SIGXFSZ</span><br><span class="line">26) SIGVTALRM	27) SIGPROF	28) SIGWINCH	29) SIGIO	30) SIGPWR</span><br><span class="line">31) SIGSYS	34) SIGRTMIN	35) SIGRTMIN+1	36) SIGRTMIN+2	37) SIGRTMIN+3</span><br><span class="line">38) SIGRTMIN+4	39) SIGRTMIN+5	40) SIGRTMIN+6	41) SIGRTMIN+7	42) SIGRTMIN+8</span><br><span class="line">43) SIGRTMIN+9	44) SIGRTMIN+10	45) SIGRTMIN+11	46) SIGRTMIN+12	47) SIGRTMIN+13</span><br><span class="line">48) SIGRTMIN+14	49) SIGRTMIN+15	50) SIGRTMAX-14	51) SIGRTMAX-13	52) SIGRTMAX-12</span><br><span class="line">53) SIGRTMAX-11	54) SIGRTMAX-10	55) SIGRTMAX-9	56) SIGRTMAX-8	57) SIGRTMAX-7</span><br><span class="line">58) SIGRTMAX-6	59) SIGRTMAX-5	60) SIGRTMAX-4	61) SIGRTMAX-3	62) SIGRTMAX-2</span><br><span class="line">63) SIGRTMAX-1	64) SIGRTMAX</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ trap [动作] [信号]</span><br></pre></td></tr></table></figure>
-<p>上面代码中，”动作”是一个 Bash 命令，”信号”常用的有以下几个。<br>常见信号</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HUP：编号1，脚本与所在的终端脱离联系。</span><br><span class="line">INT：编号2，用户按下 Ctrl + C，意图让脚本中止运行。</span><br><span class="line">QUIT：编号3，用户按下 Ctrl + 斜杠，意图退出脚本。</span><br><span class="line">KILL：编号9，该信号用于杀死进程。</span><br><span class="line">TERM：编号15，这是kill命令发出的默认信号。</span><br><span class="line">EXIT：编号0，这不是系统信号，而是 Bash 脚本特有的信号，不管什么情况，只要退出脚本就会产生。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ trap &#x27;rm -f &quot;$TMPFILE&quot;&#x27; EXIT</span><br><span class="line">#命令中，脚本遇到EXIT信号时，就会执行rm -f &quot;$TMPFILE&quot;。</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">trap &#x27;rm -f &quot;$TMPFILE&quot;&#x27; EXIT</span><br><span class="line"></span><br><span class="line">TMPFILE=$(mktemp) || exit 1</span><br><span class="line">ls /etc &gt; $TMPFILE</span><br><span class="line">if grep -qi &quot;kernel&quot; $TMPFILE; then</span><br><span class="line">  echo &#x27;find&#x27;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
-<p>上面代码中，不管是脚本正常执行结束，还是用户按 Ctrl + C 终止，都会产生EXIT信号，从而触发删除临时文件<br>注意，trap命令必须放在脚本的开头。否则，它上方的任何命令导致脚本退出，都不会被它捕获。</p>
+        <h2 id="Regular-Questions"><a href="#Regular-Questions" class="headerlink" title="Regular Questions"></a>Regular Questions</h2><ul>
+<li>What are HTTP status codes?</li>
+</ul>
+<ul>
+<li>HTTP status codes are predefined status of the task at the server<ul>
+<li>1xx - represents informational responses</li>
+<li>2xx - represents succesful responses</li>
+<li>3xx - represents redirect responses</li>
+<li>4xx - represents client errors</li>
+<li>5xx - represents server errors</li>
+</ul>
+</li>
+<li>The most commmons status codes are:<ul>
+<li>200 Success/OK</li>
+<li>201 - CREATED - used by POST or PUT methods</li>
+<li>304 - NOT MODIFIED - used in conditional GET Request to reduce bandwitdth use</li>
+<li>400 - BAD REQUEST - This can be due to validation errors or missing input data</li>
+<li>404 - NOT FOUND - Resource method is not available</li>
+<li>500 - INTERNAL SERVER ERROR - server threw some exceptions while running the method</li>
+<li>502 - BAD GATEWAY - Server was not able to get the response from another upstream server</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>Describe the most common HTTP methods/verbs, and give examples:</p>
+<ul>
+<li>GET - Read only operation, used to fetch detail from the server, downloads</li>
+<li>POST - This method is used for the creationg of new resources on the server</li>
+<li>PUT - This method is used to update existing resource on the server or to replace the resource, PUT it’s indepotent, and POST isn’t, with PUT you can update a resource N times, but if you try with post you will create N resources. PUT can create resources.</li>
+<li>PATCH - Applies a partial update to a resource and doesn’t create a new resource</li>
+<li>DELETE - This method is used to delete the resource on the server</li>
+<li>TRACE - Provides a loop back test along the path to the target resource providing a useful debugging mechanism.</li>
+<li>OPTIONS - Fetches the list of supported options of resources present on the server.</li>
+</ul>
+</li>
+<li><p>What is RAID? What is RAID0, RAID1, RAID5, RAID10?<br>RAID (Redundant Array of Independent Disks) it’ s a data storage virtualization technology that combines multiple physical disks in one logical volume.</p>
+<ul>
+<li>RAID0 - Striping, the data is striped between 2 or more disks, improving speed but compromising availability.</li>
+<li>RAID1 - Mirroring, the data is mirrored between 2 or more disks, improving availability (the server could lose N - 1 disks) but compromises the speed (replication time).</li>
+<li>RAID5 -  Blocks striped but uses distributed parity, RAID5 uses minimum 3 disks, that stripe data between them, but replicates blocks too, it’s a good RAID for databases, in this scenario read operations are good, but write can be slow.</li>
+<li>RAID10 - It’s a implementation using RAID0 + RAID1, uses 4 disks, striping data between 2 of then and mirroring this data in another 2 disks.</li>
+</ul>
+</li>
+<li><p>What is a level 0 backup? What is an incremental backup?</p>
+<ul>
+<li>Level0 backup it’s a full backup (all blocks), an after a level 0 backup, we can initializes an incremental backup rotine ( only the difference between the blocks)</li>
+</ul>
+</li>
+<li><p>Describe the general file system hierarchy of a Linux system.</p>
+<ul>
+<li>/  - root folder</li>
+<li>/etc - configuration files provided by the package manager</li>
+<li>/bin - binaries files</li>
+<li>/sbin - system  binaries files (important binaries for the OS)</li>
+<li>/boot - Static files for boot processes ( boot loader)</li>
+<li>/dev - Device files</li>
+<li>/lib - Essential shared libraries and kernel modules</li>
+<li>/usr - Secundary hierarchy</li>
+<li>/mnt - Mounting point for temporary filesystem</li>
+<li>/media - Mounting point for removable media</li>
+<li>/opt - Add-on application software packages</li>
+<li>/srv - Data service provided by this system</li>
+<li>/tmp - Temporary files</li>
+<li>/var - Variable data</li>
+<li>/root - Root user folder</li>
+<li>/home - Home users folders</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>How to redirect STDOUT and STDERR in bash? (&gt; /dev/null 2&gt;&amp;1)</p>
+<ul>
+<li>1&gt; redirect the STDOUT</li>
+<li>1&gt;&gt; redirect the STDOUT in append mode</li>
+<li>2&gt; redirect the STDERR</li>
+<li>2&gt;&gt; redirect the STDERR in append mode</li>
+<li>&amp;&gt; redirect both STDERR and STDOUT</li>
+<li>&amp;&gt;&gt; redirect both STDERR and STDOUT in append mode</li>
+<li>2&gt;&amp;1 redirect STDERR to STDOUT</li>
+</ul>
+</li>
+<li><p>Explain the three load averages and what do they indicate. What command can be used to view the load averages?</p>
+<ul>
+<li>The three load averages indicate the processor usage estimated in 1 minute, estimated in 5 minutes and 15 minutes.</li>
+<li>top or uptime</li>
+</ul>
+</li>
+<li><p>What does an <code>&amp;</code> after a command do?</p>
+<ul>
+<li>Makes the command run in a background sub shell, and becomes a job.</li>
+</ul>
+</li>
+<li><p>What does <code>&amp; disown</code> after a command do?</p>
+<ul>
+<li>disown control jobs that are running in the system, without any paramenter or ID removes the last job on the job table.</li>
+</ul>
+</li>
+<li><p>What is the sticky bit?</p>
+<ul>
+<li>It’s a permission bit that is set on a file or a directory  that let only the owner of the file/directory or the root user to delete or rename the file.</li>
+</ul>
+</li>
+<li><p>What is the difference between hardlinks and symlinks? What happens when you remove the source to a symlink/hardlink?</p>
+<ul>
+<li><p>All files in the linux filesystem are a link to a inode, a hard link is a new link to the same inode (if you remove or rename the old or the new link, the file will be intact, but any change in the data on the inode is reflected in all files that refer to that inode), the file system will only delete the inode if you don’t have any link for this inode. Because of this characteristic a hardlink only works on files that are in the same file system.</p>
+</li>
+<li><p>A softlink, it’s a link that points the link from the inode, so it’s a link from a link if the first link change the name or be deleted, the soft link will break, but can be used between differents filesystems.</p>
+</li>
+</ul>
+</li>
+<li><p>What is an inode and what fields are stored in an inode?</p>
+<ul>
+<li>Each object in the filesystem is represented by a inode that stores all the information about the file, like file type, permissions, owner, group, file size, file access, change and modification time (never birth time), file deletion time, number of links, extended attributes. Each inode has a unique number and it can acessed using <code>stat filename</code> </li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>Describe the mknod command and when you’d use it.</p>
+<ul>
+<li>mknod command creates a new device in <code>/dev</code> but actually udev creates automatically each device, if something very terrible happen we can recreate some devices using mknod to fix or make some backup.</li>
+</ul>
+</li>
+<li><p>Describe a scenario when you get a “filesystem is full” error, but <code>df</code> shows there is free space.</p>
+<ul>
+<li>When a filesystem it’s out of inode, it can happen when you have a huge amount of small files, in a small filesystem. <code>df -i</code> will show.</li>
+</ul>
+</li>
+<li><p>Describe a scenario when deleting a file, but ‘df’ not showing the space being freed.</p>
+<ul>
+<li>when a process it’s still appending that file. We can use <code>lsof</code> to check it.</li>
+</ul>
+</li>
+<li><p>Describe how ‘ps’ works.</p>
+<ul>
+<li>the ps command read files from /proc and the content of these files are generated by the kernel.</li>
+</ul>
+</li>
+<li><p>What happens to a child process that dies and has no parent process to wait for it and what’s bad about this?</p>
+<ul>
+<li>creates a zombie process, one zombie process it’s not a big problem, but each process uses a little size of ram, and uses a PID that’s a finite number of it.</li>
+</ul>
+</li>
+<li><p>What are the steps to add a user to a system without using useradd/adduser?</p>
+<ul>
+<li>Edit <code>/etc/passwd</code> with the new username, configure the home, and shell</li>
+<li>Edit <code>/etc/groups</code> add this new username to some groups</li>
+<li>Create the user home folder and set the right permissions</li>
+<li>Reset the user password with <code>passwd username</code></li>
+</ul>
+</li>
+<li><p>Describe the linux boot process with as much detail as possible, starting from when the system is powered on and ending when you get a prompt.</p>
+<ul>
+<li>BIOS/UEFI<ul>
+<li>BIOS performs startup based in the hardware, POST ( Power On Self Test) processs to initiallize the hardware, after complete, and calls the bootloader.</li>
+</ul>
+</li>
+<li>bootloader<ul>
+<li>The bootloader (GRUB2) present options to the user select, GRUB supports unix-like OS, and chain-load Windows OS, and loads the kernel into memory and supplies it with some parameters.</li>
+</ul>
+</li>
+<li>kernel<ul>
+<li>The kernel will decompress itself and will setup essential hardware and memory paging, and calls start_kernel() function, and it will perform the majority of system setups like device and driver initialization, scheduler, idle process and then starts separately in the user space the init process (pid 1).</li>
+</ul>
+</li>
+<li>init<br>-The init it’s scripts executed by shell (sysV, runit) or configuration files that are executed by binaries (upstart, systemd), init has specific levels, that are passed as variables at the call, with consists of specifics set of daemons. These will provide various non-operating system services and structures and form the user environment.</li>
+<li>User environment<ul>
+<li>The typical desktop environment begins with a daemon that calls everything needed.<br>To shutdown, it’s the inverse, the kernel kills every process, and shutdown.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>what’s the difference of <code>su -</code> and <code>su</code> ?</p>
+<ul>
+<li><code>su -</code> switch user with one login shell</li>
+<li><code>su</code> switch user without run login shell</li>
+</ul>
+</li>
+</ul>
 
     </div>
 
@@ -368,7 +526,7 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/tech/" rel="tag"># tech</a>
-              <a href="/tags/bash/" rel="tag"># bash</a>
+              <a href="/tags/interview/" rel="tag"># interview</a>
               <a href="/tags/shell/" rel="tag"># shell</a>
               <a href="/tags/Tech/" rel="tag"># Tech</a>
           </div>
@@ -377,14 +535,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/05/26/Nomad_and_Kubernetes/" rel="prev" title="Nomad 和 Kubernetes 区别">
-                  <i class="fa fa-chevron-left"></i> Nomad 和 Kubernetes 区别
+                <a href="/2023/09/04/20230904_kubectl_commands/" rel="prev" title="Kubectl 常用命令">
+                  <i class="fa fa-chevron-left"></i> Kubectl 常用命令
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/08/13/shell_from_zero_to_hero./" rel="next" title="一文让你shell从狗熊变英雄">
-                  一文让你shell从狗熊变英雄 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>

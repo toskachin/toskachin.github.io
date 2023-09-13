@@ -6,7 +6,7 @@
   <link href="https://toskachin.github.io/atom.xml" rel="self"/>
   
   <link href="https://toskachin.github.io/"/>
-  <updated>2023-09-04T13:43:08.236Z</updated>
+  <updated>2023-09-13T00:36:57.678Z</updated>
   <id>https://toskachin.github.io/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Devops/System admin面试常见问题</title>
+    <link href="https://toskachin.github.io/2023/09/12/20230912_Interview_questions/"/>
+    <id>https://toskachin.github.io/2023/09/12/20230912_Interview_questions/</id>
+    <published>2023-09-11T16:00:00.000Z</published>
+    <updated>2023-09-13T00:36:57.678Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Regular-Questions&quot;&gt;&lt;a href=&quot;#Regular-Questions&quot; class=&quot;headerlink&quot; title=&quot;Regular Questions&quot;&gt;&lt;/a&gt;Regular</summary>
+        
+      
+    
+    
+    
+    <category term="interview" scheme="https://toskachin.github.io/categories/interview/"/>
+    
+    
+    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
+    
+    <category term="interview" scheme="https://toskachin.github.io/tags/interview/"/>
+    
+    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
+    
+    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
+    
+  </entry>
   
   <entry>
     <title>Kubectl 常用命令</title>
@@ -437,9 +468,9 @@
     
     <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
     
-    <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
-    
     <category term="stock" scheme="https://toskachin.github.io/tags/stock/"/>
+    
+    <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
     
     <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     
@@ -596,38 +627,6 @@
     <category term="regex" scheme="https://toskachin.github.io/tags/regex/"/>
     
     <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
-    
-    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>一文熟悉云配置神器terraform</title>
-    <link href="https://toskachin.github.io/2021/08/26/terraform-notes/"/>
-    <id>https://toskachin.github.io/2021/08/26/terraform-notes/</id>
-    <published>2021-08-26T05:36:20.000Z</published>
-    <updated>2022-07-03T11:25:11.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;hr&gt;
-&lt;p&gt;随着Infrastructure as Code (IaC)在DEVOPS领域的兴起，如果是 Ansible 是偏向</summary>
-        
-      
-    
-    
-    
-    <category term="shell" scheme="https://toskachin.github.io/categories/shell/"/>
-    
-    
-    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
-    
-    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
-    
-    <category term="terraform" scheme="https://toskachin.github.io/tags/terraform/"/>
     
     <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     
