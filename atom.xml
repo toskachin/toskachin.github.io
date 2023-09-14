@@ -6,7 +6,7 @@
   <link href="https://toskachin.github.io/atom.xml" rel="self"/>
   
   <link href="https://toskachin.github.io/"/>
-  <updated>2023-09-13T23:40:16.490Z</updated>
+  <updated>2023-09-14T00:44:12.272Z</updated>
   <id>https://toskachin.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://toskachin.github.io/2023/09/12/20230912_Interview_questions/"/>
     <id>https://toskachin.github.io/2023/09/12/20230912_Interview_questions/</id>
     <published>2023-09-11T16:00:00.000Z</published>
-    <updated>2023-09-13T23:40:16.490Z</updated>
+    <updated>2023-09-14T00:44:12.272Z</updated>
     
     
       
@@ -470,9 +470,9 @@
     
     <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
     
-    <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
-    
     <category term="stock" scheme="https://toskachin.github.io/tags/stock/"/>
+    
+    <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
     
     <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     

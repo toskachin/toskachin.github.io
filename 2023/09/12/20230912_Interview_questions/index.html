@@ -20,15 +20,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"toskachin.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Regular Questions What is Dell omreport&#x2F;omconfig comamnd*  What is HP iLO and LOM lights-out management(LOM): Lights-out management (LOM) is a form of out-of-band management. It enables system adminis">
+<meta name="description" content="Regular Questions Explain vmstat command details123456789101112131415161718useful information for - running cpu, block cpu	- r: The number of processes waiting for run time.	- b:  The number of proces">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Devops&#x2F;System admin面试常见问题">
 <meta property="og:url" content="https://toskachin.github.io/2023/09/12/20230912_Interview_questions/index.html">
 <meta property="og:site_name" content="RJ&#39;s Blog">
-<meta property="og:description" content="Regular Questions What is Dell omreport&#x2F;omconfig comamnd*  What is HP iLO and LOM lights-out management(LOM): Lights-out management (LOM) is a form of out-of-band management. It enables system adminis">
+<meta property="og:description" content="Regular Questions Explain vmstat command details123456789101112131415161718useful information for - running cpu, block cpu	- r: The number of processes waiting for run time.	- b:  The number of proces">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-09-11T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-13T23:40:16.490Z">
+<meta property="article:modified_time" content="2023-09-14T00:44:12.272Z">
 <meta property="article:author" content="TOSKA">
 <meta property="article:tag" content="tech">
 <meta property="article:tag" content="interview">
@@ -295,7 +295,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2023-09-14 07:40:16" itemprop="dateModified" datetime="2023-09-14T07:40:16+08:00">2023-09-14</time>
+        <time title="修改时间：2023-09-14 08:44:12" itemprop="dateModified" datetime="2023-09-14T08:44:12+08:00">2023-09-14</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -328,7 +328,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>21 分钟</span>
+      <span>22 分钟</span>
     </span>
 </div>
 
@@ -340,16 +340,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <h2 id="Regular-Questions"><a href="#Regular-Questions" class="headerlink" title="Regular Questions"></a>Regular Questions</h2><ul>
-<li>What is Dell omreport/omconfig comamnd<br>* </li>
-<li>What is HP iLO and LOM<ul>
-<li>lights-out management(LOM): Lights-out management (LOM) is a form of out-of-band management. It enables system administrators to connect remotely to servers and other data center infrastructure to monitor and maintain those systems</li>
-<li>HP Integrated Lights-Out (iLO)</li>
-<li>Dell IDRAC port is 5000</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ILO FUNCTION           SOCKET TYPE PORT NUMBER </span><br><span class="line">---------------------- ----------- -----------</span><br><span class="line">Secure Shell (SSH)         TCP        22</span><br><span class="line">Remote Console/Telnet      TCP        23</span><br><span class="line">Web Server Non-SSL         TCP        80</span><br><span class="line">Web Server SSL             TCP        443</span><br><span class="line">Terminal Services          TCP        3389</span><br><span class="line">Virtual Media              TCP        17988</span><br><span class="line">Shared Remote Console      TCP        9300</span><br><span class="line">Console Replay             TCP        17990</span><br><span class="line">Raw Serial Data            TCP        3002</span><br></pre></td></tr></table></figure>
-<ul>
+<li>Explain vmstat command details<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">useful information for </span><br><span class="line">- running cpu, block cpu</span><br><span class="line">	- r: The number of processes waiting for run time.</span><br><span class="line">	- b:  The number of processes in uninterruptible sleep.</span><br><span class="line">- memory usage</span><br><span class="line">- swap </span><br><span class="line">- io - input/ouput</span><br><span class="line">	- bi - Blocks received from a block device (blocks/s)</span><br><span class="line">	- bo - Blocks sent to a block device (blocks/s).</span><br><span class="line">- system - </span><br><span class="line">	- in - The number of interrupts per second, including the clock.</span><br><span class="line">	- cs - The number of context switches per second.</span><br><span class="line">- cpu - </span><br><span class="line">	- wa: Time spent waiting for IO</span><br><span class="line">	- sy: Time spent running kernel code. (system time)</span><br><span class="line">	- us: Time spent running non-kernel code. (user time, including nice time)</span><br><span class="line">- -d  show disk reads/wirtes/IO</span><br><span class="line">- -s  show memory swap</span><br></pre></td></tr></table></figure></li>
 <li>What are HTTP status codes?</li>
 </ul>
 <ul>
@@ -571,8 +562,34 @@
 </li>
 </ul>
 <h2 id="Linux-Hardware-questions"><a href="#Linux-Hardware-questions" class="headerlink" title="Linux Hardware questions"></a>Linux Hardware questions</h2><ul>
+<li><p>What is Dell omreport/omconfig comamnd</p>
+<ul>
+<li>OpenManage Server administartor</li>
+</ul>
+</li>
 <li><p>How to install OMSA(OpenManage Server Administartor)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># wget -q -O - http://linux.dell.com/repo/hardware/latest/bootstrap.cgi | bash     下载repo源</span><br><span class="line"># yum install -y net-snmp net-snmp-devel net-snmp-utils wget perl OpenIPMI</span><br><span class="line"># yum  -y install srvadmin-all     安装路径：/opt/dell/srvadmin/</span><br><span class="line"># /opt/dell/srvadmin/sbin/srvadmin-services.sh start     启动OMSA</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># wget -q -O - http://linux.dell.com/repo/hardware/latest/bootstrap.cgi | bash     下载repo源</span><br><span class="line"># yum install -y net-snmp net-snmp-devel net-snmp-utils wget perl OpenIPMI</span><br><span class="line"># yum  -y install srvadmin-all     安装路径：/opt/dell/srvadmin/</span><br><span class="line"># /opt/dell/srvadmin/sbin/srvadmin-services.sh start     启动OMSA</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Usage of omreport of dell<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">omreport chassis # 显示所有主要组件的常规状态 </span><br><span class="line">omreport chassis memory # 显示内存信息</span><br><span class="line">omreport chassis temps # 显示系统主要组件的温度</span><br><span class="line">omreport storage adisk controller=0 # 查看磁盘陈列中的硬盘状态</span><br><span class="line">omreport storage pdisk controller=0 # 查看物理磁盘信息</span><br><span class="line">omreport storage vdisk controller=0 # 查看虚拟硬盘的状态</span><br><span class="line">omreport storage controller # 查看控制器(即RAID卡)的属性</span><br><span class="line">omreport storage enclosure controller=0 # 查看enclosure的属性</span><br><span class="line">omreport storage battery # 查看电池属性</span><br><span class="line"></span><br><span class="line">omreport chassis info -fmt ssv 分割数据打印出来</span><br></pre></td></tr></table></figure></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost wcy]# omreport chassis info</span><br><span class="line">Chassis Information</span><br><span class="line"></span><br><span class="line">Index                                      : 0</span><br><span class="line">Chassis Name                               : Main System Chassis</span><br><span class="line">Host Name                                  : localhost.localdomain</span><br><span class="line">iDRAC7 Version                             : 1.40.40 (Build 17)</span><br><span class="line">Lifecycle Controller 2 Version             : 1.1.5.165</span><br><span class="line">Chassis Model                              : PowerEdge R420</span><br><span class="line">Chassis Lock                               : Present</span><br><span class="line">Chassis Service Tag                        : 6X8QZY1</span><br><span class="line">Express Service Code                       : 15070774393</span><br><span class="line">Chassis Asset Tag                          : Unknown</span><br><span class="line">Flash chassis identify LED state           : Off</span><br><span class="line">Flash chassis identify LED timeout value   : 300</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>What is HP iLO and LOM<ul>
+<li>lights-out management(LOM): Lights-out management (LOM) is a form of out-of-band management. It enables system administrators to connect remotely to servers and other data center infrastructure to monitor and maintain those systems</li>
+<li>HP Integrated Lights-Out (iLO)</li>
+<li>Dell IDRAC port is 5000</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ILO FUNCTION           SOCKET TYPE PORT NUMBER </span><br><span class="line">---------------------- ----------- -----------</span><br><span class="line">Secure Shell (SSH)         TCP        22</span><br><span class="line">Remote Console/Telnet      TCP        23</span><br><span class="line">Web Server Non-SSL         TCP        80</span><br><span class="line">Web Server SSL             TCP        443</span><br><span class="line">Terminal Services          TCP        3389</span><br><span class="line">Virtual Media              TCP        17988</span><br><span class="line">Shared Remote Console      TCP        9300</span><br><span class="line">Console Replay             TCP        17990</span><br><span class="line">Raw Serial Data            TCP        3002</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
 <li><p>What is Dell RACADM<br>Remote Access Controller Admin (RACADM) utility is a command-line tool that enables remote or local management of Dell Servers using the iDRAC</p>
 </li>
 <li><p>List system information </p>
@@ -603,10 +620,7 @@
 <li><code>lshw</code> <code>lspci</code></li>
 </ul>
 </li>
-<li><p>Usage of omreport of dell</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">omreport chassis # 显示所有主要组件的常规状态 </span><br><span class="line">omreport chassis memory # 显示内存信息</span><br><span class="line">omreport chassis temps # 显示系统主要组件的温度</span><br><span class="line">omreport storage adisk controller=0 # 查看磁盘陈列中的硬盘状态</span><br><span class="line">omreport storage pdisk controller=0 # 查看物理磁盘信息</span><br><span class="line">omreport storage vdisk controller=0 # 查看虚拟硬盘的状态</span><br><span class="line">omreport storage controller # 查看控制器(即RAID卡)的属性</span><br><span class="line">omreport storage enclosure controller=0 # 查看enclosure的属性</span><br><span class="line">omreport storage battery # 查看电池属性</span><br><span class="line"></span><br><span class="line">omreport chassis info -fmt ssv 分割数据打印出来</span><br></pre></td></tr></table></figure></li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost wcy]# omreport chassis info</span><br><span class="line">Chassis Information</span><br><span class="line"></span><br><span class="line">Index                                      : 0</span><br><span class="line">Chassis Name                               : Main System Chassis</span><br><span class="line">Host Name                                  : localhost.localdomain</span><br><span class="line">iDRAC7 Version                             : 1.40.40 (Build 17)</span><br><span class="line">Lifecycle Controller 2 Version             : 1.1.5.165</span><br><span class="line">Chassis Model                              : PowerEdge R420</span><br><span class="line">Chassis Lock                               : Present</span><br><span class="line">Chassis Service Tag                        : 6X8QZY1</span><br><span class="line">Express Service Code                       : 15070774393</span><br><span class="line">Chassis Asset Tag                          : Unknown</span><br><span class="line">Flash chassis identify LED state           : Off</span><br><span class="line">Flash chassis identify LED timeout value   : 300</span><br></pre></td></tr></table></figure>
 <h3 id="Other-hardware-command"><a href="#Other-hardware-command" class="headerlink" title="Other hardware command"></a>Other hardware command</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">//内存</span><br><span class="line"># free -m</span><br><span class="line"># cat /proc/meminfo</span><br><span class="line"># dmidecode -t memory</span><br><span class="line">//CPU</span><br><span class="line"># lscpu</span><br><span class="line"># cat /proc/cpuinfo</span><br><span class="line"># dmidecode -t processor</span><br><span class="line"># dmidecode | grep &quot;CPU&quot; //获取CPU信息</span><br><span class="line">//硬盘</span><br><span class="line"># df -lhP</span><br><span class="line"># lsblk</span><br><span class="line"># fdisk -l</span><br><span class="line"># dmesg|grep sd //查看开机信息里面的磁盘info</span><br><span class="line"># hdparm -I /dev/sda //查看磁盘硬件信息、开启的功能等,信息特别详细 【hdparm需要yum安装】</span><br><span class="line"># smartctl -H /dev/sda //查看硬盘健康状态</span><br><span class="line"># smartctl --all /dev/sda //【smartctl需要yum安装才能用】</span><br><span class="line"># smartctl -h //还有很多有用的参数</span><br><span class="line">//网卡</span><br><span class="line"># lspci|grep -i eth</span><br><span class="line"># ifconfig -a</span><br><span class="line"># ip link show</span><br><span class="line"># ethtool eth0 //显示网卡eth0的详细参数和指标</span><br><span class="line">//系统信息</span><br><span class="line"># dmidecode -t system</span><br><span class="line"># dmidecode | grep&quot;Product&quot;</span><br><span class="line"># dmidecode | grep&quot;Manufacturer&quot; //获取厂商</span><br><span class="line"># dmidecode | grep -B 4 &quot;SerialNumber&quot; | more //获取序号信息</span><br><span class="line"># dmidecode | grep &quot;Date&quot; //获取生产日期</span><br><span class="line">//dmesg和dmidecode还有很多信息，涵盖了全部硬件信息。</span><br><span class="line">//主板</span><br><span class="line"># lspci</span><br><span class="line">//BIOS</span><br><span class="line"># dmidecode -t bios</span><br><span class="line"># dmidecode -q //列出所有有用的信息</span><br><span class="line">//RAID信息</span><br><span class="line"># lspci|grep RAID //列出RAID卡的信息</span><br><span class="line"># megacli64 //需要额外安装</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -684,13 +698,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">234k</span>
+    <span title="站点总字数">235k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">6:31</span>
+    <span title="站点阅读时长">6:32</span>
   </span>
 </div>
 <div class="busuanzi-count">
