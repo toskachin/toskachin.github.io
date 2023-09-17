@@ -6,7 +6,7 @@
   <link href="https://toskachin.github.io/atom.xml" rel="self"/>
   
   <link href="https://toskachin.github.io/"/>
-  <updated>2023-09-17T02:35:50.624Z</updated>
+  <updated>2023-09-17T02:37:35.381Z</updated>
   <id>https://toskachin.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://toskachin.github.io/2023/09/15/20230915_devops_tools/"/>
     <id>https://toskachin.github.io/2023/09/15/20230915_devops_tools/</id>
     <published>2023-09-14T16:00:00.000Z</published>
-    <updated>2023-09-17T02:35:50.624Z</updated>
+    <updated>2023-09-17T02:37:35.381Z</updated>
     
     
       
@@ -37,13 +37,15 @@
     <category term="devops" scheme="https://toskachin.github.io/categories/devops/"/>
     
     
-    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
-    
     <category term="interview" scheme="https://toskachin.github.io/tags/interview/"/>
     
-    <category term="devops" scheme="https://toskachin.github.io/tags/devops/"/>
+    <category term="Ansible" scheme="https://toskachin.github.io/tags/Ansible/"/>
     
-    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
+    <category term="Terraform" scheme="https://toskachin.github.io/tags/Terraform/"/>
+    
+    <category term="Puppet" scheme="https://toskachin.github.io/tags/Puppet/"/>
+    
+    <category term="devops" scheme="https://toskachin.github.io/tags/devops/"/>
     
   </entry>
   
@@ -52,7 +54,7 @@
     <link href="https://toskachin.github.io/2023/09/12/20230912_Interview_questions/"/>
     <id>https://toskachin.github.io/2023/09/12/20230912_Interview_questions/</id>
     <published>2023-09-11T16:00:00.000Z</published>
-    <updated>2023-09-16T07:58:53.309Z</updated>
+    <updated>2023-09-17T02:37:19.663Z</updated>
     
     
       
@@ -73,6 +75,12 @@
     <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
     
     <category term="interview" scheme="https://toskachin.github.io/tags/interview/"/>
+    
+    <category term="Ansible" scheme="https://toskachin.github.io/tags/Ansible/"/>
+    
+    <category term="Linux" scheme="https://toskachin.github.io/tags/Linux/"/>
+    
+    <category term="Shell" scheme="https://toskachin.github.io/tags/Shell/"/>
     
     <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     
