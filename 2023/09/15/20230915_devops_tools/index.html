@@ -28,7 +28,7 @@
 <meta property="og:description" content="Ansible Terraform Puppet主要区别和用途 Ansible: 侧重于deployment,软件配置部署 Puppet: 侧重于System management Terraform: Server Provisioning Tool: 侧重于Cloud, IaCAnsible 知识Basic ansible系统由控制主机和被管理主机组成,控制主机不支持windows平台 核心:">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-09-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-17T02:37:35.381Z">
+<meta property="article:modified_time" content="2023-09-18T02:54:07.561Z">
 <meta property="article:author" content="TOSKA">
 <meta property="article:tag" content="interview">
 <meta property="article:tag" content="Ansible">
@@ -295,7 +295,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2023-09-17 10:37:35" itemprop="dateModified" datetime="2023-09-17T10:37:35+08:00">2023-09-17</time>
+        <time title="修改时间：2023-09-18 10:54:07" itemprop="dateModified" datetime="2023-09-18T10:54:07+08:00">2023-09-18</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -321,7 +321,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>903</span>
+      <span>1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -357,10 +357,16 @@
 <h3 id="Ansible配置文件读取顺序"><a href="#Ansible配置文件读取顺序" class="headerlink" title="Ansible配置文件读取顺序"></a>Ansible配置文件读取顺序</h3><ol>
 <li>检查环境变量ANSIBLE_CONFIG指向的路径文件</li>
 <li>~/.ansible.cfg</li>
-<li>/etc/ansible/ansible.cfg<h3 id="常用配置参数"><a href="#常用配置参数" class="headerlink" title="常用配置参数"></a>常用配置参数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">inventory = /etc/ansible/hosts      #这个参数表示资源清单inventory文件的位置</span><br><span class="line">library = /usr/share/ansible        #指向存放Ansible模块的目录，支持多个目录方式，只要用冒号（：）隔开就可以</span><br><span class="line">forks = 5       #并发连接数，默认为5</span><br><span class="line">sudo_user = root        #设置默认执行命令的用户</span><br><span class="line">remote_port = 22        #指定连接被管节点的管理端口，默认为22端口，建议修改，能够更加安全</span><br><span class="line">host_key_checking = False       #设置是否检查SSH主机的密钥，值为True/False。关闭后第一次连接不会提示配置实例</span><br><span class="line">timeout = 60        #设置SSH连接的超时时间，单位为秒</span><br><span class="line">log_path = /var/log/ansible.log     #指定一个存储ansible日志的文件（默认不记录日志）</span><br></pre></td></tr></table></figure>
-<h2 id="Terraform-实战案例"><a href="#Terraform-实战案例" class="headerlink" title="Terraform 实战案例"></a>Terraform 实战案例</h2></li>
+<li>/etc/ansible/ansible.cfg<h3 id="常用配置参数"><a href="#常用配置参数" class="headerlink" title="常用配置参数"></a>常用配置参数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">inventory = /etc/ansible/hosts      #这个参数表示资源清单inventory文件的位置</span><br><span class="line">library = /usr/share/ansible        #指向存放Ansible模块的目录，支持多个目录方式，只要用冒号（：）隔开就可以</span><br><span class="line">forks = 5       #并发连接数，默认为5</span><br><span class="line">sudo_user = root        #设置默认执行命令的用户</span><br><span class="line">remote_port = 22        #指定连接被管节点的管理端口，默认为22端口，建议修改，能够更加安全</span><br><span class="line">host_key_checking = False       #设置是否检查SSH主机的密钥，值为True/False。关闭后第一次连接不会提示配置实例</span><br><span class="line">timeout = 60        #设置SSH连接的超时时间，单位为秒</span><br><span class="line">log_path = /var/log/ansible.log     #指定一个存储ansible日志的文件（默认不记录日志）</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h2 id="Puppet-实战案例"><a href="#Puppet-实战案例" class="headerlink" title="Puppet 实战案例"></a>Puppet 实战案例</h2>
+<h2 id="Terraform-实战案例"><a href="#Terraform-实战案例" class="headerlink" title="Terraform 实战案例"></a>Terraform 实战案例</h2><ul>
+<li>The difference of Terraform <code>resource</code> and <code>data</code><ul>
+<li><code>data</code> is mostly for ready only resources like AMI</li>
+<li><code>recourse</code> is for editable resources like ec2, network policy<h2 id="Puppet-实战案例"><a href="#Puppet-实战案例" class="headerlink" title="Puppet 实战案例"></a>Puppet 实战案例</h2></li>
+</ul>
+</li>
+</ul>
+
     </div>
 
     
@@ -416,13 +422,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">235k</span>
+    <span title="站点总字数">236k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">6:32</span>
+    <span title="站点阅读时长">6:34</span>
   </span>
 </div>
 <div class="busuanzi-count">

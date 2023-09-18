@@ -40,58 +40,63 @@
       </tags>
   </entry>
   <entry>
-    <title>Kubectl 常用命令</title>
-    <url>/2023/09/04/20230904_kubectl_commands/</url>
-    <content><![CDATA[<h2 id="Kubectl-上下文和配置"><a href="#Kubectl-上下文和配置" class="headerlink" title="Kubectl 上下文和配置"></a>Kubectl 上下文和配置</h2><p>设置 kubectl 命令交互的 kubernetes 集群并修改配置信息。参阅 使用 kubeconfig 文件进行跨集群验证 获取关于配置文件的详细信息。 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 显示合并后的 kubeconfig 配置</span><br><span class="line">$ kubectl config view </span><br><span class="line"># 同时使用多个 kubeconfig 文件并查看合并后的配置</span><br><span class="line">$ KUBECONFIG=~/.kube/config:~/.kube/kubconfig2 kubectl config view</span><br><span class="line"># 获取 e2e 用户的密码</span><br><span class="line">$ kubectl config view -o jsonpath=&#x27;&#123;.users[?(@.name == &quot;e2e&quot;)].user.password&#125;&#x27;</span><br><span class="line"># 显示当前的上下文</span><br><span class="line">$ kubectl config current-context    </span><br><span class="line"># 设置默认上下文为 my-cluster-name</span><br><span class="line">$ kubectl config use-context my-cluster-name  </span><br><span class="line"># 向 kubeconf 中增加支持基本认证的新集群</span><br><span class="line">$ kubectl config set-credentials kubeuser/foo.kubernetes.com --username=kubeuser --password=kubepassword</span><br><span class="line"># 使用指定的用户名和 namespace 设置上下文</span><br><span class="line">$ kubectl config set-context gce --user=cluster-admin --namespace=foo \</span><br><span class="line">  &amp;&amp; kubectl config use-context gce</span><br></pre></td></tr></table></figure>
-
-<h2 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h2><p>Kubernetes 的清单文件可以使用 json 或 yaml 格式定义。可以以 .yaml、.yml、或者 .json 为扩展名。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 创建资源</span><br><span class="line">$ kubectl create -f ./my-manifest.yaml     </span><br><span class="line"># 使用多个文件创建资源</span><br><span class="line">$ kubectl create -f ./my1.yaml -f ./my2.yaml   </span><br><span class="line"># 使用目录下的所有清单文件来创建资源</span><br><span class="line">$ kubectl create -f ./dir    </span><br><span class="line"># 使用 url 来创建资源</span><br><span class="line">$ kubectl create -f https://git.io/vPieo  </span><br><span class="line"># 启动一个 nginx 实例</span><br><span class="line">$ kubectl run nginx --image=nginx  </span><br><span class="line"> # 获取 pod 和 svc 的文档</span><br><span class="line">$ kubectl explain pods,svc                      </span><br><span class="line"># 从 stdin 输入中创建多个 YAML 对象</span><br><span class="line">$ cat &lt;&lt;EOF | kubectl create -f -</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: busybox-sleep</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: busybox</span><br><span class="line">    image: busybox</span><br><span class="line">    args:</span><br><span class="line">    - sleep</span><br><span class="line">    - &quot;1000000&quot;</span><br><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: busybox-sleep-less</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: busybox</span><br><span class="line">    image: busybox</span><br><span class="line">    args:</span><br><span class="line">    - sleep</span><br><span class="line">    - &quot;1000&quot;</span><br><span class="line">EOF</span><br><span class="line"># 创建包含几个 key 的 Secret</span><br><span class="line">$ cat &lt;&lt;EOF | kubectl create -f -</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Secret</span><br><span class="line">metadata:</span><br><span class="line">  name: mysecret</span><br><span class="line">type: Opaque</span><br><span class="line">data:</span><br><span class="line">  password: $(echo &quot;s33msi4&quot; | base64)</span><br><span class="line">  username: $(echo &quot;jane&quot; | base64)</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-<h2 id="显示和查找资源"><a href="#显示和查找资源" class="headerlink" title="显示和查找资源"></a>显示和查找资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># Get commands with basic output</span><br><span class="line"># 列出所有 namespace 中的所有 service</span><br><span class="line">$ kubectl get services            </span><br><span class="line"></span><br><span class="line"># 列出所有 namespace 中的所有 pod</span><br><span class="line">$ kubectl get pods --all-namespaces  </span><br><span class="line"></span><br><span class="line"># 列出所有 pod 并显示详细信息</span><br><span class="line">$ kubectl get pods -o wide      </span><br><span class="line"></span><br><span class="line"># 列出指定 deployment</span><br><span class="line">$ kubectl get deployment my-dep      </span><br><span class="line"></span><br><span class="line"># 列出该 namespace 中的所有 pod 包括未初始化的</span><br><span class="line">$ kubectl get pods --include-uninitialized      </span><br><span class="line"></span><br><span class="line"># 使用详细输出来描述命令</span><br><span class="line">$ kubectl describe nodes my-node</span><br><span class="line">$ kubectl describe pods my-pod</span><br><span class="line"></span><br><span class="line"># List Services Sorted by Name</span><br><span class="line">$ kubectl get services --sort-by=.metadata.name </span><br><span class="line"></span><br><span class="line"># 根据重启次数排序列出 pod</span><br><span class="line">$ kubectl get pods --sort-by=&#x27;.status.containerStatuses[0].restartCount&#x27;</span><br><span class="line"></span><br><span class="line"># 获取所有具有 app=cassandra 的 pod 中的 version 标签</span><br><span class="line">$ kubectl get pods --selector=app=cassandra rc -o \</span><br><span class="line">  jsonpath=&#x27;&#123;.items[*].metadata.labels.version&#125;&#x27;</span><br><span class="line"></span><br><span class="line"># 获取所有节点的 ExternalIP</span><br><span class="line">$ kubectl get nodes -o jsonpath=&#x27;&#123;.items[*].status.addresses[?(@.type==&quot;ExternalIP&quot;)].address&#125;&#x27;</span><br><span class="line"></span><br><span class="line"># 列出属于某个 PC 的 Pod 的名字</span><br><span class="line"># “jq”命令用于转换复杂的 jsonpath，参考 https://stedolan.github.io/jq/</span><br><span class="line">$ sel=$&#123;$(kubectl get rc my-rc --output=json | jq -j &#x27;.spec.selector | to_entries | .[] | &quot;\(.key)=\(.value),&quot;&#x27;)%?&#125;</span><br><span class="line">$ echo $(kubectl get pods --selector=$sel --output=jsonpath=&#123;.items..metadata.name&#125;)</span><br><span class="line"></span><br><span class="line"># 查看哪些节点已就绪</span><br><span class="line">$ JSONPATH=&#x27;&#123;range .items[*]&#125;&#123;@.metadata.name&#125;:&#123;range @.status.conditions[*]&#125;&#123;@.type&#125;=&#123;@.status&#125;;&#123;end&#125;&#123;end&#125;&#x27; \</span><br><span class="line"> &amp;&amp; kubectl get nodes -o jsonpath=&quot;$JSONPATH&quot; | grep &quot;Ready=True&quot;</span><br><span class="line"></span><br><span class="line"># 列出当前 Pod 中使用的 Secret</span><br><span class="line">$ kubectl get pods -o json | jq &#x27;.items[].spec.containers[].env[]?.valueFrom.secretKeyRef.name&#x27; | grep -v null | sort | uniq</span><br></pre></td></tr></table></figure>
-
-<h2 id="更新资源"><a href="#更新资源" class="headerlink" title="更新资源"></a>更新资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">$ kubectl rolling-update frontend-v1 -f frontend-v2.json           # 滚动更新 pod frontend-v1</span><br><span class="line">$ kubectl rolling-update frontend-v1 frontend-v2 --image=image:v2  # 更新资源名称并更新镜像</span><br><span class="line">$ kubectl rolling-update frontend --image=image:v2                 # 更新 frontend pod 中的镜像</span><br><span class="line">$ kubectl rolling-update frontend-v1 frontend-v2 --rollback        # 退出已存在的进行中的滚动更新</span><br><span class="line">$ cat pod.json | kubectl replace -f -                              # 基于 stdin 输入的 JSON 替换 pod</span><br><span class="line"># 强制替换，删除后重新创建资源。会导致服务中断。</span><br><span class="line">$ kubectl replace --force -f ./pod.json</span><br><span class="line"># 为 nginx RC 创建服务，启用本地 80 端口连接到容器上的 8000 端口</span><br><span class="line">$ kubectl expose rc nginx --port=80 --target-port=8000</span><br><span class="line"># 更新单容器 pod 的镜像版本（tag）到 v4</span><br><span class="line">$ kubectl get pod mypod -o yaml | sed &#x27;s/\(image: myimage\):.*$/\1:v4/&#x27; | kubectl replace -f -</span><br><span class="line"># 添加标签</span><br><span class="line">$ kubectl label pods my-pod new-label=awesome        </span><br><span class="line"> # 添加注解</span><br><span class="line">$ kubectl annotate pods my-pod icon-url=http://goo.gl/XXBTWq   </span><br><span class="line"># 自动扩展 deployment “foo”</span><br><span class="line">$ kubectl autoscale deployment foo --min=2 --max=10</span><br></pre></td></tr></table></figure>
-
-<h2 id="修补资源"><a href="#修补资源" class="headerlink" title="修补资源"></a>修补资源</h2><p>使用策略合并补丁并修补资源。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 部分更新节点</span><br><span class="line">kubectl patch node k8s-node-1 -p &#x27;&#123;&quot;spec&quot;:&#123;&quot;unschedulable&quot;:true&#125;&#125;&#x27; </span><br><span class="line"># 更新容器镜像；spec.containers[*].name 是必须的，因为这是合并的关键字</span><br><span class="line">$ kubectl patch pod valid-pod -p &#x27;&#123;&quot;spec&quot;:&#123;&quot;containers&quot;:[&#123;&quot;name&quot;:&quot;kubernetes-serve-hostname&quot;,&quot;image&quot;:&quot;new image&quot;&#125;]&#125;&#125;&#x27;</span><br><span class="line"># 使用具有位置数组的 json 补丁更新容器镜像</span><br><span class="line">$ kubectl patch pod valid-pod --type=&#x27;json&#x27; -p=&#x27;[&#123;&quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/spec/containers/0/image&quot;, &quot;value&quot;:&quot;new image&quot;&#125;]&#x27;</span><br><span class="line"># 使用具有位置数组的 json 补丁禁用 deployment 的 livenessProbe</span><br><span class="line">$ kubectl patch deployment valid-deployment  --type json   -p=&#x27;[&#123;&quot;op&quot;: &quot;remove&quot;, &quot;path&quot;: &quot;/spec/template/spec/containers/0/livenessProbe&quot;&#125;]&#x27;</span><br></pre></td></tr></table></figure>
-
-<h2 id="编辑资源"><a href="#编辑资源" class="headerlink" title="编辑资源"></a>编辑资源</h2><p>在编辑器中编辑任何 API 资源。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 编辑名为 docker-registry 的 service</span><br><span class="line">$ kubectl edit svc/docker-registry           </span><br><span class="line"># 使用其它编辑器</span><br><span class="line">$ KUBE_EDITOR=&quot;nano&quot; kubectl edit svc/docker-registry</span><br></pre></td></tr></table></figure>
-
-<h2 id="Scale-资源"><a href="#Scale-资源" class="headerlink" title="Scale 资源"></a>Scale 资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># Scale a replicaset named &#x27;foo&#x27; to 3</span><br><span class="line">$ kubectl scale --replicas=3 rs/foo       </span><br><span class="line"># Scale a resource specified in &quot;foo.yaml&quot; to 3</span><br><span class="line">$ kubectl scale --replicas=3 -f foo.yaml     </span><br><span class="line"># If the deployment named mysql&#x27;s current size is 2, scale mysql to 3</span><br><span class="line">$ kubectl scale --current-replicas=2 --replicas=3 deployment/mysql  </span><br><span class="line"># Scale multiple replication controllers</span><br><span class="line">$ kubectl scale --replicas=5 rc/foo rc/bar rc/baz</span><br></pre></td></tr></table></figure>
-
-<h2 id="删除资源"><a href="#删除资源" class="headerlink" title="删除资源"></a>删除资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 删除 pod.json 文件中定义的类型和名称的 pod</span><br><span class="line">$ kubectl delete -f ./pod.json        </span><br><span class="line"># 删除名为“baz”的 pod 和名为“foo”的 service</span><br><span class="line">$ kubectl delete pod,service baz foo      </span><br><span class="line"># 删除具有 name=myLabel 标签的 pod 和 serivce</span><br><span class="line">$ kubectl delete pods,services -l name=myLabel       </span><br><span class="line"># 删除具有 name=myLabel 标签的 pod 和 service，包括尚未初始化的</span><br><span class="line">$ kubectl delete pods,services -l name=myLabel --include-uninitialized   </span><br><span class="line"># 删除 my-ns namespace 下的所有 pod 和 serivce包</span><br><span class="line">$ kubectl -n my-ns delete po,svc --all</span><br></pre></td></tr></table></figure>
-
-<h2 id="与运行中的-Pod-交互"><a href="#与运行中的-Pod-交互" class="headerlink" title="与运行中的 Pod 交互"></a>与运行中的 Pod 交互</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># dump 输出 pod 的日志（stdout）</span><br><span class="line">$ kubectl logs my-pod  </span><br><span class="line"> # dump 输出 pod 中容器的日志（stdout，pod 中有多个容器的情况下使用）</span><br><span class="line">$ kubectl logs my-pod -c my-container      </span><br><span class="line"># 流式输出 pod 的日志（stdout）</span><br><span class="line">$ kubectl logs -f my-pod             </span><br><span class="line"># 流式输出 pod 中容器的日志（stdout，pod 中有多个容器的情况下使用）</span><br><span class="line">$ kubectl logs -f my-pod -c my-container</span><br><span class="line"># 交互式 shell 的方式运行 pod</span><br><span class="line">$ kubectl run -i --tty busybox --image=busybox -- sh  </span><br><span class="line"> # 连接到运行中的容器</span><br><span class="line">$ kubectl attach my-pod -i    </span><br><span class="line"># 转发 pod 中的 6000 端口到本地的 5000 端口</span><br><span class="line">$ kubectl port-forward my-pod 5000:6000   </span><br><span class="line">  # 在已存在的容器中执行命令（只有一个容器的情况下）</span><br><span class="line">$ kubectl exec my-pod -- ls /          </span><br><span class="line"># 在已存在的容器中执行命令（pod 中有多个容器的情况下）</span><br><span class="line">$ kubectl exec my-pod -c my-container -- ls /    </span><br><span class="line"># 显示指定 pod 和容器的指标度量</span><br><span class="line">$ kubectl top pod POD_NAME --containers</span><br></pre></td></tr></table></figure>
-
-<h2 id="与节点和集群交互"><a href="#与节点和集群交互" class="headerlink" title="与节点和集群交互"></a>与节点和集群交互</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 标记 my-node 不可调度</span><br><span class="line">$ kubectl cordon my-node       </span><br><span class="line"># 清空 my-node 以待维护</span><br><span class="line">$ kubectl drain my-node    </span><br><span class="line"># 标记 my-node 可调度</span><br><span class="line">$ kubectl uncordon my-node             </span><br><span class="line"> # 显示 my-node 的指标度量</span><br><span class="line">$ kubectl top node my-node    </span><br><span class="line">$ kubectl cluster-info          </span><br><span class="line"> # 将当前集群状态输出到 stdout</span><br><span class="line">$ kubectl cluster-info dump                                                               </span><br><span class="line"> # 将当前集群状态输出到 /path/to/cluster-state</span><br><span class="line">$ kubectl cluster-info dump --output-directory=/path/to/cluster-state  </span><br><span class="line"># 如果该键和影响的污点（taint）已存在，则使用指定的值替换</span><br><span class="line">$ kubectl taint nodes foo dedicated=special-user:NoSchedule</span><br></pre></td></tr></table></figure>
-
-<h2 id="set-命令"><a href="#set-命令" class="headerlink" title="set 命令"></a>set 命令</h2><p>配置应用的一些特定资源，也可以修改应用已有的资源<br>使用 kubectl set –help查看，它的子命令，env，image，resources，selector，serviceaccount，subject。</p>
-<p>语法：resources (-f FILENAME | TYPE NAME) ([—limits=LIMITS &amp; —requests=REQUESTS]</p>
-<h2 id="kubectl-set-resources-命令"><a href="#kubectl-set-resources-命令" class="headerlink" title="kubectl set resources 命令"></a>kubectl set resources 命令</h2><p>这个命令用于设置资源的一些范围限制。<br>资源对象中的Pod可以指定计算资源需求（CPU-单位m、内存-单位Mi），即使用的最小资源请求（Requests），限制（Limits）的最大资源需求，Pod将保证使用在设置的资源数量范围。<br>对于每个Pod资源，如果指定了Limits（限制）值，并省略了Requests（请求），则Requests默认为Limits的值。</p>
-<p><code>可用资源对象包括(支持大小写)：replicationcontroller、deployment、daemonset、job、replicaset。</code></p>
-<p>例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 将deployment的nginx容器cpu限制为“200m”，将内存设置为“512Mi”</span><br><span class="line">$ kubectl set resources deployment nginx -c=nginx --limits=cpu=200m,memory=512Mi</span><br><span class="line"># 设置所有nginx容器中 Requests和Limits</span><br><span class="line">$ kubectl set resources deployment nginx --limits=cpu=200m,memory=512Mi --requests=cpu=100m,memory=256Mi</span><br><span class="line"># 删除nginx中容器的计算资源值</span><br><span class="line">$ kubectl set resources deployment nginx --limits=cpu=0,memory=0 --requests=cpu=0,memory=0</span><br></pre></td></tr></table></figure>]]></content>
+    <title>Hexo Blog电脑快速迁移</title>
+    <url>/2023/09/02/20230902_hexo_migration/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>如何快速的将一个Hexo Blog移动到另外一台电脑</p>
+<h1 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h1><ul>
+<li>hexo </li>
+<li>hexo theme</li>
+<li>github</li>
+</ul>
+<h2 id="Install-Steps"><a href="#Install-Steps" class="headerlink" title="Install Steps"></a>Install Steps</h2><h3 id="Install-hexo"><a href="#Install-hexo" class="headerlink" title="Install hexo"></a>Install hexo</h3><ul>
+<li><code>brew install npm</code></li>
+<li><code>brew install hexo</code></li>
+<li>copy original folder to new location </li>
+<li>make sure new laptop ssh key added into github</li>
+<li><code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</code></li>
+</ul>
+<h2 id="Useful-hexo-commands"><a href="#Useful-hexo-commands" class="headerlink" title="Useful hexo commands"></a>Useful hexo commands</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo --config _config.yml</span><br><span class="line">hexo generate --watch</span><br><span class="line"></span><br><span class="line">hexo server</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>devops</category>
+        <category>blog</category>
       </categories>
       <tags>
         <tag>tech</tag>
-        <tag>shell</tag>
-        <tag>Kubernetes</tag>
-        <tag>container</tag>
+        <tag>personal</tag>
+        <tag>hexo</tag>
         <tag>Tech</tag>
       </tags>
   </entry>
   <entry>
     <title>Devops/System admin面试常见问题</title>
     <url>/2023/09/12/20230912_Interview_questions/</url>
-    <content><![CDATA[<h2 id="Devops-tools-questions"><a href="#Devops-tools-questions" class="headerlink" title="Devops tools questions"></a>Devops tools questions</h2><ul>
+    <content><![CDATA[<h2 id="Devops-tools-questions"><a href="#Devops-tools-questions" class="headerlink" title="Devops tools questions"></a>Devops tools questions</h2><h3 id="Ansible"><a href="#Ansible" class="headerlink" title="Ansible"></a>Ansible</h3><ul>
 <li>Ansible module shell and command difference <ul>
 <li>shell call /bin/sh </li>
 <li>command can’t reolve variable like $HOME, “&lt;”, “&amp;”</li>
 </ul>
 </li>
-<li>Ansible configure file ansible.cfg load orders </li>
+<li>Ansible configure file ansible.cfg load orders <ul>
+<li>检查环境变量ANSIBLE_CONFIG指向的路径文件</li>
+<li>ansible.cfg (in the current directory)</li>
+<li>~/.ansible.cfg</li>
+<li>/etc/ansible/ansible.cfg</li>
+</ul>
+</li>
+<li>Ansible facts cache<ul>
+<li>gathering = smart</li>
+<li>implicit</li>
+<li>explicit<br>ansible的配置文件中可以修改’gathering’的值为’smart’、’implicit’或者’explicit’。smart表示默认收集facts，但facts已有的情况下不会收集，即使用缓存facts；implicit表示默认收集facts，要禁止收集，必须使用gather_facts: False；explicit则表示默认不收集，要显式收集，必须使用gather_facts: Ture。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[defaults]</span><br><span class="line">gathering = smart</span><br><span class="line">fact_caching_timeout = 86400</span><br><span class="line">fact_caching = jsonfile</span><br><span class="line">fact_caching_connection = /path/to/cachedir</span><br></pre></td></tr></table></figure>
+
+<p>这里设置的缓存过期时间为86400秒，即缓存一天。缓存的json文件放在/path/to/cachedir目录下，各主机的缓存文件以主机名命名。缓存文件是一个json文件，要查看缓存文件，如/path/to/cachedir/192.168.100.59中的内容，使用如下语句即可。</p>
+<p><code>cat /path/to/cachedir/192.168.100.59 | python -m json.tool</code></p>
+<ul>
+<li>Ansible playbook <code>serial</code></li>
+<li>当host具有太多个时候，serial 可以定义一次跑的服务器的个数或者百分比方式30%来定义跑多少个服务器一次。</li>
+<li>Ansible how to run one local script on remote server</li>
 </ul>
 <h2 id="Regular-Questions"><a href="#Regular-Questions" class="headerlink" title="Regular Questions"></a>Regular Questions</h2><ul>
 <li>Explain vmstat command details<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">useful information for </span><br><span class="line">- running cpu, block cpu</span><br><span class="line">	- r: The number of processes waiting for run time.</span><br><span class="line">	- b:  The number of processes in uninterruptible sleep.</span><br><span class="line">- memory usage</span><br><span class="line">- swap </span><br><span class="line">- io - input/ouput</span><br><span class="line">	- bi - Blocks received from a block device (blocks/s)</span><br><span class="line">	- bo - Blocks sent to a block device (blocks/s).</span><br><span class="line">- system - </span><br><span class="line">	- in - The number of interrupts per second, including the clock.</span><br><span class="line">	- cs - The number of context switches per second.</span><br><span class="line">- cpu - </span><br><span class="line">	- wa: Time spent waiting for IO</span><br><span class="line">	- sy: Time spent running kernel code. (system time)</span><br><span class="line">	- us: Time spent running non-kernel code. (user time, including nice time)</span><br><span class="line">- -d  show disk reads/wirtes/IO</span><br><span class="line">- -s  show memory swap</span><br></pre></td></tr></table></figure></li>
@@ -407,8 +412,94 @@
         <tag>Ansible</tag>
         <tag>Linux</tag>
         <tag>Shell</tag>
+        <tag>python</tag>
         <tag>Tech</tag>
         <tag>Life</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kubectl 常用命令</title>
+    <url>/2023/09/04/20230904_kubectl_commands/</url>
+    <content><![CDATA[<h2 id="Kubectl-上下文和配置"><a href="#Kubectl-上下文和配置" class="headerlink" title="Kubectl 上下文和配置"></a>Kubectl 上下文和配置</h2><p>设置 kubectl 命令交互的 kubernetes 集群并修改配置信息。参阅 使用 kubeconfig 文件进行跨集群验证 获取关于配置文件的详细信息。 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 显示合并后的 kubeconfig 配置</span><br><span class="line">$ kubectl config view </span><br><span class="line"># 同时使用多个 kubeconfig 文件并查看合并后的配置</span><br><span class="line">$ KUBECONFIG=~/.kube/config:~/.kube/kubconfig2 kubectl config view</span><br><span class="line"># 获取 e2e 用户的密码</span><br><span class="line">$ kubectl config view -o jsonpath=&#x27;&#123;.users[?(@.name == &quot;e2e&quot;)].user.password&#125;&#x27;</span><br><span class="line"># 显示当前的上下文</span><br><span class="line">$ kubectl config current-context    </span><br><span class="line"># 设置默认上下文为 my-cluster-name</span><br><span class="line">$ kubectl config use-context my-cluster-name  </span><br><span class="line"># 向 kubeconf 中增加支持基本认证的新集群</span><br><span class="line">$ kubectl config set-credentials kubeuser/foo.kubernetes.com --username=kubeuser --password=kubepassword</span><br><span class="line"># 使用指定的用户名和 namespace 设置上下文</span><br><span class="line">$ kubectl config set-context gce --user=cluster-admin --namespace=foo \</span><br><span class="line">  &amp;&amp; kubectl config use-context gce</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h2><p>Kubernetes 的清单文件可以使用 json 或 yaml 格式定义。可以以 .yaml、.yml、或者 .json 为扩展名。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 创建资源</span><br><span class="line">$ kubectl create -f ./my-manifest.yaml     </span><br><span class="line"># 使用多个文件创建资源</span><br><span class="line">$ kubectl create -f ./my1.yaml -f ./my2.yaml   </span><br><span class="line"># 使用目录下的所有清单文件来创建资源</span><br><span class="line">$ kubectl create -f ./dir    </span><br><span class="line"># 使用 url 来创建资源</span><br><span class="line">$ kubectl create -f https://git.io/vPieo  </span><br><span class="line"># 启动一个 nginx 实例</span><br><span class="line">$ kubectl run nginx --image=nginx  </span><br><span class="line"> # 获取 pod 和 svc 的文档</span><br><span class="line">$ kubectl explain pods,svc                      </span><br><span class="line"># 从 stdin 输入中创建多个 YAML 对象</span><br><span class="line">$ cat &lt;&lt;EOF | kubectl create -f -</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: busybox-sleep</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: busybox</span><br><span class="line">    image: busybox</span><br><span class="line">    args:</span><br><span class="line">    - sleep</span><br><span class="line">    - &quot;1000000&quot;</span><br><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: busybox-sleep-less</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: busybox</span><br><span class="line">    image: busybox</span><br><span class="line">    args:</span><br><span class="line">    - sleep</span><br><span class="line">    - &quot;1000&quot;</span><br><span class="line">EOF</span><br><span class="line"># 创建包含几个 key 的 Secret</span><br><span class="line">$ cat &lt;&lt;EOF | kubectl create -f -</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Secret</span><br><span class="line">metadata:</span><br><span class="line">  name: mysecret</span><br><span class="line">type: Opaque</span><br><span class="line">data:</span><br><span class="line">  password: $(echo &quot;s33msi4&quot; | base64)</span><br><span class="line">  username: $(echo &quot;jane&quot; | base64)</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<h2 id="显示和查找资源"><a href="#显示和查找资源" class="headerlink" title="显示和查找资源"></a>显示和查找资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># Get commands with basic output</span><br><span class="line"># 列出所有 namespace 中的所有 service</span><br><span class="line">$ kubectl get services            </span><br><span class="line"></span><br><span class="line"># 列出所有 namespace 中的所有 pod</span><br><span class="line">$ kubectl get pods --all-namespaces  </span><br><span class="line"></span><br><span class="line"># 列出所有 pod 并显示详细信息</span><br><span class="line">$ kubectl get pods -o wide      </span><br><span class="line"></span><br><span class="line"># 列出指定 deployment</span><br><span class="line">$ kubectl get deployment my-dep      </span><br><span class="line"></span><br><span class="line"># 列出该 namespace 中的所有 pod 包括未初始化的</span><br><span class="line">$ kubectl get pods --include-uninitialized      </span><br><span class="line"></span><br><span class="line"># 使用详细输出来描述命令</span><br><span class="line">$ kubectl describe nodes my-node</span><br><span class="line">$ kubectl describe pods my-pod</span><br><span class="line"></span><br><span class="line"># List Services Sorted by Name</span><br><span class="line">$ kubectl get services --sort-by=.metadata.name </span><br><span class="line"></span><br><span class="line"># 根据重启次数排序列出 pod</span><br><span class="line">$ kubectl get pods --sort-by=&#x27;.status.containerStatuses[0].restartCount&#x27;</span><br><span class="line"></span><br><span class="line"># 获取所有具有 app=cassandra 的 pod 中的 version 标签</span><br><span class="line">$ kubectl get pods --selector=app=cassandra rc -o \</span><br><span class="line">  jsonpath=&#x27;&#123;.items[*].metadata.labels.version&#125;&#x27;</span><br><span class="line"></span><br><span class="line"># 获取所有节点的 ExternalIP</span><br><span class="line">$ kubectl get nodes -o jsonpath=&#x27;&#123;.items[*].status.addresses[?(@.type==&quot;ExternalIP&quot;)].address&#125;&#x27;</span><br><span class="line"></span><br><span class="line"># 列出属于某个 PC 的 Pod 的名字</span><br><span class="line"># “jq”命令用于转换复杂的 jsonpath，参考 https://stedolan.github.io/jq/</span><br><span class="line">$ sel=$&#123;$(kubectl get rc my-rc --output=json | jq -j &#x27;.spec.selector | to_entries | .[] | &quot;\(.key)=\(.value),&quot;&#x27;)%?&#125;</span><br><span class="line">$ echo $(kubectl get pods --selector=$sel --output=jsonpath=&#123;.items..metadata.name&#125;)</span><br><span class="line"></span><br><span class="line"># 查看哪些节点已就绪</span><br><span class="line">$ JSONPATH=&#x27;&#123;range .items[*]&#125;&#123;@.metadata.name&#125;:&#123;range @.status.conditions[*]&#125;&#123;@.type&#125;=&#123;@.status&#125;;&#123;end&#125;&#123;end&#125;&#x27; \</span><br><span class="line"> &amp;&amp; kubectl get nodes -o jsonpath=&quot;$JSONPATH&quot; | grep &quot;Ready=True&quot;</span><br><span class="line"></span><br><span class="line"># 列出当前 Pod 中使用的 Secret</span><br><span class="line">$ kubectl get pods -o json | jq &#x27;.items[].spec.containers[].env[]?.valueFrom.secretKeyRef.name&#x27; | grep -v null | sort | uniq</span><br></pre></td></tr></table></figure>
+
+<h2 id="更新资源"><a href="#更新资源" class="headerlink" title="更新资源"></a>更新资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">$ kubectl rolling-update frontend-v1 -f frontend-v2.json           # 滚动更新 pod frontend-v1</span><br><span class="line">$ kubectl rolling-update frontend-v1 frontend-v2 --image=image:v2  # 更新资源名称并更新镜像</span><br><span class="line">$ kubectl rolling-update frontend --image=image:v2                 # 更新 frontend pod 中的镜像</span><br><span class="line">$ kubectl rolling-update frontend-v1 frontend-v2 --rollback        # 退出已存在的进行中的滚动更新</span><br><span class="line">$ cat pod.json | kubectl replace -f -                              # 基于 stdin 输入的 JSON 替换 pod</span><br><span class="line"># 强制替换，删除后重新创建资源。会导致服务中断。</span><br><span class="line">$ kubectl replace --force -f ./pod.json</span><br><span class="line"># 为 nginx RC 创建服务，启用本地 80 端口连接到容器上的 8000 端口</span><br><span class="line">$ kubectl expose rc nginx --port=80 --target-port=8000</span><br><span class="line"># 更新单容器 pod 的镜像版本（tag）到 v4</span><br><span class="line">$ kubectl get pod mypod -o yaml | sed &#x27;s/\(image: myimage\):.*$/\1:v4/&#x27; | kubectl replace -f -</span><br><span class="line"># 添加标签</span><br><span class="line">$ kubectl label pods my-pod new-label=awesome        </span><br><span class="line"> # 添加注解</span><br><span class="line">$ kubectl annotate pods my-pod icon-url=http://goo.gl/XXBTWq   </span><br><span class="line"># 自动扩展 deployment “foo”</span><br><span class="line">$ kubectl autoscale deployment foo --min=2 --max=10</span><br></pre></td></tr></table></figure>
+
+<h2 id="修补资源"><a href="#修补资源" class="headerlink" title="修补资源"></a>修补资源</h2><p>使用策略合并补丁并修补资源。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 部分更新节点</span><br><span class="line">kubectl patch node k8s-node-1 -p &#x27;&#123;&quot;spec&quot;:&#123;&quot;unschedulable&quot;:true&#125;&#125;&#x27; </span><br><span class="line"># 更新容器镜像；spec.containers[*].name 是必须的，因为这是合并的关键字</span><br><span class="line">$ kubectl patch pod valid-pod -p &#x27;&#123;&quot;spec&quot;:&#123;&quot;containers&quot;:[&#123;&quot;name&quot;:&quot;kubernetes-serve-hostname&quot;,&quot;image&quot;:&quot;new image&quot;&#125;]&#125;&#125;&#x27;</span><br><span class="line"># 使用具有位置数组的 json 补丁更新容器镜像</span><br><span class="line">$ kubectl patch pod valid-pod --type=&#x27;json&#x27; -p=&#x27;[&#123;&quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/spec/containers/0/image&quot;, &quot;value&quot;:&quot;new image&quot;&#125;]&#x27;</span><br><span class="line"># 使用具有位置数组的 json 补丁禁用 deployment 的 livenessProbe</span><br><span class="line">$ kubectl patch deployment valid-deployment  --type json   -p=&#x27;[&#123;&quot;op&quot;: &quot;remove&quot;, &quot;path&quot;: &quot;/spec/template/spec/containers/0/livenessProbe&quot;&#125;]&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="编辑资源"><a href="#编辑资源" class="headerlink" title="编辑资源"></a>编辑资源</h2><p>在编辑器中编辑任何 API 资源。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 编辑名为 docker-registry 的 service</span><br><span class="line">$ kubectl edit svc/docker-registry           </span><br><span class="line"># 使用其它编辑器</span><br><span class="line">$ KUBE_EDITOR=&quot;nano&quot; kubectl edit svc/docker-registry</span><br></pre></td></tr></table></figure>
+
+<h2 id="Scale-资源"><a href="#Scale-资源" class="headerlink" title="Scale 资源"></a>Scale 资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># Scale a replicaset named &#x27;foo&#x27; to 3</span><br><span class="line">$ kubectl scale --replicas=3 rs/foo       </span><br><span class="line"># Scale a resource specified in &quot;foo.yaml&quot; to 3</span><br><span class="line">$ kubectl scale --replicas=3 -f foo.yaml     </span><br><span class="line"># If the deployment named mysql&#x27;s current size is 2, scale mysql to 3</span><br><span class="line">$ kubectl scale --current-replicas=2 --replicas=3 deployment/mysql  </span><br><span class="line"># Scale multiple replication controllers</span><br><span class="line">$ kubectl scale --replicas=5 rc/foo rc/bar rc/baz</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除资源"><a href="#删除资源" class="headerlink" title="删除资源"></a>删除资源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 删除 pod.json 文件中定义的类型和名称的 pod</span><br><span class="line">$ kubectl delete -f ./pod.json        </span><br><span class="line"># 删除名为“baz”的 pod 和名为“foo”的 service</span><br><span class="line">$ kubectl delete pod,service baz foo      </span><br><span class="line"># 删除具有 name=myLabel 标签的 pod 和 serivce</span><br><span class="line">$ kubectl delete pods,services -l name=myLabel       </span><br><span class="line"># 删除具有 name=myLabel 标签的 pod 和 service，包括尚未初始化的</span><br><span class="line">$ kubectl delete pods,services -l name=myLabel --include-uninitialized   </span><br><span class="line"># 删除 my-ns namespace 下的所有 pod 和 serivce包</span><br><span class="line">$ kubectl -n my-ns delete po,svc --all</span><br></pre></td></tr></table></figure>
+
+<h2 id="与运行中的-Pod-交互"><a href="#与运行中的-Pod-交互" class="headerlink" title="与运行中的 Pod 交互"></a>与运行中的 Pod 交互</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># dump 输出 pod 的日志（stdout）</span><br><span class="line">$ kubectl logs my-pod  </span><br><span class="line"> # dump 输出 pod 中容器的日志（stdout，pod 中有多个容器的情况下使用）</span><br><span class="line">$ kubectl logs my-pod -c my-container      </span><br><span class="line"># 流式输出 pod 的日志（stdout）</span><br><span class="line">$ kubectl logs -f my-pod             </span><br><span class="line"># 流式输出 pod 中容器的日志（stdout，pod 中有多个容器的情况下使用）</span><br><span class="line">$ kubectl logs -f my-pod -c my-container</span><br><span class="line"># 交互式 shell 的方式运行 pod</span><br><span class="line">$ kubectl run -i --tty busybox --image=busybox -- sh  </span><br><span class="line"> # 连接到运行中的容器</span><br><span class="line">$ kubectl attach my-pod -i    </span><br><span class="line"># 转发 pod 中的 6000 端口到本地的 5000 端口</span><br><span class="line">$ kubectl port-forward my-pod 5000:6000   </span><br><span class="line">  # 在已存在的容器中执行命令（只有一个容器的情况下）</span><br><span class="line">$ kubectl exec my-pod -- ls /          </span><br><span class="line"># 在已存在的容器中执行命令（pod 中有多个容器的情况下）</span><br><span class="line">$ kubectl exec my-pod -c my-container -- ls /    </span><br><span class="line"># 显示指定 pod 和容器的指标度量</span><br><span class="line">$ kubectl top pod POD_NAME --containers</span><br></pre></td></tr></table></figure>
+
+<h2 id="与节点和集群交互"><a href="#与节点和集群交互" class="headerlink" title="与节点和集群交互"></a>与节点和集群交互</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># 标记 my-node 不可调度</span><br><span class="line">$ kubectl cordon my-node       </span><br><span class="line"># 清空 my-node 以待维护</span><br><span class="line">$ kubectl drain my-node    </span><br><span class="line"># 标记 my-node 可调度</span><br><span class="line">$ kubectl uncordon my-node             </span><br><span class="line"> # 显示 my-node 的指标度量</span><br><span class="line">$ kubectl top node my-node    </span><br><span class="line">$ kubectl cluster-info          </span><br><span class="line"> # 将当前集群状态输出到 stdout</span><br><span class="line">$ kubectl cluster-info dump                                                               </span><br><span class="line"> # 将当前集群状态输出到 /path/to/cluster-state</span><br><span class="line">$ kubectl cluster-info dump --output-directory=/path/to/cluster-state  </span><br><span class="line"># 如果该键和影响的污点（taint）已存在，则使用指定的值替换</span><br><span class="line">$ kubectl taint nodes foo dedicated=special-user:NoSchedule</span><br></pre></td></tr></table></figure>
+
+<h2 id="set-命令"><a href="#set-命令" class="headerlink" title="set 命令"></a>set 命令</h2><p>配置应用的一些特定资源，也可以修改应用已有的资源<br>使用 kubectl set –help查看，它的子命令，env，image，resources，selector，serviceaccount，subject。</p>
+<p>语法：resources (-f FILENAME | TYPE NAME) ([—limits=LIMITS &amp; —requests=REQUESTS]</p>
+<h2 id="kubectl-set-resources-命令"><a href="#kubectl-set-resources-命令" class="headerlink" title="kubectl set resources 命令"></a>kubectl set resources 命令</h2><p>这个命令用于设置资源的一些范围限制。<br>资源对象中的Pod可以指定计算资源需求（CPU-单位m、内存-单位Mi），即使用的最小资源请求（Requests），限制（Limits）的最大资源需求，Pod将保证使用在设置的资源数量范围。<br>对于每个Pod资源，如果指定了Limits（限制）值，并省略了Requests（请求），则Requests默认为Limits的值。</p>
+<p><code>可用资源对象包括(支持大小写)：replicationcontroller、deployment、daemonset、job、replicaset。</code></p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 将deployment的nginx容器cpu限制为“200m”，将内存设置为“512Mi”</span><br><span class="line">$ kubectl set resources deployment nginx -c=nginx --limits=cpu=200m,memory=512Mi</span><br><span class="line"># 设置所有nginx容器中 Requests和Limits</span><br><span class="line">$ kubectl set resources deployment nginx --limits=cpu=200m,memory=512Mi --requests=cpu=100m,memory=256Mi</span><br><span class="line"># 删除nginx中容器的计算资源值</span><br><span class="line">$ kubectl set resources deployment nginx --limits=cpu=0,memory=0 --requests=cpu=0,memory=0</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>devops</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>Kubernetes</tag>
+        <tag>container</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Devops 三大运维工具Ansible Terraform Puppet</title>
+    <url>/2023/09/15/20230915_devops_tools/</url>
+    <content><![CDATA[<h2 id="Ansible-Terraform-Puppet主要区别和用途"><a href="#Ansible-Terraform-Puppet主要区别和用途" class="headerlink" title="Ansible Terraform Puppet主要区别和用途"></a>Ansible Terraform Puppet主要区别和用途</h2><ul>
+<li>Ansible: 侧重于deployment,软件配置部署</li>
+<li>Puppet: 侧重于System management</li>
+<li>Terraform: Server Provisioning Tool: 侧重于Cloud, IaC<h2 id="Ansible-知识"><a href="#Ansible-知识" class="headerlink" title="Ansible 知识"></a>Ansible 知识</h2><h3 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h3></li>
+<li>ansible系统由控制主机和被管理主机组成,控制主机不支持windows平台<ul>
+<li>核心: ansible</li>
+<li>Core Modules: ansible自带的模块</li>
+<li>Custom Modules: 核心模块功能不足时,用户可以添加扩展模块</li>
+<li>Plugins: 通过插件来实现记录日志,发送邮件或其他功能</li>
+<li>Playbooks: 剧本,YAML格式文件，多个任务定义在一个文件中，定义主机需要调用哪些模块来完成的功能</li>
+<li>Connectior Plugins: ansible基于连接插件连接到各个主机上,默认是使用ssh</li>
+<li>Host Inventory: 记录由Ansible管理的主机信息，包括端口、密码、ip等</li>
+</ul>
+</li>
+</ul>
+<h3 id="Ansible配置文件读取顺序"><a href="#Ansible配置文件读取顺序" class="headerlink" title="Ansible配置文件读取顺序"></a>Ansible配置文件读取顺序</h3><ol>
+<li>检查环境变量ANSIBLE_CONFIG指向的路径文件</li>
+<li>~/.ansible.cfg</li>
+<li>/etc/ansible/ansible.cfg<h3 id="常用配置参数"><a href="#常用配置参数" class="headerlink" title="常用配置参数"></a>常用配置参数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">inventory = /etc/ansible/hosts      #这个参数表示资源清单inventory文件的位置</span><br><span class="line">library = /usr/share/ansible        #指向存放Ansible模块的目录，支持多个目录方式，只要用冒号（：）隔开就可以</span><br><span class="line">forks = 5       #并发连接数，默认为5</span><br><span class="line">sudo_user = root        #设置默认执行命令的用户</span><br><span class="line">remote_port = 22        #指定连接被管节点的管理端口，默认为22端口，建议修改，能够更加安全</span><br><span class="line">host_key_checking = False       #设置是否检查SSH主机的密钥，值为True/False。关闭后第一次连接不会提示配置实例</span><br><span class="line">timeout = 60        #设置SSH连接的超时时间，单位为秒</span><br><span class="line">log_path = /var/log/ansible.log     #指定一个存储ansible日志的文件（默认不记录日志）</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="Terraform-实战案例"><a href="#Terraform-实战案例" class="headerlink" title="Terraform 实战案例"></a>Terraform 实战案例</h2><ul>
+<li>The difference of Terraform <code>resource</code> and <code>data</code><ul>
+<li><code>data</code> is mostly for ready only resources like AMI</li>
+<li><code>recourse</code> is for editable resources like ec2, network policy<h2 id="Puppet-实战案例"><a href="#Puppet-实战案例" class="headerlink" title="Puppet 实战案例"></a>Puppet 实战案例</h2></li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>devops</category>
+      </categories>
+      <tags>
+        <tag>interview</tag>
+        <tag>Ansible</tag>
+        <tag>Terraform</tag>
+        <tag>Puppet</tag>
+        <tag>devops</tag>
       </tags>
   </entry>
   <entry>
@@ -476,33 +567,6 @@
       <tags>
         <tag>tech</tag>
         <tag>interview</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo Blog电脑快速迁移</title>
-    <url>/2023/09/02/20230902_hexo_migration/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>如何快速的将一个Hexo Blog移动到另外一台电脑</p>
-<h1 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h1><ul>
-<li>hexo </li>
-<li>hexo theme</li>
-<li>github</li>
-</ul>
-<h2 id="Install-Steps"><a href="#Install-Steps" class="headerlink" title="Install Steps"></a>Install Steps</h2><h3 id="Install-hexo"><a href="#Install-hexo" class="headerlink" title="Install hexo"></a>Install hexo</h3><ul>
-<li><code>brew install npm</code></li>
-<li><code>brew install hexo</code></li>
-<li>copy original folder to new location </li>
-<li>make sure new laptop ssh key added into github</li>
-<li><code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</code></li>
-</ul>
-<h2 id="Useful-hexo-commands"><a href="#Useful-hexo-commands" class="headerlink" title="Useful hexo commands"></a>Useful hexo commands</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo --config _config.yml</span><br><span class="line">hexo generate --watch</span><br><span class="line"></span><br><span class="line">hexo server</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>personal</tag>
-        <tag>hexo</tag>
         <tag>Tech</tag>
       </tags>
   </entry>
@@ -586,33 +650,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Nomad 和 Kubernetes 区别</title>
-    <url>/2023/05/26/Nomad_and_Kubernetes/</url>
-    <content><![CDATA[<h1 id="Nomad-vs-Kubernetes"><a href="#Nomad-vs-Kubernetes" class="headerlink" title="Nomad vs. Kubernetes"></a>Nomad vs. Kubernetes</h1><p>现今Containor技术比较流行的是Kubernetes, 后起之秀Nomad也风行起来，那么两者的区别是啥</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Kubernetes is an orchestration system for containers originally designed by Google, now governed by the Cloud Native Computing Foundation (CNCF) and developed by Google, Red Hat, and many others. Kubernetes and Nomad support similar core use cases for application deployment and management, but they differ in a few key ways. Kubernetes aims to provide all the features needed to run Linux container-based applications including cluster management, scheduling, service discovery, monitoring, secrets management and more. Nomad only aims to focus on cluster management and scheduling and is designed with the Unix philosophy of having a small scope while composing with tools like Consul for service discovery/service mesh and Vault for secret management.</span><br><span class="line"></span><br><span class="line">The following characteristics generally differentiate Nomad from Kubernetes:</span><br></pre></td></tr></table></figure>
-
-<h2 id="Simplicity"><a href="#Simplicity" class="headerlink" title="Simplicity"></a>Simplicity</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Kubernetes is designed as a collection of more than a half-dozen interoperating services which together provide the full functionality. Coordination and storage is provided by etcd at the core. The state is wrapped by API controllers which are consumed by other services that provide higher level APIs for features like scheduling. Kubernetes supports running in a highly available configuration but is operationally complex to setup.</span><br><span class="line"></span><br><span class="line">Nomad is architecturally much simpler. Nomad is a single binary, both for clients and servers, and requires no external services for coordination or storage. Nomad combines a lightweight resource manager and a sophisticated scheduler into a single system. By default, Nomad is distributed, highly available, and operationally simple.</span><br></pre></td></tr></table></figure>
-
-<h2 id="Flexible-Workload-Support"><a href="#Flexible-Workload-Support" class="headerlink" title="Flexible Workload Support"></a>Flexible Workload Support</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">While Kubernetes is specifically focused on Linux containers, Nomad is more general purpose. Nomad supports virtualized, containerized and standalone applications, including Docker, Java, IIS on Windows, Qemu, etc. Nomad is designed with extensible drivers and support will be extended to all common drivers.</span><br></pre></td></tr></table></figure>
-
-<h2 id="Consistent-Deployment"><a href="#Consistent-Deployment" class="headerlink" title="Consistent Deployment"></a>Consistent Deployment</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A full Kubernetes installation for a production environment is time consuming, operationally complex, and resource intensive. An increasing number of implementations are created by the Kubernetes community to mitigate these challenges, such as minikube, kubeadm, k3s, and more. These trimmed versions of Kubernetes offer easier adoption for development and testing, but lead to inconsistency in capabilities, configuration, and management when moving into production.</span><br><span class="line"></span><br><span class="line">In contrast to Kubernetes&#x27; fragmented distributions, Nomad as a single lightweight binary can be deployed in local dev, production, on-prem, at the edge, and in the cloud in a consistent manner, and provides the same operational ease-of-use across all environments.</span><br></pre></td></tr></table></figure>
-
-<h2 id="Scalability"><a href="#Scalability" class="headerlink" title="Scalability"></a>Scalability</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Kubernetes documentation states that they support clusters up to 5,000 nodes and 300,000 total containers. As the environment grows, the interoperating components with different constraints compound the operational complexity. Even operators at Google revealed the significant challenges of managing the system at scale. The lack of maturity in the Federation project and the additional overhead of managing a centralized management plane also make it a hard experience to deploy a distributed system that spans multiple clusters.</span><br><span class="line"></span><br><span class="line">Nomad has been proven to scale to cluster sizes that exceed 10,000 nodes in real-world production environments. It can be deployed across multiple availability zones, regions, and data centers with a single cluster or multiple clusters. Nomad is designed to natively handle multi-cluster deployments without the overhead of running clusters on clusters. This makes it easier to scale the application deployment across multiple datacenters, regions, and clouds with no additional complexity.</span><br><span class="line"></span><br><span class="line">Nomad has performed strenuous benchmark on scalability with 1 million container challenge in 2016 and 2 million container challenge in 2020. These tests are aimed to validate Nomad&#x27;s architectural design and ensure that Nomad performs under the most extreme requirements.</span><br></pre></td></tr></table></figure>
-
-<h2 id="Nomad-command-examples"><a href="#Nomad-command-examples" class="headerlink" title="Nomad command examples"></a>Nomad command examples</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nomad node status</span><br><span class="line"></span><br><span class="line">nomad job run pytechco-redis.nomad.hcl</span><br><span class="line"></span><br><span class="line">nomad job stop -purge pytechco-employee</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>devops</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>Kubertnes</tag>
-        <tag>Nomad</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kubernetes 入门基础</title>
     <url>/2022/09/20/Kubernetes_from_zero/</url>
     <content><![CDATA[<h1 id="Kubernetes-入门基础"><a href="#Kubernetes-入门基础" class="headerlink" title="Kubernetes 入门基础"></a>Kubernetes 入门基础</h1><p><strong>Kubernetes Components Architecture</strong><br><img src="/2022/09/20/Kubernetes_from_zero/k8s_components.jpeg" alt="image"></p>
@@ -665,6 +702,33 @@
         <tag>tech</tag>
         <tag>Kubernetes</tag>
         <tag>container</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Nomad 和 Kubernetes 区别</title>
+    <url>/2023/05/26/Nomad_and_Kubernetes/</url>
+    <content><![CDATA[<h1 id="Nomad-vs-Kubernetes"><a href="#Nomad-vs-Kubernetes" class="headerlink" title="Nomad vs. Kubernetes"></a>Nomad vs. Kubernetes</h1><p>现今Containor技术比较流行的是Kubernetes, 后起之秀Nomad也风行起来，那么两者的区别是啥</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Kubernetes is an orchestration system for containers originally designed by Google, now governed by the Cloud Native Computing Foundation (CNCF) and developed by Google, Red Hat, and many others. Kubernetes and Nomad support similar core use cases for application deployment and management, but they differ in a few key ways. Kubernetes aims to provide all the features needed to run Linux container-based applications including cluster management, scheduling, service discovery, monitoring, secrets management and more. Nomad only aims to focus on cluster management and scheduling and is designed with the Unix philosophy of having a small scope while composing with tools like Consul for service discovery/service mesh and Vault for secret management.</span><br><span class="line"></span><br><span class="line">The following characteristics generally differentiate Nomad from Kubernetes:</span><br></pre></td></tr></table></figure>
+
+<h2 id="Simplicity"><a href="#Simplicity" class="headerlink" title="Simplicity"></a>Simplicity</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Kubernetes is designed as a collection of more than a half-dozen interoperating services which together provide the full functionality. Coordination and storage is provided by etcd at the core. The state is wrapped by API controllers which are consumed by other services that provide higher level APIs for features like scheduling. Kubernetes supports running in a highly available configuration but is operationally complex to setup.</span><br><span class="line"></span><br><span class="line">Nomad is architecturally much simpler. Nomad is a single binary, both for clients and servers, and requires no external services for coordination or storage. Nomad combines a lightweight resource manager and a sophisticated scheduler into a single system. By default, Nomad is distributed, highly available, and operationally simple.</span><br></pre></td></tr></table></figure>
+
+<h2 id="Flexible-Workload-Support"><a href="#Flexible-Workload-Support" class="headerlink" title="Flexible Workload Support"></a>Flexible Workload Support</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">While Kubernetes is specifically focused on Linux containers, Nomad is more general purpose. Nomad supports virtualized, containerized and standalone applications, including Docker, Java, IIS on Windows, Qemu, etc. Nomad is designed with extensible drivers and support will be extended to all common drivers.</span><br></pre></td></tr></table></figure>
+
+<h2 id="Consistent-Deployment"><a href="#Consistent-Deployment" class="headerlink" title="Consistent Deployment"></a>Consistent Deployment</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A full Kubernetes installation for a production environment is time consuming, operationally complex, and resource intensive. An increasing number of implementations are created by the Kubernetes community to mitigate these challenges, such as minikube, kubeadm, k3s, and more. These trimmed versions of Kubernetes offer easier adoption for development and testing, but lead to inconsistency in capabilities, configuration, and management when moving into production.</span><br><span class="line"></span><br><span class="line">In contrast to Kubernetes&#x27; fragmented distributions, Nomad as a single lightweight binary can be deployed in local dev, production, on-prem, at the edge, and in the cloud in a consistent manner, and provides the same operational ease-of-use across all environments.</span><br></pre></td></tr></table></figure>
+
+<h2 id="Scalability"><a href="#Scalability" class="headerlink" title="Scalability"></a>Scalability</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Kubernetes documentation states that they support clusters up to 5,000 nodes and 300,000 total containers. As the environment grows, the interoperating components with different constraints compound the operational complexity. Even operators at Google revealed the significant challenges of managing the system at scale. The lack of maturity in the Federation project and the additional overhead of managing a centralized management plane also make it a hard experience to deploy a distributed system that spans multiple clusters.</span><br><span class="line"></span><br><span class="line">Nomad has been proven to scale to cluster sizes that exceed 10,000 nodes in real-world production environments. It can be deployed across multiple availability zones, regions, and data centers with a single cluster or multiple clusters. Nomad is designed to natively handle multi-cluster deployments without the overhead of running clusters on clusters. This makes it easier to scale the application deployment across multiple datacenters, regions, and clouds with no additional complexity.</span><br><span class="line"></span><br><span class="line">Nomad has performed strenuous benchmark on scalability with 1 million container challenge in 2016 and 2 million container challenge in 2020. These tests are aimed to validate Nomad&#x27;s architectural design and ensure that Nomad performs under the most extreme requirements.</span><br></pre></td></tr></table></figure>
+
+<h2 id="Nomad-command-examples"><a href="#Nomad-command-examples" class="headerlink" title="Nomad command examples"></a>Nomad command examples</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nomad node status</span><br><span class="line"></span><br><span class="line">nomad job run pytechco-redis.nomad.hcl</span><br><span class="line"></span><br><span class="line">nomad job stop -purge pytechco-employee</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>devops</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>Kubertnes</tag>
+        <tag>Nomad</tag>
         <tag>Tech</tag>
       </tags>
   </entry>
@@ -837,35 +901,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo_blog_setup</title>
-    <url>/2022/07/04/hexo-blog-setup/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>每次换电脑，或者在其他电脑上工作后发现无法更新这个Blog，需要记录下如何当初一步一步设置这个blog，以方便迁移，重新搭建</p>
-<h1 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h1><ul>
-<li>hexo </li>
-<li>hexo theme</li>
-<li>github</li>
-<li></li>
-</ul>
-<h2 id="Install-Steps"><a href="#Install-Steps" class="headerlink" title="Install Steps"></a>Install Steps</h2><h3 id="Install-hexo"><a href="#Install-hexo" class="headerlink" title="Install hexo"></a>Install hexo</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew install npm</span><br><span class="line"></span><br><span class="line">brew install hexo </span><br><span class="line"></span><br><span class="line">~ ❯ hexo -v                                                                              08:45:30</span><br><span class="line">hexo-cli: 4.3.0</span><br><span class="line">os: darwin 21.5.0 12.4</span><br><span class="line"></span><br><span class="line">node: 14.17.5</span><br><span class="line">v8: 8.4.371.23-node.76</span><br><span class="line">uv: 1.41.0</span><br><span class="line">zlib: 1.2.11</span><br><span class="line">brotli: 1.0.9</span><br><span class="line">ares: 1.17.2</span><br><span class="line">modules: 83</span><br><span class="line">nghttp2: 1.42.0</span><br><span class="line">napi: 8</span><br><span class="line">llhttp: 2.1.3</span><br><span class="line">openssl: 1.1.1k</span><br><span class="line">cldr: 39.0</span><br><span class="line">icu: 69.1</span><br><span class="line">tz: 2021a</span><br><span class="line">unicode: 13.0</span><br></pre></td></tr></table></figure>
-
-<h3 id="Create-project"><a href="#Create-project" class="headerlink" title="Create project"></a>Create project</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">cd [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
-
-<h3 id="Set-blog-information"><a href="#Set-blog-information" class="headerlink" title="Set blog information"></a>Set blog information</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim _config.yml</span><br><span class="line"></span><br><span class="line">~~~~~~~~~~~~~~~~~~ _config.yml ~~~~~~~~~~~~~~~~~~</span><br><span class="line"># Site</span><br><span class="line">title: [githubaccount]&#x27;s note</span><br><span class="line">subtitle:</span><br><span class="line">description: [githubaccount]&#x27;s personal blog</span><br><span class="line">author: [githubaccount]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:[githubaccount]/[githubaccount].github.io.git</span><br><span class="line">  branch: master</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><h3 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next themes/next</span><br><span class="line"></span><br><span class="line">vi _config.yml</span><br><span class="line"></span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line">theme: next</span><br><span class="line"># https://github.com/theme-next/hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line">npm install hexo-enhancer --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install --save hexo-submit-urls-to-search-engine</span><br><span class="line">npm install hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="Useful-hexo-commands"><a href="#Useful-hexo-commands" class="headerlink" title="Useful hexo commands"></a>Useful hexo commands</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo --config _config.yml</span><br><span class="line">hexo generate --watch</span><br><span class="line"></span><br><span class="line">hexo server</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>personal</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Docker useful commands</title>
     <url>/2022/09/21/docker_useful_commands/</url>
     <content><![CDATA[<h2 id="docker-commands"><a href="#docker-commands" class="headerlink" title="docker commands"></a>docker commands</h2><hr>
@@ -917,6 +952,35 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo_blog_setup</title>
+    <url>/2022/07/04/hexo-blog-setup/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>每次换电脑，或者在其他电脑上工作后发现无法更新这个Blog，需要记录下如何当初一步一步设置这个blog，以方便迁移，重新搭建</p>
+<h1 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h1><ul>
+<li>hexo </li>
+<li>hexo theme</li>
+<li>github</li>
+<li></li>
+</ul>
+<h2 id="Install-Steps"><a href="#Install-Steps" class="headerlink" title="Install Steps"></a>Install Steps</h2><h3 id="Install-hexo"><a href="#Install-hexo" class="headerlink" title="Install hexo"></a>Install hexo</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew install npm</span><br><span class="line"></span><br><span class="line">brew install hexo </span><br><span class="line"></span><br><span class="line">~ ❯ hexo -v                                                                              08:45:30</span><br><span class="line">hexo-cli: 4.3.0</span><br><span class="line">os: darwin 21.5.0 12.4</span><br><span class="line"></span><br><span class="line">node: 14.17.5</span><br><span class="line">v8: 8.4.371.23-node.76</span><br><span class="line">uv: 1.41.0</span><br><span class="line">zlib: 1.2.11</span><br><span class="line">brotli: 1.0.9</span><br><span class="line">ares: 1.17.2</span><br><span class="line">modules: 83</span><br><span class="line">nghttp2: 1.42.0</span><br><span class="line">napi: 8</span><br><span class="line">llhttp: 2.1.3</span><br><span class="line">openssl: 1.1.1k</span><br><span class="line">cldr: 39.0</span><br><span class="line">icu: 69.1</span><br><span class="line">tz: 2021a</span><br><span class="line">unicode: 13.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="Create-project"><a href="#Create-project" class="headerlink" title="Create project"></a>Create project</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">cd [githubaccount].github.io</span><br><span class="line"></span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<h3 id="Set-blog-information"><a href="#Set-blog-information" class="headerlink" title="Set blog information"></a>Set blog information</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim _config.yml</span><br><span class="line"></span><br><span class="line">~~~~~~~~~~~~~~~~~~ _config.yml ~~~~~~~~~~~~~~~~~~</span><br><span class="line"># Site</span><br><span class="line">title: [githubaccount]&#x27;s note</span><br><span class="line">subtitle:</span><br><span class="line">description: [githubaccount]&#x27;s personal blog</span><br><span class="line">author: [githubaccount]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:[githubaccount]/[githubaccount].github.io.git</span><br><span class="line">  branch: master</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><h3 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next themes/next</span><br><span class="line"></span><br><span class="line">vi _config.yml</span><br><span class="line"></span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line">theme: next</span><br><span class="line"># https://github.com/theme-next/hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line">npm install hexo-enhancer --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install --save hexo-submit-urls-to-search-engine</span><br><span class="line">npm install hexo-symbols-count-time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Useful-hexo-commands"><a href="#Useful-hexo-commands" class="headerlink" title="Useful hexo commands"></a>Useful hexo commands</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo --config _config.yml</span><br><span class="line">hexo generate --watch</span><br><span class="line"></span><br><span class="line">hexo server</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>personal</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo Next(v8.7.0)如何边栏添加最近更新文章</title>
     <url>/2021/08/20/hexo-sidebar/</url>
     <content><![CDATA[<h2 id="创建自定义文件"><a href="#创建自定义文件" class="headerlink" title="创建自定义文件"></a>创建自定义文件</h2><p>在新建文件yoursite/source/_data/sidebar.njk,添加以下内容</p>
@@ -933,42 +997,6 @@
       </categories>
       <tags>
         <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Devops 三大运维工具Ansible Terraform Puppet</title>
-    <url>/2023/09/15/20230915_devops_tools/</url>
-    <content><![CDATA[<h2 id="Ansible-Terraform-Puppet主要区别和用途"><a href="#Ansible-Terraform-Puppet主要区别和用途" class="headerlink" title="Ansible Terraform Puppet主要区别和用途"></a>Ansible Terraform Puppet主要区别和用途</h2><ul>
-<li>Ansible: 侧重于deployment,软件配置部署</li>
-<li>Puppet: 侧重于System management</li>
-<li>Terraform: Server Provisioning Tool: 侧重于Cloud, IaC<h2 id="Ansible-知识"><a href="#Ansible-知识" class="headerlink" title="Ansible 知识"></a>Ansible 知识</h2><h3 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h3></li>
-<li>ansible系统由控制主机和被管理主机组成,控制主机不支持windows平台<ul>
-<li>核心: ansible</li>
-<li>Core Modules: ansible自带的模块</li>
-<li>Custom Modules: 核心模块功能不足时,用户可以添加扩展模块</li>
-<li>Plugins: 通过插件来实现记录日志,发送邮件或其他功能</li>
-<li>Playbooks: 剧本,YAML格式文件，多个任务定义在一个文件中，定义主机需要调用哪些模块来完成的功能</li>
-<li>Connectior Plugins: ansible基于连接插件连接到各个主机上,默认是使用ssh</li>
-<li>Host Inventory: 记录由Ansible管理的主机信息，包括端口、密码、ip等</li>
-</ul>
-</li>
-</ul>
-<h3 id="Ansible配置文件读取顺序"><a href="#Ansible配置文件读取顺序" class="headerlink" title="Ansible配置文件读取顺序"></a>Ansible配置文件读取顺序</h3><ol>
-<li>检查环境变量ANSIBLE_CONFIG指向的路径文件</li>
-<li>~/.ansible.cfg</li>
-<li>/etc/ansible/ansible.cfg<h3 id="常用配置参数"><a href="#常用配置参数" class="headerlink" title="常用配置参数"></a>常用配置参数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">inventory = /etc/ansible/hosts      #这个参数表示资源清单inventory文件的位置</span><br><span class="line">library = /usr/share/ansible        #指向存放Ansible模块的目录，支持多个目录方式，只要用冒号（：）隔开就可以</span><br><span class="line">forks = 5       #并发连接数，默认为5</span><br><span class="line">sudo_user = root        #设置默认执行命令的用户</span><br><span class="line">remote_port = 22        #指定连接被管节点的管理端口，默认为22端口，建议修改，能够更加安全</span><br><span class="line">host_key_checking = False       #设置是否检查SSH主机的密钥，值为True/False。关闭后第一次连接不会提示配置实例</span><br><span class="line">timeout = 60        #设置SSH连接的超时时间，单位为秒</span><br><span class="line">log_path = /var/log/ansible.log     #指定一个存储ansible日志的文件（默认不记录日志）</span><br></pre></td></tr></table></figure>
-<h2 id="Terraform-实战案例"><a href="#Terraform-实战案例" class="headerlink" title="Terraform 实战案例"></a>Terraform 实战案例</h2></li>
-</ol>
-<h2 id="Puppet-实战案例"><a href="#Puppet-实战案例" class="headerlink" title="Puppet 实战案例"></a>Puppet 实战案例</h2>]]></content>
-      <categories>
-        <category>devops</category>
-      </categories>
-      <tags>
-        <tag>interview</tag>
-        <tag>Ansible</tag>
-        <tag>Terraform</tag>
-        <tag>Puppet</tag>
-        <tag>devops</tag>
       </tags>
   </entry>
   <entry>
@@ -1054,6 +1082,104 @@
         <tag>tech</tag>
         <tag>network</tag>
         <tag>kubernetes</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux下regex匹配高级用法</title>
+    <url>/2021/10/16/linux-regex-advance/</url>
+    <content><![CDATA[<ul>
+<li><a href="#%E8%83%8C%E6%99%AF">背景</a></li>
+<li><a href="#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95">常用方法</a></li>
+<li><a href="#xargs%E7%94%A8%E6%B3%95">xargs用法</a><ul>
+<li><a href="#xargs%E5%8F%82%E6%95%B0">xargs参数</a></li>
+<li><a href="#xargs%E5%91%BD%E4%BB%A4%E4%B8%8E%E7%AE%A1%E9%81%93%E7%AC%A6%E7%9A%84%E5%8C%BA%E5%88%AB">xargs命令与管道符的区别：</a></li>
+</ul>
+</li>
+<li><a href="#find%E4%BD%BF%E7%94%A8">Find使用</a><ul>
+<li><a href="#find-%E5%90%84%E5%8F%82%E6%95%B0performance%E6%AF%94%E8%BE%83">find 各参数performance比较</a></li>
+<li><a href="#%E5%8C%BA%E5%88%ABfind--exec-and-find--xargs">区别find -exec and find | xargs</a><ul>
+<li><a href="#%E9%80%80%E5%87%BA%E4%BB%A3%E7%A0%81">退出代码</a></li>
+<li><a href="#%E6%A1%88%E4%BE%8B">案例</a><ul>
+<li><a href="#find--exec">find -exec</a></li>
+<li><a href="#find--xargs">find | xargs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#find-%E7%BB%93%E8%AE%BA">Find 结论</a><ul>
+<li><a href="#%E5%8F%82%E6%95%B0%E7%9A%84%E5%A4%9A%E5%B0%91">参数的多少</a></li>
+<li><a href="#find--exec-vs-find--xargs">find -exec vs find | xargs</a></li>
+</ul>
+</li>
+<li><a href="#reference">reference</a><ul>
+<li><a href="#find%E5%B1%80%E9%99%90%E6%80%A7">find局限性</a></li>
+</ul>
+</li>
+<li><a href="#ls--grepegrep--xargs">ls + grep/egrep + xargs</a><ul>
+<li><a href="#grep-and-egrep%E7%94%A8%E6%B3%95">grep and egrep用法</a><ul>
+<li><a href="#%E6%A1%88%E4%BE%8B-1">案例</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>最近由于需要大量处理csv数据文件，对于csv数据文件内容的处理当然优先选择python pandas module,但是对于服务器上海量文件的寻找,linux bash的原生态的find,grep比python显得优势更大。</p>
+<h1 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h1><ul>
+<li>find command</li>
+<li>ls + grep/egrep + xargs</li>
+</ul>
+<h1 id="xargs用法"><a href="#xargs用法" class="headerlink" title="xargs用法"></a>xargs用法</h1><p>先介绍xargs用法因为两者都需要用到 </p>
+<h2 id="xargs参数"><a href="#xargs参数" class="headerlink" title="xargs参数"></a>xargs参数</h2><p>xargs的默认动作是echo，默认分隔符为空白字符（空格，TAB，换行符）。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-0，--null：以\0作为分隔符，接受到的特殊字符将当作文本符号处理；</span><br><span class="line">-d：指定分段的分隔符，默认分隔字符为空白字符；</span><br><span class="line">-a，--arg-file=file：指定命令标准输入的来源文件；</span><br><span class="line">-e&#x27;FLAG&#x27; 或者-E &#x27;FLAG&#x27;：指定一个终止符号，当xargs命令匹配到第一个FLAG后，停止传递，并退出命令；</span><br><span class="line">-p：每当xargs执行一个分段时，询问一次用户是否执行；</span><br><span class="line">-t：表示先打印执行的命令再输出；</span><br><span class="line">-n NUM：表示一个分段包含的参数个数，参数之间以分隔符隔开，默认是将所有的参数当作一个分段输出；</span><br><span class="line">-i：用于将分段分批传递给其后的&#123;&#125;进行输出，分段会替换&#123;&#125;所在的位置进行输出；</span><br><span class="line">-I &quot;FLAG&quot;：可指定分段的替换符号，分段会分批替换到符号所在的位置进行输出执行；</span><br><span class="line">-L：指定每次执行的最大的非空行的行数；</span><br></pre></td></tr></table></figure>
+<h2 id="xargs命令与管道符的区别："><a href="#xargs命令与管道符的区别：" class="headerlink" title="xargs命令与管道符的区别："></a>xargs命令与管道符的区别：</h2><p>管道符| 是将前一个命令的标准输出作为后一个命令的标准输入耳使用；而xargs命令是将前一个命令的标准输出作为后一个命令的参数而使用</p>
+<h1 id="Find使用"><a href="#Find使用" class="headerlink" title="Find使用"></a>Find使用</h1><p>对于常用的,比如我想寻找一些文件然后cp到特定路径下面</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">find path -name &quot;yourname*.csv&quot; -exec command &#123;&#125; /tmp/test/ \;</span><br></pre></td></tr></table></figure>
+
+<h2 id="find-各参数performance比较"><a href="#find-各参数performance比较" class="headerlink" title="find 各参数performance比较"></a>find 各参数performance比较</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">du -hd0</span><br><span class="line"> 37G    .</span><br><span class="line"></span><br><span class="line"># &#x27;time&#x27; will print the total time taken for the command to finish</span><br><span class="line"></span><br><span class="line"># time find -exec \;</span><br><span class="line">time find . -name \*.php -type f -exec grep -Hn &#x27;$test&#x27; &#123;&#125; \;</span><br><span class="line">real    1m24.433s</span><br><span class="line">user    0m29.022s</span><br><span class="line">sys     0m43.304s</span><br><span class="line"></span><br><span class="line"># find -exec \+</span><br><span class="line">time find . -name \*.php -type f -exec grep -Hn &#x27;$test&#x27; &#123;&#125; \+</span><br><span class="line">real    0m13.050s</span><br><span class="line">user    0m5.315s</span><br><span class="line">sys     0m2.179s</span><br><span class="line"></span><br><span class="line"># find | xargs -n1</span><br><span class="line">time find . -name \*.php -type f -print0 | xargs -0 -n1 grep -Hn &#x27;$test&#x27;</span><br><span class="line">real    0m55.159s</span><br><span class="line">user    0m23.692s</span><br><span class="line">sys     0m28.618s</span><br><span class="line"></span><br><span class="line"># find | xargs</span><br><span class="line">time find . -name \*.php -type f -print0 | xargs -0 -grep -Hn &#x27;$test&#x27;</span><br><span class="line">real    0m12.047s</span><br><span class="line">user    0m4.997s</span><br><span class="line">sys     0m3.593s</span><br></pre></td></tr></table></figure>
+<p>得出结论find + and xargs 优于其他因为没有过多的fork和exec，减少了I/O的读写时间，可以看出大概快了6倍</p>
+<h2 id="区别find-exec-and-find-xargs"><a href="#区别find-exec-and-find-xargs" class="headerlink" title="区别find -exec and find | xargs"></a>区别find -exec and find | xargs</h2><h3 id="退出代码"><a href="#退出代码" class="headerlink" title="退出代码"></a>退出代码</h3><ul>
+<li>find -exec 返回退出代码在本身进程</li>
+<li>find | xargs 返回退出代码在子进程</li>
+</ul>
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><h4 id="find-exec"><a href="#find-exec" class="headerlink" title="find -exec"></a>find -exec</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">find . -name \*.php -type f -exec php -l &#123;&#125; \;</span><br><span class="line">...</span><br><span class="line">PHP Parse error:  syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line"></span><br><span class="line">Parse error: syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line">Errors parsing ./test.php</span><br><span class="line">...</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/network/user-new.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/network/users.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/network.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-discussion.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-general.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-head.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-media.php</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>可以看出尽管命令php -l报错 exit 1但是find -exec仍旧执行到最后且exit 0</p>
+<h4 id="find-xargs"><a href="#find-xargs" class="headerlink" title="find | xargs"></a>find | xargs</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">find . -name \*.php -type f -print0 | xargs -0 -n1 php -l</span><br><span class="line">...</span><br><span class="line">PHP Parse error:  syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line"></span><br><span class="line">Parse error: syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line">Errors parsing ./test.php</span><br></pre></td></tr></table></figure>
+
+<p>你可以看出命令立即退出，这是因为子进程退出了这个是piping command设计的原理</p>
+<h1 id="Find-结论"><a href="#Find-结论" class="headerlink" title="Find 结论"></a>Find 结论</h1><h2 id="参数的多少"><a href="#参数的多少" class="headerlink" title="参数的多少"></a>参数的多少</h2><p>find和 xargs -n1 是否需要使用; 如果子目录可以使用多个参数使用 +，如果子命令只支持一个参数使用;和-n1</p>
+<h2 id="find-exec-vs-find-xargs"><a href="#find-exec-vs-find-xargs" class="headerlink" title="find -exec vs find | xargs"></a>find -exec vs find | xargs</h2><p>find -exec 会继续执行没个文件尽管-exec报错，但find | xargs 会立即退出当子进程有错时，取决于你的需求</p>
+<h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><p><a href="https://www.everythingcli.org/find-exec-vs-find-xargs/">https://www.everythingcli.org/find-exec-vs-find-xargs/</a></p>
+<h2 id="find局限性"><a href="#find局限性" class="headerlink" title="find局限性"></a>find局限性</h2><p>但是你会发现find也有其局限性</p>
+<ul>
+<li>对于regex匹配很有限</li>
+<li>输出不友好，比如./yourname.csv，你需要进行二次处理输出结果<br>有此我们引出第二种用法</li>
+</ul>
+<h1 id="ls-grep-egrep-xargs"><a href="#ls-grep-egrep-xargs" class="headerlink" title="ls + grep/egrep + xargs"></a>ls + grep/egrep + xargs</h1><ul>
+<li>ls 列出需要文件</li>
+<li>grep 运行regex正则匹配</li>
+<li>xargs 执行命令</li>
+</ul>
+<h2 id="grep-and-egrep用法"><a href="#grep-and-egrep用法" class="headerlink" title="grep and egrep用法"></a>grep and egrep用法</h2><p>匹配7位字母或者数字keyword</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">grep &#x27;^[a-zA-Z0-9]\&#123;7\&#125;$&#x27; /usr/share/wordlists/rockyou.txt</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">egrep &#x27;^.&#123;7&#125;$&#x27; /usr/share/wordlists/rockyou.txt</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="案例-1"><a href="#案例-1" class="headerlink" title="案例"></a>案例</h3><p>找到一些特定文件名并复制到其他目录下，folder存在很多类似的文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2019-12-01_db5xtqje90.csv</span><br><span class="line">_2019-12-01_db5xtqje90.csv</span><br><span class="line">_2019-12-01_db5xtqje90_processed.csv</span><br><span class="line">2019-12-01_db5xtqje90.csv.dbfile.txt</span><br><span class="line">2019-12-01_db5xtqje90_error.csv</span><br><span class="line"></span><br><span class="line">ls | egrep &#x27;^.&#123;40&#125;$&#x27; | grep Revenue_2019-12 | xargs  -d &quot;\n&quot; cp -t /tmp/test/</span><br><span class="line"></span><br><span class="line"># egrep &#x27;^.&#123;40&#125;$&#x27; 匹配40位任意字符长度的文件名</span><br><span class="line"># xargs  -d &quot;\n&quot;  指定分隔符号为回车 </span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>sysadmin</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>regex</tag>
+        <tag>python</tag>
         <tag>Tech</tag>
       </tags>
   </entry>
@@ -1353,101 +1479,42 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux下regex匹配高级用法</title>
-    <url>/2021/10/16/linux-regex-advance/</url>
-    <content><![CDATA[<ul>
-<li><a href="#%E8%83%8C%E6%99%AF">背景</a></li>
-<li><a href="#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95">常用方法</a></li>
-<li><a href="#xargs%E7%94%A8%E6%B3%95">xargs用法</a><ul>
-<li><a href="#xargs%E5%8F%82%E6%95%B0">xargs参数</a></li>
-<li><a href="#xargs%E5%91%BD%E4%BB%A4%E4%B8%8E%E7%AE%A1%E9%81%93%E7%AC%A6%E7%9A%84%E5%8C%BA%E5%88%AB">xargs命令与管道符的区别：</a></li>
-</ul>
-</li>
-<li><a href="#find%E4%BD%BF%E7%94%A8">Find使用</a><ul>
-<li><a href="#find-%E5%90%84%E5%8F%82%E6%95%B0performance%E6%AF%94%E8%BE%83">find 各参数performance比较</a></li>
-<li><a href="#%E5%8C%BA%E5%88%ABfind--exec-and-find--xargs">区别find -exec and find | xargs</a><ul>
-<li><a href="#%E9%80%80%E5%87%BA%E4%BB%A3%E7%A0%81">退出代码</a></li>
-<li><a href="#%E6%A1%88%E4%BE%8B">案例</a><ul>
-<li><a href="#find--exec">find -exec</a></li>
-<li><a href="#find--xargs">find | xargs</a></li>
-</ul>
+    <title>国民对于疫情后经济复苏信心的丢失，路在何方</title>
+    <url>/2023/05/17/memo_2023may/</url>
+    <content><![CDATA[<h2 id="新闻要点"><a href="#新闻要点" class="headerlink" title="新闻要点"></a>新闻要点</h2><ul>
+<li>国内各种经济数据下滑，楼市价格加速下跌</li>
+<li>年轻人失业率创新高<br><img src="/memo_2023may/china_data_may.png" alt="image"><br>国内一季度各类数据如期下滑，尽管官方给出各种掩饰也无法抹去其背后真正原因国民对于经济复苏的信心的丢失<br>楼市房价的加速下跌，包括一二线城市，提前还贷，银行贷款放不出去，央行继续印钞，承接的还是国企各类城投，资金无法流向市场<blockquote>
+<p>北京方面，北京4月份二手房网签13928套，环比下降了40.5%。上海二手房成交量4月份不到1.8万套，相比于3月份的2.4万套环比下降了26%，比2月份的1.9万套还要低。</p>
+</blockquote>
 </li>
 </ul>
-</li>
-</ul>
-</li>
-<li><a href="#find-%E7%BB%93%E8%AE%BA">Find 结论</a><ul>
-<li><a href="#%E5%8F%82%E6%95%B0%E7%9A%84%E5%A4%9A%E5%B0%91">参数的多少</a></li>
-<li><a href="#find--exec-vs-find--xargs">find -exec vs find | xargs</a></li>
-</ul>
-</li>
-<li><a href="#reference">reference</a><ul>
-<li><a href="#find%E5%B1%80%E9%99%90%E6%80%A7">find局限性</a></li>
-</ul>
-</li>
-<li><a href="#ls--grepegrep--xargs">ls + grep/egrep + xargs</a><ul>
-<li><a href="#grep-and-egrep%E7%94%A8%E6%B3%95">grep and egrep用法</a><ul>
-<li><a href="#%E6%A1%88%E4%BE%8B-1">案例</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>最近由于需要大量处理csv数据文件，对于csv数据文件内容的处理当然优先选择python pandas module,但是对于服务器上海量文件的寻找,linux bash的原生态的find,grep比python显得优势更大。</p>
-<h1 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h1><ul>
-<li>find command</li>
-<li>ls + grep/egrep + xargs</li>
-</ul>
-<h1 id="xargs用法"><a href="#xargs用法" class="headerlink" title="xargs用法"></a>xargs用法</h1><p>先介绍xargs用法因为两者都需要用到 </p>
-<h2 id="xargs参数"><a href="#xargs参数" class="headerlink" title="xargs参数"></a>xargs参数</h2><p>xargs的默认动作是echo，默认分隔符为空白字符（空格，TAB，换行符）。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-0，--null：以\0作为分隔符，接受到的特殊字符将当作文本符号处理；</span><br><span class="line">-d：指定分段的分隔符，默认分隔字符为空白字符；</span><br><span class="line">-a，--arg-file=file：指定命令标准输入的来源文件；</span><br><span class="line">-e&#x27;FLAG&#x27; 或者-E &#x27;FLAG&#x27;：指定一个终止符号，当xargs命令匹配到第一个FLAG后，停止传递，并退出命令；</span><br><span class="line">-p：每当xargs执行一个分段时，询问一次用户是否执行；</span><br><span class="line">-t：表示先打印执行的命令再输出；</span><br><span class="line">-n NUM：表示一个分段包含的参数个数，参数之间以分隔符隔开，默认是将所有的参数当作一个分段输出；</span><br><span class="line">-i：用于将分段分批传递给其后的&#123;&#125;进行输出，分段会替换&#123;&#125;所在的位置进行输出；</span><br><span class="line">-I &quot;FLAG&quot;：可指定分段的替换符号，分段会分批替换到符号所在的位置进行输出执行；</span><br><span class="line">-L：指定每次执行的最大的非空行的行数；</span><br></pre></td></tr></table></figure>
-<h2 id="xargs命令与管道符的区别："><a href="#xargs命令与管道符的区别：" class="headerlink" title="xargs命令与管道符的区别："></a>xargs命令与管道符的区别：</h2><p>管道符| 是将前一个命令的标准输出作为后一个命令的标准输入耳使用；而xargs命令是将前一个命令的标准输出作为后一个命令的参数而使用</p>
-<h1 id="Find使用"><a href="#Find使用" class="headerlink" title="Find使用"></a>Find使用</h1><p>对于常用的,比如我想寻找一些文件然后cp到特定路径下面</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">find path -name &quot;yourname*.csv&quot; -exec command &#123;&#125; /tmp/test/ \;</span><br></pre></td></tr></table></figure>
-
-<h2 id="find-各参数performance比较"><a href="#find-各参数performance比较" class="headerlink" title="find 各参数performance比较"></a>find 各参数performance比较</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">du -hd0</span><br><span class="line"> 37G    .</span><br><span class="line"></span><br><span class="line"># &#x27;time&#x27; will print the total time taken for the command to finish</span><br><span class="line"></span><br><span class="line"># time find -exec \;</span><br><span class="line">time find . -name \*.php -type f -exec grep -Hn &#x27;$test&#x27; &#123;&#125; \;</span><br><span class="line">real    1m24.433s</span><br><span class="line">user    0m29.022s</span><br><span class="line">sys     0m43.304s</span><br><span class="line"></span><br><span class="line"># find -exec \+</span><br><span class="line">time find . -name \*.php -type f -exec grep -Hn &#x27;$test&#x27; &#123;&#125; \+</span><br><span class="line">real    0m13.050s</span><br><span class="line">user    0m5.315s</span><br><span class="line">sys     0m2.179s</span><br><span class="line"></span><br><span class="line"># find | xargs -n1</span><br><span class="line">time find . -name \*.php -type f -print0 | xargs -0 -n1 grep -Hn &#x27;$test&#x27;</span><br><span class="line">real    0m55.159s</span><br><span class="line">user    0m23.692s</span><br><span class="line">sys     0m28.618s</span><br><span class="line"></span><br><span class="line"># find | xargs</span><br><span class="line">time find . -name \*.php -type f -print0 | xargs -0 -grep -Hn &#x27;$test&#x27;</span><br><span class="line">real    0m12.047s</span><br><span class="line">user    0m4.997s</span><br><span class="line">sys     0m3.593s</span><br></pre></td></tr></table></figure>
-<p>得出结论find + and xargs 优于其他因为没有过多的fork和exec，减少了I/O的读写时间，可以看出大概快了6倍</p>
-<h2 id="区别find-exec-and-find-xargs"><a href="#区别find-exec-and-find-xargs" class="headerlink" title="区别find -exec and find | xargs"></a>区别find -exec and find | xargs</h2><h3 id="退出代码"><a href="#退出代码" class="headerlink" title="退出代码"></a>退出代码</h3><ul>
-<li>find -exec 返回退出代码在本身进程</li>
-<li>find | xargs 返回退出代码在子进程</li>
-</ul>
-<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><h4 id="find-exec"><a href="#find-exec" class="headerlink" title="find -exec"></a>find -exec</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">find . -name \*.php -type f -exec php -l &#123;&#125; \;</span><br><span class="line">...</span><br><span class="line">PHP Parse error:  syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line"></span><br><span class="line">Parse error: syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line">Errors parsing ./test.php</span><br><span class="line">...</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/network/user-new.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/network/users.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/network.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-discussion.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-general.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-head.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-media.php</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>可以看出尽管命令php -l报错 exit 1但是find -exec仍旧执行到最后且exit 0</p>
-<h4 id="find-xargs"><a href="#find-xargs" class="headerlink" title="find | xargs"></a>find | xargs</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">find . -name \*.php -type f -print0 | xargs -0 -n1 php -l</span><br><span class="line">...</span><br><span class="line">PHP Parse error:  syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line"></span><br><span class="line">Parse error: syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line">Errors parsing ./test.php</span><br></pre></td></tr></table></figure>
-
-<p>你可以看出命令立即退出，这是因为子进程退出了这个是piping command设计的原理</p>
-<h1 id="Find-结论"><a href="#Find-结论" class="headerlink" title="Find 结论"></a>Find 结论</h1><h2 id="参数的多少"><a href="#参数的多少" class="headerlink" title="参数的多少"></a>参数的多少</h2><p>find和 xargs -n1 是否需要使用; 如果子目录可以使用多个参数使用 +，如果子命令只支持一个参数使用;和-n1</p>
-<h2 id="find-exec-vs-find-xargs"><a href="#find-exec-vs-find-xargs" class="headerlink" title="find -exec vs find | xargs"></a>find -exec vs find | xargs</h2><p>find -exec 会继续执行没个文件尽管-exec报错，但find | xargs 会立即退出当子进程有错时，取决于你的需求</p>
-<h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><p><a href="https://www.everythingcli.org/find-exec-vs-find-xargs/">https://www.everythingcli.org/find-exec-vs-find-xargs/</a></p>
-<h2 id="find局限性"><a href="#find局限性" class="headerlink" title="find局限性"></a>find局限性</h2><p>但是你会发现find也有其局限性</p>
+<blockquote>
+<p>4月份，城镇失业数据达到了年度最低的5.2，并且已经接近了疫前数据。但是与此同时，16-24岁青年失业率首次突破20%。</p>
+</blockquote>
+<h2 id="究其背后原因"><a href="#究其背后原因" class="headerlink" title="究其背后原因"></a>究其背后原因</h2><ul>
+<li><p>国内风气的歪曲，都想赚快钱，无人愿意去干实业支撑国家运转，踏踏实实的工作，谁都想撞到风口捞一把，管理机构不对于风气的正确引导，恐怕难以改变现状，案例：</p>
 <ul>
-<li>对于regex匹配很有限</li>
-<li>输出不友好，比如./yourname.csv，你需要进行二次处理输出结果<br>有此我们引出第二种用法</li>
+<li>挖呀挖呀黄老师突然网红，一周收入百万十年收入，辞职下海。</li>
+<li>格力董密孟羽童，一个自以为格力内定接班人被开除，吐槽董秘都是干的杂活，兴趣在直播。</li>
 </ul>
-<h1 id="ls-grep-egrep-xargs"><a href="#ls-grep-egrep-xargs" class="headerlink" title="ls + grep/egrep + xargs"></a>ls + grep/egrep + xargs</h1><ul>
-<li>ls 列出需要文件</li>
-<li>grep 运行regex正则匹配</li>
-<li>xargs 执行命令</li>
+</li>
+<li><p>环境太优渥，年轻人自命不凡，没有经历过社会的洗礼，“00后整顿职场”的新闻经常看到，任性离职，受不得气</p>
+<ul>
+<li>孟羽童案例<ul>
+<li>从她个人简历来看家庭优渥，从小在国际学校读书一路保守，没有经历过国内高考的洗礼，不知道何为现实</li>
+<li>吐槽格力董秘就是一个打杂的活，当年同龄的女霸总们在干什么？董明珠离开单亲的孩子，寸步不离跟着经销商催账；张兰跑去国外打黑工，跟男人一起抗海鲜。<br><img src="/memo_2023may/mengyutong.png" alt="image"></li>
 </ul>
-<h2 id="grep-and-egrep用法"><a href="#grep-and-egrep用法" class="headerlink" title="grep and egrep用法"></a>grep and egrep用法</h2><p>匹配7位字母或者数字keyword</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">grep &#x27;^[a-zA-Z0-9]\&#123;7\&#125;$&#x27; /usr/share/wordlists/rockyou.txt</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">egrep &#x27;^.&#123;7&#125;$&#x27; /usr/share/wordlists/rockyou.txt</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="案例-1"><a href="#案例-1" class="headerlink" title="案例"></a>案例</h3><p>找到一些特定文件名并复制到其他目录下，folder存在很多类似的文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2019-12-01_db5xtqje90.csv</span><br><span class="line">_2019-12-01_db5xtqje90.csv</span><br><span class="line">_2019-12-01_db5xtqje90_processed.csv</span><br><span class="line">2019-12-01_db5xtqje90.csv.dbfile.txt</span><br><span class="line">2019-12-01_db5xtqje90_error.csv</span><br><span class="line"></span><br><span class="line">ls | egrep &#x27;^.&#123;40&#125;$&#x27; | grep Revenue_2019-12 | xargs  -d &quot;\n&quot; cp -t /tmp/test/</span><br><span class="line"></span><br><span class="line"># egrep &#x27;^.&#123;40&#125;$&#x27; 匹配40位任意字符长度的文件名</span><br><span class="line"># xargs  -d &quot;\n&quot;  指定分隔符号为回车 </span><br></pre></td></tr></table></figure>
-
+</li>
+</ul>
+</li>
+</ul>
 ]]></content>
       <categories>
-        <category>sysadmin</category>
+        <category>memo</category>
       </categories>
       <tags>
-        <tag>tech</tag>
-        <tag>shell</tag>
-        <tag>regex</tag>
-        <tag>python</tag>
-        <tag>Tech</tag>
+        <tag>memo</tag>
+        <tag>感想</tag>
       </tags>
   </entry>
   <entry>
@@ -1583,45 +1650,6 @@
         <tag>tech</tag>
         <tag>shell</tag>
         <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>国民对于疫情后经济复苏信心的丢失，路在何方</title>
-    <url>/2023/05/17/memo_2023may/</url>
-    <content><![CDATA[<h2 id="新闻要点"><a href="#新闻要点" class="headerlink" title="新闻要点"></a>新闻要点</h2><ul>
-<li>国内各种经济数据下滑，楼市价格加速下跌</li>
-<li>年轻人失业率创新高<br><img src="/memo_2023may/china_data_may.png" alt="image"><br>国内一季度各类数据如期下滑，尽管官方给出各种掩饰也无法抹去其背后真正原因国民对于经济复苏的信心的丢失<br>楼市房价的加速下跌，包括一二线城市，提前还贷，银行贷款放不出去，央行继续印钞，承接的还是国企各类城投，资金无法流向市场<blockquote>
-<p>北京方面，北京4月份二手房网签13928套，环比下降了40.5%。上海二手房成交量4月份不到1.8万套，相比于3月份的2.4万套环比下降了26%，比2月份的1.9万套还要低。</p>
-</blockquote>
-</li>
-</ul>
-<blockquote>
-<p>4月份，城镇失业数据达到了年度最低的5.2，并且已经接近了疫前数据。但是与此同时，16-24岁青年失业率首次突破20%。</p>
-</blockquote>
-<h2 id="究其背后原因"><a href="#究其背后原因" class="headerlink" title="究其背后原因"></a>究其背后原因</h2><ul>
-<li><p>国内风气的歪曲，都想赚快钱，无人愿意去干实业支撑国家运转，踏踏实实的工作，谁都想撞到风口捞一把，管理机构不对于风气的正确引导，恐怕难以改变现状，案例：</p>
-<ul>
-<li>挖呀挖呀黄老师突然网红，一周收入百万十年收入，辞职下海。</li>
-<li>格力董密孟羽童，一个自以为格力内定接班人被开除，吐槽董秘都是干的杂活，兴趣在直播。</li>
-</ul>
-</li>
-<li><p>环境太优渥，年轻人自命不凡，没有经历过社会的洗礼，“00后整顿职场”的新闻经常看到，任性离职，受不得气</p>
-<ul>
-<li>孟羽童案例<ul>
-<li>从她个人简历来看家庭优渥，从小在国际学校读书一路保守，没有经历过国内高考的洗礼，不知道何为现实</li>
-<li>吐槽格力董秘就是一个打杂的活，当年同龄的女霸总们在干什么？董明珠离开单亲的孩子，寸步不离跟着经销商催账；张兰跑去国外打黑工，跟男人一起抗海鲜。<br><img src="/memo_2023may/mengyutong.png" alt="image"></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>memo</category>
-      </categories>
-      <tags>
-        <tag>memo</tag>
-        <tag>感想</tag>
       </tags>
   </entry>
   <entry>
@@ -2236,6 +2264,113 @@
       </tags>
   </entry>
   <entry>
+    <title>一文让你shell从狗熊变英雄</title>
+    <url>/2023/08/13/shell_from_zero_to_hero./</url>
+    <content><![CDATA[<ul>
+<li><a href="#shell-from-zero-to-hero">Shell From Zero To Hero</a><ul>
+<li><a href="#simply-level-questions">Simply Level Questions</a><ul>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E7%B3%BB%E7%BB%9F%E4%BB%8E%E5%BC%80%E6%9C%BA%E5%88%B0%E7%99%BB%E9%99%86%E7%95%8C%E9%9D%A2%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B">描述Linux系统从开机到登陆界面的启动过程</a></li>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E8%BD%AF%E9%93%BE%E6%8E%A5%E5%92%8C%E7%A1%AC%E9%93%BE%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB">描述Linux下软链接和硬链接的区别</a></li>
+</ul>
+</li>
+<li><a href="#middle-level-questions">Middle Level Questions</a><ul>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4%E7%9A%84%E5%8E%9F%E7%90%86">描述Linux下文件删除的原理</a></li>
+<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fgrep%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式grep高级参数的使用</a></li>
+<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fsed%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式sed高级参数的使用</a></li>
+<li><a href="#awk">AWK</a></li>
+</ul>
+</li>
+<li><a href="#hard-level-questions">Hard Level Questions</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="Shell-From-Zero-To-Hero"><a href="#Shell-From-Zero-To-Hero" class="headerlink" title="Shell From Zero To Hero"></a>Shell From Zero To Hero</h1><h2 id="Simply-Level-Questions"><a href="#Simply-Level-Questions" class="headerlink" title="Simply Level Questions"></a>Simply Level Questions</h2><h3 id="描述Linux系统从开机到登陆界面的启动过程"><a href="#描述Linux系统从开机到登陆界面的启动过程" class="headerlink" title="描述Linux系统从开机到登陆界面的启动过程"></a>描述Linux系统从开机到登陆界面的启动过程</h3><ul>
+<li><p>开机BIOS自检，加载硬盘。</p>
+</li>
+<li><p>读取MBR,MBR引导。</p>
+</li>
+<li><p>grub引导菜单(Boot Loader)。</p>
+</li>
+<li><p>加载内核kernel。</p>
+</li>
+<li><p>启动init进程，依据inittab文件设定运行级别</p>
+</li>
+<li><p>init进程，执行rc.sysinit文件。</p>
+</li>
+<li><p>启动内核模块，执行不同级别的脚本程序。</p>
+</li>
+<li><p>执行/etc/rc.d/rc.local</p>
+</li>
+<li><p>启动mingetty，进入系统登陆界面。</p>
+</li>
+</ul>
+<h3 id="描述Linux下软链接和硬链接的区别"><a href="#描述Linux下软链接和硬链接的区别" class="headerlink" title="描述Linux下软链接和硬链接的区别"></a>描述Linux下软链接和硬链接的区别</h3><p>在Linux系统中，链接分为两种，一种是硬链接（Hard link），另一种称为符号链接或软链接（Symbolic Link）。</p>
+<ul>
+<li><p>默认不带参数的情况下，ln创建的是硬链接，带-s参数的ln命令创建的是软链接。</p>
+</li>
+<li><p>硬链接文件与源文件的inode节点号相同，而软链接文件的inode节点号，与源文件不同，</p>
+</li>
+<li><p>ln命令不能对目录创建硬链接，但可以创建软链接。对目录的软链接会经常使用到。</p>
+</li>
+<li><p>删除软链接文件，对源文件和硬链接文件无任何影响。</p>
+</li>
+<li><p>删除文件的硬链接文件，对源文件及软链接文件无任何影响。</p>
+</li>
+<li><p>删除链接文件的源文件，对硬链接文件无影响，会导致其软链接失效（红底白字闪烁状）。</p>
+</li>
+<li><p>同时删除源文件及其硬链接文件，整个文件才会被真正的删除。</p>
+</li>
+<li><p>很多硬件设备的快照功能，使用的就是类似硬链接的原理。</p>
+</li>
+<li><p>软链接可以跨文件系统，硬链接不可以跨文件系统。</p>
+</li>
+</ul>
+<h2 id="Middle-Level-Questions"><a href="#Middle-Level-Questions" class="headerlink" title="Middle Level Questions"></a>Middle Level Questions</h2><h3 id="描述Linux下文件删除的原理"><a href="#描述Linux下文件删除的原理" class="headerlink" title="描述Linux下文件删除的原理"></a>描述Linux下文件删除的原理</h3><p>Linux系统是通过link的数量来控制文件删除的，只有当一个文件不存在任何link的时候，这个文件才会被删除。一般来说每个文件两个link计数器来控制i_count和i_nlink。当一个文件被一个程序占用的时候i_count就加1。当文件的硬链接多一个的时候i_nlink也加1。删除一个文件，就是让这个文件，没有进程占用，同时i_link数量为0。</p>
+<h3 id="请简述基础正则表达式grep高级参数的使用"><a href="#请简述基础正则表达式grep高级参数的使用" class="headerlink" title="请简述基础正则表达式grep高级参数的使用"></a>请简述基础正则表达式grep高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">常用参数：</span><br><span class="line"></span><br><span class="line">-v排除匹配内容，</span><br><span class="line"></span><br><span class="line">-e支持扩展的正则表达式，</span><br><span class="line"></span><br><span class="line">-i忽略大小写，</span><br><span class="line"></span><br><span class="line">-o输出匹配的内容（只是一块，不是行），</span><br><span class="line"></span><br><span class="line">--color=auto 匹配内容显示颜色，</span><br><span class="line"></span><br><span class="line">-n 在行首显示行号。</span><br><span class="line"></span><br><span class="line">特殊字符注意事项：</span><br><span class="line"></span><br><span class="line">^(尖括号)word ：表示搜索以word开头的内容。</span><br><span class="line"></span><br><span class="line">word$ 表示搜索以word结尾的内容。</span><br><span class="line"></span><br><span class="line">^$    表示的是空行，不是空格。</span><br><span class="line"></span><br><span class="line">.     代表且只能代表任意一个字符。非正则表达式其他功能（当前目录，加载文件）</span><br><span class="line"></span><br><span class="line">/     转义字符，让有着特殊身份意义的字符，脱掉马甲，还原原型。例如.只表示原始小数点意义。</span><br><span class="line"></span><br><span class="line">*    表示重复0个或多个前面的一个字符。不代表所有。</span><br><span class="line"></span><br><span class="line">.*   表示匹配所有的字符。^.*表示以任意字符开头。</span><br><span class="line"></span><br><span class="line">[任意字符如abc] 匹配字符集内任意一个字符[a-z]。 [^abc] ^在中括号里面是非的意思，不包含之意。意思就是不包含a或b或c的行。</span><br><span class="line"></span><br><span class="line">&#123;n，m&#125; 表示重复n到m次前一个字符。｛n｝至少n次，多了不限。｛n｝N次，｛，m｝至多m次，少了不限。</span><br><span class="line"></span><br><span class="line">注：使用grep或sed要对｛｝转义。即｛｝.egrep就不需要转义了。</span><br></pre></td></tr></table></figure>
+
+<h3 id="请简述基础正则表达式sed高级参数的使用"><a href="#请简述基础正则表达式sed高级参数的使用" class="headerlink" title="请简述基础正则表达式sed高级参数的使用"></a>请简述基础正则表达式sed高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">解答：</span><br><span class="line"></span><br><span class="line">-n取消默认输出</span><br><span class="line"></span><br><span class="line">-p 打印</span><br><span class="line"></span><br><span class="line">-d删除</span><br><span class="line"></span><br><span class="line">-e允许多项编辑</span><br><span class="line"></span><br><span class="line">sed取行，要特别注意sed -n &#x27;s###g&#x27; filename 的使用，sed的( )的功能可以记住正则表达式的一部分，其中，为第一个记住的模式即第一个小括号中的匹配内容，第二记住的模式，即第二个小括号中的匹配内容，sed最多可以记住9个。</span><br><span class="line"></span><br><span class="line">实际字符的选取最好要唯一，正则表达式是贪婪的，总是尽可能的匹配更远的符合匹配的内容。另外注意字符串中的空格。</span><br></pre></td></tr></table></figure>
+
+<h3 id="AWK"><a href="#AWK" class="headerlink" title="AWK"></a>AWK</h3><h2 id="Hard-Level-Questions"><a href="#Hard-Level-Questions" class="headerlink" title="Hard Level Questions"></a>Hard Level Questions</h2>]]></content>
+      <categories>
+        <category>sysadmin</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python程序获取股票信息</title>
+    <url>/2022/07/04/stock-price/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
+<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
+<li>python3</li>
+<li>akshare</li>
+<li>GoogleSheet</li>
+</ul>
+<p>Reference </p>
+<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
+<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
+<li>code example</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
+</ul>
+]]></content>
+      <categories>
+        <category>memo</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>personal</tag>
+        <tag>python</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一文让你python从入门到放弃</title>
     <url>/2021/08/20/python-notes/</url>
     <content><![CDATA[<ul>
@@ -2414,113 +2549,6 @@
         <tag>python</tag>
         <tag>Tech</tag>
         <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一文让你shell从狗熊变英雄</title>
-    <url>/2023/08/13/shell_from_zero_to_hero./</url>
-    <content><![CDATA[<ul>
-<li><a href="#shell-from-zero-to-hero">Shell From Zero To Hero</a><ul>
-<li><a href="#simply-level-questions">Simply Level Questions</a><ul>
-<li><a href="#%E6%8F%8F%E8%BF%B0linux%E7%B3%BB%E7%BB%9F%E4%BB%8E%E5%BC%80%E6%9C%BA%E5%88%B0%E7%99%BB%E9%99%86%E7%95%8C%E9%9D%A2%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B">描述Linux系统从开机到登陆界面的启动过程</a></li>
-<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E8%BD%AF%E9%93%BE%E6%8E%A5%E5%92%8C%E7%A1%AC%E9%93%BE%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB">描述Linux下软链接和硬链接的区别</a></li>
-</ul>
-</li>
-<li><a href="#middle-level-questions">Middle Level Questions</a><ul>
-<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4%E7%9A%84%E5%8E%9F%E7%90%86">描述Linux下文件删除的原理</a></li>
-<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fgrep%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式grep高级参数的使用</a></li>
-<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fsed%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式sed高级参数的使用</a></li>
-<li><a href="#awk">AWK</a></li>
-</ul>
-</li>
-<li><a href="#hard-level-questions">Hard Level Questions</a></li>
-</ul>
-</li>
-</ul>
-<h1 id="Shell-From-Zero-To-Hero"><a href="#Shell-From-Zero-To-Hero" class="headerlink" title="Shell From Zero To Hero"></a>Shell From Zero To Hero</h1><h2 id="Simply-Level-Questions"><a href="#Simply-Level-Questions" class="headerlink" title="Simply Level Questions"></a>Simply Level Questions</h2><h3 id="描述Linux系统从开机到登陆界面的启动过程"><a href="#描述Linux系统从开机到登陆界面的启动过程" class="headerlink" title="描述Linux系统从开机到登陆界面的启动过程"></a>描述Linux系统从开机到登陆界面的启动过程</h3><ul>
-<li><p>开机BIOS自检，加载硬盘。</p>
-</li>
-<li><p>读取MBR,MBR引导。</p>
-</li>
-<li><p>grub引导菜单(Boot Loader)。</p>
-</li>
-<li><p>加载内核kernel。</p>
-</li>
-<li><p>启动init进程，依据inittab文件设定运行级别</p>
-</li>
-<li><p>init进程，执行rc.sysinit文件。</p>
-</li>
-<li><p>启动内核模块，执行不同级别的脚本程序。</p>
-</li>
-<li><p>执行/etc/rc.d/rc.local</p>
-</li>
-<li><p>启动mingetty，进入系统登陆界面。</p>
-</li>
-</ul>
-<h3 id="描述Linux下软链接和硬链接的区别"><a href="#描述Linux下软链接和硬链接的区别" class="headerlink" title="描述Linux下软链接和硬链接的区别"></a>描述Linux下软链接和硬链接的区别</h3><p>在Linux系统中，链接分为两种，一种是硬链接（Hard link），另一种称为符号链接或软链接（Symbolic Link）。</p>
-<ul>
-<li><p>默认不带参数的情况下，ln创建的是硬链接，带-s参数的ln命令创建的是软链接。</p>
-</li>
-<li><p>硬链接文件与源文件的inode节点号相同，而软链接文件的inode节点号，与源文件不同，</p>
-</li>
-<li><p>ln命令不能对目录创建硬链接，但可以创建软链接。对目录的软链接会经常使用到。</p>
-</li>
-<li><p>删除软链接文件，对源文件和硬链接文件无任何影响。</p>
-</li>
-<li><p>删除文件的硬链接文件，对源文件及软链接文件无任何影响。</p>
-</li>
-<li><p>删除链接文件的源文件，对硬链接文件无影响，会导致其软链接失效（红底白字闪烁状）。</p>
-</li>
-<li><p>同时删除源文件及其硬链接文件，整个文件才会被真正的删除。</p>
-</li>
-<li><p>很多硬件设备的快照功能，使用的就是类似硬链接的原理。</p>
-</li>
-<li><p>软链接可以跨文件系统，硬链接不可以跨文件系统。</p>
-</li>
-</ul>
-<h2 id="Middle-Level-Questions"><a href="#Middle-Level-Questions" class="headerlink" title="Middle Level Questions"></a>Middle Level Questions</h2><h3 id="描述Linux下文件删除的原理"><a href="#描述Linux下文件删除的原理" class="headerlink" title="描述Linux下文件删除的原理"></a>描述Linux下文件删除的原理</h3><p>Linux系统是通过link的数量来控制文件删除的，只有当一个文件不存在任何link的时候，这个文件才会被删除。一般来说每个文件两个link计数器来控制i_count和i_nlink。当一个文件被一个程序占用的时候i_count就加1。当文件的硬链接多一个的时候i_nlink也加1。删除一个文件，就是让这个文件，没有进程占用，同时i_link数量为0。</p>
-<h3 id="请简述基础正则表达式grep高级参数的使用"><a href="#请简述基础正则表达式grep高级参数的使用" class="headerlink" title="请简述基础正则表达式grep高级参数的使用"></a>请简述基础正则表达式grep高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">常用参数：</span><br><span class="line"></span><br><span class="line">-v排除匹配内容，</span><br><span class="line"></span><br><span class="line">-e支持扩展的正则表达式，</span><br><span class="line"></span><br><span class="line">-i忽略大小写，</span><br><span class="line"></span><br><span class="line">-o输出匹配的内容（只是一块，不是行），</span><br><span class="line"></span><br><span class="line">--color=auto 匹配内容显示颜色，</span><br><span class="line"></span><br><span class="line">-n 在行首显示行号。</span><br><span class="line"></span><br><span class="line">特殊字符注意事项：</span><br><span class="line"></span><br><span class="line">^(尖括号)word ：表示搜索以word开头的内容。</span><br><span class="line"></span><br><span class="line">word$ 表示搜索以word结尾的内容。</span><br><span class="line"></span><br><span class="line">^$    表示的是空行，不是空格。</span><br><span class="line"></span><br><span class="line">.     代表且只能代表任意一个字符。非正则表达式其他功能（当前目录，加载文件）</span><br><span class="line"></span><br><span class="line">/     转义字符，让有着特殊身份意义的字符，脱掉马甲，还原原型。例如.只表示原始小数点意义。</span><br><span class="line"></span><br><span class="line">*    表示重复0个或多个前面的一个字符。不代表所有。</span><br><span class="line"></span><br><span class="line">.*   表示匹配所有的字符。^.*表示以任意字符开头。</span><br><span class="line"></span><br><span class="line">[任意字符如abc] 匹配字符集内任意一个字符[a-z]。 [^abc] ^在中括号里面是非的意思，不包含之意。意思就是不包含a或b或c的行。</span><br><span class="line"></span><br><span class="line">&#123;n，m&#125; 表示重复n到m次前一个字符。｛n｝至少n次，多了不限。｛n｝N次，｛，m｝至多m次，少了不限。</span><br><span class="line"></span><br><span class="line">注：使用grep或sed要对｛｝转义。即｛｝.egrep就不需要转义了。</span><br></pre></td></tr></table></figure>
-
-<h3 id="请简述基础正则表达式sed高级参数的使用"><a href="#请简述基础正则表达式sed高级参数的使用" class="headerlink" title="请简述基础正则表达式sed高级参数的使用"></a>请简述基础正则表达式sed高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">解答：</span><br><span class="line"></span><br><span class="line">-n取消默认输出</span><br><span class="line"></span><br><span class="line">-p 打印</span><br><span class="line"></span><br><span class="line">-d删除</span><br><span class="line"></span><br><span class="line">-e允许多项编辑</span><br><span class="line"></span><br><span class="line">sed取行，要特别注意sed -n &#x27;s###g&#x27; filename 的使用，sed的( )的功能可以记住正则表达式的一部分，其中，为第一个记住的模式即第一个小括号中的匹配内容，第二记住的模式，即第二个小括号中的匹配内容，sed最多可以记住9个。</span><br><span class="line"></span><br><span class="line">实际字符的选取最好要唯一，正则表达式是贪婪的，总是尽可能的匹配更远的符合匹配的内容。另外注意字符串中的空格。</span><br></pre></td></tr></table></figure>
-
-<h3 id="AWK"><a href="#AWK" class="headerlink" title="AWK"></a>AWK</h3><h2 id="Hard-Level-Questions"><a href="#Hard-Level-Questions" class="headerlink" title="Hard Level Questions"></a>Hard Level Questions</h2>]]></content>
-      <categories>
-        <category>sysadmin</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>shell</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python程序获取股票信息</title>
-    <url>/2022/07/04/stock-price/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
-<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
-<li>python3</li>
-<li>akshare</li>
-<li>GoogleSheet</li>
-</ul>
-<p>Reference </p>
-<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
-<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
-<li>code example</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
-</ul>
-]]></content>
-      <categories>
-        <category>memo</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>personal</tag>
-        <tag>python</tag>
-        <tag>Tech</tag>
       </tags>
   </entry>
   <entry>
