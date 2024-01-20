@@ -1598,6 +1598,141 @@
       </tags>
   </entry>
   <entry>
+    <title>一文了解正则表达式</title>
+    <url>/2022/05/10/regexr/</url>
+    <content><![CDATA[<h1 id="一-正则表达式简介"><a href="#一-正则表达式简介" class="headerlink" title="一.正则表达式简介"></a>一.正则表达式简介</h1><ol>
+<li><p>什么是正则表达式<br>正则表达式（Regluar Expressions）又称规则表达式，这个概念最初是由Unix中的工具软件（如sed 和 grep）普及开的。正则表达式在代码中常简写为REs，regexes或regexp（regex patterns）。它本质上是一个小巧的、高度专用的编程语言。 许多程序设计语言都支持通过正则表达式进行字符串操作。例如，在Perl中就内建了一个功能强大的正则表达式引擎。</p>
+</li>
+<li><p>正则表达式能做什么<br>正则表达式的主要应用对象是文本，使用正则表达式可以指定想要匹配的字符串规则，然后通过这个规则来匹配、查找、替换或切割那些符合指定规则的文本。总体来讲，正则表达式可以对指定的文本实现以下功能：</p>
+</li>
+</ol>
+<ul>
+<li>匹配验证： 判断给定的字符串是否符合正则表达式所指定的过滤规则，从而可以判断某个字符串的内容是否符合特定的规则（如email地址、手机号码等）；当正则表达式用于匹配验证时，通常需要在正则表达式字符串的首部和尾部加上^和$，以匹配整个待验证的字符串。</li>
+<li>查找与替换： 判断给定字符串中是否包含满足正则表达式所指定的匹配规则的子串，如查找一段文本中的所包含的IP地址。另外，还可以对查找到的子串进行内容替换。<br>字符串分割与子串截取： 基于子串查找功能还可以以符合正则表达式所指定的匹配规则的字符串作为分隔符对给定的字符串进行分割。</li>
+</ul>
+<h1 id="二-正则表达式中的字符"><a href="#二-正则表达式中的字符" class="headerlink" title="二.正则表达式中的字符"></a>二.正则表达式中的字符</h1><p>正则表达式的主要应用对象是文本，其最基础的功能是文本匹配，而文本是由一个个的字符组成，因此正则表达式实际上是对字符的匹配。正则表达式中的字符分为 普通字符 和 元字符，而正则表达式就是这些普通字符和特殊元字符组合成的表示一个特定匹配规则的表达式。</p>
+<ol>
+<li>普通字符<br>实际上，大多数字符都将简单地匹配它们的自身值，它们被称为普通字符，如数字（0-9），字母（a-z, A-Z）等。例如，正则表达式hello123将匹配字符串’hello123’，因为该这则表达式中都是普通字符，不包含特殊元字符。当然，我们可以通过指定正则表达式的匹配模式为 忽略字母大小写模式，这么正则表达式hello123将能够匹配’Hello123’, ‘HellO123’, ‘HELLO123’等字符串。</li>
+</ol>
+<blockquote>
+<p>提示： 其实我们并不需要去记忆哪些字符是普通字符，我们只需要知道哪些字符是特殊元字符就可以了，除了特殊元字符之外的所有字符都是普通字符。</p>
+</blockquote>
+<ol start="2">
+<li>元字符<br>上面提到，正则表达式除了进行字符自身之的匹配外，还可以基于指定的规则进行模糊匹配。这就意味着它需要一些特殊字符来表示这些模糊的匹配规则，因此这些特殊字符默认情况下并不能匹配到它们自身的字面值，而是表示某些特殊的功能。这些特殊元字符包括：., [, ], (, ), *, +, ?, ^, $, , |。这些特殊字符的使用，会在下面进行详细讲解。正则表达式的重点和难点也就在于对正则表达式引擎的工作原理以及对这些特殊元字符掌握和灵活运用。</li>
+</ol>
+<blockquote>
+<p>提示： 那么如果想匹配这些特殊元字符本身的字面值怎么办呢？我们可以通过其中一个特殊字符对其它特殊字符进行转义，从而达到可以匹配这些特殊字符自身字面值的目的。</p>
+</blockquote>
+<h1 id="三-元字符详解"><a href="#三-元字符详解" class="headerlink" title="三.元字符详解"></a>三.元字符详解</h1><p>现在我们来详细说明一下正则表达式中的特殊元字符到底能完成哪些复杂的匹配功能。<br>1.单个字符匹配</p>
+<p><img src="/2022/05/10/regexr/regex1.png" alt="image"></p>
+<blockquote>
+<p>说明： 所有的特殊字符在[ ]内都将失去其原有的特殊含义:</p>
+<ul>
+<li>有些特殊字符在[ ]中被赋予新的特殊含义，如 ‘^’出现在[ ]中的开始位置表示取反，它出现在[]中的其他位置表示其本身（变成了一个普通字符）；</li>
+<li>有些特殊字符则变为普通字符，如 ‘.’, ‘*’, ‘+’, ‘?’, ‘$’</li>
+<li>有的普通字符变为特殊字符，如 ‘-‘ 在[ ]中的位置不是第一个字符则表示一个数字或字母区间，如果在[ ]中的位置是第一个字符则表示其本身（一个普通字符）</li>
+<li>在[ ]中，如果要使用’-‘, ‘^’ 或’]’，可在在它们前面加上反斜杠，或把’-‘, ‘]’放在第一个字符的 位置，把’^’放在非第一个字符的位置</li>
+</ul>
+</blockquote>
+<ol>
+<li>预定义字符集</li>
+</ol>
+<p>我们可以在反斜杠后面跟上一个指定的字母来表示预定义的字符集合</p>
+<p><img src="/2022/05/10/regexr/regex2.png" alt="image"></p>
+<ol start="3">
+<li>字符次数匹配–量词<br>在正则表达式中，我们还可以指定匹配某个字符出现次数</li>
+</ol>
+<p><img src="/2022/05/10/regexr/regex3.png" alt="image"></p>
+<blockquote>
+<p>说明： {m,n}中的m和n可以省略其中一个，{,n}相当于{0,n}，{m,}相当于{m,整数最大值}。</p>
+</blockquote>
+<p>我们可以得出以下结论：</p>
+<ul>
+<li>{0,1}或{,1} 等价于 ?</li>
+<li>{1,} 等价于 +</li>
+<li>{0,} 等价于 *</li>
+</ul>
+<p>我们优先选择使用 ?, + 和 *，因为他们书写简单，也可以使整个正则表达式变得简洁。</p>
+<blockquote>
+<p>说明： ? 这个字符在正则表达中与 ?, +, *, {m,n}连用时还有一个额外的功能，就是将匹配模式由贪婪模式（尽可能的增加匹配次数） 变成 非贪婪模式（尽可能减少匹配次数）， 这个会在下面的内容中进行详细说明。</p>
+</blockquote>
+<ol start="4">
+<li><p>边界匹配<br>正则表达式中还可以对边界位置进行匹配，如一个字符串的开头或结尾，一个单词的开头或结尾。<br><img src="/2022/05/10/regexr/regexr4.png" alt="image"></p>
+</li>
+<li><p>逻辑与分组<br>语法 | 说明 | 表达式实例 | 可匹配到的字符串实例<br><img src="/2022/05/10/regexr/regexr5.png" alt="image"></p>
+</li>
+</ol>
+<ol start="6">
+<li>特殊构造</li>
+</ol>
+<p><img src="/2022/05/10/regexr/regexr6.png" alt="image"></p>
+<blockquote>
+<p>说明： 上面所说的“不消耗字符串内容”是指只是进行匹配，但是不移动原始字符串的匹配位置，这样就可以完成多次匹配。下面有个匹配密码的正则表达式实例，就是用这个特性巧妙完成的。</p>
+</blockquote>
+<h1 id="四-常用正则表达式实例"><a href="#四-常用正则表达式实例" class="headerlink" title="四.常用正则表达式实例"></a>四.常用正则表达式实例</h1><p>通常写一个合适的正则表达式是比较耗费时间的，因此我们可以保留一些常用的正则表达式以备不时之需。但是需要说明的是，没有任何一个人敢说自己写的正则表达式是百分之百严谨的，而且也没有百分之百相同的匹配需求，因此这里只是列举我自己写的几个常用的正则表达式，欢迎大家留言讨论。</p>
+<blockquote>
+<p>说明： 下面只是一些简单的匹配规则，实际情况中需要我们根据具体情况再这些正则表达式的首部和尾部加上相应的边界符，如：^, $, \A, \Z, \b, \B等</p>
+</blockquote>
+<p><strong>匹配一个网络地址（URL)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[a-zA-Z]+://[\S]+</span><br></pre></td></tr></table></figure>
+<p>需要说明的是，网络地址不一定是一个网页地址（http或https链接），还可能是ftp地址等。如果我们要匹配特定协议的网络地址，如http或http链接可以这样写:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(https?://)?[\S]+</span><br></pre></td></tr></table></figure>
+<p><strong>匹配一个IP地址</strong><br>最简单的写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(\d+[.])&#123;3&#125;\d+</span><br></pre></td></tr></table></figure>
+<p>严谨一点的写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(((?:[1-9]\d?)|(?:1\d&#123;2&#125;)|(?:2[0-4]\d)|(?:25[0-5]))[.])&#123;3&#125;((?:[1-9]\d?)|(?:1\d&#123;2&#125;)|(?:2[0-4]\d)|(?:25[0-5]))</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">((([1-9]\d?)|(1\d&#123;2&#125;)|(2[0-4]\d)|(25[0-5]))[.])&#123;3&#125;(([1-9]\d?)|(1\d&#123;2&#125;)|(2[0-4]\d)|(25[0-5]))</span><br></pre></td></tr></table></figure>
+<p><strong>匹配一个邮箱地址</strong><br>最简单的写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\S+@\S+\.\S+</span><br></pre></td></tr></table></figure>
+<p>严谨一点的写法（保证只出现一个@符）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[^\s@]+@[^\s@]+\.[^\s@]+</span><br></pre></td></tr></table></figure>
+<p><strong>匹配密码是否合法</strong><br>要求比较简单的情况，比如只要求为非空字符且限定密码长度为6-18位</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">^\S[6-18]$</span><br></pre></td></tr></table></figure>
+<p>要求比较复杂的情况，比如必须同时包含含数字、大小字母、小写字母和标点符号，这就需要用到前面所说的正则表达式的特殊构造了(?=…), (?!=…)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(?=^.&#123;6,8&#125;$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)</span><br></pre></td></tr></table></figure>
+<p>如果要求必须同时包含且只能包含数字、大小字母、小写字母和标点符号，可以这样写：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(?=^[\d\Wa-zA-Z]&#123;6,8&#125;$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)</span><br></pre></td></tr></table></figure>
+<p><strong>匹配大陆身份证号码（15位或18位)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\d&#123;15&#125;|(\d&#123;18&#125;|(\d&#123;17&#125;[Xx]))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>小贴士： 当今的身份证号码有15位和18位之分。1985年我国实行居民身份证制度，当时签发的身份证号码是15位的，1999年签发的身份证由于年份的扩展（由两位变为四位）和末尾加了效验码，就成了18位。这两种身份证号码将在相当长的一段时期内共存。两种身份证号码的含义如下：</p>
+</blockquote>
+<p><strong>匹配日期（年-月-日)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(\d&#123;2&#125;|\d&#123;4&#125;)-((0?[1-9])|(1[0-2]))-((0?[1-9])|([12][0-9])|(3[01]))</span><br></pre></td></tr></table></figure>
+<p>24小时制时间（小时:分钟:秒）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(((0?|1)[0-9])|(2[0-3])):([0-5][0-9]):([0-5][0-9])</span><br></pre></td></tr></table></figure>
+<p>其他常用正则表达式<br><img src="/2022/05/10/regexr/regerx7.png" alt="image"><br><strong>再次说明，实际情况中需要我们根据具体情况再这些正则表达式的首部和尾部加上相应的边界符，如：^, $, \A, \Z, \b, \B等</strong></p>
+<h1 id="五-正则表达式的匹配过程"><a href="#五-正则表达式的匹配过程" class="headerlink" title="五.正则表达式的匹配过程"></a>五.正则表达式的匹配过程</h1><p>基于量词（如?, +, *, {m,n}, {m,}）的字符重复次数匹配是正则表达式优于普通字符串处理方法的一个重要方面，也是正则表达式的一个重要组成部分。量词对正则表达式的匹配过程具有非常重大的影响，因此在介绍正则表达式的匹配过程时，必不可少的要提到量词的两个重要分类：</p>
+<ul>
+<li>匹配优先量词 我们上面介绍的量词就是匹配优先量词包括：?, +, *, {m,n}，但是不包括{m}</li>
+<li>忽略优先量词 在匹配优先量词后面加上一个问号就变成了忽略优先量词，包括：??, +?, *?, {m,n}?<br>如果大家对这两个词不熟悉的话，那么大家一定听说过这两个词：</li>
+<li>贪婪模式（或非惰性匹配） 顾名思义，就是在整个表达式匹配成功的前提下，尽可能多的去匹配量词所修饰的字符</li>
+<li>非贪婪模式（或惰性匹配） 在整个表达式匹配成功的前提下，尽可能少的去匹配量词所修饰的字符<br>它们之间的关系是：</li>
+<li>匹配优先量词修饰的子表达式使用的是就是贪婪模式（非惰性匹配）;</li>
+<li>忽略优先量词修饰的子表达式使用的就是模式就是非贪婪模式（惰性匹配）;<br>下面我们通过一个实例来分析 贪婪模式 和 非贪婪模式 下的正则匹配过程：</li>
+<li>要匹配的字符串：’abcbd’</li>
+<li>贪婪模式正则表达式：a[bcd]*b</li>
+<li>非贪婪模式正则表达式：a[bcd]*?b</li>
+</ul>
+<h2 id="1-贪婪模式匹配过程分析"><a href="#1-贪婪模式匹配过程分析" class="headerlink" title="1. 贪婪模式匹配过程分析"></a>1. 贪婪模式匹配过程分析</h2><p><img src="/2022/05/10/regexr/regexr8.png" alt="image"></p>
+<h2 id="2-非贪婪模式匹配过程分析"><a href="#2-非贪婪模式匹配过程分析" class="headerlink" title="2. 非贪婪模式匹配过程分析"></a>2. 非贪婪模式匹配过程分析</h2><p><img src="/2022/05/10/regexr/regerx9.png" alt="image"></p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>贪婪模式与非贪婪模式影响的是被量词修饰的子表达式的匹配行为，贪婪模式在整个表达式匹配成功的前提下，尽可能多的匹配；非贪婪模式在整个表达式匹配成功的前提下，尽可能少的匹配。另外，非贪婪模式只被部分NFA引擎所支持。从匹配效率上来看，能达到相同匹配结果时，贪婪模式的匹配效率通常会比较高，因为它回溯过程会比较少。</p>
+<h2 id="4-补充示例"><a href="#4-补充示例" class="headerlink" title="4. 补充示例"></a>4. 补充示例</h2><p>匹配过程示例<br><img src="/2022/05/10/regexr/regerx10.png" alt="image"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* 首先由“&lt;”取得控制权，由位置0位开始尝试匹配，匹配字符“a”，匹配失败，第一轮匹配结束。第二轮匹配从位置1开始尝试匹配，同样匹配失败。第三轮从位置3开始尝试匹配，匹配字符“&lt;”，匹配成功，控制权交给“d”。</span><br><span class="line"></span><br><span class="line">* “d”尝试匹配字符“d”，匹配成功，控制权交给“i”。重复以上过程，直到由“&gt;”匹配到字符“&gt;”，控制权交给“.*”。</span><br><span class="line"></span><br><span class="line">* “.*”属于贪婪模式，将从B处后的字符“t”开始，一直匹配到E处，也就是字符串结束位置，将控制权交给“&lt;”。</span><br><span class="line"></span><br><span class="line">* “&lt;”从字符串结束位置尝试匹配，匹配失败，向前查找可供回溯的状态，把控制权交给“.”，由“.”让出一个字符“c”，把控制权再交给“&lt;”，尝试匹配，匹配失败，向前查找可供回溯的状态。一直重复以上过程，直到“.*”让出已匹配的字符“&lt;”，实际上也就是到让出了已匹配的子串“&lt;/div&gt;cc&quot;为止，“&lt;”才匹配字符“&lt;”成功，控制权交给“/”。 </span><br><span class="line"></span><br><span class="line">* 接下来由“/”、“d”、“i”、“v”分别匹配对应的字符成功，此时整个正则表达式匹配完毕。</span><br></pre></td></tr></table></figure>
+
+<h1 id="六-参考资料"><a href="#六-参考资料" class="headerlink" title="六.参考资料"></a>六.参考资料</h1><p><img src="/2022/05/10/regexr/regerx11.png" alt="image"></p>
+]]></content>
+      <categories>
+        <category>shell</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一文让你python从入门到放弃</title>
     <url>/2021/08/20/python-notes/</url>
     <content><![CDATA[<ul>
@@ -1776,141 +1911,6 @@
         <tag>python</tag>
         <tag>Tech</tag>
         <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一文了解正则表达式</title>
-    <url>/2022/05/10/regexr/</url>
-    <content><![CDATA[<h1 id="一-正则表达式简介"><a href="#一-正则表达式简介" class="headerlink" title="一.正则表达式简介"></a>一.正则表达式简介</h1><ol>
-<li><p>什么是正则表达式<br>正则表达式（Regluar Expressions）又称规则表达式，这个概念最初是由Unix中的工具软件（如sed 和 grep）普及开的。正则表达式在代码中常简写为REs，regexes或regexp（regex patterns）。它本质上是一个小巧的、高度专用的编程语言。 许多程序设计语言都支持通过正则表达式进行字符串操作。例如，在Perl中就内建了一个功能强大的正则表达式引擎。</p>
-</li>
-<li><p>正则表达式能做什么<br>正则表达式的主要应用对象是文本，使用正则表达式可以指定想要匹配的字符串规则，然后通过这个规则来匹配、查找、替换或切割那些符合指定规则的文本。总体来讲，正则表达式可以对指定的文本实现以下功能：</p>
-</li>
-</ol>
-<ul>
-<li>匹配验证： 判断给定的字符串是否符合正则表达式所指定的过滤规则，从而可以判断某个字符串的内容是否符合特定的规则（如email地址、手机号码等）；当正则表达式用于匹配验证时，通常需要在正则表达式字符串的首部和尾部加上^和$，以匹配整个待验证的字符串。</li>
-<li>查找与替换： 判断给定字符串中是否包含满足正则表达式所指定的匹配规则的子串，如查找一段文本中的所包含的IP地址。另外，还可以对查找到的子串进行内容替换。<br>字符串分割与子串截取： 基于子串查找功能还可以以符合正则表达式所指定的匹配规则的字符串作为分隔符对给定的字符串进行分割。</li>
-</ul>
-<h1 id="二-正则表达式中的字符"><a href="#二-正则表达式中的字符" class="headerlink" title="二.正则表达式中的字符"></a>二.正则表达式中的字符</h1><p>正则表达式的主要应用对象是文本，其最基础的功能是文本匹配，而文本是由一个个的字符组成，因此正则表达式实际上是对字符的匹配。正则表达式中的字符分为 普通字符 和 元字符，而正则表达式就是这些普通字符和特殊元字符组合成的表示一个特定匹配规则的表达式。</p>
-<ol>
-<li>普通字符<br>实际上，大多数字符都将简单地匹配它们的自身值，它们被称为普通字符，如数字（0-9），字母（a-z, A-Z）等。例如，正则表达式hello123将匹配字符串’hello123’，因为该这则表达式中都是普通字符，不包含特殊元字符。当然，我们可以通过指定正则表达式的匹配模式为 忽略字母大小写模式，这么正则表达式hello123将能够匹配’Hello123’, ‘HellO123’, ‘HELLO123’等字符串。</li>
-</ol>
-<blockquote>
-<p>提示： 其实我们并不需要去记忆哪些字符是普通字符，我们只需要知道哪些字符是特殊元字符就可以了，除了特殊元字符之外的所有字符都是普通字符。</p>
-</blockquote>
-<ol start="2">
-<li>元字符<br>上面提到，正则表达式除了进行字符自身之的匹配外，还可以基于指定的规则进行模糊匹配。这就意味着它需要一些特殊字符来表示这些模糊的匹配规则，因此这些特殊字符默认情况下并不能匹配到它们自身的字面值，而是表示某些特殊的功能。这些特殊元字符包括：., [, ], (, ), *, +, ?, ^, $, , |。这些特殊字符的使用，会在下面进行详细讲解。正则表达式的重点和难点也就在于对正则表达式引擎的工作原理以及对这些特殊元字符掌握和灵活运用。</li>
-</ol>
-<blockquote>
-<p>提示： 那么如果想匹配这些特殊元字符本身的字面值怎么办呢？我们可以通过其中一个特殊字符对其它特殊字符进行转义，从而达到可以匹配这些特殊字符自身字面值的目的。</p>
-</blockquote>
-<h1 id="三-元字符详解"><a href="#三-元字符详解" class="headerlink" title="三.元字符详解"></a>三.元字符详解</h1><p>现在我们来详细说明一下正则表达式中的特殊元字符到底能完成哪些复杂的匹配功能。<br>1.单个字符匹配</p>
-<p><img src="/2022/05/10/regexr/regex1.png" alt="image"></p>
-<blockquote>
-<p>说明： 所有的特殊字符在[ ]内都将失去其原有的特殊含义:</p>
-<ul>
-<li>有些特殊字符在[ ]中被赋予新的特殊含义，如 ‘^’出现在[ ]中的开始位置表示取反，它出现在[]中的其他位置表示其本身（变成了一个普通字符）；</li>
-<li>有些特殊字符则变为普通字符，如 ‘.’, ‘*’, ‘+’, ‘?’, ‘$’</li>
-<li>有的普通字符变为特殊字符，如 ‘-‘ 在[ ]中的位置不是第一个字符则表示一个数字或字母区间，如果在[ ]中的位置是第一个字符则表示其本身（一个普通字符）</li>
-<li>在[ ]中，如果要使用’-‘, ‘^’ 或’]’，可在在它们前面加上反斜杠，或把’-‘, ‘]’放在第一个字符的 位置，把’^’放在非第一个字符的位置</li>
-</ul>
-</blockquote>
-<ol>
-<li>预定义字符集</li>
-</ol>
-<p>我们可以在反斜杠后面跟上一个指定的字母来表示预定义的字符集合</p>
-<p><img src="/2022/05/10/regexr/regex2.png" alt="image"></p>
-<ol start="3">
-<li>字符次数匹配–量词<br>在正则表达式中，我们还可以指定匹配某个字符出现次数</li>
-</ol>
-<p><img src="/2022/05/10/regexr/regex3.png" alt="image"></p>
-<blockquote>
-<p>说明： {m,n}中的m和n可以省略其中一个，{,n}相当于{0,n}，{m,}相当于{m,整数最大值}。</p>
-</blockquote>
-<p>我们可以得出以下结论：</p>
-<ul>
-<li>{0,1}或{,1} 等价于 ?</li>
-<li>{1,} 等价于 +</li>
-<li>{0,} 等价于 *</li>
-</ul>
-<p>我们优先选择使用 ?, + 和 *，因为他们书写简单，也可以使整个正则表达式变得简洁。</p>
-<blockquote>
-<p>说明： ? 这个字符在正则表达中与 ?, +, *, {m,n}连用时还有一个额外的功能，就是将匹配模式由贪婪模式（尽可能的增加匹配次数） 变成 非贪婪模式（尽可能减少匹配次数）， 这个会在下面的内容中进行详细说明。</p>
-</blockquote>
-<ol start="4">
-<li><p>边界匹配<br>正则表达式中还可以对边界位置进行匹配，如一个字符串的开头或结尾，一个单词的开头或结尾。<br><img src="/2022/05/10/regexr/regexr4.png" alt="image"></p>
-</li>
-<li><p>逻辑与分组<br>语法 | 说明 | 表达式实例 | 可匹配到的字符串实例<br><img src="/2022/05/10/regexr/regexr5.png" alt="image"></p>
-</li>
-</ol>
-<ol start="6">
-<li>特殊构造</li>
-</ol>
-<p><img src="/2022/05/10/regexr/regexr6.png" alt="image"></p>
-<blockquote>
-<p>说明： 上面所说的“不消耗字符串内容”是指只是进行匹配，但是不移动原始字符串的匹配位置，这样就可以完成多次匹配。下面有个匹配密码的正则表达式实例，就是用这个特性巧妙完成的。</p>
-</blockquote>
-<h1 id="四-常用正则表达式实例"><a href="#四-常用正则表达式实例" class="headerlink" title="四.常用正则表达式实例"></a>四.常用正则表达式实例</h1><p>通常写一个合适的正则表达式是比较耗费时间的，因此我们可以保留一些常用的正则表达式以备不时之需。但是需要说明的是，没有任何一个人敢说自己写的正则表达式是百分之百严谨的，而且也没有百分之百相同的匹配需求，因此这里只是列举我自己写的几个常用的正则表达式，欢迎大家留言讨论。</p>
-<blockquote>
-<p>说明： 下面只是一些简单的匹配规则，实际情况中需要我们根据具体情况再这些正则表达式的首部和尾部加上相应的边界符，如：^, $, \A, \Z, \b, \B等</p>
-</blockquote>
-<p><strong>匹配一个网络地址（URL)</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[a-zA-Z]+://[\S]+</span><br></pre></td></tr></table></figure>
-<p>需要说明的是，网络地址不一定是一个网页地址（http或https链接），还可能是ftp地址等。如果我们要匹配特定协议的网络地址，如http或http链接可以这样写:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(https?://)?[\S]+</span><br></pre></td></tr></table></figure>
-<p><strong>匹配一个IP地址</strong><br>最简单的写法：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(\d+[.])&#123;3&#125;\d+</span><br></pre></td></tr></table></figure>
-<p>严谨一点的写法：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(((?:[1-9]\d?)|(?:1\d&#123;2&#125;)|(?:2[0-4]\d)|(?:25[0-5]))[.])&#123;3&#125;((?:[1-9]\d?)|(?:1\d&#123;2&#125;)|(?:2[0-4]\d)|(?:25[0-5]))</span><br></pre></td></tr></table></figure>
-<p>或</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">((([1-9]\d?)|(1\d&#123;2&#125;)|(2[0-4]\d)|(25[0-5]))[.])&#123;3&#125;(([1-9]\d?)|(1\d&#123;2&#125;)|(2[0-4]\d)|(25[0-5]))</span><br></pre></td></tr></table></figure>
-<p><strong>匹配一个邮箱地址</strong><br>最简单的写法：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\S+@\S+\.\S+</span><br></pre></td></tr></table></figure>
-<p>严谨一点的写法（保证只出现一个@符）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[^\s@]+@[^\s@]+\.[^\s@]+</span><br></pre></td></tr></table></figure>
-<p><strong>匹配密码是否合法</strong><br>要求比较简单的情况，比如只要求为非空字符且限定密码长度为6-18位</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">^\S[6-18]$</span><br></pre></td></tr></table></figure>
-<p>要求比较复杂的情况，比如必须同时包含含数字、大小字母、小写字母和标点符号，这就需要用到前面所说的正则表达式的特殊构造了(?=…), (?!=…)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(?=^.&#123;6,8&#125;$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)</span><br></pre></td></tr></table></figure>
-<p>如果要求必须同时包含且只能包含数字、大小字母、小写字母和标点符号，可以这样写：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(?=^[\d\Wa-zA-Z]&#123;6,8&#125;$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W+)</span><br></pre></td></tr></table></figure>
-<p><strong>匹配大陆身份证号码（15位或18位)</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\d&#123;15&#125;|(\d&#123;18&#125;|(\d&#123;17&#125;[Xx]))</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>小贴士： 当今的身份证号码有15位和18位之分。1985年我国实行居民身份证制度，当时签发的身份证号码是15位的，1999年签发的身份证由于年份的扩展（由两位变为四位）和末尾加了效验码，就成了18位。这两种身份证号码将在相当长的一段时期内共存。两种身份证号码的含义如下：</p>
-</blockquote>
-<p><strong>匹配日期（年-月-日)</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(\d&#123;2&#125;|\d&#123;4&#125;)-((0?[1-9])|(1[0-2]))-((0?[1-9])|([12][0-9])|(3[01]))</span><br></pre></td></tr></table></figure>
-<p>24小时制时间（小时:分钟:秒）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(((0?|1)[0-9])|(2[0-3])):([0-5][0-9]):([0-5][0-9])</span><br></pre></td></tr></table></figure>
-<p>其他常用正则表达式<br><img src="/2022/05/10/regexr/regerx7.png" alt="image"><br><strong>再次说明，实际情况中需要我们根据具体情况再这些正则表达式的首部和尾部加上相应的边界符，如：^, $, \A, \Z, \b, \B等</strong></p>
-<h1 id="五-正则表达式的匹配过程"><a href="#五-正则表达式的匹配过程" class="headerlink" title="五.正则表达式的匹配过程"></a>五.正则表达式的匹配过程</h1><p>基于量词（如?, +, *, {m,n}, {m,}）的字符重复次数匹配是正则表达式优于普通字符串处理方法的一个重要方面，也是正则表达式的一个重要组成部分。量词对正则表达式的匹配过程具有非常重大的影响，因此在介绍正则表达式的匹配过程时，必不可少的要提到量词的两个重要分类：</p>
-<ul>
-<li>匹配优先量词 我们上面介绍的量词就是匹配优先量词包括：?, +, *, {m,n}，但是不包括{m}</li>
-<li>忽略优先量词 在匹配优先量词后面加上一个问号就变成了忽略优先量词，包括：??, +?, *?, {m,n}?<br>如果大家对这两个词不熟悉的话，那么大家一定听说过这两个词：</li>
-<li>贪婪模式（或非惰性匹配） 顾名思义，就是在整个表达式匹配成功的前提下，尽可能多的去匹配量词所修饰的字符</li>
-<li>非贪婪模式（或惰性匹配） 在整个表达式匹配成功的前提下，尽可能少的去匹配量词所修饰的字符<br>它们之间的关系是：</li>
-<li>匹配优先量词修饰的子表达式使用的是就是贪婪模式（非惰性匹配）;</li>
-<li>忽略优先量词修饰的子表达式使用的就是模式就是非贪婪模式（惰性匹配）;<br>下面我们通过一个实例来分析 贪婪模式 和 非贪婪模式 下的正则匹配过程：</li>
-<li>要匹配的字符串：’abcbd’</li>
-<li>贪婪模式正则表达式：a[bcd]*b</li>
-<li>非贪婪模式正则表达式：a[bcd]*?b</li>
-</ul>
-<h2 id="1-贪婪模式匹配过程分析"><a href="#1-贪婪模式匹配过程分析" class="headerlink" title="1. 贪婪模式匹配过程分析"></a>1. 贪婪模式匹配过程分析</h2><p><img src="/2022/05/10/regexr/regexr8.png" alt="image"></p>
-<h2 id="2-非贪婪模式匹配过程分析"><a href="#2-非贪婪模式匹配过程分析" class="headerlink" title="2. 非贪婪模式匹配过程分析"></a>2. 非贪婪模式匹配过程分析</h2><p><img src="/2022/05/10/regexr/regerx9.png" alt="image"></p>
-<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>贪婪模式与非贪婪模式影响的是被量词修饰的子表达式的匹配行为，贪婪模式在整个表达式匹配成功的前提下，尽可能多的匹配；非贪婪模式在整个表达式匹配成功的前提下，尽可能少的匹配。另外，非贪婪模式只被部分NFA引擎所支持。从匹配效率上来看，能达到相同匹配结果时，贪婪模式的匹配效率通常会比较高，因为它回溯过程会比较少。</p>
-<h2 id="4-补充示例"><a href="#4-补充示例" class="headerlink" title="4. 补充示例"></a>4. 补充示例</h2><p>匹配过程示例<br><img src="/2022/05/10/regexr/regerx10.png" alt="image"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* 首先由“&lt;”取得控制权，由位置0位开始尝试匹配，匹配字符“a”，匹配失败，第一轮匹配结束。第二轮匹配从位置1开始尝试匹配，同样匹配失败。第三轮从位置3开始尝试匹配，匹配字符“&lt;”，匹配成功，控制权交给“d”。</span><br><span class="line"></span><br><span class="line">* “d”尝试匹配字符“d”，匹配成功，控制权交给“i”。重复以上过程，直到由“&gt;”匹配到字符“&gt;”，控制权交给“.*”。</span><br><span class="line"></span><br><span class="line">* “.*”属于贪婪模式，将从B处后的字符“t”开始，一直匹配到E处，也就是字符串结束位置，将控制权交给“&lt;”。</span><br><span class="line"></span><br><span class="line">* “&lt;”从字符串结束位置尝试匹配，匹配失败，向前查找可供回溯的状态，把控制权交给“.”，由“.”让出一个字符“c”，把控制权再交给“&lt;”，尝试匹配，匹配失败，向前查找可供回溯的状态。一直重复以上过程，直到“.*”让出已匹配的字符“&lt;”，实际上也就是到让出了已匹配的子串“&lt;/div&gt;cc&quot;为止，“&lt;”才匹配字符“&lt;”成功，控制权交给“/”。 </span><br><span class="line"></span><br><span class="line">* 接下来由“/”、“d”、“i”、“v”分别匹配对应的字符成功，此时整个正则表达式匹配完毕。</span><br></pre></td></tr></table></figure>
-
-<h1 id="六-参考资料"><a href="#六-参考资料" class="headerlink" title="六.参考资料"></a>六.参考资料</h1><p><img src="/2022/05/10/regexr/regerx11.png" alt="image"></p>
-]]></content>
-      <categories>
-        <category>shell</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>shell</tag>
-        <tag>Tech</tag>
       </tags>
   </entry>
   <entry>
@@ -2102,6 +2102,356 @@
         <tag>tech</tag>
         <tag>shell</tag>
         <tag>Linux</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>一文让你shell从狗熊变英雄</title>
+    <url>/2023/08/13/shell_from_zero_to_hero./</url>
+    <content><![CDATA[<ul>
+<li><a href="#shell-from-zero-to-hero">Shell From Zero To Hero</a><ul>
+<li><a href="#simply-level-questions">Simply Level Questions</a><ul>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E7%B3%BB%E7%BB%9F%E4%BB%8E%E5%BC%80%E6%9C%BA%E5%88%B0%E7%99%BB%E9%99%86%E7%95%8C%E9%9D%A2%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B">描述Linux系统从开机到登陆界面的启动过程</a></li>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E8%BD%AF%E9%93%BE%E6%8E%A5%E5%92%8C%E7%A1%AC%E9%93%BE%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB">描述Linux下软链接和硬链接的区别</a></li>
+</ul>
+</li>
+<li><a href="#middle-level-questions">Middle Level Questions</a><ul>
+<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4%E7%9A%84%E5%8E%9F%E7%90%86">描述Linux下文件删除的原理</a></li>
+<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fgrep%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式grep高级参数的使用</a></li>
+<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fsed%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式sed高级参数的使用</a></li>
+<li><a href="#awk">AWK</a></li>
+</ul>
+</li>
+<li><a href="#hard-level-questions">Hard Level Questions</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="Shell-From-Zero-To-Hero"><a href="#Shell-From-Zero-To-Hero" class="headerlink" title="Shell From Zero To Hero"></a>Shell From Zero To Hero</h1><h2 id="Simply-Level-Questions"><a href="#Simply-Level-Questions" class="headerlink" title="Simply Level Questions"></a>Simply Level Questions</h2><h3 id="描述Linux系统从开机到登陆界面的启动过程"><a href="#描述Linux系统从开机到登陆界面的启动过程" class="headerlink" title="描述Linux系统从开机到登陆界面的启动过程"></a>描述Linux系统从开机到登陆界面的启动过程</h3><ul>
+<li><p>开机BIOS自检，加载硬盘。</p>
+</li>
+<li><p>读取MBR,MBR引导。</p>
+</li>
+<li><p>grub引导菜单(Boot Loader)。</p>
+</li>
+<li><p>加载内核kernel。</p>
+</li>
+<li><p>启动init进程，依据inittab文件设定运行级别</p>
+</li>
+<li><p>init进程，执行rc.sysinit文件。</p>
+</li>
+<li><p>启动内核模块，执行不同级别的脚本程序。</p>
+</li>
+<li><p>执行/etc/rc.d/rc.local</p>
+</li>
+<li><p>启动mingetty，进入系统登陆界面。</p>
+</li>
+</ul>
+<h3 id="描述Linux下软链接和硬链接的区别"><a href="#描述Linux下软链接和硬链接的区别" class="headerlink" title="描述Linux下软链接和硬链接的区别"></a>描述Linux下软链接和硬链接的区别</h3><p>在Linux系统中，链接分为两种，一种是硬链接（Hard link），另一种称为符号链接或软链接（Symbolic Link）。</p>
+<ul>
+<li><p>默认不带参数的情况下，ln创建的是硬链接，带-s参数的ln命令创建的是软链接。</p>
+</li>
+<li><p>硬链接文件与源文件的inode节点号相同，而软链接文件的inode节点号，与源文件不同，</p>
+</li>
+<li><p>ln命令不能对目录创建硬链接，但可以创建软链接。对目录的软链接会经常使用到。</p>
+</li>
+<li><p>删除软链接文件，对源文件和硬链接文件无任何影响。</p>
+</li>
+<li><p>删除文件的硬链接文件，对源文件及软链接文件无任何影响。</p>
+</li>
+<li><p>删除链接文件的源文件，对硬链接文件无影响，会导致其软链接失效（红底白字闪烁状）。</p>
+</li>
+<li><p>同时删除源文件及其硬链接文件，整个文件才会被真正的删除。</p>
+</li>
+<li><p>很多硬件设备的快照功能，使用的就是类似硬链接的原理。</p>
+</li>
+<li><p>软链接可以跨文件系统，硬链接不可以跨文件系统。</p>
+</li>
+</ul>
+<h2 id="Middle-Level-Questions"><a href="#Middle-Level-Questions" class="headerlink" title="Middle Level Questions"></a>Middle Level Questions</h2><h3 id="描述Linux下文件删除的原理"><a href="#描述Linux下文件删除的原理" class="headerlink" title="描述Linux下文件删除的原理"></a>描述Linux下文件删除的原理</h3><p>Linux系统是通过link的数量来控制文件删除的，只有当一个文件不存在任何link的时候，这个文件才会被删除。一般来说每个文件两个link计数器来控制i_count和i_nlink。当一个文件被一个程序占用的时候i_count就加1。当文件的硬链接多一个的时候i_nlink也加1。删除一个文件，就是让这个文件，没有进程占用，同时i_link数量为0。</p>
+<h3 id="请简述基础正则表达式grep高级参数的使用"><a href="#请简述基础正则表达式grep高级参数的使用" class="headerlink" title="请简述基础正则表达式grep高级参数的使用"></a>请简述基础正则表达式grep高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">常用参数：</span><br><span class="line"></span><br><span class="line">-v排除匹配内容，</span><br><span class="line"></span><br><span class="line">-e支持扩展的正则表达式，</span><br><span class="line"></span><br><span class="line">-i忽略大小写，</span><br><span class="line"></span><br><span class="line">-o输出匹配的内容（只是一块，不是行），</span><br><span class="line"></span><br><span class="line">--color=auto 匹配内容显示颜色，</span><br><span class="line"></span><br><span class="line">-n 在行首显示行号。</span><br><span class="line"></span><br><span class="line">特殊字符注意事项：</span><br><span class="line"></span><br><span class="line">^(尖括号)word ：表示搜索以word开头的内容。</span><br><span class="line"></span><br><span class="line">word$ 表示搜索以word结尾的内容。</span><br><span class="line"></span><br><span class="line">^$    表示的是空行，不是空格。</span><br><span class="line"></span><br><span class="line">.     代表且只能代表任意一个字符。非正则表达式其他功能（当前目录，加载文件）</span><br><span class="line"></span><br><span class="line">/     转义字符，让有着特殊身份意义的字符，脱掉马甲，还原原型。例如.只表示原始小数点意义。</span><br><span class="line"></span><br><span class="line">*    表示重复0个或多个前面的一个字符。不代表所有。</span><br><span class="line"></span><br><span class="line">.*   表示匹配所有的字符。^.*表示以任意字符开头。</span><br><span class="line"></span><br><span class="line">[任意字符如abc] 匹配字符集内任意一个字符[a-z]。 [^abc] ^在中括号里面是非的意思，不包含之意。意思就是不包含a或b或c的行。</span><br><span class="line"></span><br><span class="line">&#123;n，m&#125; 表示重复n到m次前一个字符。｛n｝至少n次，多了不限。｛n｝N次，｛，m｝至多m次，少了不限。</span><br><span class="line"></span><br><span class="line">注：使用grep或sed要对｛｝转义。即｛｝.egrep就不需要转义了。</span><br></pre></td></tr></table></figure>
+
+<h3 id="请简述基础正则表达式sed高级参数的使用"><a href="#请简述基础正则表达式sed高级参数的使用" class="headerlink" title="请简述基础正则表达式sed高级参数的使用"></a>请简述基础正则表达式sed高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">解答：</span><br><span class="line"></span><br><span class="line">-n取消默认输出</span><br><span class="line"></span><br><span class="line">-p 打印</span><br><span class="line"></span><br><span class="line">-d删除</span><br><span class="line"></span><br><span class="line">-e允许多项编辑</span><br><span class="line"></span><br><span class="line">sed取行，要特别注意sed -n &#x27;s###g&#x27; filename 的使用，sed的( )的功能可以记住正则表达式的一部分，其中，为第一个记住的模式即第一个小括号中的匹配内容，第二记住的模式，即第二个小括号中的匹配内容，sed最多可以记住9个。</span><br><span class="line"></span><br><span class="line">实际字符的选取最好要唯一，正则表达式是贪婪的，总是尽可能的匹配更远的符合匹配的内容。另外注意字符串中的空格。</span><br></pre></td></tr></table></figure>
+
+<h3 id="AWK"><a href="#AWK" class="headerlink" title="AWK"></a>AWK</h3><h2 id="Hard-Level-Questions"><a href="#Hard-Level-Questions" class="headerlink" title="Hard Level Questions"></a>Hard Level Questions</h2>]]></content>
+      <categories>
+        <category>sysadmin</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python程序获取股票信息</title>
+    <url>/2022/07/04/stock-price/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
+<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
+<li>python3</li>
+<li>akshare</li>
+<li>GoogleSheet</li>
+</ul>
+<p>Reference </p>
+<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
+<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
+<li>code example</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
+</ul>
+]]></content>
+      <categories>
+        <category>tech</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>personal</tag>
+        <tag>python</tag>
+        <tag>Tech</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>一文熟悉云配置神器terraform</title>
+    <url>/2021/08/26/terraform-notes/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><hr>
+<p>随着Infrastructure as Code (IaC)在DEVOPS领域的兴起，如果是 Ansible 是偏向 Infrastructure Configuration tool，那么 Terraform 就是 Infrastructure provision tool，两者本身并不冲突，而 Terraform 使用 declarative 声明式语法结合强大的生态让我们在多云 (AWS, Azure, GCP, Alibaba Cloud, TencentCloud) 和容器化 (K8s) 环境中可以更加地从容应对新挑战实现统一的资源编排管理。</p>
+<h1 id="文章更新日记"><a href="#文章更新日记" class="headerlink" title="文章更新日记"></a>文章更新日记</h1><hr>
+<p>2021-09-07 - 添加terraform缺点，完结<br>2021-08-26 - 初始化文章</p>
+<h1 id="Terraform-简介"><a href="#Terraform-简介" class="headerlink" title="Terraform 简介"></a>Terraform 简介</h1><hr>
+<p>Terraform is a tool for building, changing, and versioning infrastructure safely and efficiently. Terraform can manage existing and popular service providers as well as custom in-house solutions.</p>
+<p>Configuration files describe to Terraform the components needed to run a single application or your entire datacenter. Terraform generates an execution plan describing what it will do to reach the desired state, and then executes it to build the described infrastructure. As the configuration changes, Terraform is able to determine what changed and create incremental execution plans which can be applied.</p>
+<p>The infrastructure Terraform can manage includes low-level components such as compute instances, storage, and networking, as well as high-level components such as DNS entries, SaaS features, etc.</p>
+<p>开发公司：HashiCorp<br>入门手册：<a href="https://www.terraform.io/intro/index.html">https://www.terraform.io/intro/index.html</a><br>官网: <a href="https://www.terraform.io/">https://www.terraform.io/</a><br>Github：<a href="https://github.com/hashicorp/terraform">https://github.com/hashicorp/terraform</a><br>功能：terraform 用于各类基础设施资源初始化，支持多种云平台，支持第三方服务对接<br>Terraform 语言： HCL(HashiCorp Configuration Language)<br>Advantages of Infrastructure as Code</p>
+<ul>
+<li>Easily Repeatable</li>
+<li>Easily Readable</li>
+<li>Operational certainty with “terraform plan”</li>
+<li>Standardized environment builds</li>
+<li>Quickly provisioned development environments</li>
+<li>Disaster Recovery</li>
+</ul>
+<p>关于 Terraform 开源版你需要知道的缺点，官方的介绍视频主要通过引入 Terraform Enterprise 企业版来解决以下问题</p>
+<ul>
+<li>状态管理非常原始</li>
+<li>缺乏状态可视化</li>
+<li>版本控制困难，需要借助github等第三方工具</li>
+<li>语言内的语法使用困难，比如循环，变量定义</li>
+</ul>
+<p><a href="https://learn.hashicorp.com/tutorials/terraform/infrastructure-as-code">Introduction to Infrastructure as Code with Terraform</a></p>
+<h1 id="Terraform-安装"><a href="#Terraform-安装" class="headerlink" title="Terraform 安装"></a>Terraform 安装</h1><hr>
+<p>安装 Terraform，找到与你系统 <a href="https://www.terraform.io/downloads.html">匹配的软件包</a> 然后下载。Terraform 被打包为一个 zip 归档文件。</p>
+<p>下载完 zip 文件以后，解压这个包。Terraform 是一个名为 terraform 的独立文件。包里其他所有的文件都可以安全删掉，Terraform 依然可以正常工作。</p>
+<p>最后一步确保 terraform 二进制文件在 PATH 上可用。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># copy binary file to path</span><br><span class="line">mv ~/Downloads/terraform /usr/local/bin/</span><br><span class="line"></span><br><span class="line"># macOS can use Homebrew to install terraform</span><br><span class="line">brew install hashicorp/tap/terraform</span><br><span class="line"></span><br><span class="line"># terraform</span><br><span class="line">Usage: terraform [-version] [-help] &lt;command&gt; [args]</span><br><span class="line"></span><br><span class="line">The available commands for execution are listed below.</span><br><span class="line">The most common, useful commands are shown first, followed by</span><br><span class="line">less common or more advanced commands. If you&#x27;re just getting</span><br><span class="line">started with Terraform, stick with the common commands. For the</span><br><span class="line">other commands, please read the help and docs before usage.</span><br><span class="line"></span><br><span class="line">Common commands:</span><br><span class="line">    apply              Builds or changes infrastructure</span><br><span class="line">    console            Interactive console for Terraform interpolations</span><br><span class="line">    destroy            Destroy Terraform-managed infrastructure</span><br><span class="line">    env                Workspace management</span><br><span class="line">    fmt                Rewrites config files to canonical format</span><br><span class="line">    get                Download and install modules for the configuration</span><br><span class="line">    graph              Create a visual graph of Terraform resources</span><br><span class="line">    import             Import existing infrastructure into Terraform</span><br><span class="line">    init               Initialize a Terraform working directory</span><br><span class="line">    login              Obtain and save credentials for a remote host</span><br><span class="line">    logout             Remove locally-stored credentials for a remote host</span><br><span class="line">    output             Read an output from a state file</span><br><span class="line">    plan               Generate and show an execution plan</span><br><span class="line">    providers          Prints a tree of the providers used in the configuration</span><br><span class="line">    refresh            Update local state file against real resources</span><br><span class="line">    show               Inspect Terraform state or plan</span><br><span class="line">    taint              Manually mark a resource for recreation</span><br><span class="line">    untaint            Manually unmark a resource as tainted</span><br><span class="line">    validate           Validates the Terraform files</span><br><span class="line">    version            Prints the Terraform version</span><br><span class="line">    workspace          Workspace management</span><br><span class="line"></span><br><span class="line">All other commands:</span><br><span class="line">    0.12upgrade        Rewrites pre-0.12 module source code for v0.12</span><br><span class="line">    0.13upgrade        Rewrites pre-0.13 module source code for v0.13</span><br><span class="line">    debug              Debug output management (experimental)</span><br><span class="line">    force-unlock       Manually unlock the terraform state</span><br><span class="line">    push               Obsolete command for Terraform Enterprise legacy (v1)</span><br><span class="line">    state              Advanced state management</span><br></pre></td></tr></table></figure>
+
+<p>可以在云上创建 Terraform 的账户，并创建 AccessKey，通过环境变量存放认证信息</p>
+<p>terrafrom 常用命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">terraform init   # 初始化工作目录，也是我们第一个要执行的命令</span><br><span class="line">terraform plan   # 生成计划</span><br><span class="line">terraform appy   # 提交请求</span><br><span class="line">terraform state  # 查看资源状态</span><br><span class="line">terraform graph  # 生成执行计划图</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://learn.hashicorp.com/tutorials/terraform/install-cli">官方安装terraform文档</a></p>
+<h1 id="Terraform-in-60-Seconds"><a href="#Terraform-in-60-Seconds" class="headerlink" title="Terraform in 60 Seconds"></a>Terraform in 60 Seconds</h1><hr>
+<p>A Terraform configuration is a series of code blocks that define your intended infrastructure. You’ll run the terraform command against this file to create an Nginx webserver and view the default Nginx web page.</p>
+<h2 id="View-code"><a href="#View-code" class="headerlink" title="View code"></a>View code</h2><p>First, open the <code>main.tf</code> file in the text editor by clicking this link.</p>
+<p><code>main.tf</code></p>
+<p>You don’t have to edit or even understand the code. It defines two resources: a Docker disk image that packages the Nginx webserver, and a Docker container that gives it a name and runs it on port 80.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># pwd</span><br><span class="line">/root/terraform-docker-demo</span><br><span class="line"></span><br><span class="line"># vim main.tf</span><br><span class="line">terraform &#123;</span><br><span class="line">  required_providers &#123;</span><br><span class="line">    docker = &#123;</span><br><span class="line">      source = &quot;terraform-providers/docker&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  required_version = &quot;&gt;= 0.13&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;docker_image&quot; &quot;nginx&quot; &#123;</span><br><span class="line">  name = &quot;nginx:latest&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;docker_container&quot; &quot;nginx&quot; &#123;</span><br><span class="line">  image = docker_image.nginx.latest</span><br><span class="line">  name  = &quot;tutorial&quot;</span><br><span class="line">  ports &#123;</span><br><span class="line">    internal = 80</span><br><span class="line">    external = 80</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Init"><a href="#Init" class="headerlink" title="Init"></a>Init</h2><p>All Terraform workflows start with the <code>init</code> command. Terraform searches the configuration for both direct and indirect references to providers (such as Docker). Terraform then attempts to load the required plugins.</p>
+<p><code>terraform init</code></p>
+<h2 id="Apply"><a href="#Apply" class="headerlink" title="Apply"></a>Apply</h2><p>Now provision the webserver by running <code>apply</code>.<br><code>terraform apply</code></p>
+<p>You will be asked to confirm. Type <code>yes</code> and press <code>ENTER</code>. It may take up to 30 seconds. A message will display confirmation that it succeeded.</p>
+<h2 id="Verify"><a href="#Verify" class="headerlink" title="Verify"></a>Verify</h2><p>Visit this URL to view the default Nginx web page which is now live</p>
+<p>Alternatively, you can examine Docker’s process list. You will see the tutorial container which is running Nginx<br><code>docker ps</code></p>
+<h2 id="Destroy"><a href="#Destroy" class="headerlink" title="Destroy"></a>Destroy</h2><p>To remove the Nginx webserver as defined in <code>main.tf</code>, run the destroy command.<br><code>terraform destroy</code><br>You will be prompted to confirm. Type <code>yes</code> and press <code>ENTER</code>.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>You have now created and destroyed your first Terraform resources! Terraform supports hundreds of ecosystem providers, from major cloud resources to content delivery networks and more.</p>
+<p>Continue learning at HashiCorp Learn and the Terraform API documentation or discuss with others on the Terraform forum.</p>
+<h1 id="Terraform-关键概念"><a href="#Terraform-关键概念" class="headerlink" title="Terraform 关键概念"></a>Terraform 关键概念</h1><p>Terraform 管理的是云资源</p>
+<p>基础设施和服务统称为资源，如私有网络、子网、物理机、虚拟机、镜像、专线、NAT 网关等等都可以称之为资源，也是开发和运维人员经常要打交道要维护的东西。</p>
+<p>资源分为两种 resource 和 data</p>
+<p>resource<br>这类资源一般是抽象的真正的云服务资源，支持增删改，如私有网络、NAT 网关、虚拟机实例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">resource &quot; 资源类名 &amp; quot; &quot; 映射到本地的唯一资源名 &amp; quot; &#123;</span><br><span class="line">  参数 = 值</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>data</em><br>这类资源一般是固定的一些可读资源，如可用区列表、镜像列表。大部分情况下，resource 资源也会封装一个 data source 方法，用于资源查询</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">data &quot; 资源类名 &amp; quot; &quot; 映射到本地的唯一资源名 &amp; quot; &#123;</span><br><span class="line">  参数 = 值</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在使用 Terraform 的过程中，通常接触到很多名词，如 configuration，provider，resource，datasource，state，backend，provisioner 等，本文将一一跟大家介绍这些概念。</p>
+<h2 id="Configuration：基础设施的定义和描述"><a href="#Configuration：基础设施的定义和描述" class="headerlink" title="Configuration：基础设施的定义和描述"></a>Configuration：基础设施的定义和描述</h2><p>“基础设施即代码（Infrastructure as Code）”，这里的 Code 就是对基础设施资源的代码定义和描述，也就是通过代码表达我们想要管理的资源。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># VPC 资源</span><br><span class="line">resource &quot;alicloud_vpc&quot; &quot;vpc&quot; &#123;</span><br><span class="line">        name          = &quot;tf_vpc&quot;</span><br><span class="line">        cidr_block  = &quot;172.16.0.0/16&quot;</span><br><span class="line">&#125;</span><br><span class="line"># VSwitch 资源</span><br><span class="line">resource &quot;alicloud_vswitch&quot; &quot;vswitch&quot; &#123;</span><br><span class="line">        vpc_id            = alicloud_vpc.vpc.id</span><br><span class="line">        cidr_block        = &quot;172.16.1.0/24&quot;</span><br><span class="line">        availability_zone = &quot;cn-beijing-a&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对所有资源的代码描述都需要定义在一个以 tf 结尾的文件用于 Terraform 加载和解析，这个文件我们称之为 “Terraform 模板” 或者“Configuration”。</p>
+<h2 id="Provider：基础设施管理组件"><a href="#Provider：基础设施管理组件" class="headerlink" title="Provider：基础设施管理组件"></a>Provider：基础设施管理组件</h2><p>Terraform 通常用于对云上基础设施，如虚拟机，网络资源，容器资源，存储资源等的创建，更新，查看，删除等管理动作，也可以实现对物理机的管理，如安装软件，部署应用等</p>
+<p>【Provider】 是一个与 Open API 直接交互的后端驱动，Terraform 就是通过 Provider 来完成对基础设施资源的管理的。不同的基础设施提供商都需要提供一个 Provider 来实现对自家基础设施的统一管理。目前 Terraform 目前支持超过 160 多种的 providers，大多数云平台的 Provider 插件均已经实现了，AWS对应的 Provider 为 <code>aws</code> 。</p>
+<p>在操作环境中，Terraform 和 Provider 是两个独立存在的 package，当运行 Terraform 时，Terraform 会根据用户模板中指定的 provider 或者 resource／datasource 的标志自动的下载模板所用到的所有 provider，并将其放在执行目录下的一个隐藏目录 .terraform 下。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">provider &quot;aws&quot; &#123;</span><br><span class="line">    profile = &quot;default&quot;</span><br><span class="line">    access_key = var.access_key</span><br><span class="line">    secret_key = var.secret_key</span><br><span class="line">    region     = var.region</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>模板中显示指定了一个AWS的 Provider，指定了需要管理资源的 region，指定了当前这个模板的标识。<br>通常 Provider 都包含两个主要元素 resource 和 data source。</p>
+<h2 id="Resource：基础设施资源和服务的管理"><a href="#Resource：基础设施资源和服务的管理" class="headerlink" title="Resource：基础设施资源和服务的管理"></a>Resource：基础设施资源和服务的管理</h2><p>在 Terraform 中，一个具体的资源或者服务称之为一个 resource，比如一台 ECS 实例，一个 VPC 网络，一个 SLB 实例。每个特定的 resource 包含了若干可用于描述对应资源或者服务的属性字段，通过这些字段来定义一个完整的资源或者服务，比如实例的名称（name），实例的规格（instance_type），VPC 或者 VSwitch 的网段（cidr_block）等。<br>定义一个 Resource 的语法非常简单，通过 resource 关键字声明，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 定义一个 ECS 实例</span><br><span class="line">resource &quot;alicloud_instance&quot; &quot;default&quot; &#123;</span><br><span class="line">  image_id        = &quot;ubuntu_16_04_64_20G_alibase_20190620.vhd&quot;</span><br><span class="line">  instance_type   = &quot;ecs.sn1ne.large&quot;</span><br><span class="line">  instance_name   = &quot;my-first-vm&quot;</span><br><span class="line">  system_disk_category = &quot;cloud_ssd&quot;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>其中 alicloud_instance 为 资源类型（Resource Type)，定义这个资源的类型，告诉 Terraform 这个 Resource 是阿里云的 ECS 实例还是阿里云的 VPC。</li>
+<li>default 为 资源名称(Resource Name)，资源名称在同一个模块中必须唯一，主要用于供其他资源引用该资源。</li>
+<li>大括号里面的 block 块为 配置参数(Configuration Arguments)，定义资源的属性，比如 ECS 实例的规格、镜像、名称等。<br>显然这个 Terraform 模板的功能为在阿里云上创建一个 ECS 实例，镜像 ID 为 ubuntu_16_04_64_20G_alibase_20190620.vhd ，规格为 ecs.sn1ne.large ，自定义了实例名称和系统盘的类型。</li>
+</ul>
+<p>除此之外，在 Terraform 中，一个资源与另一个资源的关系也定义为一个资源，如一块云盘与一台 ECS 实例的挂载，一个弹性 IP（EIP）与一台 ECS 或者 SLB 实例的绑定关系。这样定义的好处是，一方面资源架构非常清晰，另一方面，当模板中有若干个 EIP 需要与若干台 ECS 实例绑定时，只需要通过 Terraform 的 count 功能就可以在无需编写大量重复代码的前提下实现绑定功能。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">resource &quot;alicloud_instance&quot; &quot;default&quot; &#123;</span><br><span class="line">  count = 5</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line">resource &quot;alicloud_eip&quot; &quot;default&quot; &#123;</span><br><span class="line">    count = 5</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line">resource &quot;alicloud_eip_association&quot; &quot;default&quot; &#123;</span><br><span class="line">  count = 5</span><br><span class="line">  instance_id = alicloud_instance.default[count.index].id</span><br><span class="line">  allocation_id = alicloud_eip.default[count.index].id</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>显然这个 Terraform 模板的功能为在阿里云上创建 5 个 ECS 实例和 5 个弹性 IP，并将它们一一绑定。</p>
+<h2 id="Data-Source：基础设施资源和服务的查询"><a href="#Data-Source：基础设施资源和服务的查询" class="headerlink" title="Data Source：基础设施资源和服务的查询"></a>Data Source：基础设施资源和服务的查询</h2><p>对资源的查询是运维人员或者系统最常使用的操作，比如，查看某个 region 下有哪些可用区，某个可用区下有哪些实例规格，每个 region 下有哪些镜像，当前账号下有多少机器等，通过对资源及其资源属性的查询可以帮助和引导开发者进行下一步的操作。</p>
+<p>除此之外，在编写 Terraform 模板时，Resource 使用的参数有些是固定的静态变量，但有些情况下可能参数变量不确定或者参数可能随时变化。比如我们创建 ECS 实例时，通常需要指定我们自己的镜像 ID 和实例规格，但我们的模板可能随时更新，如果在代码中指定 ImageID 和 Instance，则一旦我们更新镜像模板就需要重新修改代码。<br>在 Terraform 中，Data Source 提供的就是一个查询资源的功能，每个 data source 实现对一个资源的动态查询，Data Souce 的结果可以认为是动态变量，只有在运行时才能知道变量的值。</p>
+<p>Data Sources 通过 data 关键字声明，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Images data source for image_id</span><br><span class="line">data &quot;alicloud_images&quot; &quot;default&quot; &#123;</span><br><span class="line">  most_recent = true</span><br><span class="line">  owners      = &quot;system&quot;</span><br><span class="line">  name_regex  = &quot;^ubuntu_18.*_64&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">data &quot;alicloud_zones&quot; &quot;default&quot; &#123;</span><br><span class="line">  available_resource_creation = &quot;VSwitch&quot;</span><br><span class="line">  enable_details              = true</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Instance_types data source for instance_type</span><br><span class="line">data &quot;alicloud_instance_types&quot; &quot;default&quot; &#123;</span><br><span class="line">  availability_zone = data.alicloud_zones.default.zones.0.id</span><br><span class="line">  cpu_core_count    = 2</span><br><span class="line">  memory_size       = 4</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;alicloud_instance&quot; &quot;web&quot; &#123;</span><br><span class="line">  image_id        = data.alicloud_images.default.images[0].id</span><br><span class="line">  instance_type   = data.alicloud_instance_types.default.instance_types[0].id</span><br><span class="line">  instance_name   = &quot;my-first-vm&quot;</span><br><span class="line">  system_disk_category = &quot;cloud_ssd&quot;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如上例子中的 ECS Instance 没有指定镜像 ImageID 和实例规格，而是通过 data 引用，Terraform 运行时将首先根据镜像名称前缀选择系统镜像，如果同时有多个镜像满足条件，则选择最新的镜像。实例规格也是类似，在某个可用区下选择 2 核 4G 的实例规格进行返回。</p>
+<h2 id="State：保存资源关系及其属性文件的数据库"><a href="#State：保存资源关系及其属性文件的数据库" class="headerlink" title="State：保存资源关系及其属性文件的数据库"></a>State：保存资源关系及其属性文件的数据库</h2><p>Terraform 创建和管理的所有资源都会保存到自己的数据库上，这个数据库不是通常意义上的数据库（MySQL，Redis 等），而是一个文件名为 terraform.tfstate 的文件，在 Terraform 中称之为 state ，默认存放在执行 Terraform 命令的本地目录下。这个 state 文件非常重要，如果该文件损坏，Terraform 将认为已创建的资源被破坏或者需要重建（实际的云资源通常不会受到影响），因为在执行 Terraform 命令是，Terraform 将会利用该文件与当前目录下的模板做 Diff 比较，如果出现不一致，Terraform 将按照模板中的定义重新创建或者修改已有资源，直到没有 Diff，因此可以认为 Terraform 是一个有状态服务。</p>
+<p>当涉及多人协作时不仅需要拷贝模板，还需要拷贝 state 文件，这无形中增加了维护成本。幸运的是，目前 Terraform 支持把 state 文件放到远端的存储服务 OSS 上或者 consul 上，来实现 state 文件和模板代码的分离。具体细节可参考 官方文档 Remote State 或者关注后续文章的详细介绍。</p>
+<h2 id="Backend：存放-State-文件的载体"><a href="#Backend：存放-State-文件的载体" class="headerlink" title="Backend：存放 State 文件的载体"></a>Backend：存放 State 文件的载体</h2><p>正如上节提到，Terraform 在创建完资源后，会将资源的属性存放在一个 state 文件中，这个文件可以存放在本地也可以存放在远端。存放 state 文件的载体就是 Backend 。<br>Backend 分为本地（local）和远端（remote）两类，默认为本地。远端的类型也非常多，目前官方网站提供的有 13 种，并且阿里云的 OSS就位列其中。</p>
+<p>使用远端的 Backend，既可以降低多人协作时对 state 的维护成本，而且可以将一些敏感的数据存放在远端，保证了数据的安全性。</p>
+<h2 id="Provisioner：在机器上执行操作的组件"><a href="#Provisioner：在机器上执行操作的组件" class="headerlink" title="Provisioner：在机器上执行操作的组件"></a>Provisioner：在机器上执行操作的组件</h2><p>Provisioner 通常用来在本地机器或者登陆远程主机执行相关的操作，如 local-exec provisioner 用来执行本地的命令， chef provisioner 用来在远程机器安装，配置和执行 chef client， remote-exec provisioner 用来登录远程主机并在其上执行命令。</p>
+<p>Provisioner 通常跟 Provider 一起配合使用，provider 用来创建和管理资源，provisioner 在创建好的机器上执行各种操作。</p>
+<h1 id="Terraform-常用命令详解"><a href="#Terraform-常用命令详解" class="headerlink" title="Terraform 常用命令详解"></a>Terraform 常用命令详解</h1><blockquote>
+<p>terraform plan：资源的预览</p>
+</blockquote>
+<p><code>plan</code> 命令用于对模板中所定义资源的预览，主要用于以下几个场景：</p>
+<ul>
+<li>预览当前模板中定义的资源是否符合管理预期，和 Markdown 的预览功能类似</li>
+<li>如果当前模板已经存在对应的 state 文件，那么 plan 命令将会展示模板定义与 state 文件内容的 diff 结果，如果有变更，将会展示结果并在下方显示出来</li>
+<li>对 DataSource 而言，执行 plan 命令，即可直接获取并输出所要查询的资源及其属性<blockquote>
+<p>terraform apply：资源的新建和变更</p>
+</blockquote>
+</li>
+</ul>
+<p><code>apply</code> 命令用于实际资源的新建和变更操作，为了安全起见，在命令运行过程中增加了人工交互的过程，即需要手动确认是否继续，当然也可以通过 –auto-approve 参数来跳过人工确认的过程。<br><code>apply </code>命令适用于以下几种场景：</p>
+<ul>
+<li>创建新的资源</li>
+<li>通过修改模板参数来修改资源的属性</li>
+<li>如果从当前模板中删除某个资源的定义， apply 命令会将该资源彻底删除。可以理解为“资源的移除也是一种变更”<blockquote>
+<p>terraform show：资源的展示</p>
+</blockquote>
+</li>
+</ul>
+<p><code>show </code>命令用于展示当前 state 中所有被管理的资源及其所有属性值。</p>
+<blockquote>
+<p>terraform destroy：资源的释放</p>
+</blockquote>
+<p>destroy 命令用于对资源的释放操作，为了安全起见，在命令执行过程中，也增加了人工交互的过程，如果想要跳过手动确认操作，可以通过 –force 参数来跳过。<br><code>terraform destroy</code> 默认会释放当前模板中定义的所有资源，如果只想释放其中某个特定的资源，可以通过参数 -target=&lt;资源类型&gt;.&lt;资源名称&gt; 来指定。</p>
+<blockquote>
+<p>terraform import：资源的导入</p>
+</blockquote>
+<p><code>import</code> 命令用于将存量的云资源导入到 terraform state 中，进而加入到 Terraform 的管理体系中，适用的场景包含但不限于以下几种：</p>
+<ul>
+<li>从来没有使用 Terraform 管控过任何资源，当前所有的存量云资源都是通过控制台，阿里云 CLI，ROS 或者直接调用 API 创建和管理的，现在想要切换为 Terraform 管理</li>
+<li>在不影响资源正常使用的前提下，重构资源模板中的资源定义</li>
+<li>阿里云的 Provider 进行了兼容性升级，新版 Provider 对原有模板中所定义的资源支持了更多的参数，需要把最新的参数同步进来<blockquote>
+<p>terraform taint: 标记资源为“被污染”</p>
+</blockquote>
+</li>
+</ul>
+<p><code>taint</code> 命令用于把某个资源标记为 “被污染” 状态，当再次执行 apply 命令时，这个被污染的资源将会被先释放，然后再创建一个新的，相当于对这个特定资源做了先删除后新建的操作。<br>命令的详细格式为： <code>terraform taint &lt;资源类型&gt;.&lt;资源名称&gt;</code> ，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform taint alicloud_vswitch.this</span><br><span class="line">Resource instance alicloud_vswitch.this has been marked as tainted.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>terraform untaint：取消 “被污染” 标记<br><code>untaint</code> 命令是 <code>taint</code> 的逆向操作，用于取消 “被污染” 标记，使其恢复到正常的状态。命令的详细格式和 taint 类似为： <code>terraform untaint &lt;资源类型&gt;.&lt;资源名称&gt;</code> ，如：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform untaint alicloud_vswitch.this</span><br><span class="line">Resource instance alicloud_vswitch.this has been successfully untainted.</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>terraform output：打印出参及其值<br>如果在模板中显示定义了 output 参数，那么这个 output 的值将在 apply 命令之后展示，但 plan 命令并不会展示，如果想随时随地快速查看 output 的值，可以直接运行命令 terraform output :</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform output</span><br><span class="line">vswitchId = vsw-gw8gl31wz********</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Terraform-资源管理常用命令"><a href="#Terraform-资源管理常用命令" class="headerlink" title="Terraform 资源管理常用命令"></a>Terraform 资源管理常用命令</h2><p>Terraform 对资源状态的管理，实际上是对 State 文件中数据的管理。State 文件保存了当前 Terraform 管理的所有资源及其属性，内容都是由 Terraform 自动存储的，为了保证数据的完整性，不建议手动修改 State 内容。</p>
+<p>对 State 数据的操作可以通过 <code>terraform state</code> 命令来完成。</p>
+<blockquote>
+<p>terraform state list：列出当前 state 中的所有资源</p>
+</blockquote>
+<p><code>state list</code> 按照 <code>&lt;资源类型&gt;.&lt;资源名称&gt;</code> 的格式列出当前 state 中存在的所有资源（包括 datasource），如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform state list</span><br><span class="line">data.alicloud_slbs.default</span><br><span class="line">alicloud_vpc.default</span><br><span class="line">alicloud_vswitch.this</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>terraform state show：展示某一个资源的属性<br><code>state show</code> 命令按照 Key-Value 的格式展示出特定资源的所有属性及其值，命令的完整格式为 <code>terraform state show &lt;资源类型&gt;.&lt;资源名称&gt;</code> ，如：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform state show alicloud_vswitch.this</span><br><span class="line"># alicloud_vswitch.this:</span><br><span class="line">resource &quot;alicloud_vswitch&quot; &quot;this&quot; &#123;</span><br><span class="line">    availability_zone = &quot;eu-central-1a&quot;</span><br><span class="line">    cidr_block        = &quot;172.16.0.0/24&quot;</span><br><span class="line">    id                = &quot;vsw-gw8gl31wz******&quot;</span><br><span class="line">    vpc_id            = &quot;vpc-gw8calnzt*******&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>terraform state pull：获取当前 state 内容并展示<br><code>state pull</code> 命令用于原样展示当前 state 文件数据，类似与 Shell 下的 cat 命令，如`</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform state pull</span><br><span class="line">&#123;</span><br><span class="line">  &quot;version&quot;: 4,</span><br><span class="line">  &quot;terraform_version&quot;: &quot;0.12.8&quot;,</span><br><span class="line">  &quot;serial&quot;: 615,</span><br><span class="line">  &quot;lineage&quot;: &quot;39aeeee2-b3bd-8130-c897-2cb8595cf8ec&quot;,</span><br><span class="line">  &quot;outputs&quot;: &#123;</span><br><span class="line">    ***</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;resources&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;mode&quot;: &quot;data&quot;,</span><br><span class="line">      &quot;type&quot;: &quot;alicloud_slbs&quot;,</span><br><span class="line">      &quot;name&quot;: &quot;default&quot;,</span><br><span class="line">      &quot;provider&quot;: &quot;provider.alicloud&quot;,</span><br><span class="line">      ***</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;mode&quot;: &quot;managed&quot;,</span><br><span class="line">      &quot;type&quot;: &quot;alicloud_vpc&quot;,</span><br><span class="line">      &quot;name&quot;: &quot;default&quot;,</span><br><span class="line">      &quot;provider&quot;: &quot;provider.alicloud&quot;,</span><br><span class="line">      ***</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>terraform state rm：移除特定的资源</p>
+</blockquote>
+<p><code>state rm</code> 命令用于将 state 中的某个资源移除，但是实际上并不会真正删除这个资源，命令格式为： <code>terraform state rm &lt;资源类型&gt;.&lt;资源名称&gt;</code> ，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">terraform state rm alicloud_vswitch.this</span><br><span class="line">Removed alicloud_vswitch.this</span><br><span class="line">Successfully removed 1 resource instance(s).</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>移除后，如果模板内容不变并且再次执行 <code>apply</code> 命令，将会新增一个同样的资源。移除后的资源可以再次通过 <code>import</code> 命令再次加入。</p>
+<blockquote>
+<p>terraform state mv：变更特定资源的存放地址</p>
+</blockquote>
+<p>如果想调整某个资源所在的 state 文件，可以通过 <code>state mv</code> 命令来完成，类似于 Shell 下的 mv 命令，这个命令的使用有多种选项，可以通过命令 <code>terraform state mv --help</code> 来详细了解。本文只介绍最常用的一种： <code>terraform state mv --state=./terraform.tfstate --state-out=&lt;target path&gt;/terraform-target.tfstate &lt;资源类型&gt;.&lt;资源名称 A&gt; &lt;资源类型&gt;.&lt;资源名称 B&gt;</code> ，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform state mv -state-out=../tf.tfstate alicloud_vswitch.this alicloud_vswitch.default</span><br><span class="line">Move &quot;alicloud_vswitch.this&quot; to &quot;alicloud_vswitch.default&quot;</span><br><span class="line">Successfully moved 1 object(s).</span><br></pre></td></tr></table></figure>
+
+<p>如上命令省略了默认的 –state=./terraform.tfstate 选项，命令最终的结果是将当前 State 中的 VSwitch 资源移动到了上层目录下名为 tf.tfstate 的 State 中，并且将 VSwitch 的资源名称由 “this” 改为了 “default”</p>
+<blockquote>
+<p>terraform refresh：刷新当前 state<br><code>refresh</code> 命令可以用来刷新当前 State 的内容，即再次调用 API 并拉取最新的数据写入到 state 文件中。</p>
+</blockquote>
+<h2 id="Terraform-其他常用命令"><a href="#Terraform-其他常用命令" class="headerlink" title="Terraform 其他常用命令"></a>Terraform 其他常用命令</h2><p>除了资源和 state 的管理命令外，还有一些常用的应用在模板，provider 等多种场景下的命令。</p>
+<blockquote>
+<p>terraform init：初始化加载模块<br><code>init</code> 用来初始化加载所需的模块，包括 Provider，Provisioner，Module 等。</p>
+</blockquote>
+<blockquote>
+<p>terraform graph：输出当前模板定义的资源关系图<br>每个模板定义的资源之间都存在不同程度的关系，如果想看资源关系大图，可以使用命令 <code>terraform graph</code> :</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform graph</span><br><span class="line">digraph &#123;</span><br><span class="line">        compound = &quot;true&quot;</span><br><span class="line">        newrank = &quot;true&quot;</span><br><span class="line">        subgraph &quot;root&quot; &#123;</span><br><span class="line">                &quot;[root] alicloud_vpc.default&quot; [label = &quot;alicloud_vpc.default&quot;, shape = &quot;box&quot;]</span><br><span class="line">                &quot;[root] alicloud_vswitch.this&quot; [label = &quot;alicloud_vswitch.this&quot;, shape = &quot;box&quot;]</span><br><span class="line">                ******</span><br><span class="line">                &quot;[root] output.vswitchId&quot; -&gt; &quot;[root] alicloud_vswitch.this&quot;</span><br><span class="line">                &quot;[root] provider.alicloud (close)&quot; -&gt; &quot;[root] alicloud_vswitch.this&quot;</span><br><span class="line">                                ******</span><br><span class="line">                &quot;[root] root&quot; -&gt; &quot;[root] provider.alicloud (close)&quot;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该命令的结果还可以通过命令 <code>terraform graph | dot -Tsvg &gt; graph.svg</code> 直接导出为一张图片（需要提前安装 graphviz： <code>brew install graphviz</code> ）</p>
+<blockquote>
+<p>terraform validate：验证模板语法是否正确</p>
+</blockquote>
+<p>Terraform 模板的编写需要遵循其自身定义的一套简单的语法规范，编写完成后，如果想要检查模板是否存在语法错误或者在运行 <code>plan</code> 和 <code>apply</code> 命令的时候报语法错误，可以通过执行命令 <code>terraform validate</code> 来检查和定位错误出现的详细位置和原因。</p>
+<h1 id="Terraform-使用技巧"><a href="#Terraform-使用技巧" class="headerlink" title="Terraform 使用技巧"></a>Terraform 使用技巧</h1><h2 id="避免秘钥直接写入-tf-文件中"><a href="#避免秘钥直接写入-tf-文件中" class="headerlink" title="避免秘钥直接写入 tf 文件中"></a>避免秘钥直接写入 tf 文件中</h2><p>将秘钥直接填入到. tf 文件中是十分不安全的，在多用户共同管理资源时，不建议把云 API 的秘钥直接写到源代码里，以免一不小心更新到公开的版本中，造成安全风险。</p>
+<p>涉及 Provider API 中的如数据库用户名密码也同样建议以变量的形式加载，避免明文写入到文件中</p>
+<h2 id="善用-variable-环境变量"><a href="#善用-variable-环境变量" class="headerlink" title="善用 variable 环境变量"></a>善用 variable 环境变量</h2><p>variable 是 Terraform 重要的配置文件类型之一，通过对变量的集中管理，用户可以在资源文件中直接引用变量名进行赋值</p>
+<p>创建 variable.tf 文件，配置可用区参数的默认值 ap-guangzhou-1</p>
+<h2 id="善用-output-做-debug"><a href="#善用-output-做-debug" class="headerlink" title="善用 output 做 debug"></a>善用 output 做 debug</h2><p>terraform output 指令用于从状态文件中提取输出变量的值。</p>
+<p>标准语法：terraform output [options] [NAME]</p>
+<ul>
+<li><code>option</code>s 用来填写 <code>output</code> 的 flags</li>
+<li><code>NAME</code> 用来指定要输出的变量的值，默认为根模块的所有输出<br>配置 <code>output.tf</code> 文件，设置要输出的内容，案例中设置查看服务器的 <code>id</code> 和 <code>availability_zone </code>两个参数</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># output.tf</span><br><span class="line"></span><br><span class="line">output &quot;cvm_az&quot; &#123;</span><br><span class="line">  value = &quot;$&#123;tencentcloud_instance.cvm.availability_zone&#125;&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">output &quot;cvm_id&quot; &#123;</span><br><span class="line">  value = &quot;$&#123;tencentcloud_instance.cvm.id&#125;&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行 terraform apply，output 的内容自动显示出来，也可以执行 terraform output 再次查看全部输出内容</p>
+<p>通过 terraform output cvm_id 单独查看服务器 id</p>
+<p>有关 output 指令的更多信息，请点击<a href="https://www.terraform.io/docs/cli/commands/output.html">这里</a></p>
+<h2 id="terrafrom-目录布局"><a href="#terrafrom-目录布局" class="headerlink" title="terrafrom 目录布局"></a>terrafrom 目录布局</h2><p>Terraform 运行时会读取工作目录中所有的 <code>*.tf</code>, <code>*.tfvars</code> 文件，所以我们不必把所有的东西都写在单个文件中去，应按职责分列在不同的文件中，例如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">provider.tf             ### provider 配置</span><br><span class="line"></span><br><span class="line">terraform.tfvars        ### 配置 provider 要用到的变量</span><br><span class="line"></span><br><span class="line">varable.tf              ### 通用变量</span><br><span class="line"></span><br><span class="line">resource.tf             ### 资源定义</span><br><span class="line"></span><br><span class="line">data.tf                 ### 包文件定义</span><br><span class="line"></span><br><span class="line">output.tf               ### 输出</span><br></pre></td></tr></table></figure>
+
+<h2 id="其它-terraform-指令"><a href="#其它-terraform-指令" class="headerlink" title="其它 terraform 指令"></a>其它 terraform 指令</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># providers 有新版本时可以使用以下指令更新脚本，获取最新的应用</span><br><span class="line">terraform init -upgrade</span><br><span class="line"></span><br><span class="line"># 限制并发操作的数量，默认是 10</span><br><span class="line">terraform apply -parallelism=5</span><br></pre></td></tr></table></figure>
+
+<h1 id="Terraform-的缺点"><a href="#Terraform-的缺点" class="headerlink" title="Terraform 的缺点"></a>Terraform 的缺点</h1><ul>
+<li>状态管理还处在原始社会</li>
+</ul>
+<p>terraform 作为开源软件，既有开源软件生态丰富代码相对难以作恶的优势，又有开源软件只重视核心功能不注重使用体验的劣势。状态管理是 terraform 用户体验非常差的一环，由于没有提供相应的功能，客户只能自己在开源社区里找解决方案。目前 AWS 上常用的方案是 S3 存储状态，DynamoDB 用来加锁。如果多个人部署同一个 stack，就简单粗暴去 DynamoDB 拿锁排队。这个方案在几十人的团队里还凑合，再大就会有很多麻烦。另外，状态的版本控制基本上没有，或者只能通过状态使用的存储引擎做版本管理（比如 S3），很难有效对比多个状态之间的差异。</p>
+<ul>
+<li>缺乏可视化的手段</li>
+</ul>
+<p>状态的展示，部署的过程其实都可能做很多可视化的事情，让整体体验更好一些，减少 devOps 犯错。然而，terraform 并没有做这方面的支持。</p>
+<ul>
+<li>代码表现力一般</li>
+</ul>
+<p>实际使用的时候，我们总是绕不开循环，条件判断，以及对字符串做处理等各种工作，变量的定义重复使用，而 terraform 在这一块的表现力太弱，使得代码写起来非常冗长，很多时候不得不复制粘贴。</p>
+<ul>
+<li>terraform cloud 才刚刚起步</li>
+</ul>
+<p>头两个问题也许在 terraform 的企业版中得到解决，但我和我的公司都没有用过，具体怎么样不得而知。也许是迫于接下来要讲的 pulumi 在市场上的压力吧，Hashicorp 在 2019 年 9 月开始提供 terraform cloud，为小团队解决这两个问题。然而，目前 terraform cloud 更像是一个临时拼凑的 CI 工具，还有很长的路要走。</p>
+]]></content>
+      <categories>
+        <category>devops</category>
+      </categories>
+      <tags>
+        <tag>tech</tag>
+        <tag>shell</tag>
+        <tag>IaC</tag>
+        <tag>terraform</tag>
         <tag>Tech</tag>
       </tags>
   </entry>
@@ -2521,356 +2871,6 @@
         <tag>tech</tag>
         <tag>shell</tag>
         <tag>Linux</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一文让你shell从狗熊变英雄</title>
-    <url>/2023/08/13/shell_from_zero_to_hero./</url>
-    <content><![CDATA[<ul>
-<li><a href="#shell-from-zero-to-hero">Shell From Zero To Hero</a><ul>
-<li><a href="#simply-level-questions">Simply Level Questions</a><ul>
-<li><a href="#%E6%8F%8F%E8%BF%B0linux%E7%B3%BB%E7%BB%9F%E4%BB%8E%E5%BC%80%E6%9C%BA%E5%88%B0%E7%99%BB%E9%99%86%E7%95%8C%E9%9D%A2%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B">描述Linux系统从开机到登陆界面的启动过程</a></li>
-<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E8%BD%AF%E9%93%BE%E6%8E%A5%E5%92%8C%E7%A1%AC%E9%93%BE%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB">描述Linux下软链接和硬链接的区别</a></li>
-</ul>
-</li>
-<li><a href="#middle-level-questions">Middle Level Questions</a><ul>
-<li><a href="#%E6%8F%8F%E8%BF%B0linux%E4%B8%8B%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4%E7%9A%84%E5%8E%9F%E7%90%86">描述Linux下文件删除的原理</a></li>
-<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fgrep%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式grep高级参数的使用</a></li>
-<li><a href="#%E8%AF%B7%E7%AE%80%E8%BF%B0%E5%9F%BA%E7%A1%80%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8Fsed%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8">请简述基础正则表达式sed高级参数的使用</a></li>
-<li><a href="#awk">AWK</a></li>
-</ul>
-</li>
-<li><a href="#hard-level-questions">Hard Level Questions</a></li>
-</ul>
-</li>
-</ul>
-<h1 id="Shell-From-Zero-To-Hero"><a href="#Shell-From-Zero-To-Hero" class="headerlink" title="Shell From Zero To Hero"></a>Shell From Zero To Hero</h1><h2 id="Simply-Level-Questions"><a href="#Simply-Level-Questions" class="headerlink" title="Simply Level Questions"></a>Simply Level Questions</h2><h3 id="描述Linux系统从开机到登陆界面的启动过程"><a href="#描述Linux系统从开机到登陆界面的启动过程" class="headerlink" title="描述Linux系统从开机到登陆界面的启动过程"></a>描述Linux系统从开机到登陆界面的启动过程</h3><ul>
-<li><p>开机BIOS自检，加载硬盘。</p>
-</li>
-<li><p>读取MBR,MBR引导。</p>
-</li>
-<li><p>grub引导菜单(Boot Loader)。</p>
-</li>
-<li><p>加载内核kernel。</p>
-</li>
-<li><p>启动init进程，依据inittab文件设定运行级别</p>
-</li>
-<li><p>init进程，执行rc.sysinit文件。</p>
-</li>
-<li><p>启动内核模块，执行不同级别的脚本程序。</p>
-</li>
-<li><p>执行/etc/rc.d/rc.local</p>
-</li>
-<li><p>启动mingetty，进入系统登陆界面。</p>
-</li>
-</ul>
-<h3 id="描述Linux下软链接和硬链接的区别"><a href="#描述Linux下软链接和硬链接的区别" class="headerlink" title="描述Linux下软链接和硬链接的区别"></a>描述Linux下软链接和硬链接的区别</h3><p>在Linux系统中，链接分为两种，一种是硬链接（Hard link），另一种称为符号链接或软链接（Symbolic Link）。</p>
-<ul>
-<li><p>默认不带参数的情况下，ln创建的是硬链接，带-s参数的ln命令创建的是软链接。</p>
-</li>
-<li><p>硬链接文件与源文件的inode节点号相同，而软链接文件的inode节点号，与源文件不同，</p>
-</li>
-<li><p>ln命令不能对目录创建硬链接，但可以创建软链接。对目录的软链接会经常使用到。</p>
-</li>
-<li><p>删除软链接文件，对源文件和硬链接文件无任何影响。</p>
-</li>
-<li><p>删除文件的硬链接文件，对源文件及软链接文件无任何影响。</p>
-</li>
-<li><p>删除链接文件的源文件，对硬链接文件无影响，会导致其软链接失效（红底白字闪烁状）。</p>
-</li>
-<li><p>同时删除源文件及其硬链接文件，整个文件才会被真正的删除。</p>
-</li>
-<li><p>很多硬件设备的快照功能，使用的就是类似硬链接的原理。</p>
-</li>
-<li><p>软链接可以跨文件系统，硬链接不可以跨文件系统。</p>
-</li>
-</ul>
-<h2 id="Middle-Level-Questions"><a href="#Middle-Level-Questions" class="headerlink" title="Middle Level Questions"></a>Middle Level Questions</h2><h3 id="描述Linux下文件删除的原理"><a href="#描述Linux下文件删除的原理" class="headerlink" title="描述Linux下文件删除的原理"></a>描述Linux下文件删除的原理</h3><p>Linux系统是通过link的数量来控制文件删除的，只有当一个文件不存在任何link的时候，这个文件才会被删除。一般来说每个文件两个link计数器来控制i_count和i_nlink。当一个文件被一个程序占用的时候i_count就加1。当文件的硬链接多一个的时候i_nlink也加1。删除一个文件，就是让这个文件，没有进程占用，同时i_link数量为0。</p>
-<h3 id="请简述基础正则表达式grep高级参数的使用"><a href="#请简述基础正则表达式grep高级参数的使用" class="headerlink" title="请简述基础正则表达式grep高级参数的使用"></a>请简述基础正则表达式grep高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">常用参数：</span><br><span class="line"></span><br><span class="line">-v排除匹配内容，</span><br><span class="line"></span><br><span class="line">-e支持扩展的正则表达式，</span><br><span class="line"></span><br><span class="line">-i忽略大小写，</span><br><span class="line"></span><br><span class="line">-o输出匹配的内容（只是一块，不是行），</span><br><span class="line"></span><br><span class="line">--color=auto 匹配内容显示颜色，</span><br><span class="line"></span><br><span class="line">-n 在行首显示行号。</span><br><span class="line"></span><br><span class="line">特殊字符注意事项：</span><br><span class="line"></span><br><span class="line">^(尖括号)word ：表示搜索以word开头的内容。</span><br><span class="line"></span><br><span class="line">word$ 表示搜索以word结尾的内容。</span><br><span class="line"></span><br><span class="line">^$    表示的是空行，不是空格。</span><br><span class="line"></span><br><span class="line">.     代表且只能代表任意一个字符。非正则表达式其他功能（当前目录，加载文件）</span><br><span class="line"></span><br><span class="line">/     转义字符，让有着特殊身份意义的字符，脱掉马甲，还原原型。例如.只表示原始小数点意义。</span><br><span class="line"></span><br><span class="line">*    表示重复0个或多个前面的一个字符。不代表所有。</span><br><span class="line"></span><br><span class="line">.*   表示匹配所有的字符。^.*表示以任意字符开头。</span><br><span class="line"></span><br><span class="line">[任意字符如abc] 匹配字符集内任意一个字符[a-z]。 [^abc] ^在中括号里面是非的意思，不包含之意。意思就是不包含a或b或c的行。</span><br><span class="line"></span><br><span class="line">&#123;n，m&#125; 表示重复n到m次前一个字符。｛n｝至少n次，多了不限。｛n｝N次，｛，m｝至多m次，少了不限。</span><br><span class="line"></span><br><span class="line">注：使用grep或sed要对｛｝转义。即｛｝.egrep就不需要转义了。</span><br></pre></td></tr></table></figure>
-
-<h3 id="请简述基础正则表达式sed高级参数的使用"><a href="#请简述基础正则表达式sed高级参数的使用" class="headerlink" title="请简述基础正则表达式sed高级参数的使用"></a>请简述基础正则表达式sed高级参数的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">解答：</span><br><span class="line"></span><br><span class="line">-n取消默认输出</span><br><span class="line"></span><br><span class="line">-p 打印</span><br><span class="line"></span><br><span class="line">-d删除</span><br><span class="line"></span><br><span class="line">-e允许多项编辑</span><br><span class="line"></span><br><span class="line">sed取行，要特别注意sed -n &#x27;s###g&#x27; filename 的使用，sed的( )的功能可以记住正则表达式的一部分，其中，为第一个记住的模式即第一个小括号中的匹配内容，第二记住的模式，即第二个小括号中的匹配内容，sed最多可以记住9个。</span><br><span class="line"></span><br><span class="line">实际字符的选取最好要唯一，正则表达式是贪婪的，总是尽可能的匹配更远的符合匹配的内容。另外注意字符串中的空格。</span><br></pre></td></tr></table></figure>
-
-<h3 id="AWK"><a href="#AWK" class="headerlink" title="AWK"></a>AWK</h3><h2 id="Hard-Level-Questions"><a href="#Hard-Level-Questions" class="headerlink" title="Hard Level Questions"></a>Hard Level Questions</h2>]]></content>
-      <categories>
-        <category>sysadmin</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>shell</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python程序获取股票信息</title>
-    <url>/2022/07/04/stock-price/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>股票里面“打板” 用于炒每日涨停的股票从而短期买入卖出获取暴利<br>短线客们需要每日复盘，了解每个股票的人气，游资的情况，股票板块的热点等信息，因此每天获取涨停股票数据尤为重要</p>
-<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><ul>
-<li>python3</li>
-<li>akshare</li>
-<li>GoogleSheet</li>
-</ul>
-<p>Reference </p>
-<p><a href="https://akshare.xyz/data/stock/stock.html">https://akshare.xyz/data/stock/stock.html</a></p>
-<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><ul>
-<li>code example</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#! /usr/local/bin/python</span><br><span class="line"></span><br><span class="line">import akshare as ak</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line">import argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def getArgs():</span><br><span class="line">    parser = argparse.ArgumentParser(description=&#x27;涨停股票信息&#x27;)</span><br><span class="line">    parser.add_argument(&#x27;-d&#x27;, &#x27;--date&#x27;, help=&#x27;date&#x27;, dest=&quot;date&quot;,required=True)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    return args</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">	args = getArgs()</span><br><span class="line"></span><br><span class="line">today = datetime.datetime.now().strftime(&quot;%Y%m%d&quot;)</span><br><span class="line">#连板股票池</span><br><span class="line">#表头 代码  名称  总市值  最后封板时间  连板数  所属行业</span><br><span class="line"></span><br><span class="line">stock_zt_pool_em_df = ak.stock_zt_pool_em(date=args.date)</span><br><span class="line">lb_data = stock_zt_pool_em_df.iloc[:,[1,2,7,11,14,15]]</span><br><span class="line">lb = lb_data.sort_values(by=[&#x27;连板数&#x27;], ascending=False)</span><br><span class="line">lb_filter = lb.loc[lb[&#x27;连板数&#x27;] &gt;= 2]</span><br><span class="line">print(args.date + &quot;涨停股票池&quot;)</span><br><span class="line">print(lb)</span><br><span class="line">lb.to_csv(&#x27;daily_lb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#炸板股池</span><br><span class="line"># 接口: stock_zt_pool_zbgc_em</span><br><span class="line"># 目标地址: http://quote.eastmoney.com/ztb/detail#type=zbgc</span><br><span class="line"># 描述: 东方财富网-行情中心-涨停板行情-炸板股池</span><br><span class="line"></span><br><span class="line">stock_zt_pool_zbgc_em_df = ak.stock_zt_pool_zbgc_em(date=args.date)</span><br><span class="line">zb = stock_zt_pool_zbgc_em_df.iloc[:,[1,2,3,7,11,15]]</span><br><span class="line">print( args.date + &quot;炸板股池&quot; )</span><br><span class="line">print(zb)</span><br><span class="line">zb.to_csv(&#x27;daily_zb_&#123;&#125;.txt&#x27;.format(args.date),index=False)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>导出的数据经过google sheet 处理生成图片即可用于分享<br><img src="/2022/07/04/stock-price/stock_price.png" alt="image"></li>
-</ul>
-]]></content>
-      <categories>
-        <category>tech</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>personal</tag>
-        <tag>python</tag>
-        <tag>Tech</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一文熟悉云配置神器terraform</title>
-    <url>/2021/08/26/terraform-notes/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><hr>
-<p>随着Infrastructure as Code (IaC)在DEVOPS领域的兴起，如果是 Ansible 是偏向 Infrastructure Configuration tool，那么 Terraform 就是 Infrastructure provision tool，两者本身并不冲突，而 Terraform 使用 declarative 声明式语法结合强大的生态让我们在多云 (AWS, Azure, GCP, Alibaba Cloud, TencentCloud) 和容器化 (K8s) 环境中可以更加地从容应对新挑战实现统一的资源编排管理。</p>
-<h1 id="文章更新日记"><a href="#文章更新日记" class="headerlink" title="文章更新日记"></a>文章更新日记</h1><hr>
-<p>2021-09-07 - 添加terraform缺点，完结<br>2021-08-26 - 初始化文章</p>
-<h1 id="Terraform-简介"><a href="#Terraform-简介" class="headerlink" title="Terraform 简介"></a>Terraform 简介</h1><hr>
-<p>Terraform is a tool for building, changing, and versioning infrastructure safely and efficiently. Terraform can manage existing and popular service providers as well as custom in-house solutions.</p>
-<p>Configuration files describe to Terraform the components needed to run a single application or your entire datacenter. Terraform generates an execution plan describing what it will do to reach the desired state, and then executes it to build the described infrastructure. As the configuration changes, Terraform is able to determine what changed and create incremental execution plans which can be applied.</p>
-<p>The infrastructure Terraform can manage includes low-level components such as compute instances, storage, and networking, as well as high-level components such as DNS entries, SaaS features, etc.</p>
-<p>开发公司：HashiCorp<br>入门手册：<a href="https://www.terraform.io/intro/index.html">https://www.terraform.io/intro/index.html</a><br>官网: <a href="https://www.terraform.io/">https://www.terraform.io/</a><br>Github：<a href="https://github.com/hashicorp/terraform">https://github.com/hashicorp/terraform</a><br>功能：terraform 用于各类基础设施资源初始化，支持多种云平台，支持第三方服务对接<br>Terraform 语言： HCL(HashiCorp Configuration Language)<br>Advantages of Infrastructure as Code</p>
-<ul>
-<li>Easily Repeatable</li>
-<li>Easily Readable</li>
-<li>Operational certainty with “terraform plan”</li>
-<li>Standardized environment builds</li>
-<li>Quickly provisioned development environments</li>
-<li>Disaster Recovery</li>
-</ul>
-<p>关于 Terraform 开源版你需要知道的缺点，官方的介绍视频主要通过引入 Terraform Enterprise 企业版来解决以下问题</p>
-<ul>
-<li>状态管理非常原始</li>
-<li>缺乏状态可视化</li>
-<li>版本控制困难，需要借助github等第三方工具</li>
-<li>语言内的语法使用困难，比如循环，变量定义</li>
-</ul>
-<p><a href="https://learn.hashicorp.com/tutorials/terraform/infrastructure-as-code">Introduction to Infrastructure as Code with Terraform</a></p>
-<h1 id="Terraform-安装"><a href="#Terraform-安装" class="headerlink" title="Terraform 安装"></a>Terraform 安装</h1><hr>
-<p>安装 Terraform，找到与你系统 <a href="https://www.terraform.io/downloads.html">匹配的软件包</a> 然后下载。Terraform 被打包为一个 zip 归档文件。</p>
-<p>下载完 zip 文件以后，解压这个包。Terraform 是一个名为 terraform 的独立文件。包里其他所有的文件都可以安全删掉，Terraform 依然可以正常工作。</p>
-<p>最后一步确保 terraform 二进制文件在 PATH 上可用。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># copy binary file to path</span><br><span class="line">mv ~/Downloads/terraform /usr/local/bin/</span><br><span class="line"></span><br><span class="line"># macOS can use Homebrew to install terraform</span><br><span class="line">brew install hashicorp/tap/terraform</span><br><span class="line"></span><br><span class="line"># terraform</span><br><span class="line">Usage: terraform [-version] [-help] &lt;command&gt; [args]</span><br><span class="line"></span><br><span class="line">The available commands for execution are listed below.</span><br><span class="line">The most common, useful commands are shown first, followed by</span><br><span class="line">less common or more advanced commands. If you&#x27;re just getting</span><br><span class="line">started with Terraform, stick with the common commands. For the</span><br><span class="line">other commands, please read the help and docs before usage.</span><br><span class="line"></span><br><span class="line">Common commands:</span><br><span class="line">    apply              Builds or changes infrastructure</span><br><span class="line">    console            Interactive console for Terraform interpolations</span><br><span class="line">    destroy            Destroy Terraform-managed infrastructure</span><br><span class="line">    env                Workspace management</span><br><span class="line">    fmt                Rewrites config files to canonical format</span><br><span class="line">    get                Download and install modules for the configuration</span><br><span class="line">    graph              Create a visual graph of Terraform resources</span><br><span class="line">    import             Import existing infrastructure into Terraform</span><br><span class="line">    init               Initialize a Terraform working directory</span><br><span class="line">    login              Obtain and save credentials for a remote host</span><br><span class="line">    logout             Remove locally-stored credentials for a remote host</span><br><span class="line">    output             Read an output from a state file</span><br><span class="line">    plan               Generate and show an execution plan</span><br><span class="line">    providers          Prints a tree of the providers used in the configuration</span><br><span class="line">    refresh            Update local state file against real resources</span><br><span class="line">    show               Inspect Terraform state or plan</span><br><span class="line">    taint              Manually mark a resource for recreation</span><br><span class="line">    untaint            Manually unmark a resource as tainted</span><br><span class="line">    validate           Validates the Terraform files</span><br><span class="line">    version            Prints the Terraform version</span><br><span class="line">    workspace          Workspace management</span><br><span class="line"></span><br><span class="line">All other commands:</span><br><span class="line">    0.12upgrade        Rewrites pre-0.12 module source code for v0.12</span><br><span class="line">    0.13upgrade        Rewrites pre-0.13 module source code for v0.13</span><br><span class="line">    debug              Debug output management (experimental)</span><br><span class="line">    force-unlock       Manually unlock the terraform state</span><br><span class="line">    push               Obsolete command for Terraform Enterprise legacy (v1)</span><br><span class="line">    state              Advanced state management</span><br></pre></td></tr></table></figure>
-
-<p>可以在云上创建 Terraform 的账户，并创建 AccessKey，通过环境变量存放认证信息</p>
-<p>terrafrom 常用命令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">terraform init   # 初始化工作目录，也是我们第一个要执行的命令</span><br><span class="line">terraform plan   # 生成计划</span><br><span class="line">terraform appy   # 提交请求</span><br><span class="line">terraform state  # 查看资源状态</span><br><span class="line">terraform graph  # 生成执行计划图</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://learn.hashicorp.com/tutorials/terraform/install-cli">官方安装terraform文档</a></p>
-<h1 id="Terraform-in-60-Seconds"><a href="#Terraform-in-60-Seconds" class="headerlink" title="Terraform in 60 Seconds"></a>Terraform in 60 Seconds</h1><hr>
-<p>A Terraform configuration is a series of code blocks that define your intended infrastructure. You’ll run the terraform command against this file to create an Nginx webserver and view the default Nginx web page.</p>
-<h2 id="View-code"><a href="#View-code" class="headerlink" title="View code"></a>View code</h2><p>First, open the <code>main.tf</code> file in the text editor by clicking this link.</p>
-<p><code>main.tf</code></p>
-<p>You don’t have to edit or even understand the code. It defines two resources: a Docker disk image that packages the Nginx webserver, and a Docker container that gives it a name and runs it on port 80.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># pwd</span><br><span class="line">/root/terraform-docker-demo</span><br><span class="line"></span><br><span class="line"># vim main.tf</span><br><span class="line">terraform &#123;</span><br><span class="line">  required_providers &#123;</span><br><span class="line">    docker = &#123;</span><br><span class="line">      source = &quot;terraform-providers/docker&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  required_version = &quot;&gt;= 0.13&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;docker_image&quot; &quot;nginx&quot; &#123;</span><br><span class="line">  name = &quot;nginx:latest&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;docker_container&quot; &quot;nginx&quot; &#123;</span><br><span class="line">  image = docker_image.nginx.latest</span><br><span class="line">  name  = &quot;tutorial&quot;</span><br><span class="line">  ports &#123;</span><br><span class="line">    internal = 80</span><br><span class="line">    external = 80</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Init"><a href="#Init" class="headerlink" title="Init"></a>Init</h2><p>All Terraform workflows start with the <code>init</code> command. Terraform searches the configuration for both direct and indirect references to providers (such as Docker). Terraform then attempts to load the required plugins.</p>
-<p><code>terraform init</code></p>
-<h2 id="Apply"><a href="#Apply" class="headerlink" title="Apply"></a>Apply</h2><p>Now provision the webserver by running <code>apply</code>.<br><code>terraform apply</code></p>
-<p>You will be asked to confirm. Type <code>yes</code> and press <code>ENTER</code>. It may take up to 30 seconds. A message will display confirmation that it succeeded.</p>
-<h2 id="Verify"><a href="#Verify" class="headerlink" title="Verify"></a>Verify</h2><p>Visit this URL to view the default Nginx web page which is now live</p>
-<p>Alternatively, you can examine Docker’s process list. You will see the tutorial container which is running Nginx<br><code>docker ps</code></p>
-<h2 id="Destroy"><a href="#Destroy" class="headerlink" title="Destroy"></a>Destroy</h2><p>To remove the Nginx webserver as defined in <code>main.tf</code>, run the destroy command.<br><code>terraform destroy</code><br>You will be prompted to confirm. Type <code>yes</code> and press <code>ENTER</code>.</p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>You have now created and destroyed your first Terraform resources! Terraform supports hundreds of ecosystem providers, from major cloud resources to content delivery networks and more.</p>
-<p>Continue learning at HashiCorp Learn and the Terraform API documentation or discuss with others on the Terraform forum.</p>
-<h1 id="Terraform-关键概念"><a href="#Terraform-关键概念" class="headerlink" title="Terraform 关键概念"></a>Terraform 关键概念</h1><p>Terraform 管理的是云资源</p>
-<p>基础设施和服务统称为资源，如私有网络、子网、物理机、虚拟机、镜像、专线、NAT 网关等等都可以称之为资源，也是开发和运维人员经常要打交道要维护的东西。</p>
-<p>资源分为两种 resource 和 data</p>
-<p>resource<br>这类资源一般是抽象的真正的云服务资源，支持增删改，如私有网络、NAT 网关、虚拟机实例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">resource &quot; 资源类名 &amp; quot; &quot; 映射到本地的唯一资源名 &amp; quot; &#123;</span><br><span class="line">  参数 = 值</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><em>data</em><br>这类资源一般是固定的一些可读资源，如可用区列表、镜像列表。大部分情况下，resource 资源也会封装一个 data source 方法，用于资源查询</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">data &quot; 资源类名 &amp; quot; &quot; 映射到本地的唯一资源名 &amp; quot; &#123;</span><br><span class="line">  参数 = 值</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在使用 Terraform 的过程中，通常接触到很多名词，如 configuration，provider，resource，datasource，state，backend，provisioner 等，本文将一一跟大家介绍这些概念。</p>
-<h2 id="Configuration：基础设施的定义和描述"><a href="#Configuration：基础设施的定义和描述" class="headerlink" title="Configuration：基础设施的定义和描述"></a>Configuration：基础设施的定义和描述</h2><p>“基础设施即代码（Infrastructure as Code）”，这里的 Code 就是对基础设施资源的代码定义和描述，也就是通过代码表达我们想要管理的资源。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># VPC 资源</span><br><span class="line">resource &quot;alicloud_vpc&quot; &quot;vpc&quot; &#123;</span><br><span class="line">        name          = &quot;tf_vpc&quot;</span><br><span class="line">        cidr_block  = &quot;172.16.0.0/16&quot;</span><br><span class="line">&#125;</span><br><span class="line"># VSwitch 资源</span><br><span class="line">resource &quot;alicloud_vswitch&quot; &quot;vswitch&quot; &#123;</span><br><span class="line">        vpc_id            = alicloud_vpc.vpc.id</span><br><span class="line">        cidr_block        = &quot;172.16.1.0/24&quot;</span><br><span class="line">        availability_zone = &quot;cn-beijing-a&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对所有资源的代码描述都需要定义在一个以 tf 结尾的文件用于 Terraform 加载和解析，这个文件我们称之为 “Terraform 模板” 或者“Configuration”。</p>
-<h2 id="Provider：基础设施管理组件"><a href="#Provider：基础设施管理组件" class="headerlink" title="Provider：基础设施管理组件"></a>Provider：基础设施管理组件</h2><p>Terraform 通常用于对云上基础设施，如虚拟机，网络资源，容器资源，存储资源等的创建，更新，查看，删除等管理动作，也可以实现对物理机的管理，如安装软件，部署应用等</p>
-<p>【Provider】 是一个与 Open API 直接交互的后端驱动，Terraform 就是通过 Provider 来完成对基础设施资源的管理的。不同的基础设施提供商都需要提供一个 Provider 来实现对自家基础设施的统一管理。目前 Terraform 目前支持超过 160 多种的 providers，大多数云平台的 Provider 插件均已经实现了，AWS对应的 Provider 为 <code>aws</code> 。</p>
-<p>在操作环境中，Terraform 和 Provider 是两个独立存在的 package，当运行 Terraform 时，Terraform 会根据用户模板中指定的 provider 或者 resource／datasource 的标志自动的下载模板所用到的所有 provider，并将其放在执行目录下的一个隐藏目录 .terraform 下。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">provider &quot;aws&quot; &#123;</span><br><span class="line">    profile = &quot;default&quot;</span><br><span class="line">    access_key = var.access_key</span><br><span class="line">    secret_key = var.secret_key</span><br><span class="line">    region     = var.region</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>模板中显示指定了一个AWS的 Provider，指定了需要管理资源的 region，指定了当前这个模板的标识。<br>通常 Provider 都包含两个主要元素 resource 和 data source。</p>
-<h2 id="Resource：基础设施资源和服务的管理"><a href="#Resource：基础设施资源和服务的管理" class="headerlink" title="Resource：基础设施资源和服务的管理"></a>Resource：基础设施资源和服务的管理</h2><p>在 Terraform 中，一个具体的资源或者服务称之为一个 resource，比如一台 ECS 实例，一个 VPC 网络，一个 SLB 实例。每个特定的 resource 包含了若干可用于描述对应资源或者服务的属性字段，通过这些字段来定义一个完整的资源或者服务，比如实例的名称（name），实例的规格（instance_type），VPC 或者 VSwitch 的网段（cidr_block）等。<br>定义一个 Resource 的语法非常简单，通过 resource 关键字声明，如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 定义一个 ECS 实例</span><br><span class="line">resource &quot;alicloud_instance&quot; &quot;default&quot; &#123;</span><br><span class="line">  image_id        = &quot;ubuntu_16_04_64_20G_alibase_20190620.vhd&quot;</span><br><span class="line">  instance_type   = &quot;ecs.sn1ne.large&quot;</span><br><span class="line">  instance_name   = &quot;my-first-vm&quot;</span><br><span class="line">  system_disk_category = &quot;cloud_ssd&quot;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>其中 alicloud_instance 为 资源类型（Resource Type)，定义这个资源的类型，告诉 Terraform 这个 Resource 是阿里云的 ECS 实例还是阿里云的 VPC。</li>
-<li>default 为 资源名称(Resource Name)，资源名称在同一个模块中必须唯一，主要用于供其他资源引用该资源。</li>
-<li>大括号里面的 block 块为 配置参数(Configuration Arguments)，定义资源的属性，比如 ECS 实例的规格、镜像、名称等。<br>显然这个 Terraform 模板的功能为在阿里云上创建一个 ECS 实例，镜像 ID 为 ubuntu_16_04_64_20G_alibase_20190620.vhd ，规格为 ecs.sn1ne.large ，自定义了实例名称和系统盘的类型。</li>
-</ul>
-<p>除此之外，在 Terraform 中，一个资源与另一个资源的关系也定义为一个资源，如一块云盘与一台 ECS 实例的挂载，一个弹性 IP（EIP）与一台 ECS 或者 SLB 实例的绑定关系。这样定义的好处是，一方面资源架构非常清晰，另一方面，当模板中有若干个 EIP 需要与若干台 ECS 实例绑定时，只需要通过 Terraform 的 count 功能就可以在无需编写大量重复代码的前提下实现绑定功能。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">resource &quot;alicloud_instance&quot; &quot;default&quot; &#123;</span><br><span class="line">  count = 5</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line">resource &quot;alicloud_eip&quot; &quot;default&quot; &#123;</span><br><span class="line">    count = 5</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line">resource &quot;alicloud_eip_association&quot; &quot;default&quot; &#123;</span><br><span class="line">  count = 5</span><br><span class="line">  instance_id = alicloud_instance.default[count.index].id</span><br><span class="line">  allocation_id = alicloud_eip.default[count.index].id</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>显然这个 Terraform 模板的功能为在阿里云上创建 5 个 ECS 实例和 5 个弹性 IP，并将它们一一绑定。</p>
-<h2 id="Data-Source：基础设施资源和服务的查询"><a href="#Data-Source：基础设施资源和服务的查询" class="headerlink" title="Data Source：基础设施资源和服务的查询"></a>Data Source：基础设施资源和服务的查询</h2><p>对资源的查询是运维人员或者系统最常使用的操作，比如，查看某个 region 下有哪些可用区，某个可用区下有哪些实例规格，每个 region 下有哪些镜像，当前账号下有多少机器等，通过对资源及其资源属性的查询可以帮助和引导开发者进行下一步的操作。</p>
-<p>除此之外，在编写 Terraform 模板时，Resource 使用的参数有些是固定的静态变量，但有些情况下可能参数变量不确定或者参数可能随时变化。比如我们创建 ECS 实例时，通常需要指定我们自己的镜像 ID 和实例规格，但我们的模板可能随时更新，如果在代码中指定 ImageID 和 Instance，则一旦我们更新镜像模板就需要重新修改代码。<br>在 Terraform 中，Data Source 提供的就是一个查询资源的功能，每个 data source 实现对一个资源的动态查询，Data Souce 的结果可以认为是动态变量，只有在运行时才能知道变量的值。</p>
-<p>Data Sources 通过 data 关键字声明，如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Images data source for image_id</span><br><span class="line">data &quot;alicloud_images&quot; &quot;default&quot; &#123;</span><br><span class="line">  most_recent = true</span><br><span class="line">  owners      = &quot;system&quot;</span><br><span class="line">  name_regex  = &quot;^ubuntu_18.*_64&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">data &quot;alicloud_zones&quot; &quot;default&quot; &#123;</span><br><span class="line">  available_resource_creation = &quot;VSwitch&quot;</span><br><span class="line">  enable_details              = true</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Instance_types data source for instance_type</span><br><span class="line">data &quot;alicloud_instance_types&quot; &quot;default&quot; &#123;</span><br><span class="line">  availability_zone = data.alicloud_zones.default.zones.0.id</span><br><span class="line">  cpu_core_count    = 2</span><br><span class="line">  memory_size       = 4</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;alicloud_instance&quot; &quot;web&quot; &#123;</span><br><span class="line">  image_id        = data.alicloud_images.default.images[0].id</span><br><span class="line">  instance_type   = data.alicloud_instance_types.default.instance_types[0].id</span><br><span class="line">  instance_name   = &quot;my-first-vm&quot;</span><br><span class="line">  system_disk_category = &quot;cloud_ssd&quot;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如上例子中的 ECS Instance 没有指定镜像 ImageID 和实例规格，而是通过 data 引用，Terraform 运行时将首先根据镜像名称前缀选择系统镜像，如果同时有多个镜像满足条件，则选择最新的镜像。实例规格也是类似，在某个可用区下选择 2 核 4G 的实例规格进行返回。</p>
-<h2 id="State：保存资源关系及其属性文件的数据库"><a href="#State：保存资源关系及其属性文件的数据库" class="headerlink" title="State：保存资源关系及其属性文件的数据库"></a>State：保存资源关系及其属性文件的数据库</h2><p>Terraform 创建和管理的所有资源都会保存到自己的数据库上，这个数据库不是通常意义上的数据库（MySQL，Redis 等），而是一个文件名为 terraform.tfstate 的文件，在 Terraform 中称之为 state ，默认存放在执行 Terraform 命令的本地目录下。这个 state 文件非常重要，如果该文件损坏，Terraform 将认为已创建的资源被破坏或者需要重建（实际的云资源通常不会受到影响），因为在执行 Terraform 命令是，Terraform 将会利用该文件与当前目录下的模板做 Diff 比较，如果出现不一致，Terraform 将按照模板中的定义重新创建或者修改已有资源，直到没有 Diff，因此可以认为 Terraform 是一个有状态服务。</p>
-<p>当涉及多人协作时不仅需要拷贝模板，还需要拷贝 state 文件，这无形中增加了维护成本。幸运的是，目前 Terraform 支持把 state 文件放到远端的存储服务 OSS 上或者 consul 上，来实现 state 文件和模板代码的分离。具体细节可参考 官方文档 Remote State 或者关注后续文章的详细介绍。</p>
-<h2 id="Backend：存放-State-文件的载体"><a href="#Backend：存放-State-文件的载体" class="headerlink" title="Backend：存放 State 文件的载体"></a>Backend：存放 State 文件的载体</h2><p>正如上节提到，Terraform 在创建完资源后，会将资源的属性存放在一个 state 文件中，这个文件可以存放在本地也可以存放在远端。存放 state 文件的载体就是 Backend 。<br>Backend 分为本地（local）和远端（remote）两类，默认为本地。远端的类型也非常多，目前官方网站提供的有 13 种，并且阿里云的 OSS就位列其中。</p>
-<p>使用远端的 Backend，既可以降低多人协作时对 state 的维护成本，而且可以将一些敏感的数据存放在远端，保证了数据的安全性。</p>
-<h2 id="Provisioner：在机器上执行操作的组件"><a href="#Provisioner：在机器上执行操作的组件" class="headerlink" title="Provisioner：在机器上执行操作的组件"></a>Provisioner：在机器上执行操作的组件</h2><p>Provisioner 通常用来在本地机器或者登陆远程主机执行相关的操作，如 local-exec provisioner 用来执行本地的命令， chef provisioner 用来在远程机器安装，配置和执行 chef client， remote-exec provisioner 用来登录远程主机并在其上执行命令。</p>
-<p>Provisioner 通常跟 Provider 一起配合使用，provider 用来创建和管理资源，provisioner 在创建好的机器上执行各种操作。</p>
-<h1 id="Terraform-常用命令详解"><a href="#Terraform-常用命令详解" class="headerlink" title="Terraform 常用命令详解"></a>Terraform 常用命令详解</h1><blockquote>
-<p>terraform plan：资源的预览</p>
-</blockquote>
-<p><code>plan</code> 命令用于对模板中所定义资源的预览，主要用于以下几个场景：</p>
-<ul>
-<li>预览当前模板中定义的资源是否符合管理预期，和 Markdown 的预览功能类似</li>
-<li>如果当前模板已经存在对应的 state 文件，那么 plan 命令将会展示模板定义与 state 文件内容的 diff 结果，如果有变更，将会展示结果并在下方显示出来</li>
-<li>对 DataSource 而言，执行 plan 命令，即可直接获取并输出所要查询的资源及其属性<blockquote>
-<p>terraform apply：资源的新建和变更</p>
-</blockquote>
-</li>
-</ul>
-<p><code>apply</code> 命令用于实际资源的新建和变更操作，为了安全起见，在命令运行过程中增加了人工交互的过程，即需要手动确认是否继续，当然也可以通过 –auto-approve 参数来跳过人工确认的过程。<br><code>apply </code>命令适用于以下几种场景：</p>
-<ul>
-<li>创建新的资源</li>
-<li>通过修改模板参数来修改资源的属性</li>
-<li>如果从当前模板中删除某个资源的定义， apply 命令会将该资源彻底删除。可以理解为“资源的移除也是一种变更”<blockquote>
-<p>terraform show：资源的展示</p>
-</blockquote>
-</li>
-</ul>
-<p><code>show </code>命令用于展示当前 state 中所有被管理的资源及其所有属性值。</p>
-<blockquote>
-<p>terraform destroy：资源的释放</p>
-</blockquote>
-<p>destroy 命令用于对资源的释放操作，为了安全起见，在命令执行过程中，也增加了人工交互的过程，如果想要跳过手动确认操作，可以通过 –force 参数来跳过。<br><code>terraform destroy</code> 默认会释放当前模板中定义的所有资源，如果只想释放其中某个特定的资源，可以通过参数 -target=&lt;资源类型&gt;.&lt;资源名称&gt; 来指定。</p>
-<blockquote>
-<p>terraform import：资源的导入</p>
-</blockquote>
-<p><code>import</code> 命令用于将存量的云资源导入到 terraform state 中，进而加入到 Terraform 的管理体系中，适用的场景包含但不限于以下几种：</p>
-<ul>
-<li>从来没有使用 Terraform 管控过任何资源，当前所有的存量云资源都是通过控制台，阿里云 CLI，ROS 或者直接调用 API 创建和管理的，现在想要切换为 Terraform 管理</li>
-<li>在不影响资源正常使用的前提下，重构资源模板中的资源定义</li>
-<li>阿里云的 Provider 进行了兼容性升级，新版 Provider 对原有模板中所定义的资源支持了更多的参数，需要把最新的参数同步进来<blockquote>
-<p>terraform taint: 标记资源为“被污染”</p>
-</blockquote>
-</li>
-</ul>
-<p><code>taint</code> 命令用于把某个资源标记为 “被污染” 状态，当再次执行 apply 命令时，这个被污染的资源将会被先释放，然后再创建一个新的，相当于对这个特定资源做了先删除后新建的操作。<br>命令的详细格式为： <code>terraform taint &lt;资源类型&gt;.&lt;资源名称&gt;</code> ，如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform taint alicloud_vswitch.this</span><br><span class="line">Resource instance alicloud_vswitch.this has been marked as tainted.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>terraform untaint：取消 “被污染” 标记<br><code>untaint</code> 命令是 <code>taint</code> 的逆向操作，用于取消 “被污染” 标记，使其恢复到正常的状态。命令的详细格式和 taint 类似为： <code>terraform untaint &lt;资源类型&gt;.&lt;资源名称&gt;</code> ，如：</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform untaint alicloud_vswitch.this</span><br><span class="line">Resource instance alicloud_vswitch.this has been successfully untainted.</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>terraform output：打印出参及其值<br>如果在模板中显示定义了 output 参数，那么这个 output 的值将在 apply 命令之后展示，但 plan 命令并不会展示，如果想随时随地快速查看 output 的值，可以直接运行命令 terraform output :</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform output</span><br><span class="line">vswitchId = vsw-gw8gl31wz********</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="Terraform-资源管理常用命令"><a href="#Terraform-资源管理常用命令" class="headerlink" title="Terraform 资源管理常用命令"></a>Terraform 资源管理常用命令</h2><p>Terraform 对资源状态的管理，实际上是对 State 文件中数据的管理。State 文件保存了当前 Terraform 管理的所有资源及其属性，内容都是由 Terraform 自动存储的，为了保证数据的完整性，不建议手动修改 State 内容。</p>
-<p>对 State 数据的操作可以通过 <code>terraform state</code> 命令来完成。</p>
-<blockquote>
-<p>terraform state list：列出当前 state 中的所有资源</p>
-</blockquote>
-<p><code>state list</code> 按照 <code>&lt;资源类型&gt;.&lt;资源名称&gt;</code> 的格式列出当前 state 中存在的所有资源（包括 datasource），如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform state list</span><br><span class="line">data.alicloud_slbs.default</span><br><span class="line">alicloud_vpc.default</span><br><span class="line">alicloud_vswitch.this</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>terraform state show：展示某一个资源的属性<br><code>state show</code> 命令按照 Key-Value 的格式展示出特定资源的所有属性及其值，命令的完整格式为 <code>terraform state show &lt;资源类型&gt;.&lt;资源名称&gt;</code> ，如：</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform state show alicloud_vswitch.this</span><br><span class="line"># alicloud_vswitch.this:</span><br><span class="line">resource &quot;alicloud_vswitch&quot; &quot;this&quot; &#123;</span><br><span class="line">    availability_zone = &quot;eu-central-1a&quot;</span><br><span class="line">    cidr_block        = &quot;172.16.0.0/24&quot;</span><br><span class="line">    id                = &quot;vsw-gw8gl31wz******&quot;</span><br><span class="line">    vpc_id            = &quot;vpc-gw8calnzt*******&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>terraform state pull：获取当前 state 内容并展示<br><code>state pull</code> 命令用于原样展示当前 state 文件数据，类似与 Shell 下的 cat 命令，如`</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform state pull</span><br><span class="line">&#123;</span><br><span class="line">  &quot;version&quot;: 4,</span><br><span class="line">  &quot;terraform_version&quot;: &quot;0.12.8&quot;,</span><br><span class="line">  &quot;serial&quot;: 615,</span><br><span class="line">  &quot;lineage&quot;: &quot;39aeeee2-b3bd-8130-c897-2cb8595cf8ec&quot;,</span><br><span class="line">  &quot;outputs&quot;: &#123;</span><br><span class="line">    ***</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;resources&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;mode&quot;: &quot;data&quot;,</span><br><span class="line">      &quot;type&quot;: &quot;alicloud_slbs&quot;,</span><br><span class="line">      &quot;name&quot;: &quot;default&quot;,</span><br><span class="line">      &quot;provider&quot;: &quot;provider.alicloud&quot;,</span><br><span class="line">      ***</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;mode&quot;: &quot;managed&quot;,</span><br><span class="line">      &quot;type&quot;: &quot;alicloud_vpc&quot;,</span><br><span class="line">      &quot;name&quot;: &quot;default&quot;,</span><br><span class="line">      &quot;provider&quot;: &quot;provider.alicloud&quot;,</span><br><span class="line">      ***</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>terraform state rm：移除特定的资源</p>
-</blockquote>
-<p><code>state rm</code> 命令用于将 state 中的某个资源移除，但是实际上并不会真正删除这个资源，命令格式为： <code>terraform state rm &lt;资源类型&gt;.&lt;资源名称&gt;</code> ，如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">terraform state rm alicloud_vswitch.this</span><br><span class="line">Removed alicloud_vswitch.this</span><br><span class="line">Successfully removed 1 resource instance(s).</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>移除后，如果模板内容不变并且再次执行 <code>apply</code> 命令，将会新增一个同样的资源。移除后的资源可以再次通过 <code>import</code> 命令再次加入。</p>
-<blockquote>
-<p>terraform state mv：变更特定资源的存放地址</p>
-</blockquote>
-<p>如果想调整某个资源所在的 state 文件，可以通过 <code>state mv</code> 命令来完成，类似于 Shell 下的 mv 命令，这个命令的使用有多种选项，可以通过命令 <code>terraform state mv --help</code> 来详细了解。本文只介绍最常用的一种： <code>terraform state mv --state=./terraform.tfstate --state-out=&lt;target path&gt;/terraform-target.tfstate &lt;资源类型&gt;.&lt;资源名称 A&gt; &lt;资源类型&gt;.&lt;资源名称 B&gt;</code> ，如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform state mv -state-out=../tf.tfstate alicloud_vswitch.this alicloud_vswitch.default</span><br><span class="line">Move &quot;alicloud_vswitch.this&quot; to &quot;alicloud_vswitch.default&quot;</span><br><span class="line">Successfully moved 1 object(s).</span><br></pre></td></tr></table></figure>
-
-<p>如上命令省略了默认的 –state=./terraform.tfstate 选项，命令最终的结果是将当前 State 中的 VSwitch 资源移动到了上层目录下名为 tf.tfstate 的 State 中，并且将 VSwitch 的资源名称由 “this” 改为了 “default”</p>
-<blockquote>
-<p>terraform refresh：刷新当前 state<br><code>refresh</code> 命令可以用来刷新当前 State 的内容，即再次调用 API 并拉取最新的数据写入到 state 文件中。</p>
-</blockquote>
-<h2 id="Terraform-其他常用命令"><a href="#Terraform-其他常用命令" class="headerlink" title="Terraform 其他常用命令"></a>Terraform 其他常用命令</h2><p>除了资源和 state 的管理命令外，还有一些常用的应用在模板，provider 等多种场景下的命令。</p>
-<blockquote>
-<p>terraform init：初始化加载模块<br><code>init</code> 用来初始化加载所需的模块，包括 Provider，Provisioner，Module 等。</p>
-</blockquote>
-<blockquote>
-<p>terraform graph：输出当前模板定义的资源关系图<br>每个模板定义的资源之间都存在不同程度的关系，如果想看资源关系大图，可以使用命令 <code>terraform graph</code> :</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ terraform graph</span><br><span class="line">digraph &#123;</span><br><span class="line">        compound = &quot;true&quot;</span><br><span class="line">        newrank = &quot;true&quot;</span><br><span class="line">        subgraph &quot;root&quot; &#123;</span><br><span class="line">                &quot;[root] alicloud_vpc.default&quot; [label = &quot;alicloud_vpc.default&quot;, shape = &quot;box&quot;]</span><br><span class="line">                &quot;[root] alicloud_vswitch.this&quot; [label = &quot;alicloud_vswitch.this&quot;, shape = &quot;box&quot;]</span><br><span class="line">                ******</span><br><span class="line">                &quot;[root] output.vswitchId&quot; -&gt; &quot;[root] alicloud_vswitch.this&quot;</span><br><span class="line">                &quot;[root] provider.alicloud (close)&quot; -&gt; &quot;[root] alicloud_vswitch.this&quot;</span><br><span class="line">                                ******</span><br><span class="line">                &quot;[root] root&quot; -&gt; &quot;[root] provider.alicloud (close)&quot;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>该命令的结果还可以通过命令 <code>terraform graph | dot -Tsvg &gt; graph.svg</code> 直接导出为一张图片（需要提前安装 graphviz： <code>brew install graphviz</code> ）</p>
-<blockquote>
-<p>terraform validate：验证模板语法是否正确</p>
-</blockquote>
-<p>Terraform 模板的编写需要遵循其自身定义的一套简单的语法规范，编写完成后，如果想要检查模板是否存在语法错误或者在运行 <code>plan</code> 和 <code>apply</code> 命令的时候报语法错误，可以通过执行命令 <code>terraform validate</code> 来检查和定位错误出现的详细位置和原因。</p>
-<h1 id="Terraform-使用技巧"><a href="#Terraform-使用技巧" class="headerlink" title="Terraform 使用技巧"></a>Terraform 使用技巧</h1><h2 id="避免秘钥直接写入-tf-文件中"><a href="#避免秘钥直接写入-tf-文件中" class="headerlink" title="避免秘钥直接写入 tf 文件中"></a>避免秘钥直接写入 tf 文件中</h2><p>将秘钥直接填入到. tf 文件中是十分不安全的，在多用户共同管理资源时，不建议把云 API 的秘钥直接写到源代码里，以免一不小心更新到公开的版本中，造成安全风险。</p>
-<p>涉及 Provider API 中的如数据库用户名密码也同样建议以变量的形式加载，避免明文写入到文件中</p>
-<h2 id="善用-variable-环境变量"><a href="#善用-variable-环境变量" class="headerlink" title="善用 variable 环境变量"></a>善用 variable 环境变量</h2><p>variable 是 Terraform 重要的配置文件类型之一，通过对变量的集中管理，用户可以在资源文件中直接引用变量名进行赋值</p>
-<p>创建 variable.tf 文件，配置可用区参数的默认值 ap-guangzhou-1</p>
-<h2 id="善用-output-做-debug"><a href="#善用-output-做-debug" class="headerlink" title="善用 output 做 debug"></a>善用 output 做 debug</h2><p>terraform output 指令用于从状态文件中提取输出变量的值。</p>
-<p>标准语法：terraform output [options] [NAME]</p>
-<ul>
-<li><code>option</code>s 用来填写 <code>output</code> 的 flags</li>
-<li><code>NAME</code> 用来指定要输出的变量的值，默认为根模块的所有输出<br>配置 <code>output.tf</code> 文件，设置要输出的内容，案例中设置查看服务器的 <code>id</code> 和 <code>availability_zone </code>两个参数</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># output.tf</span><br><span class="line"></span><br><span class="line">output &quot;cvm_az&quot; &#123;</span><br><span class="line">  value = &quot;$&#123;tencentcloud_instance.cvm.availability_zone&#125;&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">output &quot;cvm_id&quot; &#123;</span><br><span class="line">  value = &quot;$&#123;tencentcloud_instance.cvm.id&#125;&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>执行 terraform apply，output 的内容自动显示出来，也可以执行 terraform output 再次查看全部输出内容</p>
-<p>通过 terraform output cvm_id 单独查看服务器 id</p>
-<p>有关 output 指令的更多信息，请点击<a href="https://www.terraform.io/docs/cli/commands/output.html">这里</a></p>
-<h2 id="terrafrom-目录布局"><a href="#terrafrom-目录布局" class="headerlink" title="terrafrom 目录布局"></a>terrafrom 目录布局</h2><p>Terraform 运行时会读取工作目录中所有的 <code>*.tf</code>, <code>*.tfvars</code> 文件，所以我们不必把所有的东西都写在单个文件中去，应按职责分列在不同的文件中，例如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">provider.tf             ### provider 配置</span><br><span class="line"></span><br><span class="line">terraform.tfvars        ### 配置 provider 要用到的变量</span><br><span class="line"></span><br><span class="line">varable.tf              ### 通用变量</span><br><span class="line"></span><br><span class="line">resource.tf             ### 资源定义</span><br><span class="line"></span><br><span class="line">data.tf                 ### 包文件定义</span><br><span class="line"></span><br><span class="line">output.tf               ### 输出</span><br></pre></td></tr></table></figure>
-
-<h2 id="其它-terraform-指令"><a href="#其它-terraform-指令" class="headerlink" title="其它 terraform 指令"></a>其它 terraform 指令</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># providers 有新版本时可以使用以下指令更新脚本，获取最新的应用</span><br><span class="line">terraform init -upgrade</span><br><span class="line"></span><br><span class="line"># 限制并发操作的数量，默认是 10</span><br><span class="line">terraform apply -parallelism=5</span><br></pre></td></tr></table></figure>
-
-<h1 id="Terraform-的缺点"><a href="#Terraform-的缺点" class="headerlink" title="Terraform 的缺点"></a>Terraform 的缺点</h1><ul>
-<li>状态管理还处在原始社会</li>
-</ul>
-<p>terraform 作为开源软件，既有开源软件生态丰富代码相对难以作恶的优势，又有开源软件只重视核心功能不注重使用体验的劣势。状态管理是 terraform 用户体验非常差的一环，由于没有提供相应的功能，客户只能自己在开源社区里找解决方案。目前 AWS 上常用的方案是 S3 存储状态，DynamoDB 用来加锁。如果多个人部署同一个 stack，就简单粗暴去 DynamoDB 拿锁排队。这个方案在几十人的团队里还凑合，再大就会有很多麻烦。另外，状态的版本控制基本上没有，或者只能通过状态使用的存储引擎做版本管理（比如 S3），很难有效对比多个状态之间的差异。</p>
-<ul>
-<li>缺乏可视化的手段</li>
-</ul>
-<p>状态的展示，部署的过程其实都可能做很多可视化的事情，让整体体验更好一些，减少 devOps 犯错。然而，terraform 并没有做这方面的支持。</p>
-<ul>
-<li>代码表现力一般</li>
-</ul>
-<p>实际使用的时候，我们总是绕不开循环，条件判断，以及对字符串做处理等各种工作，变量的定义重复使用，而 terraform 在这一块的表现力太弱，使得代码写起来非常冗长，很多时候不得不复制粘贴。</p>
-<ul>
-<li>terraform cloud 才刚刚起步</li>
-</ul>
-<p>头两个问题也许在 terraform 的企业版中得到解决，但我和我的公司都没有用过，具体怎么样不得而知。也许是迫于接下来要讲的 pulumi 在市场上的压力吧，Hashicorp 在 2019 年 9 月开始提供 terraform cloud，为小团队解决这两个问题。然而，目前 terraform cloud 更像是一个临时拼凑的 CI 工具，还有很长的路要走。</p>
-]]></content>
-      <categories>
-        <category>devops</category>
-      </categories>
-      <tags>
-        <tag>tech</tag>
-        <tag>shell</tag>
-        <tag>IaC</tag>
-        <tag>terraform</tag>
         <tag>Tech</tag>
       </tags>
   </entry>
