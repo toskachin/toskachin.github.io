@@ -6,7 +6,7 @@
   <link href="https://toskachin.github.io/atom.xml" rel="self"/>
   
   <link href="https://toskachin.github.io/"/>
-  <updated>2023-10-23T11:25:31.615Z</updated>
+  <updated>2024-01-20T10:02:59.128Z</updated>
   <id>https://toskachin.github.io/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>阶段性总结</title>
+    <link href="https://toskachin.github.io/2024/01/20/20240120_change_memo/"/>
+    <id>https://toskachin.github.io/2024/01/20/20240120_change_memo/</id>
+    <published>2024-01-19T16:00:00.000Z</published>
+    <updated>2024-01-20T10:02:59.128Z</updated>
+    
+    
+    
+    
+    <category term="memo" scheme="https://toskachin.github.io/categories/memo/"/>
+    
+    
+    <category term="memo" scheme="https://toskachin.github.io/tags/memo/"/>
+    
+    <category term="life" scheme="https://toskachin.github.io/tags/life/"/>
+    
+    <category term="Life" scheme="https://toskachin.github.io/tags/Life/"/>
+    
+  </entry>
   
   <entry>
     <title>Ansible Questions</title>
@@ -70,13 +91,13 @@
     <category term="devops" scheme="https://toskachin.github.io/categories/devops/"/>
     
     
+    <category term="interview" scheme="https://toskachin.github.io/tags/interview/"/>
+    
     <category term="Ansible" scheme="https://toskachin.github.io/tags/Ansible/"/>
     
     <category term="Terraform" scheme="https://toskachin.github.io/tags/Terraform/"/>
     
     <category term="Puppet" scheme="https://toskachin.github.io/tags/Puppet/"/>
-    
-    <category term="interview" scheme="https://toskachin.github.io/tags/interview/"/>
     
     <category term="devops" scheme="https://toskachin.github.io/tags/devops/"/>
     
@@ -107,9 +128,9 @@
     
     <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
     
-    <category term="Ansible" scheme="https://toskachin.github.io/tags/Ansible/"/>
-    
     <category term="interview" scheme="https://toskachin.github.io/tags/interview/"/>
+    
+    <category term="Ansible" scheme="https://toskachin.github.io/tags/Ansible/"/>
     
     <category term="Linux" scheme="https://toskachin.github.io/tags/Linux/"/>
     
@@ -378,7 +399,7 @@
     <link href="https://toskachin.github.io/2022/09/21/docker_useful_commands/"/>
     <id>https://toskachin.github.io/2022/09/21/docker_useful_commands/</id>
     <published>2022-09-20T23:54:41.000Z</published>
-    <updated>2023-09-17T02:33:26.640Z</updated>
+    <updated>2024-01-20T10:03:56.444Z</updated>
     
     
       
@@ -392,7 +413,7 @@
     
     
     
-    <category term="decops" scheme="https://toskachin.github.io/categories/decops/"/>
+    <category term="devops" scheme="https://toskachin.github.io/categories/devops/"/>
     
     
     <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
@@ -472,7 +493,7 @@
     <link href="https://toskachin.github.io/2022/07/04/stock-price/"/>
     <id>https://toskachin.github.io/2022/07/04/stock-price/</id>
     <published>2022-07-04T00:27:16.000Z</published>
-    <updated>2023-09-17T02:35:03.744Z</updated>
+    <updated>2024-01-20T10:03:42.406Z</updated>
     
     
       
@@ -485,7 +506,7 @@
     
     
     
-    <category term="memo" scheme="https://toskachin.github.io/categories/memo/"/>
+    <category term="tech" scheme="https://toskachin.github.io/categories/tech/"/>
     
     
     <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
@@ -619,42 +640,6 @@
     <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     
     <category term="Life" scheme="https://toskachin.github.io/tags/Life/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux下regex匹配高级用法</title>
-    <link href="https://toskachin.github.io/2021/10/16/linux-regex-advance/"/>
-    <id>https://toskachin.github.io/2021/10/16/linux-regex-advance/</id>
-    <published>2021-10-15T23:40:41.000Z</published>
-    <updated>2023-09-17T02:31:52.120Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#%E8%83%8C%E6%99%AF&quot;&gt;背景&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95&quot;&gt;常用方法&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="sysadmin" scheme="https://toskachin.github.io/categories/sysadmin/"/>
-    
-    
-    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
-    
-    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
-    
-    <category term="regex" scheme="https://toskachin.github.io/tags/regex/"/>
-    
-    <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
-    
-    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     
   </entry>
   

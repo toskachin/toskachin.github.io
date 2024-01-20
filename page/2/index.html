@@ -161,7 +161,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -172,7 +172,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -195,6 +195,11 @@
 	</div>
 	<ul class="links-of-blogroll-list recent-posts-list">
 	        <li class="my-links-of-blogroll-item">
+		    <a href="/2024/01/20/20240120_change_memo/" title="阶段性总结" target="">
+		    阶段性总结
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
 		    <a href="/2023/10/23/20231023_Ansible_questions/" title="Ansible Questions" target="">
 		    Ansible Questions
 		    </a>
@@ -212,11 +217,6 @@
 	        <li class="my-links-of-blogroll-item">
 		    <a href="/2023/09/04/20230904_kubectl_commands/" title="Kubectl 常用命令" target="">
 		    Kubectl 常用命令
-		    </a>
-		</li>
-	        <li class="my-links-of-blogroll-item">
-		    <a href="/2023/09/02/20230902_hexo_migration/" title="Hexo Blog电脑快速迁移" target="">
-		    Hexo Blog电脑快速迁移
 		    </a>
 		</li>
 	</ul>
@@ -247,6 +247,254 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2023/05/11/developer_macos_setup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="TOSKA">
+      <meta itemprop="description" content="10+ IT career and personal memories">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="RJ's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/05/11/developer_macos_setup/" class="post-title-link" itemprop="url">Developer's MacOS setup from Zero</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-05-11 15:59:59" itemprop="dateCreated datePublished" datetime="2023-05-11T15:59:59+08:00">2023-05-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2023-09-17 10:33:39" itemprop="dateModified" datetime="2023-09-17T10:33:39+08:00">2023-09-17</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/sysadmin/" itemprop="url" rel="index"><span itemprop="name">sysadmin</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>12 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ul>
+<li><a href="#third-part-applications-links">Third part applications links</a></li>
+<li><a href="#macos-setup">MacOS Setup</a><ul>
+<li><a href="#sceenshots-save-folder">sceenshots save folder</a></li>
+<li><a href="#ssh-keys">SSH Keys</a></li>
+</ul>
+</li>
+<li><a href="#applications-configuration">Applications Configuration</a><ul>
+<li><a href="#iterm2-setup">iTerm2 setup</a><ul>
+<li><a href="#installation-">Installation </a></li>
+<li><a href="#customization-">Customization </a><ul>
+<li><a href="#colors-and-font-settings-">Colors and Font Settings </a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#zsh-setup">Zsh setup</a><ul>
+<li><a href="#install-zsh">Install zsh</a></li>
+<li><a href="#step2-install-plugins-and--theme">Step2 Install plugins and  theme</a></li>
+<li><a href="#install-theme">Install Theme</a></li>
+<li><a href="#re-load-configuration">Re-load configuration</a></li>
+</ul>
+</li>
+<li><a href="#homebrew-setup">Homebrew setup</a></li>
+<li><a href="#git-setup">Git setup</a><ul>
+<li><a href="#git-and-github-">Git and GitHub </a></li>
+<li><a href="#ssh-config-for-github-">SSH Config for GitHub </a><ul>
+<li><a href="#check-for-existing-ssh-keys-">Check for existing SSH keys </a></li>
+<li><a href="#generate-a-new-ssh-key-">Generate a new SSH key </a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sublime-setup">Sublime setup</a><ul>
+<li><a href="#sublime-text-">Sublime Text </a><ul>
+<li><a href="#installation--1">Installation </a></li>
+<li><a href="#use-cli-to-open-file-">Use CLI to open file </a></li>
+</ul>
+</li>
+<li><a href="#subl-plugins">Subl plugins</a></li>
+<li><a href="#keyboard-shortcuts">Keyboard Shortcuts</a></li>
+<li><a href="#sidebarenhancements">SideBarEnhancements</a></li>
+<li><a href="#sublimelinter">SublimeLinter</a></li>
+<li><a href="#gitgutter">GitGutter</a></li>
+<li><a href="#markdown-preview">Markdown Preview</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Third-part-applications-links"><a href="#Third-part-applications-links" class="headerlink" title="Third part applications links"></a>Third part applications links</h1><ul>
+<li>Custom terminal tool: iTerm2 <a target="_blank" rel="noopener" href="https://iterm2.com/">https://iterm2.com</a></li>
+<li>Smart your terminal: zsh: <a target="_blank" rel="noopener" href="https://ohmyz.sh/">https://ohmyz.sh/</a></li>
+<li>Yum on MacOS: Homebrew <a target="_blank" rel="noopener" href="https://brew.sh/">https://brew.sh</a></li>
+<li>Notebook or IDE: sublime <a target="_blank" rel="noopener" href="https://www.sublimetext.com/">https://www.sublimetext.com</a></li>
+<li>IDE Visual Studio: <a target="_blank" rel="noopener" href="https://code.visualstudio.com/">https://code.visualstudio.com</a></li>
+<li>Git : <a target="_blank" rel="noopener" href="https://github.com/git-guides/install-git">https://github.com/git-guides/install-git</a></li>
+</ul>
+<h1 id="MacOS-Setup"><a href="#MacOS-Setup" class="headerlink" title="MacOS Setup"></a>MacOS Setup</h1><h3 id="sceenshots-save-folder"><a href="#sceenshots-save-folder" class="headerlink" title="sceenshots save folder"></a>sceenshots save folder</h3><ul>
+<li>manually create screenshots folder </li>
+<li>defaults write com.apple.screencapture location xxxx(screenshots folder path)</li>
+</ul>
+<h3 id="SSH-Keys"><a href="#SSH-Keys" class="headerlink" title="SSH Keys"></a>SSH Keys</h3><p>many of you have setup ssh keys to ssh remote to servers, if you don’t want to change settings, you can simply copy ssh folders</p>
+<ul>
+<li>copy from older Macbook ~/.ssh/* </li>
+</ul>
+<h1 id="Applications-Configuration"><a href="#Applications-Configuration" class="headerlink" title="Applications Configuration"></a>Applications Configuration</h1><h2 id="iTerm2-setup"><a href="#iTerm2-setup" class="headerlink" title="iTerm2 setup"></a>iTerm2 setup</h2><p><a target="_blank" rel="noopener" href="http://www.iterm2.com/">iTerm2</a> is an open source replacement for Apple’s Terminal. It’s highly customizable and comes with a lot of useful features.</p>
+<h3 id="Installation"><a href="#Installation" class="headerlink" title="Installation "></a>Installation <a id="installation"></a></h3><p>Use <a target="_blank" rel="noopener" href="http://sourabhbajaj.com/mac-setup/Homebrew/">Homebrew</a> to download and install:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew cask install iterm2</span><br></pre></td></tr></table></figure>
+<p>or download via <a target="_blank" rel="noopener" href="https://iterm2.com/">https://iterm2.com</a></p>
+<h3 id="Customization"><a href="#Customization" class="headerlink" title="Customization "></a>Customization <a id="customization"></a></h3><h4 id="Colors-and-Font-Settings"><a href="#Colors-and-Font-Settings" class="headerlink" title="Colors and Font Settings "></a>Colors and Font Settings <a id="colors-and-font-settings"></a></h4><p>Here are some suggested settings you can change or set, <strong>they are all optional</strong>.</p>
+<ul>
+<li>Set hot-key to open and close the terminal to <code>command + option + i</code></li>
+<li>Go to profiles -&gt; Default -&gt; Terminal -&gt; Check silence bell to disable the terminal session from making any sound</li>
+<li>Download <a target="_blank" rel="noopener" href="https://github.com/mbadolato/iTerm2-Color-Schemes/tree/master/schemes">one of iTerm2 color schemes</a> and then set these to your default profile colors</li>
+<li>Change the cursor text and cursor color to yellow make it more visible</li>
+<li>Change the font to 14pt Source Code Pro Lite. Source Code Pro can be downloaded using <a target="_blank" rel="noopener" href="https://sourabhbajaj.com/mac-setup/Homebrew/">Homebrew</a> <code>brew tap caskroom/fonts &amp;&amp; brew cask install font-source-code-pro</code></li>
+<li>If you’re using BASH instead of ZSH you can add <code>export CLICOLOR=1</code> line to your <code>~/.bash_profile</code>file for nice coloring of listings</li>
+</ul>
+<h2 id="Zsh-setup"><a href="#Zsh-setup" class="headerlink" title="Zsh setup"></a>Zsh setup</h2><h3 id="Install-zsh"><a href="#Install-zsh" class="headerlink" title="Install zsh"></a>Install zsh</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c &quot;$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Step2-Install-plugins-and-theme"><a href="#Step2-Install-plugins-and-theme" class="headerlink" title="Step2 Install plugins and  theme"></a>Step2 Install plugins and  theme</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.zshrc</span><br><span class="line"></span><br><span class="line">plugins=(git zsh-autosuggestions zsh-syntax-highlighting)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Install-Theme"><a href="#Install-Theme" class="headerlink" title="Install Theme"></a>Install Theme</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#Set ZSH_THEME=powerlevel10k/powerlevel10k in your ~/.zshrc.</span><br><span class="line"></span><br><span class="line">ZSH_THEME=&quot;powerlevel10k/powerlevel10k&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Re-load-configuration"><a href="#Re-load-configuration" class="headerlink" title="Re-load configuration"></a>Re-load configuration</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<h2 id="Homebrew-setup"><a href="#Homebrew-setup" class="headerlink" title="Homebrew setup"></a>Homebrew setup</h2><blockquote>
+<p>/bin/bash -c “$(curl -fsSL <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;">https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;</a></p>
+</blockquote>
+<h2 id="Git-setup"><a href="#Git-setup" class="headerlink" title="Git setup"></a>Git setup</h2><h3 id="Git-and-GitHub"><a href="#Git-and-GitHub" class="headerlink" title="Git and GitHub "></a>Git and GitHub <a id="git-and-github"></a></h3><p>What’s a developer without <a target="_blank" rel="noopener" href="http://git-scm.com/">Git</a>? To install, run:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install git</span><br></pre></td></tr></table></figure>
+
+<p>When done, to test that it installed properly you can run:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git --version</span><br></pre></td></tr></table></figure>
+
+<p>And <code>which git</code> should output <code>/usr/local/bin/git</code>.</p>
+<p>Next, we’ll define your Git user (should be the same name and email you use for <a target="_blank" rel="noopener" href="https://github.com/">GitHub</a>):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name &quot;Your Name Here&quot;</span><br><span class="line">$ git config --global user.email &quot;your_email@youremail.com&quot;</span><br></pre></td></tr></table></figure>
+
+<p>They will get added to your <code>.gitconfig</code> file.</p>
+<p>To push code to your GitHub repositories, we’re going to use the recommended HTTPS method (versus SSH). To prevent <code>git</code> from asking for your username and password every time you push a commit you can cache your credentials by running the following command, as described in the <a target="_blank" rel="noopener" href="https://help.github.com/articles/caching-your-github-password-in-git/">instructions</a>.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global credential.helper osxkeychain</span><br></pre></td></tr></table></figure>
+
+<h3 id="SSH-Config-for-GitHub"><a href="#SSH-Config-for-GitHub" class="headerlink" title="SSH Config for GitHub "></a>SSH Config for GitHub <a id="ssh-config-for-github"></a></h3><p>The instructions below are referenced from <a target="_blank" rel="noopener" href="https://help.github.com/articles/generating-ssh-keys">the official documentation</a>.</p>
+<h4 id="Check-for-existing-SSH-keys"><a href="#Check-for-existing-SSH-keys" class="headerlink" title="Check for existing SSH keys "></a>Check for existing SSH keys <a id="check-for-existing-ssh-keys"></a></h4><p>First, we need to check for existing SSH keys on your computer. We do this by running:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ls -al ~/.ssh</span><br><span class="line"># Lists the files in your .ssh directory, if they exist</span><br></pre></td></tr></table></figure>
+
+<p>Check the directory listing to see if you have files named either <code>id_rsa.pub</code> or <code>id_dsa.pub</code>. If you don’t have either of those files then read on, otherwise skip the next section.</p>
+<h4 id="Generate-a-new-SSH-key"><a href="#Generate-a-new-SSH-key" class="headerlink" title="Generate a new SSH key "></a>Generate a new SSH key <a id="generate-a-new-ssh-key"></a></h4><p>If you don’t have an SSH key you need to generate one. To do that you need to run the commands below, and make sure to substitute the placeholder with your email. The default settings are preferred, so when you’re asked to “enter a file in which to save the key,”” just press Enter to continue.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C &quot;your_email@example.com&quot;</span><br><span class="line"># Creates a new ssh key, using the provided email as a label</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sublime-setup"><a href="#Sublime-setup" class="headerlink" title="Sublime setup"></a>Sublime setup</h2><h3 id="Sublime-Text"><a href="#Sublime-Text" class="headerlink" title="Sublime Text "></a>Sublime Text <a id="sublime-text"></a></h3><p><a target="_blank" rel="noopener" href="http://www.sublimetext.com/">Sublime Text</a> is a widely used editor that describes it self as <em>a sophisticated text editor for code, markup and prose</em>.</p>
+<h4 id="Installation-1"><a href="#Installation-1" class="headerlink" title="Installation "></a>Installation <a id="installation"></a></h4><p><a target="_blank" rel="noopener" href="http://www.sublimetext.com/">Download</a> the <strong>.dmg</strong> file and drag-and-drop it to the <strong>Applications</strong> folder.</p>
+<h4 id="Use-CLI-to-open-file"><a href="#Use-CLI-to-open-file" class="headerlink" title="Use CLI to open file "></a>Use CLI to open file <a id="use-cli-to-open-file"></a></h4><p>Let’s create a shortcut so we can launch Sublime Text from the command-line</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl</span><br></pre></td></tr></table></figure>
+
+<p>Now you can open a file with <code>$ subl myfile.py</code> or start a new project in the current directory with <code>$ subl .</code>.</p>
+<h3 id="Subl-plugins"><a href="#Subl-plugins" class="headerlink" title="Subl plugins"></a>Subl plugins</h3><p>****</p>
+<h3 id="Keyboard-Shortcuts"><a href="#Keyboard-Shortcuts" class="headerlink" title="Keyboard Shortcuts"></a>Keyboard Shortcuts</h3><ul>
+<li><strong>Goto Anything</strong> Cmd+P is used for quickly finding and opening files. Just type in a part of a path and filename within a project and you can easily open that file. This is great for quickly opening files in large Django projects.</li>
+<li><strong>Goto Line Number</strong> Ctrl+G takes you to a specific line number in an active file.</li>
+<li><strong>command + shift + p</strong>  to open install package -&gt; search packages </li>
+</ul>
+<h3 id="SideBarEnhancements"><a href="#SideBarEnhancements" class="headerlink" title="SideBarEnhancements"></a>SideBarEnhancements</h3><p><a target="_blank" rel="noopener" href="https://sublime.wbond.net/packages/SideBarEnhancements">SideBarEnhancements</a> extends the number of menu options in the sidebar, speeding up your overall workflow. Options such as <strong>New File</strong> and <strong>Duplicate</strong> are essential and should be part of ST3 out of the box. The <strong>Delete</strong> option alone makes it worth downloading. This feature simply sends files to the Trash, which may seem trivial, but if you delete a file without it, then it’s very difficult to recover unless you’re using a version control system</p>
+<p><img src="/../.gitbook/assets/image.png"></p>
+<p><a target="_blank" rel="noopener" href="https://sublime.wbond.net/packages/Anaconda">Anaconda</a> is the ultimate Python package. It adds a number of IDE-like features to ST3 including the following:</p>
+<ul>
+<li><strong>Autocompletion</strong> works by default, but there are a number of configuration <a target="_blank" rel="noopener" href="https://github.com/DamnWidget/anaconda#anaconda-autocompletion">options</a>.</li>
+<li><strong>Code</strong> <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Lint_%28software%29"><strong>linting</strong></a> uses either PyLint or PyFlakes with PEP 8. I personally use a different linting package, as I will explain shortly, so I disable linting altogether within the user-defined Anaconda settings file, <strong>Anaconda.sublime-settings</strong>, via the file menu: <strong>Sublime &gt; Preferences &gt; Package Settings &gt; Anaconda &gt; Settings - User</strong>: <code>&#123;&quot;anaconda_linting&quot;: false&#125;</code></li>
+<li><strong>McCabe code complexity checker</strong> runs the <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">McCabe complexity checker</a> tool within a specific file. If you’re not familiar with what complexity is, be sure to visit the link above.</li>
+<li><strong>Goto Definitions</strong> finds and displays the definition of any variable, function, or class throughout your entire project.</li>
+<li><strong>Find Usage</strong> quickly searches where a variable, function, or class has been used in a specific file.</li>
+<li><strong>Show Documentation</strong> shows the docstring for functions or classes (if defined, of course).</li>
+</ul>
+<h3 id="SublimeLinter"><a href="#SublimeLinter" class="headerlink" title="SublimeLinter"></a>SublimeLinter</h3><p><a target="_blank" rel="noopener" href="https://sublime.wbond.net/packages/SublimeLinter">SublimeLinter</a> is a framework for ST3 linters. The package itself does not include any actual linters; those must be installed separately via Package Control using the <strong>SublimeLinter-[linter_name]</strong> naming syntax. You can view official linters <a target="_blank" rel="noopener" href="https://github.com/SublimeLinter">here</a>. There are also a number of third party linters, which can be viewed in Package Control. Check out the installation instructions <a target="_blank" rel="noopener" href="http://sublimelinter.readthedocs.org/en/latest/installation.html">here</a>.</p>
+<h3 id="GitGutter"><a href="#GitGutter" class="headerlink" title="GitGutter"></a>GitGutter</h3><p><a target="_blank" rel="noopener" href="https://sublime.wbond.net/packages/GitGutter">GitGutter</a> shows little icons in ST3’s gutter area that indicate whether a line has been inserted, modified, or deleted since the last commit.</p>
+<h3 id="Markdown-Preview"><a href="#Markdown-Preview" class="headerlink" title="Markdown Preview"></a>Markdown Preview</h3><p><a target="_blank" rel="noopener" href="https://sublime.wbond.net/packages/Markdown%20Preview">Markdown Preview</a> is used for previewing and building markdown files.</p>
+<p>To use, open the Package Manager and type <code>Markdown Preview</code> to show the available commands:</p>
+<ul>
+<li>Markdown Preview: Python Markdown: Preview in Browser</li>
+<li>Markdown Preview: Python Markdown: Export HTML in Sublime Text</li>
+<li>Markdown Preview: Python Markdown: Copy to Clipboard</li>
+<li>Markdown Preview: GitHub Flavored Markdown: Preview in Browser</li>
+<li>Markdown Preview: GitHub Flavored Markdown: Export HTML in Sublime Text</li>
+<li>Markdown Preview: GitHub Flavored Markdown: Copy to Clipboard</li>
+<li>Markdown Preview: Open Markdown Cheat Sheet</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -436,7 +684,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2023-09-17 10:33:26" itemprop="dateModified" datetime="2023-09-17T10:33:26+08:00">2023-09-17</time>
+        <time title="修改时间：2024-01-20 18:03:56" itemprop="dateModified" datetime="2024-01-20T18:03:56+08:00">2024-01-20</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -444,7 +692,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/decops/" itemprop="url" rel="index"><span itemprop="name">decops</span></a>
+          <a href="/categories/devops/" itemprop="url" rel="index"><span itemprop="name">devops</span></a>
         </span>
     </span>
 
@@ -812,7 +1060,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2023-09-17 10:35:03" itemprop="dateModified" datetime="2023-09-17T10:35:03+08:00">2023-09-17</time>
+        <time title="修改时间：2024-01-20 18:03:42" itemprop="dateModified" datetime="2024-01-20T18:03:42+08:00">2024-01-20</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -820,7 +1068,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/memo/" itemprop="url" rel="index"><span itemprop="name">memo</span></a>
+          <a href="/categories/tech/" itemprop="url" rel="index"><span itemprop="name">tech</span></a>
         </span>
     </span>
 
@@ -1696,183 +1944,6 @@
 <h2 id="Script-and-coding"><a href="#Script-and-coding" class="headerlink" title="Script and coding"></a>Script and coding</h2><p>how to rollback git add locally<br>difference of git merge and git rebase<br>Shell script</p>
 <h2 id="Cloud-tech"><a href="#Cloud-tech" class="headerlink" title="Cloud tech"></a>Cloud tech</h2><p>AWS Load balance type<br>Introduce AWS feature you familiar with</p>
 <h2 id="IT-process-and-Project-management"><a href="#IT-process-and-Project-management" class="headerlink" title="IT process and Project management"></a>IT process and Project management</h2><p>How to initize project for office movement<br>Vendor management<br>Project schedule management</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2021/10/16/linux-regex-advance/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="TOSKA">
-      <meta itemprop="description" content="10+ IT career and personal memories">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="RJ's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/10/16/linux-regex-advance/" class="post-title-link" itemprop="url">Linux下regex匹配高级用法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-10-16 07:40:41" itemprop="dateCreated datePublished" datetime="2021-10-16T07:40:41+08:00">2021-10-16</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2023-09-17 10:31:52" itemprop="dateModified" datetime="2023-09-17T10:31:52+08:00">2023-09-17</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/sysadmin/" itemprop="url" rel="index"><span itemprop="name">sysadmin</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.7k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <ul>
-<li><a href="#%E8%83%8C%E6%99%AF">背景</a></li>
-<li><a href="#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95">常用方法</a></li>
-<li><a href="#xargs%E7%94%A8%E6%B3%95">xargs用法</a><ul>
-<li><a href="#xargs%E5%8F%82%E6%95%B0">xargs参数</a></li>
-<li><a href="#xargs%E5%91%BD%E4%BB%A4%E4%B8%8E%E7%AE%A1%E9%81%93%E7%AC%A6%E7%9A%84%E5%8C%BA%E5%88%AB">xargs命令与管道符的区别：</a></li>
-</ul>
-</li>
-<li><a href="#find%E4%BD%BF%E7%94%A8">Find使用</a><ul>
-<li><a href="#find-%E5%90%84%E5%8F%82%E6%95%B0performance%E6%AF%94%E8%BE%83">find 各参数performance比较</a></li>
-<li><a href="#%E5%8C%BA%E5%88%ABfind--exec-and-find--xargs">区别find -exec and find | xargs</a><ul>
-<li><a href="#%E9%80%80%E5%87%BA%E4%BB%A3%E7%A0%81">退出代码</a></li>
-<li><a href="#%E6%A1%88%E4%BE%8B">案例</a><ul>
-<li><a href="#find--exec">find -exec</a></li>
-<li><a href="#find--xargs">find | xargs</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#find-%E7%BB%93%E8%AE%BA">Find 结论</a><ul>
-<li><a href="#%E5%8F%82%E6%95%B0%E7%9A%84%E5%A4%9A%E5%B0%91">参数的多少</a></li>
-<li><a href="#find--exec-vs-find--xargs">find -exec vs find | xargs</a></li>
-</ul>
-</li>
-<li><a href="#reference">reference</a><ul>
-<li><a href="#find%E5%B1%80%E9%99%90%E6%80%A7">find局限性</a></li>
-</ul>
-</li>
-<li><a href="#ls--grepegrep--xargs">ls + grep/egrep + xargs</a><ul>
-<li><a href="#grep-and-egrep%E7%94%A8%E6%B3%95">grep and egrep用法</a><ul>
-<li><a href="#%E6%A1%88%E4%BE%8B-1">案例</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>最近由于需要大量处理csv数据文件，对于csv数据文件内容的处理当然优先选择python pandas module,但是对于服务器上海量文件的寻找,linux bash的原生态的find,grep比python显得优势更大。</p>
-<h1 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h1><ul>
-<li>find command</li>
-<li>ls + grep/egrep + xargs</li>
-</ul>
-<h1 id="xargs用法"><a href="#xargs用法" class="headerlink" title="xargs用法"></a>xargs用法</h1><p>先介绍xargs用法因为两者都需要用到 </p>
-<h2 id="xargs参数"><a href="#xargs参数" class="headerlink" title="xargs参数"></a>xargs参数</h2><p>xargs的默认动作是echo，默认分隔符为空白字符（空格，TAB，换行符）。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-0，--null：以\0作为分隔符，接受到的特殊字符将当作文本符号处理；</span><br><span class="line">-d：指定分段的分隔符，默认分隔字符为空白字符；</span><br><span class="line">-a，--arg-file=file：指定命令标准输入的来源文件；</span><br><span class="line">-e&#x27;FLAG&#x27; 或者-E &#x27;FLAG&#x27;：指定一个终止符号，当xargs命令匹配到第一个FLAG后，停止传递，并退出命令；</span><br><span class="line">-p：每当xargs执行一个分段时，询问一次用户是否执行；</span><br><span class="line">-t：表示先打印执行的命令再输出；</span><br><span class="line">-n NUM：表示一个分段包含的参数个数，参数之间以分隔符隔开，默认是将所有的参数当作一个分段输出；</span><br><span class="line">-i：用于将分段分批传递给其后的&#123;&#125;进行输出，分段会替换&#123;&#125;所在的位置进行输出；</span><br><span class="line">-I &quot;FLAG&quot;：可指定分段的替换符号，分段会分批替换到符号所在的位置进行输出执行；</span><br><span class="line">-L：指定每次执行的最大的非空行的行数；</span><br></pre></td></tr></table></figure>
-<h2 id="xargs命令与管道符的区别："><a href="#xargs命令与管道符的区别：" class="headerlink" title="xargs命令与管道符的区别："></a>xargs命令与管道符的区别：</h2><p>管道符| 是将前一个命令的标准输出作为后一个命令的标准输入耳使用；而xargs命令是将前一个命令的标准输出作为后一个命令的参数而使用</p>
-<h1 id="Find使用"><a href="#Find使用" class="headerlink" title="Find使用"></a>Find使用</h1><p>对于常用的,比如我想寻找一些文件然后cp到特定路径下面</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find path -name &quot;yourname*.csv&quot; -exec command &#123;&#125; /tmp/test/ \;</span><br></pre></td></tr></table></figure>
-
-<h2 id="find-各参数performance比较"><a href="#find-各参数performance比较" class="headerlink" title="find 各参数performance比较"></a>find 各参数performance比较</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">du -hd0</span><br><span class="line"> 37G    .</span><br><span class="line"></span><br><span class="line"># &#x27;time&#x27; will print the total time taken for the command to finish</span><br><span class="line"></span><br><span class="line"># time find -exec \;</span><br><span class="line">time find . -name \*.php -type f -exec grep -Hn &#x27;$test&#x27; &#123;&#125; \;</span><br><span class="line">real    1m24.433s</span><br><span class="line">user    0m29.022s</span><br><span class="line">sys     0m43.304s</span><br><span class="line"></span><br><span class="line"># find -exec \+</span><br><span class="line">time find . -name \*.php -type f -exec grep -Hn &#x27;$test&#x27; &#123;&#125; \+</span><br><span class="line">real    0m13.050s</span><br><span class="line">user    0m5.315s</span><br><span class="line">sys     0m2.179s</span><br><span class="line"></span><br><span class="line"># find | xargs -n1</span><br><span class="line">time find . -name \*.php -type f -print0 | xargs -0 -n1 grep -Hn &#x27;$test&#x27;</span><br><span class="line">real    0m55.159s</span><br><span class="line">user    0m23.692s</span><br><span class="line">sys     0m28.618s</span><br><span class="line"></span><br><span class="line"># find | xargs</span><br><span class="line">time find . -name \*.php -type f -print0 | xargs -0 -grep -Hn &#x27;$test&#x27;</span><br><span class="line">real    0m12.047s</span><br><span class="line">user    0m4.997s</span><br><span class="line">sys     0m3.593s</span><br></pre></td></tr></table></figure>
-<p>得出结论find + and xargs 优于其他因为没有过多的fork和exec，减少了I/O的读写时间，可以看出大概快了6倍</p>
-<h2 id="区别find-exec-and-find-xargs"><a href="#区别find-exec-and-find-xargs" class="headerlink" title="区别find -exec and find | xargs"></a>区别find -exec and find | xargs</h2><h3 id="退出代码"><a href="#退出代码" class="headerlink" title="退出代码"></a>退出代码</h3><ul>
-<li>find -exec 返回退出代码在本身进程</li>
-<li>find | xargs 返回退出代码在子进程</li>
-</ul>
-<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><h4 id="find-exec"><a href="#find-exec" class="headerlink" title="find -exec"></a>find -exec</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">find . -name \*.php -type f -exec php -l &#123;&#125; \;</span><br><span class="line">...</span><br><span class="line">PHP Parse error:  syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line"></span><br><span class="line">Parse error: syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line">Errors parsing ./test.php</span><br><span class="line">...</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/network/user-new.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/network/users.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/network.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-discussion.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-general.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-head.php</span><br><span class="line">No syntax errors detected in ./everythingcli/wordpress/wp-admin/options-media.php</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>可以看出尽管命令php -l报错 exit 1但是find -exec仍旧执行到最后且exit 0</p>
-<h4 id="find-xargs"><a href="#find-xargs" class="headerlink" title="find | xargs"></a>find | xargs</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">find . -name \*.php -type f -print0 | xargs -0 -n1 php -l</span><br><span class="line">...</span><br><span class="line">PHP Parse error:  syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line"></span><br><span class="line">Parse error: syntax error, unexpected &#x27;=&#x27; in ./test.php on line 3</span><br><span class="line">Errors parsing ./test.php</span><br></pre></td></tr></table></figure>
-
-<p>你可以看出命令立即退出，这是因为子进程退出了这个是piping command设计的原理</p>
-<h1 id="Find-结论"><a href="#Find-结论" class="headerlink" title="Find 结论"></a>Find 结论</h1><h2 id="参数的多少"><a href="#参数的多少" class="headerlink" title="参数的多少"></a>参数的多少</h2><p>find和 xargs -n1 是否需要使用; 如果子目录可以使用多个参数使用 +，如果子命令只支持一个参数使用;和-n1</p>
-<h2 id="find-exec-vs-find-xargs"><a href="#find-exec-vs-find-xargs" class="headerlink" title="find -exec vs find | xargs"></a>find -exec vs find | xargs</h2><p>find -exec 会继续执行没个文件尽管-exec报错，但find | xargs 会立即退出当子进程有错时，取决于你的需求</p>
-<h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><p><a target="_blank" rel="noopener" href="https://www.everythingcli.org/find-exec-vs-find-xargs/">https://www.everythingcli.org/find-exec-vs-find-xargs/</a></p>
-<h2 id="find局限性"><a href="#find局限性" class="headerlink" title="find局限性"></a>find局限性</h2><p>但是你会发现find也有其局限性</p>
-<ul>
-<li>对于regex匹配很有限</li>
-<li>输出不友好，比如./yourname.csv，你需要进行二次处理输出结果<br>有此我们引出第二种用法</li>
-</ul>
-<h1 id="ls-grep-egrep-xargs"><a href="#ls-grep-egrep-xargs" class="headerlink" title="ls + grep/egrep + xargs"></a>ls + grep/egrep + xargs</h1><ul>
-<li>ls 列出需要文件</li>
-<li>grep 运行regex正则匹配</li>
-<li>xargs 执行命令</li>
-</ul>
-<h2 id="grep-and-egrep用法"><a href="#grep-and-egrep用法" class="headerlink" title="grep and egrep用法"></a>grep and egrep用法</h2><p>匹配7位字母或者数字keyword</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &#x27;^[a-zA-Z0-9]\&#123;7\&#125;$&#x27; /usr/share/wordlists/rockyou.txt</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">egrep &#x27;^.&#123;7&#125;$&#x27; /usr/share/wordlists/rockyou.txt</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="案例-1"><a href="#案例-1" class="headerlink" title="案例"></a>案例</h3><p>找到一些特定文件名并复制到其他目录下，folder存在很多类似的文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">2019-12-01_db5xtqje90.csv</span><br><span class="line">_2019-12-01_db5xtqje90.csv</span><br><span class="line">_2019-12-01_db5xtqje90_processed.csv</span><br><span class="line">2019-12-01_db5xtqje90.csv.dbfile.txt</span><br><span class="line">2019-12-01_db5xtqje90_error.csv</span><br><span class="line"></span><br><span class="line">ls | egrep &#x27;^.&#123;40&#125;$&#x27; | grep Revenue_2019-12 | xargs  -d &quot;\n&quot; cp -t /tmp/test/</span><br><span class="line"></span><br><span class="line"># egrep &#x27;^.&#123;40&#125;$&#x27; 匹配40位任意字符长度的文件名</span><br><span class="line"># xargs  -d &quot;\n&quot;  指定分隔符号为回车 </span><br></pre></td></tr></table></figure>
-
 
       
     </div>
