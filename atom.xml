@@ -6,7 +6,7 @@
   <link href="https://toskachin.github.io/atom.xml" rel="self"/>
   
   <link href="https://toskachin.github.io/"/>
-  <updated>2023-09-18T02:54:07.561Z</updated>
+  <updated>2023-10-23T11:25:31.615Z</updated>
   <id>https://toskachin.github.io/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ansible Questions</title>
+    <link href="https://toskachin.github.io/2023/10/23/20231023_Ansible_questions/"/>
+    <id>https://toskachin.github.io/2023/10/23/20231023_Ansible_questions/</id>
+    <published>2023-10-22T16:00:00.000Z</published>
+    <updated>2023-10-23T11:25:31.615Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;Ansible&quot;&gt;&lt;a href=&quot;#Ansible&quot; class=&quot;headerlink&quot; title=&quot;Ansible&quot;&gt;&lt;/a&gt;Ansible&lt;/h3&gt;&lt;h2 id=&quot;Ansible-Terraform-Puppet主要区别和用途&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="devops" scheme="https://toskachin.github.io/categories/devops/"/>
+    
+    
+    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
+    
+    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
+    
+    <category term="Ansible" scheme="https://toskachin.github.io/tags/Ansible/"/>
+    
+    <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
+    
+    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
+    
+  </entry>
   
   <entry>
     <title>Devops 三大运维工具Ansible Terraform Puppet</title>
@@ -620,40 +653,6 @@
     <category term="regex" scheme="https://toskachin.github.io/tags/regex/"/>
     
     <category term="python" scheme="https://toskachin.github.io/tags/python/"/>
-    
-    <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>一文熟悉云配置神器terraform</title>
-    <link href="https://toskachin.github.io/2021/08/26/terraform-notes/"/>
-    <id>https://toskachin.github.io/2021/08/26/terraform-notes/</id>
-    <published>2021-08-26T05:36:20.000Z</published>
-    <updated>2023-09-17T02:29:34.926Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;hr&gt;
-&lt;p&gt;随着Infrastructure as Code (IaC)在DEVOPS领域的兴起，如果是 Ansible 是偏向</summary>
-        
-      
-    
-    
-    
-    <category term="devops" scheme="https://toskachin.github.io/categories/devops/"/>
-    
-    
-    <category term="tech" scheme="https://toskachin.github.io/tags/tech/"/>
-    
-    <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
-    
-    <category term="IaC" scheme="https://toskachin.github.io/tags/IaC/"/>
-    
-    <category term="terraform" scheme="https://toskachin.github.io/tags/terraform/"/>
     
     <category term="Tech" scheme="https://toskachin.github.io/tags/Tech/"/>
     

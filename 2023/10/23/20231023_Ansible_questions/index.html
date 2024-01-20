@@ -20,26 +20,32 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"toskachin.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="10+ IT career and personal memories">
-<meta property="og:type" content="website">
-<meta property="og:title" content="RJ&#39;s Blog">
-<meta property="og:url" content="https://toskachin.github.io/categories/memo/index.html">
+<meta name="description" content="AnsibleAnsible Terraform Puppet主要区别和用途 Ansible: 侧重于deployment,软件配置部署 Puppet: 侧重于System management Terraform: Server Provisioning Tool: 侧重于Cloud, IaCAnsible 知识Basic ansible系统由控制主机和被管理主机组成,控制主机不支持window">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ansible Questions">
+<meta property="og:url" content="https://toskachin.github.io/2023/10/23/20231023_Ansible_questions/index.html">
 <meta property="og:site_name" content="RJ&#39;s Blog">
-<meta property="og:description" content="10+ IT career and personal memories">
+<meta property="og:description" content="AnsibleAnsible Terraform Puppet主要区别和用途 Ansible: 侧重于deployment,软件配置部署 Puppet: 侧重于System management Terraform: Server Provisioning Tool: 侧重于Cloud, IaCAnsible 知识Basic ansible系统由控制主机和被管理主机组成,控制主机不支持window">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-10-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-10-23T11:25:31.615Z">
 <meta property="article:author" content="TOSKA">
-<meta property="article:tag" content="Tech, Life, 技术，人生">
+<meta property="article:tag" content="tech">
+<meta property="article:tag" content="shell">
+<meta property="article:tag" content="Ansible">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="Tech">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://toskachin.github.io/categories/memo/">
+<link rel="canonical" href="https://toskachin.github.io/2023/10/23/20231023_Ansible_questions/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"categories/memo/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://toskachin.github.io/2023/10/23/20231023_Ansible_questions/","path":"2023/10/23/20231023_Ansible_questions/","title":"Ansible Questions"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>分类: memo | RJ's Blog</title>
+<title>Ansible Questions | RJ's Blog</title>
   
 
 
@@ -133,7 +139,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -146,6 +152,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ansible"><span class="nav-number">1.</span> <span class="nav-text">Ansible</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ansible-Terraform-Puppet%E4%B8%BB%E8%A6%81%E5%8C%BA%E5%88%AB%E5%92%8C%E7%94%A8%E9%80%94"><span class="nav-number"></span> <span class="nav-text">Ansible Terraform Puppet主要区别和用途</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ansible-%E7%9F%A5%E8%AF%86"><span class="nav-number"></span> <span class="nav-text">Ansible 知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic"><span class="nav-number">1.</span> <span class="nav-text">Basic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">常用配置参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ansible-commom-questions"><span class="nav-number"></span> <span class="nav-text">Ansible commom questions</span></a></div>
         </div>
         <!--/noindex-->
 
@@ -246,73 +253,173 @@
 </noscript>
 
 
-    <div class="main-inner category posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
-  
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h2 class="collection-header">memo
-          <small>分类</small>
-        </h2>
-      </div>
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://toskachin.github.io/2023/10/23/20231023_Ansible_questions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="TOSKA">
+      <meta itemprop="description" content="10+ IT career and personal memories">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="RJ's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ansible Questions
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2023</span>
+
+      <time title="创建时间：2023-10-23 00:00:00 / 修改时间：19:25:31" itemprop="dateCreated datePublished" datetime="2023-10-23T00:00:00+08:00">2023-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/devops/" itemprop="url" rel="index"><span itemprop="name">devops</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="Ansible"><a href="#Ansible" class="headerlink" title="Ansible"></a>Ansible</h3><h2 id="Ansible-Terraform-Puppet主要区别和用途"><a href="#Ansible-Terraform-Puppet主要区别和用途" class="headerlink" title="Ansible Terraform Puppet主要区别和用途"></a>Ansible Terraform Puppet主要区别和用途</h2><ul>
+<li>Ansible: 侧重于deployment,软件配置部署</li>
+<li>Puppet: 侧重于System management</li>
+<li>Terraform: Server Provisioning Tool: 侧重于Cloud, IaC<h2 id="Ansible-知识"><a href="#Ansible-知识" class="headerlink" title="Ansible 知识"></a>Ansible 知识</h2><h3 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h3></li>
+<li>ansible系统由控制主机和被管理主机组成,控制主机不支持windows平台<ul>
+<li>核心: ansible</li>
+<li>Core Modules: ansible自带的模块</li>
+<li>Custom Modules: 核心模块功能不足时,用户可以添加扩展模块</li>
+<li>Plugins: 通过插件来实现记录日志,发送邮件或其他功能</li>
+<li>Playbooks: 剧本,YAML格式文件，多个任务定义在一个文件中，定义主机需要调用哪些模块来完成的功能</li>
+<li>Connectior Plugins: ansible基于连接插件连接到各个主机上,默认是使用ssh</li>
+<li>Host Inventory: 记录由Ansible管理的主机信息，包括端口、密码、ip等</li>
+</ul>
+</li>
+</ul>
+<h3 id="常用配置参数"><a href="#常用配置参数" class="headerlink" title="常用配置参数"></a>常用配置参数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">inventory = /etc/ansible/hosts      #这个参数表示资源清单inventory文件的位置</span><br><span class="line">library = /usr/share/ansible        #指向存放Ansible模块的目录，支持多个目录方式，只要用冒号（：）隔开就可以</span><br><span class="line">forks = 5       #并发连接数，默认为5</span><br><span class="line">sudo_user = root        #设置默认执行命令的用户</span><br><span class="line">remote_port = 22        #指定连接被管节点的管理端口，默认为22端口，建议修改，能够更加安全</span><br><span class="line">host_key_checking = False       #设置是否检查SSH主机的密钥，值为True/False。关闭后第一次连接不会提示配置实例</span><br><span class="line">timeout = 60        #设置SSH连接的超时时间，单位为秒</span><br><span class="line">log_path = /var/log/ansible.log     #指定一个存储ansible日志的文件（默认不记录日志）</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Ansible-commom-questions"><a href="#Ansible-commom-questions" class="headerlink" title="Ansible commom questions"></a>Ansible commom questions</h2><ul>
+<li>Ansible module shell and command difference <ul>
+<li>shell call /bin/sh </li>
+<li>command can’t reolve variable like $HOME, “&lt;”, “&amp;”</li>
+</ul>
+</li>
+<li>Ansible configure file ansible.cfg load orders <ul>
+<li>检查环境变量ANSIBLE_CONFIG指向的路径文件</li>
+<li>ansible.cfg (in the current directory)</li>
+<li>~/.ansible.cfg</li>
+<li>/etc/ansible/ansible.cfg</li>
+</ul>
+</li>
+<li>Ansible facts cache<ul>
+<li>gathering = smart</li>
+<li>implicit</li>
+<li>explicit<br>ansible的配置文件中可以修改’gathering’的值为’smart’、’implicit’或者’explicit’。smart表示默认收集facts，但facts已有的情况下不会收集，即使用缓存facts；implicit表示默认收集facts，要禁止收集，必须使用gather_facts: False；explicit则表示默认不收集，要显式收集，必须使用gather_facts: Ture。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[defaults]</span><br><span class="line">gathering = smart</span><br><span class="line">fact_caching_timeout = 86400</span><br><span class="line">fact_caching = jsonfile</span><br><span class="line">fact_caching_connection = /path/to/cachedir</span><br></pre></td></tr></table></figure>
+
+<p>这里设置的缓存过期时间为86400秒，即缓存一天。缓存的json文件放在/path/to/cachedir目录下，各主机的缓存文件以主机名命名。缓存文件是一个json文件，要查看缓存文件，如/path/to/cachedir/192.168.100.59中的内容，使用如下语句即可。</p>
+<p><code>cat /path/to/cachedir/192.168.100.59 | python -m json.tool</code></p>
+<ul>
+<li><p>Ansible playbook <code>serial</code></p>
+</li>
+<li><p>当host具有太多个时候，serial 可以定义一次跑的服务器的个数或者百分比方式30%来定义跑多少个服务器一次。</p>
+</li>
+<li><p>Ansible how to run one local script on remote server</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- name: Transfer and execute a script.</span><br><span class="line">  hosts: all</span><br><span class="line">  tasks:</span><br><span class="line">     - name: Copy and Execute the script </span><br><span class="line">       script: /home/user/userScript.sh</span><br></pre></td></tr></table></figure></li>
+<li><p>Ansible how to debug one task output</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- hosts: apt-servers</span><br><span class="line">  tasks:</span><br><span class="line">    - name: Check if reboot is required</span><br><span class="line">      script: /home/ansible/scripts/check.reboot.required.sh</span><br><span class="line">      register: output</span><br><span class="line"></span><br><span class="line">    - debug: var=output.stdout_lines</span><br></pre></td></tr></table></figure></li>
+</ul>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-05-17T06:33:00+08:00"
-              content="2023-05-17">
-          05-17
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/05/17/memo_2023may/" itemprop="url">
-            <span itemprop="name">国民对于疫情后经济复苏信心的丢失，路在何方</span>
-          </a>
-      </div>
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tech/" rel="tag"># tech</a>
+              <a href="/tags/shell/" rel="tag"># shell</a>
+              <a href="/tags/Ansible/" rel="tag"># Ansible</a>
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/Tech/" rel="tag"># Tech</a>
+          </div>
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/15/20230915_devops_tools/" rel="prev" title="Devops 三大运维工具Ansible Terraform Puppet">
+                  <i class="fa fa-chevron-left"></i> Devops 三大运维工具Ansible Terraform Puppet
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
-    <div class="collection-year">
-      <span class="collection-header">2022</span>
-    </div>
+</div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2022-07-04T08:27:16+08:00"
-              content="2022-07-04">
-          07-04
-        </time>
-      </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/07/04/stock-price/" itemprop="url">
-            <span itemprop="name">python程序获取股票信息</span>
-          </a>
-      </div>
 
-      
-    </header>
-  </article>
 
-    </div>
-  </div>
-  
-  
-  
+
 
 </div>
   </main>
