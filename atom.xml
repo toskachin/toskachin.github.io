@@ -70,13 +70,13 @@
     <category term="devops" scheme="https://toskachin.github.io/categories/devops/"/>
     
     
-    <category term="interview" scheme="https://toskachin.github.io/tags/interview/"/>
-    
     <category term="Ansible" scheme="https://toskachin.github.io/tags/Ansible/"/>
     
     <category term="Terraform" scheme="https://toskachin.github.io/tags/Terraform/"/>
     
     <category term="Puppet" scheme="https://toskachin.github.io/tags/Puppet/"/>
+    
+    <category term="interview" scheme="https://toskachin.github.io/tags/interview/"/>
     
     <category term="devops" scheme="https://toskachin.github.io/tags/devops/"/>
     
@@ -107,9 +107,9 @@
     
     <category term="shell" scheme="https://toskachin.github.io/tags/shell/"/>
     
-    <category term="interview" scheme="https://toskachin.github.io/tags/interview/"/>
-    
     <category term="Ansible" scheme="https://toskachin.github.io/tags/Ansible/"/>
+    
+    <category term="interview" scheme="https://toskachin.github.io/tags/interview/"/>
     
     <category term="Linux" scheme="https://toskachin.github.io/tags/Linux/"/>
     
